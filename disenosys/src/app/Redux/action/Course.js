@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export const fetchCourse = () => async (dispatch) => {
     try {
-      const response = await axios.get('https://disenosys.onrender.com/api/v1/getAllCourses');
+      const response = await axios.get('https://disenosys-1.onrender.com/api/v1/getAllCourses');
       const productsJson = response.data;
       dispatch(setProducts(productsJson));
     } catch (error) {

@@ -10,7 +10,7 @@ import { Login, Signup } from '../features/authSlice';
 export const SignupData = (userData) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://disenosys.onrender.com/api/v1/user/register",
+        "https://disenosys-1.onrender.com/api/v1/user/register",
         userData
       );
       dispatch(Signup(data));
@@ -37,7 +37,7 @@ export const SignupData = (userData) => async (dispatch) => {
     console.log(userData);
     try {
       const { data } = await axios.post(
-        "https://disenosys.onrender.com/api/v1/user/login",
+        "https://disenosys-1.onrender.com/api/v1/user/login",
         userData // This is now JSON, not FormData
       );
       dispatch(Login(data));

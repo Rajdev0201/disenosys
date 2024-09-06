@@ -32,7 +32,7 @@ const Navbar = () => {
 
   const cart = useSelector((state) => state?.currentCart);
   const length = cart?.cartItems?.length;
-
+  console.log(length)
   const handleLinkClick = (link) => {
     setActiveLink(link);
     setMobileMenuOpen(false);

@@ -7,7 +7,7 @@ import {setCart} from "../features/currentCartSlice.js"
 
 export const addProductToCart = (cart) => async (dispatch) => {
     try {
-        const response = await axios.post('https://disenosys.onrender.com/api/v1/addCart', cart);
+        const response = await axios.post('https://disenosys-1.onrender.com/api/v1/addCart', cart);
         const { cartItem } = response.data;
         dispatch(addCart(cartItem));
         dispatch(getAllCarts());
@@ -27,7 +27,7 @@ export const addProductToCart = (cart) => async (dispatch) => {
 
 export const removeProductFromCart = (cartId) => async (dispatch) => {
     try {
-        await axios.delete(`https://disenosys.onrender.com/api/v1/cart/${cartId}`);
+        await axios.delete(`https://disenosys-1.onrender.com/api/v1/cart/${cartId}`);
         dispatch(removeFromCart(cartId));
         dispatch(getAllCarts())
     } catch (error) {
@@ -61,7 +61,7 @@ export const removeProductFromCart = (cartId) => async (dispatch) => {
 
 export const getAllCarts = () => async (dispatch) => {
     try {
-        const res = await axios.get("https://disenosys.onrender.com/api/v1/getCart");
+        const res = await axios.get("https://disenosys-1.onrender.com/api/v1/getCart");
         const getCart = res.data;
         dispatch(setCart(getCart));
     } catch (error) {
