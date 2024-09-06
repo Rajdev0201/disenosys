@@ -17,7 +17,9 @@
 }
 
 @keyframes spin {
+
   0% { transform: rotate(0deg); }
+
   100% { transform: rotate(360deg); }
 }
 
@@ -25,6 +27,7 @@
 .box-content {
   position: relative;
   overflow: hidden;
+
   /* background: rgb(75, 73, 73); */
   transition: background 0.3s ease;
 }

@@ -22,8 +22,8 @@ const config: Config = {
         "ch-gradient":"linear-gradient(72.2deg, rgba(127, 86, 217, 0.9) 26.49%, rgba(8, 49, 139, 0.9) 85.53%)",
       },
       boxShadow: {
-        'custom-shadow': 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;',
-        'border-shadow': 'rgba(0, 0, 0, 0.35) 0px 5px 15px;',
+        'custom-shadow': 'rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px',
+        'border-shadow': 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
       },
       animation: {
         slideIn: 'slideIn 1s ease-out'
