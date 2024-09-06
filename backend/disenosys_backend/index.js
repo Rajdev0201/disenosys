@@ -27,6 +27,13 @@ app.use((_req, res, next) => {
   res.header('Access-Control-Allow-Headers', '*');
   next();
 });
+const orgins = ["https://disenosys.onrender.com","http://localhost:3000"]
+app.use(cors({
+  origin: orgins,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true,
+}));
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const UserRoute = require("./routes/UserRoute.js")
 const CourseRoute = require("./routes/CourseRoute.js")
@@ -37,6 +44,10 @@ app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
 app.use("/api/v1",addCart);
 app.use("/course",payment);
+
+app.get("/",(req,res) => {
+ res.send("hi")
+})
 
 app.use(errorMiddleware);
 module.exports = app
