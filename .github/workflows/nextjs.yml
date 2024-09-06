@@ -81,7 +81,7 @@ jobs:
           path: ./out
       - uses: actions/checkout@v3
         with:
-          sparse-checkout: portfolio
+          sparse-checkout: app
 
   # Deployment job
   deploy:
