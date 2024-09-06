@@ -18,7 +18,7 @@ const loadRazorpayScript = () => {
 
 export const CheckOut = (Data, nav) => async (dispatch) => {
     try {
-        const res = await axios.post("http://localhost:8000/course/checkout-order", Data);
+        const res = await axios.post("https://disenosys.onrender.com/course/checkout-order", Data);
         const { orderId, amount, currency } = res.data;
 
         await loadRazorpayScript(); // Ensure Razorpay script is loaded
@@ -32,7 +32,7 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
             order_id: orderId,
             handler: async (response) => {
                 try {
-                    const captureResponse = await axios.post("http://localhost:8000/course/capture-payment", {
+                    const captureResponse = await axios.post("https://disenosys.onrender.com/course/capture-payment", {
                         razorpayPaymentId: response.razorpay_payment_id,
                         razorpayOrderId: response.razorpay_order_id,
                         razorpaySignature: response.razorpay_signature,
