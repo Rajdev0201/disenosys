@@ -33,7 +33,8 @@
     "react-scroll-parallax": "^3.4.5",
     "react-toastify": "^10.0.5",
     "sass": "^1.78.0",
-    "three": "^0.167.1"
+    "three": "^0.167.1",
+    "url": "^0.11.4"
   },
   "devDependencies": {
     "@types/node": "^20",
