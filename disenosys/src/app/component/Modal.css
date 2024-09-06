@@ -1,0 +1,8 @@
+@keyframes slide-down {
+    from {
+      transform: scale(0);
+    }
+    to {
+      transform: translateY(0); 
+    }
+  }

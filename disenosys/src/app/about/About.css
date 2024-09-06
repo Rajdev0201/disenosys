@@ -1,0 +1,7 @@
+.about {
+    background-image: url("../assests/About.jpg");
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding: 20px;
+}
