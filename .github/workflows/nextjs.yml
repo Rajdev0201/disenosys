@@ -22,14 +22,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: List files in workspace
+        run: |
+          echo "Listing files in the workspace:"
+          ls -la /home/runner/work/disenosys/disenosys
+
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          if [ -f "disenosys/yarn.lock" ]; then
+          if [ -f "/home/runner/work/disenosys/disenosys/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_ENV
             echo "command=install" >> $GITHUB_ENV
             echo "runner=yarn" >> $GITHUB_ENV
-          elif [ -f "disenosys/package.json" ]; then
+          elif [ -f "/home/runner/work/disenosys/disenosys/package-lock.json" ]; then
             echo "manager=npm" >> $GITHUB_ENV
             echo "command=ci" >> $GITHUB_ENV
             echo "runner=npx --no-install" >> $GITHUB_ENV
@@ -67,7 +72,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out  # Ensure this path matches your build output
+          path: ./out
 
   deploy:
     environment:
