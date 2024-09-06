@@ -19,7 +19,7 @@ export const Course = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 my-6 gap-6 md:gap-8">
           <div>
             <h1 className="text-blue-800 text-lg sm:text-xl md:text-xl lg:text-xl xl:text-4xl">
-              Let's <span className="font-bold">Begin</span>
+              Let&apos;s <span className="font-bold">Begin</span>
             </h1>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold py-2 md:py-4 font-poppins">
               Lets Find The

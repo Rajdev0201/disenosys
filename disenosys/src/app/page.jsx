@@ -10,7 +10,7 @@ import { getAllCarts } from './Redux/action/addToCart.js'
 import { useEffect } from 'react'
 import Pricing from "./component/Pricing"
 
-export default function page() {
+export default function Page() {
   const dispatch = useDispatch()
 
   useEffect(() => {

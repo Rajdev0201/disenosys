@@ -123,7 +123,7 @@ const Authentication = () => {
                   Login
                 </button>
                 <h1 className="text-center text-lg mt-6 font-light mb-6 hover:text-[#38c3e2]"onClick={handleLogin}>
-                  Don't have an account?
+                  Don&apos;t have an account?
                 </h1>
               </form>
             </div>
@@ -164,7 +164,7 @@ const Authentication = () => {
                   className="text-center text-lg pt-1 font-light mb-6 hover:text-[#38c3e2] cursor-pointer"
                   onClick={handleLogin}
                 >
-                  Don't have an account?
+                  Don&apos;t have an account?
                 </h1>
               </form>
             </div>
