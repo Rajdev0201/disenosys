@@ -25,11 +25,11 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          if [ -f "yarn.lock" ]; then
+          if [ -f "disenosys/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_ENV
             echo "command=install" >> $GITHUB_ENV
             echo "runner=yarn" >> $GITHUB_ENV
-          elif [ -f "package.json" ]; then
+          elif [ -f "disenosys/package.json" ]; then
             echo "manager=npm" >> $GITHUB_ENV
             echo "command=ci" >> $GITHUB_ENV
             echo "runner=npx --no-install" >> $GITHUB_ENV
