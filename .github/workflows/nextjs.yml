@@ -79,6 +79,9 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
+      - uses: actions/checkout@v3
+        with:
+          sparse-checkout: portfolio
 
   # Deployment job
   deploy:
