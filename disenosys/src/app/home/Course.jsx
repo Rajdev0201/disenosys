@@ -11,6 +11,7 @@ const Course = () => {
   const courses = useSelector((state) => state?.course?.courses);
   const cart = useSelector((state) => state?.cart);
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user)
 
   useEffect(() => {
     dispatch(fetchCourse());
@@ -28,14 +29,18 @@ const Course = () => {
   const addCart = (course) => {
     // const totalPrice = course.price * 1;
     // console.log('Total Price:', totalPrice);
-    dispatch(addProductToCart({
-      courseId: course?._id,
-      name: course?.courseName,
-      price: course?.price,
-      quantity: 1,
-      img: course?.imagePath,
-      // totalPrice:totalPrice
-    }));
+    if( user?.user?.user?._id){
+      dispatch(addProductToCart({
+        courseId: course?._id,
+        name: course?.courseName,
+        price: course?.price,
+        quantity: 1,
+        img: course?.imagePath,
+        // totalPrice:totalPrice
+      }));
+    }else{
+       alert("please sign in your account")
+      }
   };
 
   const getButtonClass = (category) => {
