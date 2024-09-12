@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllCarts } from '@/app/Redux/action/addToCart.js';
 import Modal from "../Modal.jsx";
 import {ShiftingDropDown} from "../Dropdown.jsx";
+import { usePathname } from 'next/navigation';
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -22,8 +23,8 @@ const Navbar = () => {
   const [cartModalOpen, setCartModalOpen] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
+  const path = usePathname();
   const user = useSelector(state => state.user)
-  console.log(user);
   useEffect(() => {
     dispatch(getAllCarts());
     const currentPath = router.pathname;
@@ -43,7 +44,7 @@ const Navbar = () => {
 
 
   return (
-    <nav className="shadow-lg bg-violet-800  fixed w-full top-0 left-0 right-0 z-50">
+    <nav className="shadow-lg bg-[#182073] fixed w-full top-0 left-0 right-0 z-50">
       <div className=" flex flex-col md:flex-row items-center justify-evenly px-4 py-3">
 
         <div className="flex items-center w-full md:w-auto justify-between md:justify-center">
@@ -56,7 +57,7 @@ const Navbar = () => {
         <div className={`hidden md:flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4`}>
           <Link href="/" passHref
             onClick={() => handleLinkClick('/')}
-            className={`py-2 px-4 font-semibold text-white hover:text-[#057FE3] font-poppins text-base ${activeLink === '/' ? 'text-[#057FE3]' : ''}`}
+            className={`py-2 px-4 font-semibold text-white hover:text-[#057FE3] font-poppins text-base ${path === '/' ? 'text-[#182073]' : ''}`}
           >
             Home
           </Link>
@@ -102,11 +103,11 @@ const Navbar = () => {
           }
         </div>
         {mobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 w-full bg-white shadow-lg z-50">
+          <div className="md:hidden absolute top-16 left-0 w-full bg-violet-800  shadow-lg z-50">
             <div className="flex flex-col items-center py-4 space-y-4">
               <Link href="/" passHref
                 onClick={() => handleLinkClick('/')}
-                className={`py-2 px-4 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-base ${activeLink === '/' ? 'bg-[#2AAA94] text-[#057FE3] ' : ''}`}
+                className={`py-2 px-4 font-semibold text-white hover:text-[#057FE3] font-poppins text-base ${activeLink === '/' ? ' text-[#057FE3] ' : ''}`}
               >
                 Home
               </Link>
@@ -143,16 +144,16 @@ const Navbar = () => {
               {['Course', 'Gallery'].map((item) => (
                 <Link key={item} href={`/${item.toLowerCase()}`} passHref
                   onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
-                  className={`py-2 px-0 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-base ${activeLink === `/${item.toLowerCase()}` ? 'bg-[#2AAA94] text-[#057FE3] ' : ''}`}
+                  className={`py-2 px-0 font-semibold text-white hover:text-[#057FE3] font-poppins text-base ${activeLink === `/${item.toLowerCase()}` ? 'bg-[#2AAA94] text-[#057FE3] ' : ''}`}
                 >
                   {item}
                 </Link>
               ))}
 
               <div className='flex space-x-4 justify-center py-4 border-t border-gray-200'>
-                <CiSearch size={30} className='text-[#182073] hover:text-[#057FE3]' />
+                <CiSearch size={30} className='text-white hover:text-[#057FE3]' />
                 <div className='relative flex items-center gap-4 hover:cursor-pointer'>
-                <IoCartSharp size={40} className='text-[#182073] hover:text-[#057FE3]' />
+                <IoCartSharp size={40} className='text-white hover:text-[#057FE3]' />
                   {length > 0 &&  user?.user?.user?._id?
                 <>
                   <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-violet-800 rounded-full ring-2 ring-gray-400 z-50' onClick={() => setCartModalOpen(true)}>

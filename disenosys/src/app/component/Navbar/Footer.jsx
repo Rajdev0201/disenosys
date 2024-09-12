@@ -8,7 +8,7 @@ import { MdOutlineCopyright } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <div className="bg-violet-800 font-poppins">
+    <div className="bg-[#182073] font-poppins">
       <div className="container mx-auto px-10 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 space-x-0  space-y-4 md:space-y-0 sm:space-x-0 lg:space-x-12">
           {/* Unique First Column */}
