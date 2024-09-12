@@ -6,10 +6,10 @@ import "../component/Navbar/Navbar.css";
 
 export default function Count() {
     return (
-        <section className="box-shadow bg-slate-800 p-10">
+        <section className="box-shadow bg-white p-10">
             <div className="max-w-7xl px-4 mx-auto sm:px-6 lg:px-8">
             <div class="max-w-2xl mx-auto text-center">
-            <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl text-gray-300 box-shadow p-2">Numbers tell Our story</h2>
+            <h2 class="text-3xl font-bold leading-tight  sm:text-4xl lg:text-5xl text-[#182073] p-2">Numbers tell Our story</h2>
             {/* <div className='border  mt-4'></div> */}
            </div>
 

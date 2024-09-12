@@ -25,7 +25,7 @@ const MyModal = () => {
 
   
 <div
-  class="max-w-44 bg-transparent items-center justify-center flex border-2 border-sky-500 shadow-lg hover:bg-sky-500 text-sky-500 hover:text-white duration-300 cursor-pointer active:scale-[0.98]"
+  class="max-w-44 bg-transparent items-center justify-center flex border-2 border-white shadow-lg hover:bg-[#182073] text-white hover:text-white duration-300 cursor-pointer active:scale-[0.98]"
 >
   <button class="px-5 py-2 flex items-center"onClick={openModal}>
   <LuUser2 size={20} className=" mx-1" />

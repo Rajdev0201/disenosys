@@ -2,11 +2,11 @@ import React from 'react'
 
 export default function Pricing() {
     return (
-        <section class="py-10 bg-gradient-to-r from-[#0083B0] to-[#f086d2] sm:py-16 lg:py-24">
+        <section class="py-10 bg-[#182073] sm:py-16 lg:py-24">
             <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="max-w-2xl mx-auto text-center">
                     <h1 className='font-bold font-poppins text-[#F1F1F5] text-xl lg:text-5xl'>
-                        Our <span className='text-[#182073]'>C</span>ourses
+                        Our <span className='text-white'>C</span>ourses
                     </h1>
                     {/* <p class="max-w-lg mx-auto mt-4 text-base leading-relaxed text-gray-400">Explore our diverse course offerings designed to help you achieve your learning goals. Whether you are a beginner or an advanced learner, we have a course for you.</p>
                  */}
@@ -15,9 +15,9 @@ export default function Pricing() {
                 <div class="grid max-w-3xl grid-cols-1 gap-6 mx-auto mt-8 sm:mt-16 sm:grid-cols-2">
 
                     <div class="group duration-500  hover:-rotate-0 hover:skew-x-1 skew-x-0 hover:-translate-x-6  hover:-translate-y-12">
-                        <div class="group-hover:duration-400 relative rounded-2xl w-64 mx-auto h-36 bg-zinc-800 text-gray-50 flex flex-col justify-center items-center gap-1 before:-skew-x-12  before:rounded-2xl  before:absolute before:content['']  before:bg-neutral-700 before:right-3 before:top-0 before:w-64 before:h-32 before:-z-10">
-                            <span class="text-5xl font-bold">Online</span>
-                            <p class="text-amber-300 font-thin">- Course -</p>
+                        <div class="group-hover:duration-400 relative rounded-2xl w-64 mx-auto h-36 bg-white text-gray-50 flex flex-col justify-center items-center gap-1 before:-skew-x-12  before:rounded-2xl  before:absolute before:content['']  before:bg-neutral-700 before:right-3 before:top-0 before:w-64 before:h-32 before:-z-10">
+                            <span class="text-5xl font-bold text-[#182073]">Online</span>
+                            <p class="text-[#182073] text-base font-bold">- Course -</p>
                         </div>
 
                         <div class="bg-gradient-to-r from-[#182073] to-blue-300 border-r-4 border-l-4 border-t-4 border-t-[#8991ee] border-b-4 border-b-[#8991ee] border-l-[#F1F1F5]  border-r-[#F1F1F5] rounded-md">
@@ -68,7 +68,8 @@ export default function Pricing() {
                                         <span class="text-base font-medium text-[#F1F1F5]">Accountability</span>
                                     </li>
                                 </ul>
-                                <a href="#" title="" class="inline-flex items-center justify-center w-full px-4 py-4 mt-8 font-semibold text-white transition-all duration-200 rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 hover:opacity-80 focus:opacity-80" role="button"> Get Online Course </a>
+                                <a href="#" title="" class="inline-flex items-center justify-center w-full px-4 py-4 mt-8 font-semibold text-white
+                                 transition-all duration-200 rounded-md   bg-[#182073] hover:opacity-80 focus:opacity-80" role="button"> Get Online Course </a>
 
                                 <p class="mt-5 text-sm text-gray-400">No Credit Card Required</p>
                             </div>
@@ -77,9 +78,9 @@ export default function Pricing() {
 
                     
                     <div class="group duration-500  hover:-rotate-0 hover:skew-x-1 skew-x-0 hover:translate-x-6  hover:translate-y-12">
-                        <div class="group-hover:duration-400 relative rounded-2xl w-64 mx-auto h-36 bg-zinc-800 text-gray-50 flex flex-col justify-center items-center gap-1 before:-skew-x-12  before:rounded-2xl  before:absolute before:content['']  before:bg-neutral-700 before:right-3 before:top-0 before:w-64 before:h-32 before:-z-10">
-                            <span class="text-5xl font-bold">Recorded</span>
-                            <p class="text-amber-300 font-thin">- Course -</p>
+                        <div class="group-hover:duration-400 relative rounded-2xl w-64 mx-auto h-36 bg-white text-gray-50 flex flex-col justify-center items-center gap-1 before:-skew-x-12  before:rounded-2xl  before:absolute before:content['']  before:bg-neutral-700 before:right-3 before:top-0 before:w-64 before:h-32 before:-z-10">
+                            <span class="text-5xl text-[#182073] font-bold">Recorded</span>
+                            <p class="text-[#182073] text-base font-bold">- Course -</p>
                         </div>
 
                     <div class="bg-gradient-to-r from-[#182073] to-blue-300 border-r-4 border-l-4 border-t-4 border-t-[#8991ee] shadow-inner border-b-4 border-b-[#8991ee] border-l-[#F1F1F5]  border-r-[#F1F1F5] rounded-md">
@@ -131,7 +132,9 @@ export default function Pricing() {
 
                             </ul>
 
-                            <a href="#" title="" class="inline-flex items-center justify-center w-full px-4 py-4 mt-8 font-semibold text-white transition-all duration-200 rounded-md bg-gradient-to-r from-fuchsia-600 to-blue-600 hover:opacity-80 focus:opacity-80" role="button"> Get Pre-record  </a>
+                            <a href="#" title="" class="inline-flex items-center justify-center w-full px-4 py-4 mt-8 font-semibold text-white transition-all duration-200 rounded-md 
+                            bg-[#182073]
+                            hover:opacity-80 focus:opacity-80" role="button"> Get Pre-record  </a>
 
                             <p class="mt-5 text-sm text-gray-400">No Credit Card Required</p>
                         </div>

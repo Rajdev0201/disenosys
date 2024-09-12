@@ -45,18 +45,18 @@ const Course = () => {
 
   const getButtonClass = (category) => {
     return selectedCategory === category
-      ? 'text-white font-josefin font-bold text-xl px-8 rounded shadow-lg shadow-cyan-500/50 py-2 bg-blue-600 hover:bg-blue-500'
-      : ' font-josefin font-bold text-xl px-8 rounded shadow-lg shadow-cyan-500/50 py-2 bg-gray-100 hover:bg-blue-400';
+      ? 'text-white font-josefin font-bold text-xl px-8 rounded shadow-lg py-2 bg-[#182073] hover:bg-blue-800'
+      : ' font-josefin font-bold text-xl px-8 rounded shadow-lg text-[#182073] border border-gray-200 py-2 bg-white hover:bg-blue-100';
   };
 
   return (
     <div className='mt-6 hover:cursor-pointer'>
       <div className='text-center mb-12'>
-        <h1 className='font-bold font-poppins text-[#057FE3] text-xl lg:text-5xl'>
+        <h1 className='font-bold font-poppins text-[#182073] text-xl lg:text-5xl'>
           All <span className='text-[#182073]'>Online</span> Course
         </h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 p-6 bg-light-gradient">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 p-6 bg-white">
         <div className='col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8'>
           {filteredCourses?.map((course) => (
             <div key={course?._id} className="flex flex-col justify-between bg-white rounded-lg shadow-lg overflow-hidden p-4 border border-gray-200">
@@ -71,10 +71,10 @@ const Course = () => {
                 <div className="font-bold text-xl mb-2 text-center">{course?.courseName}</div>
                 <p className="text-gray-500 font-medium text-md text-base mb-4 mt-2">{course?.description}</p>
                 <div className="flex justify-between items-center mt-auto">
-                  <button className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
+                  <button className='bg-[#182073] text-white px-4 py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
                     Add to Cart
                   </button>
-                  <span className="text-xl font-semibold text-[#4BE5CA] flex items-center"><FaIndianRupeeSign />{course?.price}</span>
+                  <span className="text-xl font-semibold text-[#182073] flex items-center"><FaIndianRupeeSign />{course?.price}</span>
                 </div>
               </div>
             </div>

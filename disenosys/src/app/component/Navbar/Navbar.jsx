@@ -43,8 +43,8 @@ const Navbar = () => {
 
 
   return (
-    <nav className="shadow-lg bg-gradient-to-r from-violet-400 to-[#FFFFFF] fixed w-full top-0 left-0 right-0 z-50">
-      <div className=" flex flex-col md:flex-row items-center justify-evenly px-4 py-2">
+    <nav className="shadow-lg bg-violet-800  fixed w-full top-0 left-0 right-0 z-50">
+      <div className=" flex flex-col md:flex-row items-center justify-evenly px-4 py-3">
 
         <div className="flex items-center w-full md:w-auto justify-between md:justify-center">
           <Image src={logo} alt='Logo' className='w-44 h-auto p-3' />
@@ -56,7 +56,7 @@ const Navbar = () => {
         <div className={`hidden md:flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4`}>
           <Link href="/" passHref
             onClick={() => handleLinkClick('/')}
-            className={`py-2 px-4 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-xl ${activeLink === '/' ? 'text-[#057FE3]' : ''}`}
+            className={`py-2 px-4 font-semibold text-white hover:text-[#057FE3] font-poppins text-base ${activeLink === '/' ? 'text-[#057FE3]' : ''}`}
           >
             Home
           </Link>
@@ -66,18 +66,18 @@ const Navbar = () => {
           {['Course', 'Gallery'].map((item) => (
             <Link key={item} href={`/${item.toLowerCase()}`} passHref
               onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
-              className={`py-2 px-4 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-xl ${activeLink === `/${item.toLowerCase()}` ? 'text-[#057FE3]' : ''}`}
+              className={`py-2 px-4 font-semibold text-white hover:text-[#057FE3] font-poppins text-base ${activeLink === `/${item.toLowerCase()}` ? 'text-[#057FE3]' : ''}`}
             >
               {item}
             </Link>
           ))}
              <div className='hidden md:flex space-x-6  justify-center items-center'>
-            <CiSearch size={30} className='text-[#182073] hover:text-[#057FE3]' />
+            <CiSearch size={30} className='text-white hover:text-[#057FE3]' />
             <div className='relative flex items-center gap-4 hover:cursor-pointer'>
-              <IoCartSharp size={40} className='text-[#182073] hover:text-[#057FE3]' />
+              <IoCartSharp size={40} className='text-white hover:text-[#057FE3]' />
               {length > 0 &&  user?.user?.user?._id?
                 <>
-                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-violet-800 rounded-full ring-2 ring-gray-400 z-50' onClick={() => setCartModalOpen(true)}>
+                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-violet-800 rounded-full ring-2 ring-white z-50' onClick={() => setCartModalOpen(true)}>
                     {length}
                   </span>
                 </>
@@ -94,7 +94,7 @@ const Navbar = () => {
         <div className='hidden md:flex justify-end'>
           {user?.user?.user?.userName ?
             <div className='hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer'>
-            <span className="bg-[#7518B1] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-xl">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
+            <span className="bg-[#7518B1] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
             </div>
             :
 
@@ -106,7 +106,7 @@ const Navbar = () => {
             <div className="flex flex-col items-center py-4 space-y-4">
               <Link href="/" passHref
                 onClick={() => handleLinkClick('/')}
-                className={`py-2 px-4 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-xl ${activeLink === '/' ? 'bg-[#2AAA94] text-[#057FE3] ' : ''}`}
+                className={`py-2 px-4 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-base ${activeLink === '/' ? 'bg-[#2AAA94] text-[#057FE3] ' : ''}`}
               >
                 Home
               </Link>
@@ -114,7 +114,7 @@ const Navbar = () => {
               {/* <div className="relative">
                 <button
                   onClick={() => { setDropdownOpen(!dropdownOpen); handleLinkClick('/company'); }}
-                  className={`py-2 px-4 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-xl flex items-center ${activeLink === '/company' ? 'bg-[#2AAA94] text-[#057FE3] ' : ''}`}
+                  className={`py-2 px-4 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-base flex items-center ${activeLink === '/company' ? 'bg-[#2AAA94] text-[#057FE3] ' : ''}`}
                 >
                   Company
                   <motion.span variants={iconVariants} animate={dropdownOpen ? "open" : "closed"}>
@@ -143,7 +143,7 @@ const Navbar = () => {
               {['Course', 'Gallery'].map((item) => (
                 <Link key={item} href={`/${item.toLowerCase()}`} passHref
                   onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
-                  className={`py-2 px-0 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-xl ${activeLink === `/${item.toLowerCase()}` ? 'bg-[#2AAA94] text-[#057FE3] ' : ''}`}
+                  className={`py-2 px-0 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-base ${activeLink === `/${item.toLowerCase()}` ? 'bg-[#2AAA94] text-[#057FE3] ' : ''}`}
                 >
                   {item}
                 </Link>
@@ -172,7 +172,7 @@ const Navbar = () => {
               <>
               {user?.user?.user?.userName ?
             <div className='hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer'>
-            <span className="bg-[#7518B1] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-xl">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
+            <span className="bg-[#7518B1] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
             </div>
             :
 

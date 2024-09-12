@@ -140,8 +140,7 @@ const Home = () => {
           <div className="col-span-6">
             <div className="">
               <h1 className="font-poppins text-3xl mt-6 md:mt-6 lg:mt-0 sm:text-3xl md:text-6xl lg:text-7xl font-bold text-white">
-                Good <span className="text-[#057FE3]">Coaching</span> is good teaching & nothing else.
-              </h1>
+              Shaping Industry-Ready <span className="text-[#057FE3]">Engineers</span> for the Future              </h1>
             </div>
             <div className="flex justify-start mt-6 sm:mt-8 lg:mt-12">
               {/* <button className="font-poppins font-semibold text-base sm:text-lg lg:text-xl px-4 py-2 sm:px-5 lg:px-6 sm:py-2 lg:py-3 bg-[#4BE5CA] text-white rounded-lg">

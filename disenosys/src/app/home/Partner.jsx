@@ -15,11 +15,11 @@ const Partner = () => {
   return (
     <div className='mt-6 py-6'>
       <div className='flex justify-center items-center mb-12 p-5'>
-        <h1 className='font-bold font-poppins text-[#057FE3] text-xl lg:text-5xl'>
+        <h1 className='font-bold font-poppins text-[#182073] text-xl lg:text-5xl'>
           Hiring <span className='text-[#182073]'>P</span>artner
         </h1>
       </div>
-      <div className='shadow-lg bg-gradient-to-r from-[#FFFFFF] to-violet-400 rounded'>
+      <div className='shadow-lg bg-gradient-to-r from-violet-800 to-[#182073] rounded'>
         <div className='py-6'>
           <Marquee
             speed={80}

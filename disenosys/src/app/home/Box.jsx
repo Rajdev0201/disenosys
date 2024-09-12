@@ -7,7 +7,7 @@ const Box = () => {
     return (
         <div className='flex flex-col items-center py-5 lg:py-12'>
              <div className='flex justify-center items-center mb-12 p-5'>
-            <h1 className='font-bold font-poppins text-[#057FE3] text-xl lg:text-5xl'>Why <span className='text-[#182073]'>Choose</span> Us?</h1>
+            <h1 className='font-bold font-poppins text-[#182073] text-xl lg:text-5xl'>Why <span className='text-[#182073]'>Choose</span> Us?</h1>
         </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl px-4 container mx-auto">
                 <div className="box-content flex flex-col items-center bg-white rounded-lg shadow-md border-b-4 border-[#0162ca] h-full">

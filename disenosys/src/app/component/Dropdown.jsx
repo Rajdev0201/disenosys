@@ -16,7 +16,7 @@ import "./Navbar/Navbar.css"
 
 export const ShiftingDropDown = () => {
   return (
-    <div className="py-2 px-4 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-xl">
+    <div className="py-2 px-4 font-semibold text-white  hover:text-[#057FE3] font-poppins text-base">
       <Tabs />
     </div>
   );
@@ -67,10 +67,10 @@ const Tab = ({ children, tab, handleSetSelected, selected }) => {
       id={`shift-tab-${tab}`}
       onMouseEnter={() => handleSetSelected(tab)}
       onClick={() => handleSetSelected(tab)}
-      className={`py-2 px-4  flex items-center font-semibold  hover:text-[#057FE3] font-poppins text-lg transition-colors ${
+      className={`py-2 px-4  flex items-center font-semibold  hover:text-[#057FE3] font-poppins text-base transition-colors ${
         selected === tab
-          ? "text-[#057FE3] font-semibold text-lg font-poppins"
-          : "text-[#182073] font-semibold text-lg font-poppins"
+          ? "text-[#057FE3] font-semibold text-base font-poppins"
+          : "text-white  font-semibold text-base font-poppins"
       }`}
     >
       <span>{children}</span>
@@ -99,7 +99,7 @@ const Content = ({ selected, dir }) => {
         opacity: 0,
         y: 8,
       }}
-      className="absolute left-0 top-[calc(100%_+_24px)] w-32 rounded-lg border border-[#057FE3] bg-white box-shadow  p-4"
+      className="absolute left-0 top-[calc(100%_+_24px)] w-32 rounded-lg border border-white bg-dark  box-shadow  p-4"
     >
       <Bridge />
       <Nub selected={selected} />
@@ -171,8 +171,8 @@ const Pricing = () => {
   return (
     <div className="w-44 h-16 space-y-3 flex flex-col">
        
-         <Link  href="/about" className="text-[#182073] hover:text-[#057FE3] flex items-center"><FiEdit />About</Link>
-         <Link  href="/contact" className="text-[#182073] hover:text-[#057FE3] flex items-center"><FiPlusSquare />Contact</Link>
+         <Link  href="/about" className="text-white  hover:text-[#057FE3] flex items-center"><FiEdit />About</Link>
+         <Link  href="/contact" className="text-white  hover:text-[#057FE3] flex items-center"><FiPlusSquare />Contact</Link>
 
     </div>
   );
