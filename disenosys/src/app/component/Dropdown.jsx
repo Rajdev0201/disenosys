@@ -12,11 +12,13 @@ import {
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import "./Navbar/Navbar.css"
+import { usePathname } from "next/navigation";
 
 
 export const ShiftingDropDown = () => {
+  
   return (
-    <div className="py-2 px-4 font-semibold text-white  hover:text-[#057FE3] font-poppins text-base">
+    <div className='py-2 px-4 font-semibold hover:text-[#057FE3] font-poppins text-base'>
       <Tabs />
     </div>
   );
@@ -25,7 +27,7 @@ export const ShiftingDropDown = () => {
 const Tabs = () => {
   const [selected, setSelected] = useState(null);
   const [dir, setDir] = useState(null);
-
+  const path = usePathname()
   const handleSetSelected = (val) => {
     if (typeof selected === "number" && typeof val === "number") {
       setDir(selected > val ? "r" : "l");
@@ -48,6 +50,7 @@ const Tabs = () => {
             selected={selected}
             handleSetSelected={handleSetSelected}
             tab={t.id}
+            path = {path}
           >
             {t.title}
           </Tab>
@@ -61,14 +64,15 @@ const Tabs = () => {
   );
 };
 
-const Tab = ({ children, tab, handleSetSelected, selected }) => {
+const Tab = ({ children, tab, handleSetSelected, selected,path }) => {
+  console.log(tab)
   return (
     <button
       id={`shift-tab-${tab}`}
       onMouseEnter={() => handleSetSelected(tab)}
       onClick={() => handleSetSelected(tab)}
-      className={`py-2 px-4  flex items-center font-semibold  hover:text-[#057FE3] font-poppins text-base transition-colors ${
-        selected === tab
+      className={`py-2 px-4  flex items-center font-semibold hover:text-[#057FE3]  font-poppins text-base transition-colors ${
+        selected === tab  
           ? "text-[#057FE3] font-semibold text-base font-poppins"
           : "text-white  font-semibold text-base font-poppins"
       }`}
@@ -99,7 +103,7 @@ const Content = ({ selected, dir }) => {
         opacity: 0,
         y: 8,
       }}
-      className="absolute left-0 top-[calc(100%_+_24px)] w-32 rounded-lg border border-white bg-dark  box-shadow  p-4"
+      className="absolute left-0 top-[calc(100%_+_24px)] w-32 rounded-lg border border-white bg-[#182073]  box-shadow  p-4"
     >
       <Bridge />
       <Nub selected={selected} />

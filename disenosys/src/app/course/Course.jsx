@@ -18,7 +18,7 @@ export const Course = () => {
       <div className="bg-white px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-44 mx-auto p-12 mt-6 font-poppins">
         <div className="grid grid-cols-1 md:grid-cols-2 my-6 gap-6 md:gap-8">
           <div>
-            <h1 className="text-blue-800 text-lg sm:text-xl md:text-xl lg:text-xl xl:text-4xl">
+            <h1 className="text-blue-800 text-lg sm:text-xl md:text-xl lg:text-xl xl:text-4xl font-poppins">
               Let&apos;s <span className="font-bold">Begin</span>
             </h1>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold py-2 md:py-4 font-poppins">
@@ -46,8 +46,8 @@ export const Course = () => {
           </div>
         </div>
       </div>
-      <div className="p-6 sm:p-12 lg:p-24 bg-course-gradient">
-        <h1 className='font-bold font-poppins text-center text-[#020617] text-xl lg:text-5xl'>
+      <div className="p-6 sm:p-12 lg:p-24 bg-[#182073]">
+        <h1 className='text-2xl font-semibold font-poppins text-white text-center md:text-3xl lg:text-4xl'>
         Why <span className='text-white'>Consult</span> with us?
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 p-4 sm:p-12">
@@ -61,38 +61,38 @@ export const Course = () => {
           </div>
           <div className="handshake shadow-border-shadow p-4 bg-white">
             <div className="border-b border-gray-300 py-3">
-              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold">
+              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold font-poppins">
                 <FaMedal className="inline-flex mr-2" />
                 Quality Training Materials and Content
               </h2>
             </div>
             <div className="border-b border-gray-300 py-3">
-              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold">
-                <GrUserExpert className="inline-flex mr-22" />
+              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold font-poppins">
+                <GrUserExpert className="inline-flex mr-2" />
                 Industry Experts as Instructors
               </h2>
             </div>
             <div className="border-b border-gray-300 py-3">
-              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold">
+              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold font-poppins">
                 <BiSolidInstitution className="inline-flex mr-2" />
                 Collaboration with Research Labs and Industries
               </h2>
             </div>
             <div className="border-b border-gray-300 py-3">
-              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold">
+              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold font-poppins">
                 <IoLogoYoutube className="inline-flex mr-2" />
                 Multiple Options: Learn at Your Pace, Recorded Live Sessions, &
                 Mentorship Programs
               </h2>
             </div>
             <div className="border-b border-gray-300 py-3">
-              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold">
+              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold font-poppins">
                 <GiRibbonMedal className="inline-flex mr-2" />
                 Highly Regarded Professional Certificates
               </h2>
             </div>
             <div className="border-b border-gray-300 py-3">
-              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold">
+              <h2 className="px-6 sm:px-12 text-lg sm:text-xl font-semibold font-poppins">
                 <ImPriceTag className="inline-flex mr-2" />
                 Affordable, Friendly Pricing
               </h2>
@@ -100,7 +100,7 @@ export const Course = () => {
           </div>
         </div>
       </div>
-      <div className=" mt-16 pb-12 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-44 bg-ch-gradient">
+      <div className=" mt-16 pb-12 px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-44">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-4 md:gap-7 flex justify-center items-center">
           {/* Image Section */}
           <div className="md:col-span-2 flex justify-center items-center mt-20 md:justify-center">
@@ -116,7 +116,7 @@ export const Course = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold mt-12 font-poppins py-3">
               100% Risk Free, We Promise You
             </h1>
-            <p className="text-sm sm:text-base md:text-lg text-gray-200">
+            <p className="text-sm sm:text-base md:text-lg text-gray-600">
               If you are unsatisfied for any reason for up to 5 days following
               your purchase, contact us for a full refund. No questions asked.
             </p>

@@ -9,7 +9,7 @@ export default function Count() {
         <section className="box-shadow bg-white p-10">
             <div className="max-w-7xl px-4 mx-auto sm:px-6 lg:px-8">
             <div class="max-w-2xl mx-auto text-center">
-            <h2 class="text-3xl font-bold leading-tight  sm:text-4xl lg:text-5xl text-[#182073] p-2">Numbers tell Our story</h2>
+            <h2 class="text-3xl font-bold leading-tight font-poppins sm:text-4xl lg:text-5xl text-[#182073] p-2">Numbers tell Our story</h2>
             {/* <div className='border  mt-4'></div> */}
            </div>
 

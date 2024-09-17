@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./component/Navbar/Navbar"
-// import Providers from "./Providers"
-import Footer from "./component/Navbar/Footer.jsx"
-import { Providers } from "./Redux/Provide.js";
+import Navbar from "./component/Navbar/Navbar";
+import Footer from "./component/Navbar/Footer";
+import { Providers } from "./Redux/Provide";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import LoadingWrapper from "./component/LoadingWrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,20 +17,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-{/* <script src="https://checkout.razorpay.com/v1/checkout.js"></script> */}
       <body className={inter.className}>
         <Providers>
-        <Navbar />
-        {children}
-        <Footer/>
-        <ToastContainer />
+          <LoadingWrapper>
+            <Navbar />
+            {children}
+            <Footer />
+            <ToastContainer />
+          </LoadingWrapper>
         </Providers>
-        </body>
+      </body>
     </html>
   );
 }

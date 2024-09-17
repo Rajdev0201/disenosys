@@ -9,7 +9,7 @@ const WhyChoose = () => {
     return (
         <div className='bg-[#182073] w-full h-auto'>
             <div className='container mx-auto p-12 text-center'>
-                <h1 className='text-2xl font-semibold font-josefin text-white md:text-3xl lg:text-4xl'>
+                <h1 className='text-2xl font-semibold font-poppins text-white md:text-3xl lg:text-4xl'>
                     Why <span className='text-white'>learn</span> with our courses?
                 </h1>
                 <p className='text-sm text-gray-300 font-josefin mt-4 md:text-base lg:text-lg'>

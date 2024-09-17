@@ -24,6 +24,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const path = usePathname();
+  // console.log(path);
+  
   const user = useSelector(state => state.user)
   useEffect(() => {
     dispatch(getAllCarts());
@@ -33,7 +35,7 @@ const Navbar = () => {
 
   const cart = useSelector((state) => state?.currentCart);
   const length = cart?.cartItems?.length;
-  console.log(length)
+  // console.log(length)
   const handleLinkClick = (link) => {
     setActiveLink(link);
     setMobileMenuOpen(false);
@@ -55,19 +57,20 @@ const Navbar = () => {
         </div>
 
         <div className={`hidden md:flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4`}>
+     
           <Link href="/" passHref
-            onClick={() => handleLinkClick('/')}
-            className={`py-2 px-4 font-semibold text-white hover:text-[#057FE3] font-poppins text-base ${path === '/' ? 'text-[#182073]' : ''}`}
+            // onClick={() => handleLinkClick('/')}
+            className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${path === '/' ? 'text-[#057FE3]' : 'text-white'}`}
           >
             Home
           </Link>
-
+    
           <ShiftingDropDown/>
 
           {['Course', 'Gallery'].map((item) => (
             <Link key={item} href={`/${item.toLowerCase()}`} passHref
-              onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
-              className={`py-2 px-4 font-semibold text-white hover:text-[#057FE3] font-poppins text-base ${activeLink === `/${item.toLowerCase()}` ? 'text-[#057FE3]' : ''}`}
+              // onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
+              className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${path === `/${item.toLowerCase()}` ? 'text-[#057FE3]' : 'text-white'}`}
             >
               {item}
             </Link>
@@ -106,8 +109,8 @@ const Navbar = () => {
           <div className="md:hidden absolute top-16 left-0 w-full bg-violet-800  shadow-lg z-50">
             <div className="flex flex-col items-center py-4 space-y-4">
               <Link href="/" passHref
-                onClick={() => handleLinkClick('/')}
-                className={`py-2 px-4 font-semibold text-white hover:text-[#057FE3] font-poppins text-base ${activeLink === '/' ? ' text-[#057FE3] ' : ''}`}
+                // onClick={() => handleLinkClick('/')}
+                className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${path === '/' ? 'text-[#057FE3]' : 'text-white'}`}
               >
                 Home
               </Link>
@@ -143,8 +146,8 @@ const Navbar = () => {
 
               {['Course', 'Gallery'].map((item) => (
                 <Link key={item} href={`/${item.toLowerCase()}`} passHref
-                  onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
-                  className={`py-2 px-0 font-semibold text-white hover:text-[#057FE3] font-poppins text-base ${activeLink === `/${item.toLowerCase()}` ? 'bg-[#2AAA94] text-[#057FE3] ' : ''}`}
+                  // onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
+                  className={`py-2 px-0 font-semibold hover:text-[#057FE3] font-poppins text-base ${path === `/${item.toLowerCase()}` ? 'text-[#057FE3]' : 'text-white' }`}
                 >
                   {item}
                 </Link>
