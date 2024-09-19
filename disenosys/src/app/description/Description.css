@@ -1,0 +1,18 @@
+.banner{
+    background-image: url("../assests/course.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+/* .input-field::placeholder {
+    color: grey; Placeholder text color
+    opacity: 1;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .input-field:focus::placeholder {
+    opacity: 0; Make placeholder text disappear on focus
+    transform: translateY(-1.5rem); Move placeholder text up on focus
+  } */
+  

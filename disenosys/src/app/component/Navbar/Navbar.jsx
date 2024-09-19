@@ -52,7 +52,7 @@ const Navbar = () => {
         <div className="flex items-center w-full md:w-auto justify-between md:justify-center">
           <Image src={logo} alt='Logo' className='w-44 h-auto p-3' />
           <div className='md:hidden flex items-center'>
-            <RiMenu4Fill size={30} className='text-[#182073]' onClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
+            <RiMenu4Fill size={30} className='text-white' onClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
           </div>
         </div>
 

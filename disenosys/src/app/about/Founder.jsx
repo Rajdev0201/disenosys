@@ -1,14 +1,14 @@
 import React from "react";
 import foud from "../assests/foun.jpg";
 import Image from "next/image";
-import c from "../assests/3.png";
-import Partner from "../home/Partner";
+// import c from "../assests/3.png";
+// import Partner from "../home/Partner";
 
 const Founder = () => {
   return (
     <div className="container-2xl bg-who-gradient mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 pb-12 font-poppins py-3">
-      <h1 className="font-bold text-center text-[#00224F] text-xl lg:text-5xl">
-        The <span className="text-[#4BE5CA]">F</span>ounder
+      <h1 className="font-bold text-center text-[#182073]  text-xl lg:text-5xl">
+        The <span className="">F</span>ounder
       </h1>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10 xl:gap-12 mt-16">
@@ -54,7 +54,6 @@ const Founder = () => {
           <Image src={c} alt="Software Partner 4" className="w-full h-auto max-w-xs" />
         </div>
       </div> */}
-      <Partner/>
     </div>
   );
 };

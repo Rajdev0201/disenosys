@@ -32,6 +32,7 @@
     "react-modal": "^3.16.1",
     "react-redux": "^9.1.2",
     "react-scroll-parallax": "^3.4.5",
+    "react-stars": "^2.2.5",
     "react-toastify": "^10.0.5",
     "sass": "^1.78.0",
     "sharp": "^0.33.5",

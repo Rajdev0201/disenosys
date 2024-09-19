@@ -1,3 +1,4 @@
+import Partner from "../home/Partner";
 import { About } from "./About";
 import Founder from "./Founder";
 import Vision from "./Vision";
@@ -10,6 +11,7 @@ export default function about () {
          <Vision/>
          <Weare/>
          <Founder/>
+         <Partner/>
         </>
        
     )
