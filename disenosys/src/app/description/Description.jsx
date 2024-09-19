@@ -78,18 +78,20 @@ export const Description = () => {
   const addCart = (course) => {
     // const totalPrice = course.price * 1;
     // console.log('Total Price:', totalPrice);
-    if( user?.user?.user?._id){
-      dispatch(addProductToCart({
-        courseId: course?._id,
-        name: course?.courseName,
-        price: course?.price,
-        quantity: 1,
-        img: course?.imagePath,
-        // totalPrice:totalPrice
-      }));
-    }else{
-       alert("please sign in your account")
-      }
+    if (user?.user?.user?._id) {
+      dispatch(
+        addProductToCart({
+          courseId: course?._id,
+          name: course?.courseName,
+          price: course?.price,
+          quantity: 1,
+          img: course?.imagePath,
+          // totalPrice:totalPrice
+        })
+      );
+    } else {
+      alert("please sign in your account");
+    }
   };
 
   const toggleAccordion = (index) => {
@@ -121,10 +123,10 @@ export const Description = () => {
                     Share with your Friend
                   </p>
                   <div className="flex gap-5 my-3">
-                    <Image src={w} className="w-10 h-10" sizes={1} />
-                    <Image src={x} className="w-10 h-10" sizes={1} />
-                    <Image src={f} className="w-10 h-10" sizes={1} />
-                    <Image src={l} className="w-10 h-10" sizes={1} />
+                    <Image src={w} className="w-10 h-10" sizes={1} alt="" />
+                    <Image src={x} className="w-10 h-10" sizes={1} alt="" />
+                    <Image src={f} className="w-10 h-10" sizes={1} alt="" />
+                    <Image src={l} className="w-10 h-10" sizes={1} alt="" />
                   </div>
                   <button className="bg-[#182073] px-2 py-1 rounded font-poppins text-white font-bold my-3">
                     Course Brouchure
@@ -238,8 +240,8 @@ export const Description = () => {
                           Hello learner!
                         </h3>
                         <p className="py-4 text-gray-600">
-                          "If you would like to subscribe to an Pre-recorded
-                          course, please Purchase Your course."
+                          &quot;If you would like to subscribe to a Pre-recorded
+                          course, please Purchase Your course.&quot;
                         </p>
                         <p className="py-4 text-[#182073] font-medium text-base">
                           {description.title}
@@ -306,8 +308,8 @@ export const Description = () => {
                     Hello learner!
                   </h3>
                   <p className="py-4 text-gray-600">
-                    "If you would like to subscribe to an online course, please
-                    fill out the form."
+                    &quot;If you would like to subscribe to a Pre-recorded
+                    course, please Purchase Your course.&quot;
                   </p>
                   <div className="flex justify-end mt-4">
                     <a
