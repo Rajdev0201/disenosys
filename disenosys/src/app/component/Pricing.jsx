@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 export default function Pricing() {
     return (
         <section class="py-10 bg-white shadow-xl box-shadow  sm:py-16 lg:py-12 mb-4">
