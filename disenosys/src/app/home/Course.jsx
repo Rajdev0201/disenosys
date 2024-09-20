@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import { fetchCourse } from "../Redux/action/Course.js";
 import {addProductToCart} from "../Redux/action/addToCart.js"
+import Link from 'next/link.js';
+import { useRouter } from 'next/navigation';
 
 const Course = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const courses = useSelector((state) => state?.course?.courses);
+  // console.log(courses)
   const cart = useSelector((state) => state?.cart);
   const dispatch = useDispatch();
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.user);
+  const router = useRouter();
 
   useEffect(() => {
     dispatch(fetchCourse());
@@ -49,6 +53,11 @@ const Course = () => {
       : ' font-josefin font-bold text-xl px-8 rounded shadow-lg text-[#182073] border border-gray-200 py-2 bg-white hover:bg-blue-100';
   };
 
+  const goToDescriptionPage = (courseId) => {
+    router.push(`/description?courseId=${courseId}`);
+  };
+
+
   return (
     <div className='mt-6 hover:cursor-pointer'>
       <div className='text-center mb-12'>
@@ -59,7 +68,9 @@ const Course = () => {
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 p-6 bg-white">
         <div className='col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8'>
           {filteredCourses?.map((course) => (
-            <div key={course?._id} className="flex flex-col justify-between bg-white rounded-lg shadow-lg overflow-hidden p-4 border border-gray-200">
+            
+            <div key={course?._id} className="flex flex-col justify-between bg-white rounded-lg shadow-lg overflow-hidden p-4 border border-gray-200" onClick={() => goToDescriptionPage(course?._id)}>
+        
               <div className="relative w-full h-48 mb-4">
                 <img
                   src={course?.imagePath}
@@ -77,6 +88,7 @@ const Course = () => {
                   <span className="text-xl font-semibold text-[#182073] flex items-center"><FaIndianRupeeSign />{course?.price}</span>
                 </div>
               </div>
+        
             </div>
           ))}
         </div>

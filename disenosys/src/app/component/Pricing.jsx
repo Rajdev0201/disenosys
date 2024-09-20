@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Pricing() {
     return (
-        <section class="py-10 bg-white shadow-xl box-shadow border-4 rounded-md border-[#182073] sm:py-16 lg:py-12 mb-4">
+        <section class="py-10 bg-white shadow-xl box-shadow  sm:py-16 lg:py-12 mb-4">
             <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
                 <div class="max-w-2xl mx-auto text-center">
                     <h1 className='font-bold font-poppins text-[#182073] text-xl lg:text-5xl'>

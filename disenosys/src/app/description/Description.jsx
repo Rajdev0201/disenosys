@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Description.css";
 import Image from "next/image";
 import carimage from "../assests/car.webp";
@@ -17,64 +17,27 @@ import { Review } from "./Review";
 import { Rating } from "./Rating";
 import { MdCancel } from "react-icons/md";
 import { addProductToCart } from "../Redux/action/addToCart";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCourse } from "../Redux/action/Course";
+import { useSearchParams } from "next/navigation";
+
+
 export const Description = () => {
   const [openAccordionIndex, setOpenAccordionIndex] = useState(null);
   const [opencourseAccordion, setopencourseAccordion] = useState(null);
-  const descriptions = [
-    {
-      title: "CFD Foundation course: Part-1",
-      course:
-        "A CFD (Computational Fluid Dynamics) Foundation course typically covers the fundamental concepts and tools used in CFD simulations. Here's an outline of what Part 1 might include. This part of the course would lay the groundwork for more advanced topics, such as turbulence modeling, multiphase flows, and advanced meshing techniques, which would be covered in subsequent parts.",
-      image: carimage,
-      key: {
-        prerequisites: [
-          "Work on 8 Industry Oriented Projects",
-          "Understand Basics about Trim Parts",
-          "Learn Bracket Part Creation",
-          "Work on Bracket creation Project",
-          "Crack Entry Level Trims Design Engineer Interviews",
-          "Understand Basic Tools in Catia Generative Shape Design",
-          "Learn Patchwork & Part Modification",
-        ],
-      },
-      overview: [
-        "What is side door trims assembly?",
-        "In automotive design, side door trims assembly refers to the paneling and elements mounted inside of a vehicle door. It contains the window controls, speaker covers, door panel, armrest, and door handle. Its objective is to offer both aesthetically pleasing and practical advantages, like soundproofing and storing space.",
-        "Process",
-        "The design process of side door trims assembly in automotive design typically involves the following steps:",
-        "Concept development: The design team will consider factors like the target market, vehicle design, and materials as they develop various ideas for the side door trim assembly.",
-        "Sketching and rendering: To improve the design and envision how it will appear in the finished product, the team will produce sketches and renderings of the ideas using both conventional and digital tools.",
-        "CAD modeling: The team will produce a 3D computer-aided design (CAD) model of the side door trims assembly once the design is complete, which will be used for prototyping and testing.",
-        "Prototyping and testing: The side door trims assembly will be physically prototyped by the team and evaluated for durability, function, and fit.",
-        "Refinement and production: Testing findings will be used to improve the design and get it ready for production, including choosing the right materials, tools, and manufacturing processes.",
-        "To ensure that the finished product satisfies all design requirements, quality standards, and cost targets, the team will work in collaboration with numerous stakeholders throughout the design process, including engineers, suppliers, and manufacturing partners.",
-        "Significance",
-        "In terms of automotive design, side door trim assembly is crucial for giving the interior of the car a polished, uniform appearance as well as a number of practical advantages.",
-        "Some of the key significance of side door trims assembly are:",
-        "Aesthetics: The side door trims assembly improves the interior of the vehicle overall and makes the design visually cohesive. It can also be customized to fit the vehicle’s color scheme and style.",
-        "Sound insulation: By serving as a barrier between the passenger compartment and the outside world, side door trim assembly is also crucial in lowering noise levels inside the vehicle.",
-        "Protection: The side door trim assembly can guard against damage from moisture, dirt, and debris to the interior of the vehicle door, including the wiring, locking mechanisms, and window regulators.",
-        "Functionality: The side door trim assembly can also offer a number of useful features, including storage compartments, ambient light, and power window and mirror controls.",
-        "Overall, side door trims assembly is a crucial element of automotive design that improves the overall driving experience for the vehicle’s occupants by means of both aesthetic and functional reasons.",
-        "Industry Average Pay",
-        "The average salary for an automotive design engineer in India is around 6.6 LPA, with salaries ranging from 3 LPA to 17 LPA.",
-      ],
-      courseContent: [
-        "THEORY",
-        "Side Door Assembly Introduction",
-        "Purpose of Side Door Assembly",
-        "Parameter, Regulation, and Close Volume Mapping",
-        "Class A-Surface Quality Check and Joinery Creation",
-        "Master Section Creation and Importance in Trims Design",
-        "Draft Analysis: Tooling Axis, Compass, Slider, and Lifter Studies",
-        "Feature Creation: Mounting Structures, Power Copy, Snap Fit Creation",
-        "Assembly & 2D Drawing: CATIA Drafting Module, Part Views, Section Details",
-        "Parting Line Creation",
-      ],
-      coursefee: "$70 (4200 INR) including Tax",
-      demoId: "VZZHoSIpwGo",
-    },
-  ];
+  const dispatch = useDispatch();
+  const search = useSearchParams();
+  const courseId = search.get('courseId');
+  
+
+  
+
+  const courses = useSelector((state) => state?.course?.courses);
+  
+  useEffect(() => {
+      dispatch(fetchCourse());
+  }, [dispatch]);
+
   const addCart = (course) => {
     // const totalPrice = course.price * 1;
     // console.log('Total Price:', totalPrice);
@@ -101,10 +64,11 @@ export const Description = () => {
   const courseAccordion = (index) => {
     setopencourseAccordion(opencourseAccordion === index ? null : index);
   };
+
   return (
     <>
       <div className="fluid">
-        {descriptions.map((description, index) => (
+        {courses?.filter(course => course._id === courseId)?.map((description, index) => (
           <>
             <div key={index}>
               <div className="banner p-10 md:p-12 lg:p-40 relative mt-6 md:mt-12 lg:mt-20">
@@ -112,7 +76,7 @@ export const Description = () => {
                   Latest Release, popular
                 </p>
                 <h1 className="text-white text-2xl sm:text-3xl font-poppins md:text-4xl font-bold">
-                  {description.title}
+                  {description.courseName}
                 </h1>
                 <p className="text-white pt-3 font-poppins">Course Detail</p>
               </div>
@@ -135,20 +99,35 @@ export const Description = () => {
                     Course Detail
                   </h1>
                   <p className="leading-7 text-start font-poppins pt-3 text-base md:text-lg text-gray-500">
-                    {description.course}
+                    {description.description}
                   </p>
                   <p className="font-bold text-xl sm:text-2xl md:text-3xl text-slate-900 pt-3">
-                    Course Fee: {description.coursefee}
+                    Course Fee: ₹{description.price}
                   </p>
                   <h1 className="text-slate-900 font-bold text-xl sm:text-2xl md:text-3xl font-poppins pt-4 pb-2">
                     Key Information
                   </h1>
                   <ul className="list-disc pl-5">
-                    {description.key.prerequisites.map((item, idx) => (
-                      <li key={idx} className="text-gray-500 font-poppins">
-                        {item}
+                    {/* {description?.detailsDescription[0].Curriculum?.map(
+                      (item, idx) => (
+                        <li key={idx} className="text-gray-500">
+                          {item}
+                        </li>
+                      )
+                    )} */}
+                    <>
+                      <li className="text-gray-500">Work on 8 Industry Oriented Projects</li>
+                      <li className="text-gray-500">Understand Basics about Trim Parts</li>
+                      <li className="text-gray-500">Learn Bracket Part Creation</li>
+                      <li className="text-gray-500">Work on Bracket creation Project</li>
+                      <li className="text-gray-500">
+                        Crack Entry Level Trims Design Engineer Interviews
                       </li>
-                    ))}
+                      <li className="text-gray-500">
+                        Understand Basic Tools in Catia Generative Shape Design
+                      </li>
+                      <li className="text-gray-500">Learn Patchwork & Part Modification</li>
+                    </>
                   </ul>
                   <h1 className="font-bold text-slate-900 text-xl sm:text-2xl md:text-3xl font-poppins pt-5 py-2">
                     More Information
@@ -174,8 +153,8 @@ export const Description = () => {
                 <div className="col-span-1 p-4 sm:p-6 lg:p-12 xl:p-16 2xl:p-24">
                   <div className="p-4 lg:w-96 md:w-80 sm:p-5 lg:p-6 rounded-lg bg-white shadow-box-shadow  sm:my-8 mx-4 sm:mx-8 lg:mx-0 md:sticky top-10  ">
                     <div>
-                      <Image
-                        src={description.image}
+                      <img
+                        src={description.imagePath}
                         alt={description.title}
                         className="rounded-lg w-full aspect-[5/3]" // Maintain aspect ratio
                       />
@@ -244,11 +223,11 @@ export const Description = () => {
                           course, please Purchase Your course.&quot;
                         </p>
                         <p className="py-4 text-[#182073] font-medium text-base">
-                          {description.title}
+                          {description.courseName}
                         </p>
 
                         <p className="py-1 text-[#182073] font-medium text-base">
-                          {description.coursefee}
+                          ₹{description.price}
                         </p>
 
                         <div className="flex justify-end mt-4">
@@ -308,8 +287,8 @@ export const Description = () => {
                     Hello learner!
                   </h3>
                   <p className="py-4 text-gray-600">
-                    &quot;If you would like to subscribe to a Pre-recorded
-                    course, please Purchase Your course.&quot;
+                    &quot;If you would like to subscribe to a Online
+                    course, please fill the form.&quot;
                   </p>
                   <div className="flex justify-end mt-4">
                     <a
