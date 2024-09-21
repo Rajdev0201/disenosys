@@ -4,7 +4,7 @@ import Image from "next/image";
 import home from "../assests/home.jpg";
 // import { useParallax } from "react-scroll-parallax";
 import { FiArrowRight } from "react-icons/fi";
-import {Whatsapp} from "./Whatsapp";
+import { Whatsapp } from "./Whatsapp";
 import { BiSolidCarMechanic } from "react-icons/bi";
 import {
   useMotionTemplate,
@@ -15,7 +15,6 @@ import {
 import Link from "next/link";
 
 const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
-
 
 // const FloatingPhone = () => {
 //   return (
@@ -95,7 +94,6 @@ const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
 const Home = () => {
   // const [loading, setLoading] = useState(true);
   const color = useMotionValue(COLORS_TOP[0]);
-  
 
   useEffect(() => {
     animate(color, COLORS_TOP, {
@@ -133,27 +131,27 @@ const Home = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-  
+
     const name = formData.get("name");
     const email = formData.get("email");
     const mobile = formData.get("mobile");
-  
+
     if (!name || !email || !mobile) {
       setResult("Please fill out all fields.");
-      return; 
+      return;
     }
-  
+
     setResult("Sending....");
     formData.append("access_key", "097c5e10-cf78-451f-ad76-3e45d5e45e25");
-  
+
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: formData,
       });
-  
+
       const data = await response.json();
-  
+
       if (data.success) {
         setResult("Form Submitted Successfully");
         event.target.reset();
@@ -169,7 +167,6 @@ const Home = () => {
       setResult("An error occurred. Please try again.");
     }
   };
-  
 
   return (
     <motion.section
@@ -182,7 +179,9 @@ const Home = () => {
           <div className="col-span-6">
             <div className="">
               <h1 className="font-poppins text-3xl mt-6 md:mt-6 lg:mt-0 sm:text-3xl md:text-6xl lg:text-7xl font-bold text-dark">
-              Shaping Industry Ready <span className="text-[#182073]">Engineers</span> for the Future </h1>
+                Shaping Industry Ready{" "}
+                <span className="text-[#182073]">Engineers</span> for the Future{" "}
+              </h1>
             </div>
             <div className="flex justify-start mt-6 sm:mt-8 lg:mt-12">
               {/* <button className="font-poppins font-semibold text-base sm:text-lg lg:text-xl px-4 py-2 sm:px-5 lg:px-6 sm:py-2 lg:py-3 bg-[#4BE5CA] text-white rounded-lg">
@@ -199,10 +198,10 @@ const Home = () => {
                 whileTap={{
                   scale: 0.985,
                 }}
-                className="group relative flex w-fit items-center  gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-dark transition-colors hover:bg-gray-950/50"
+                className="group relative flex w-fit items-center  gap-1.5 rounded-full hover:text-white bg-white px-4 py-2 text-dark transition-colors hover:bg-[#182073]"
               >
                 <Link href="/course"> View Course</Link>
-               
+
                 <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
               </motion.button>
             </div>
@@ -215,56 +214,60 @@ const Home = () => {
             className="shadow-2xl p-6 lg:p-12 bg-violet-300 rounded-full max-w-xs sm:max-w-sm lg:max-w-md"
           /> */}
 
-<div class="flex items-center justify-center">
-<form onSubmit={onSubmit}>
-  <div
-    class="bg-[#182073] border-[4px] border-[#F1F1F5] rounded-2xl mr-12 hover:border-[#057FE3] transition-all duration-200"
-  >
-    <div
-      class="mx-auto flex items-center space-y-4 py-16 px-16 font-semibold text-gray-500 flex-col"
-    >
-     <BiSolidCarMechanic size={60} className="text-white"/>
-      <h1 class="text-white text-2xl">Book a Live Class</h1>
-      <label htmlFor="name" className="sr-only">Name</label>
-            <input
-              className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 text-white focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
-              placeholder="Name"
-              type="text"
-              name="name"
-              id="name"
-              required
-            />
+            <div class="flex items-center justify-center">
+              <form onSubmit={onSubmit}>
+                <div class="bg-[#182073] border-[4px] border-[#F1F1F5] rounded-2xl mr-0 lg:mr-12 hover:border-[#057FE3] transition-all duration-200">
+                  <div class="mx-auto flex items-center space-y-4 py-16 px-16 font-semibold text-gray-500 flex-col">
+                    <BiSolidCarMechanic size={60} className="text-white" />
+                    <h1 class="text-white text-sm lg:text-2xl">
+                      Book a demo class today!
+                    </h1>
+                    <label htmlFor="name" className="sr-only">
+                      Name
+                    </label>
+                    <input
+                      className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 text-white focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
+                      placeholder="Name"
+                      type="text"
+                      name="name"
+                      id="name"
+                      required
+                    />
 
-            <label htmlFor="email" className="sr-only">Email</label>
-            <input
-              className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 text-white focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
-              placeholder="Email"
-              type="email"
-              name="email"
-              id="email"
-              required
-            />
+                    <label htmlFor="email" className="sr-only">
+                      Email
+                    </label>
+                    <input
+                      className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 text-white focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
+                      placeholder="Email"
+                      type="email"
+                      name="email"
+                      id="email"
+                      required
+                    />
 
-            <label htmlFor="mobile" className="sr-only">Mobile</label>
-            <input
-              className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 text-white focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
-              placeholder="Mobile"
-              type="text"
-              name="mobile"
-              id="mobile"
-              required
-            />
+                    <label htmlFor="mobile" className="sr-only">
+                      Mobile
+                    </label>
+                    <input
+                      className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 text-white focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
+                      placeholder="Mobile"
+                      type="text"
+                      name="mobile"
+                      id="mobile"
+                      required
+                    />
 
-            <button
-              className="w-full p-2 bg-white border-none outline-none text-[#182073] rounded-md font-bold text-gray-900 border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? "Sending..." : "Submit"}
-            </button>
+                    <button
+                      className="w-full p-2 bg-white border-none outline-none text-[#182073] rounded-md font-bold text-gray-900 border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
+                      type="submit"
+                      disabled={loading}
+                    >
+                      {loading ? "Sending..." : "Submit"}
+                    </button>
 
-            {result && <p className="text-white mt-4">{result}</p>}
-      {/* <p>
+                    {result && <p className="text-white mt-4">{result}</p>}
+                    {/* <p>
         Don't have an account?
         <a
           class="font-semibold text-white hover:text-blue-500 transition-all duration-200"
@@ -272,11 +275,10 @@ const Home = () => {
           >Sign up</a
         >
       </p> */}
-    
-    </div>
-  </div>
-  </form>
-</div>
+                  </div>
+                </div>
+              </form>
+            </div>
 
             {/* <section className="grid place-content-center p-4 lg:p-28">
               <FloatingPhone />
@@ -289,7 +291,7 @@ const Home = () => {
           <Stars radius={50} count={2500} factor={4} fade speed={2} />
         </Canvas>
       </div> */}
-      <Whatsapp/>
+      <Whatsapp />
     </motion.section>
   );
 };

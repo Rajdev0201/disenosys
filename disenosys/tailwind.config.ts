@@ -1,3 +1,4 @@
+import { transform } from "next/dist/build/swc";
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -26,14 +27,14 @@ const config: Config = {
         'border-shadow': 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
       },
       animation: {
-        slideIn: 'slideIn 1s ease-out'
+        slideIn: 'zoomIn 1s ease-out',
       },
       keyframes: {
-        slideIn: {
-          '0%': { transform: 'translateY(-100%)' },
-          '100%': { transform: 'translateX(-30%)' }
-        }
-      }
+        zoomIn: {
+          '0%': { transform: 'scale(0.5)', opacity: '0',},
+          '100%': { transform: 'scale(1)',opacity:'1' },
+        },
+      },
 
     },
   },

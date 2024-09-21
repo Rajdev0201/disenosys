@@ -22,9 +22,9 @@ export default function Count() {
                         { end: 210, label: "College Partners" },
                         { end: 87, label: "Reported Career Benefits", isPercentage: true },
                     ].map((item, index) => (
-                        <div key={index} className="p-6 border-2 border-[#F1F1F5] rounded-lg hover:border-[#182073] transition duration-300 ease-in-out">
+                        <div key={index} className="p-6 border-2 border-[#F1F1F5] bg-[#182073] rounded-lg hover:border-[#182073] transition duration-300 ease-in-out">
                             <h3 className="font-bold text-5xl sm:text-6xl lg:text-7xl">
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#057FE3]  to-[#182073]">
+                                <span className=" bg-clip-text text-white">
                                     <CountUp
                                         start={0}
                                         end={item.end}
@@ -33,7 +33,7 @@ export default function Count() {
                                     {item.isPercentage ? "%" : "+"}
                                 </span>
                             </h3>
-                            <p className="text-base mt-3 text-gray-500">{item.label}</p>
+                            <p className="text-base mt-3 text-gray-200">{item.label}</p>
                         </div>
                     ))}
                 </div>

@@ -36,19 +36,19 @@ const Testimonials = () => {
                                     <div>
                                         <div className="flex justify-center gap-0.5 text-[#182073]">
                                             {/* Star icons */}
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5 text-yellow-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5 ">
                                                 <path d="M10 15.27L16.18 19 14.54 12.97 20 8.25 13.81 7.63 10 1 6.19 7.63 0 8.25l5.46 4.72L3.82 19z" />
                                             </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5 text-yellow-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5">
                                                 <path d="M10 15.27L16.18 19 14.54 12.97 20 8.25 13.81 7.63 10 1 6.19 7.63 0 8.25l5.46 4.72L3.82 19z" />
                                             </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5 text-yellow-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5">
                                                 <path d="M10 15.27L16.18 19 14.54 12.97 20 8.25 13.81 7.63 10 1 6.19 7.63 0 8.25l5.46 4.72L3.82 19z" />
                                             </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5 text-yellow-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5">
                                                 <path d="M10 15.27L16.18 19 14.54 12.97 20 8.25 13.81 7.63 10 1 6.19 7.63 0 8.25l5.46 4.72L3.82 19z" />
                                             </svg>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5 text-yellow-500">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" className="w-5 h-5">
                                                 <path d="M10 15.27L16.18 19 14.54 12.97 20 8.25 13.81 7.63 10 1 6.19 7.63 0 8.25l5.46 4.72L3.82 19z" />
                                             </svg>
                                         </div>

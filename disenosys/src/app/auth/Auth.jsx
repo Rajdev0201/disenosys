@@ -70,13 +70,13 @@ const Authentication = () => {
     <div className="container mx-auto">
       <div className="container flex justify-around pb-12">
         <h1
-          className={`text-xl font-semibold cursor-pointer ${activeTab === "login" ? "" : "text-[#38c3e2]"}`}
+          className={`text-xl font-semibold cursor-pointer ${activeTab === "login" ? "" : "text-[#182073]"}`}
           onClick={handleRegister}
         >
           Login
         </h1>
         <h1
-          className={`text-xl font-semibold cursor-pointer ${activeTab === "register" ? "" : "text-[#38c3e2]"}`}
+          className={`text-xl font-semibold cursor-pointer ${activeTab === "register" ? "" : "text-[#182073]"}`}
           onClick={handleLogin}
         >
           Register
@@ -86,7 +86,7 @@ const Authentication = () => {
         forgotshow ? (
           <>
             <div className="container mx-auto pt-5">
-              <h1 className="text-3xl font-bold text-center">Signin</h1>
+            <h1 className="font-bold text-center text-gray-700 font-poppins text-base">Welcome!</h1>
               <form onSubmit={handleSignin}>
                 <input
                   type="text"
@@ -118,11 +118,11 @@ const Authentication = () => {
                 </div>
                 <button
                   type="submit"
-                  className="bg-[#38c3e2] w-full p-4 mt-6 text-xl font-semibold text-white rounded-md"
+                  className="bg-[#182073] w-full p-4 mt-6 text-xl font-semibold text-white rounded-md"
                 >
                   Login
                 </button>
-                <h1 className="text-center text-lg mt-6 font-light mb-6 hover:text-[#38c3e2]"onClick={handleLogin}>
+                <h1 className="text-center text-lg mt-6 font-light mb-6 hover:text-[#182073]"onClick={handleLogin}>
                   Don&apos;t have an account?
                 </h1>
               </form>
@@ -174,7 +174,7 @@ const Authentication = () => {
         <>
           <ToastContainer />
           <div className="container mx-auto pt-5">
-            <h1 className="text-3xl font-bold text-center">Register</h1>
+            <h1 className="font-bold text-center text-gray-700 font-poppins text-base">Welcome!</h1>
             <form action="" onSubmit={(e) => handleSignup(e)}>
               <input
                 type="text"
@@ -202,12 +202,12 @@ const Authentication = () => {
               />
               <button
                 type="submit"
-                className="bg-[#38c3e2] w-full p-4 mt-5 text-xl font-semibold text-white rounded-md"
+                className="bg-[#182073] w-full p-4 mt-5 text-xl font-poppins font-semibold text-white rounded-md"
               >
                 Register Now
               </button>
               <h1
-                className="text-center text-lg mt-6 font-light mb-6 hover:text-[#38c3e2] cursor-pointer"
+                className="text-center text-lg mt-6 font-light mb-6 hover:text-[#182073] cursor-pointer"
                 onClick={handleRegister}
               >
                 Already have an account?

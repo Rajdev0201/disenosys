@@ -10,7 +10,7 @@ const WhyChoose = () => {
         <div className='bg-[#182073] w-full h-auto'>
             <div className='container mx-auto p-12 text-center'>
                 <h1 className='text-2xl font-semibold font-poppins text-white md:text-3xl lg:text-4xl'>
-                    Why <span className='text-white'>learn</span> with our courses?
+                    Why <span className='text-white'>learn</span> from us?
                 </h1>
                 <p className='text-sm text-gray-300 font-josefin mt-4 md:text-base lg:text-lg'>
                 Our courses offer expert-led training and hands-on practice. Equip yourself with the skills and knowledge needed to excel in your field
@@ -18,7 +18,7 @@ const WhyChoose = () => {
             </div>
             <div className='flex flex-col md:flex-row container mx-auto p-12 justify-center items-center gap-12'>
                 <div className='flex flex-col justify-center items-center text-center'>
-                    <Image src={learn} alt='Learn' className='' />
+                    <Image src={learn} alt='Learn' className=''/>
                     <div className='mt-6'>
                         <h4 className='text-lg font-semibold font-poppins text-white md:text-xl lg:text-2xl'>
                             01. Learn

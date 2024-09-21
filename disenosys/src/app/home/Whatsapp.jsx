@@ -9,7 +9,7 @@ export const Whatsapp = () => {
   };
 
   return (
-    <div className="flex items-center gap-4 fixed top-80 right-5 z-50">
+    <div className="flex items-center gap-4 fixed top-80 left-5 z-50">
       <div className="social-button">
         <button onClick={sendWhatsAppMessage} className="relative w-12 h-12 rounded-full group">
           <div className="floater w-full h-full absolute top-0 left-0 bg-[#182073] rounded-full duration-300 group-hover:-top-8 group-hover:shadow-2xl"></div>

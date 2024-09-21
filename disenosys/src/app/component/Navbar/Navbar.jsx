@@ -81,13 +81,13 @@ const Navbar = () => {
               <IoCartSharp size={40} className='text-white hover:text-[#057FE3]' />
               {length > 0 &&  user?.user?.user?._id?
                 <>
-                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-violet-800 rounded-full ring-2 ring-white z-50' onClick={() => setCartModalOpen(true)}>
+                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#057FE3] rounded-full ring-2 ring-white z-50' onClick={() => setCartModalOpen(true)}>
                     {length}
                   </span>
                 </>
                 :
                 <>
-                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-violet-800 rounded-full ring-2 ring-gray-400 z-50' onClick={() => setCartModalOpen(true)}>
+                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#057FE3] rounded-full ring-2 ring-gray-400 z-50' onClick={() => setCartModalOpen(true)}>
                     0
                   </span>
                 </>
@@ -98,7 +98,7 @@ const Navbar = () => {
         <div className='hidden md:flex justify-end'>
           {user?.user?.user?.userName ?
             <div className='hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer'>
-            <span className="bg-[#7518B1] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
+            <span className="bg-[#057FE3] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
             </div>
             :
 
@@ -159,13 +159,13 @@ const Navbar = () => {
                 <IoCartSharp size={40} className='text-white hover:text-[#057FE3]' />
                   {length > 0 &&  user?.user?.user?._id?
                 <>
-                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-violet-800 rounded-full ring-2 ring-gray-400 z-50' onClick={() => setCartModalOpen(true)}>
+                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#057FE3] rounded-full ring-2 ring-gray-400 z-50' onClick={() => setCartModalOpen(true)}>
                     {length}
                   </span>
                 </>
                 :
                 <>
-                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-violet-800 rounded-full ring-2 ring-gray-400 z-50' onClick={() => setCartModalOpen(true)}>
+                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#057FE3] rounded-full ring-2 ring-gray-400 z-50' onClick={() => setCartModalOpen(true)}>
                     0
                   </span>
                 </>
@@ -176,7 +176,7 @@ const Navbar = () => {
               <>
               {user?.user?.user?.userName ?
             <div className='hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer'>
-            <span className="bg-[#7518B1] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
+            <span className=" bg-[#057FE3] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
             </div>
             :
 
