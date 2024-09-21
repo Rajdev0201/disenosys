@@ -32,8 +32,8 @@ const Authentication = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
-    const name = document.getElementById("name").value;
-    const mail = document.getElementById("email").value;
+    const userName = document.getElementById("userName").value;
+    const userMail = document.getElementById("userEmail").value;
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmpassword").value;
   
@@ -43,8 +43,8 @@ const Authentication = () => {
     }
   
     const data = {
-      userEmail: mail,
-      userName: name,
+      userEmail:userMail,
+      userName:userName,
       password: password,
     };
    
@@ -178,13 +178,13 @@ const Authentication = () => {
             <form action="" onSubmit={(e) => handleSignup(e)}>
               <input
                 type="text"
-                id="name"
+                id="userName"
                 placeholder="Enter Username"
                 className="border border-gray-400 mt-9 p-3 w-full rounded"
               />
               <input
                 type="text"
-                id="email"
+                id="userEmail"
                 placeholder="Enter Email"
                 className="border border-gray-400 mt-4 p-3 w-full rounded"
               />

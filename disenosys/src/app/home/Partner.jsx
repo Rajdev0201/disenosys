@@ -19,7 +19,7 @@ const Partner = () => {
           Hiring <span className='text-[#182073]'>P</span>artner
         </h1>
       </div>
-      <div className='shadow-lg bg-gradient-to-r from-violet-800 to-[#182073] rounded'>
+      <div className='shadow-lg bg-white rounded'>
         <div className='py-6'>
           <Marquee
             speed={80}

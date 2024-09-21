@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux'
 import { getAllCarts } from './Redux/action/addToCart.js'
 import { useEffect} from 'react'
 import Pricing from "./component/Pricing"
-
+import Testimonials from "./home/Testimonials"
 export default function Page() {
   const dispatch = useDispatch()
   // const [loading, setLoading] = useState(true);
@@ -38,6 +38,7 @@ export default function Page() {
       <Home />
       <Count />
       <Box />
+      <Testimonials/>
       <WhyChoose />
       <Partner />
       <Course />

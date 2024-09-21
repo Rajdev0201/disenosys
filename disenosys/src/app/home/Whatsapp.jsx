@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Whatsapp = () => {
   const sendWhatsAppMessage = () => {
-    const phoneNumber = '9962149069';
+    const phoneNumber = '9944478700';
     const message = 'Enquiry course related from DISENOSYS';
     const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');

@@ -17,13 +17,23 @@ export const SignupData = (userData) => async (dispatch) => {
       toast.dark('signup process done!', {
         position: "top-right",
         autoClose: 5000,
-        theme: "light",
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
         });
       localStorage.setItem("profile", JSON.stringify(data));
     } catch (err) {
       toast.info(err?.response?.data?.message, {
         position: "top-right",
         autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
         theme: "dark",
     });
     }
@@ -44,7 +54,12 @@ export const SignupData = (userData) => async (dispatch) => {
       toast.info('Login successful!', {
         position: "top-right",
         autoClose: 5000,
-        theme: "light",
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
       localStorage.setItem("profile", JSON.stringify(data));
       nav("/");

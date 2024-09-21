@@ -3,11 +3,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import home from "../assests/home.jpg";
 // import { useParallax } from "react-scroll-parallax";
-import { Stars } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
 import { FiArrowRight } from "react-icons/fi";
 import {Whatsapp} from "./Whatsapp";
-import { FiBatteryCharging, FiWifi } from "react-icons/fi";
 import { BiSolidCarMechanic } from "react-icons/bi";
 import {
   useMotionTemplate,
@@ -98,6 +95,7 @@ const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
 const Home = () => {
   // const [loading, setLoading] = useState(true);
   const color = useMotionValue(COLORS_TOP[0]);
+  
 
   useEffect(() => {
     animate(color, COLORS_TOP, {
@@ -129,18 +127,62 @@ const Home = () => {
   //   );
   // }
 
+  const [result, setResult] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+  
+    const name = formData.get("name");
+    const email = formData.get("email");
+    const mobile = formData.get("mobile");
+  
+    if (!name || !email || !mobile) {
+      setResult("Please fill out all fields.");
+      return; 
+    }
+  
+    setResult("Sending....");
+    formData.append("access_key", "097c5e10-cf78-451f-ad76-3e45d5e45e25");
+  
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+  
+      const data = await response.json();
+  
+      if (data.success) {
+        setResult("Form Submitted Successfully");
+        event.target.reset();
+        setTimeout(() => {
+          setResult("");
+        }, 1000);
+      } else {
+        console.log("Error", data);
+        setResult(data.message);
+      }
+    } catch (error) {
+      console.error("Error submitting the form", error);
+      setResult("An error occurred. Please try again.");
+    }
+  };
+  
+
   return (
     <motion.section
       style={{
         backgroundImage,
       }}
     >
-      <div className="container-2xl bg mt-12 px-2 md:px-12 py-36 md:mt-12 lg:mt-16 w-full relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12  container mx-auto flex items-center justify-center px-6 lg:px-10 2xl:px-28">
+      <div className="container-2xl bg mt-12 px-2 md:px-12 py-40 md:mt-12 lg:mt-16 w-full relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12  container mx-auto flex items-center justify-center px-6 lg:px-0 2xl:px-0">
           <div className="col-span-6">
             <div className="">
-              <h1 className="font-poppins text-3xl mt-6 md:mt-6 lg:mt-0 sm:text-3xl md:text-6xl lg:text-7xl font-bold text-white">
-              Shaping Industry-Ready <span className="text-[#057FE3]">Engineers</span> for the Future              </h1>
+              <h1 className="font-poppins text-3xl mt-6 md:mt-6 lg:mt-0 sm:text-3xl md:text-6xl lg:text-7xl font-bold text-dark">
+              Shaping Industry Ready <span className="text-[#182073]">Engineers</span> for the Future </h1>
             </div>
             <div className="flex justify-start mt-6 sm:mt-8 lg:mt-12">
               {/* <button className="font-poppins font-semibold text-base sm:text-lg lg:text-xl px-4 py-2 sm:px-5 lg:px-6 sm:py-2 lg:py-3 bg-[#4BE5CA] text-white rounded-lg">
@@ -157,7 +199,7 @@ const Home = () => {
                 whileTap={{
                   scale: 0.985,
                 }}
-                className="group relative flex w-fit items-center gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-gray-50 transition-colors hover:bg-gray-950/50"
+                className="group relative flex w-fit items-center  gap-1.5 rounded-full bg-gray-950/10 px-4 py-2 text-dark transition-colors hover:bg-gray-950/50"
               >
                 <Link href="/course"> View Course</Link>
                
@@ -174,40 +216,54 @@ const Home = () => {
           /> */}
 
 <div class="flex items-center justify-center">
+<form onSubmit={onSubmit}>
   <div
-    class="bg-[#182073] border-[4px] border-[#F1F1F5] rounded-2xl hover:border-[#057FE3] transition-all duration-200"
+    class="bg-[#182073] border-[4px] border-[#F1F1F5] rounded-2xl mr-12 hover:border-[#057FE3] transition-all duration-200"
   >
     <div
       class="mx-auto flex items-center space-y-4 py-16 px-16 font-semibold text-gray-500 flex-col"
     >
      <BiSolidCarMechanic size={60} className="text-white"/>
       <h1 class="text-white text-2xl">Book a Live Class</h1>
-      <input
-        class="w-full p-2 bg-blue-900 rounded-md border border-gray-700 focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
-        placeholder="Name"
-        type="text"
-        name="name"
-        id="name"
-      />
-      <input
-        class="w-full p-2 bg-blue-900 rounded-md border border-gray-700 focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
-        placeholder="Email"
-        type="email"
-        name="email"
-        id="email"
-      />
-      <input
-        class="w-full p-2 bg-blue-900 rounded-md border border-gray-700 focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
-        placeholder="Mobile"
-        type="text"
-        name="mobile"
-        id="mobile"
-      />
-      <input
-        class="w-full p-2 bg-white border-none outline-none text-[#182073] rounded-md font-bold text-gray-900 border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
-        type="submit"
-        id=""
-      />
+      <label htmlFor="name" className="sr-only">Name</label>
+            <input
+              className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 text-white focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
+              placeholder="Name"
+              type="text"
+              name="name"
+              id="name"
+              required
+            />
+
+            <label htmlFor="email" className="sr-only">Email</label>
+            <input
+              className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 text-white focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
+              placeholder="Email"
+              type="email"
+              name="email"
+              id="email"
+              required
+            />
+
+            <label htmlFor="mobile" className="sr-only">Mobile</label>
+            <input
+              className="w-full p-2 bg-blue-900 rounded-md border border-gray-700 text-white focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
+              placeholder="Mobile"
+              type="text"
+              name="mobile"
+              id="mobile"
+              required
+            />
+
+            <button
+              className="w-full p-2 bg-white border-none outline-none text-[#182073] rounded-md font-bold text-gray-900 border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
+              type="submit"
+              disabled={loading}
+            >
+              {loading ? "Sending..." : "Submit"}
+            </button>
+
+            {result && <p className="text-white mt-4">{result}</p>}
       {/* <p>
         Don't have an account?
         <a
@@ -216,8 +272,10 @@ const Home = () => {
           >Sign up</a
         >
       </p> */}
+    
     </div>
   </div>
+  </form>
 </div>
 
             {/* <section className="grid place-content-center p-4 lg:p-28">
