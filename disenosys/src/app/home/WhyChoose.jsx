@@ -17,45 +17,48 @@ const WhyChoose = () => {
                 </p>
             </div>
             <div className='flex flex-col md:flex-row container mx-auto p-12 justify-center items-center gap-12'>
-                <div className='flex flex-col justify-center items-center text-center'>
+                <article className='flex flex-col justify-center items-center text-center'>
                     <Image src={learn} alt='Learn' className=''/>
                     <div className='mt-6'>
-                        <h4 className='text-lg font-semibold font-poppins text-white md:text-xl lg:text-2xl'>
+                        <h3 className='text-lg font-semibold font-poppins text-white md:text-xl lg:text-2xl'>
                             01. Learn
-                        </h4>
+                        </h3>
                         <p className='text-sm text-gray-300 font-medium font-josefin mt-3 md:text-base lg:text-md'>
                         Gain in-depth knowledge through our interactive lessons. Our expert instructors will guide you through each topic with real-world examples
                         </p>
                     </div>
-                </div>
+                </article>
+
                 <div className='hidden md:flex items-center'>
                     <Image src={line} alt='Line' className='' />
                 </div>
-                <div className='flex flex-col justify-center items-center text-center'>
+
+                <article className='flex flex-col justify-center items-center text-center'>
                     <Image src={grad} alt='Graduate' className='' />
                     <div className='mt-6'>
-                        <h4 className='text-lg font-semibold font-poppins text-white md:text-xl lg:text-2xl'>
+                        <h3 className='text-lg font-semibold font-poppins text-white md:text-xl lg:text-2xl'>
                             02. Graduate
-                        </h4>
+                        </h3>
                         <p className='text-sm text-gray-300 font-medium font-josefin mt-3 md:text-base lg:text-md'>
                         Earn a recognized certificate upon course completion. Join our network of successful alumni who have advanced their careers
                         </p>
                     </div>
-                </div>
+                </article>
                 <div className='hidden md:flex items-center'>
                     <Image src={line} alt='Line' className='' />
                 </div>
-                <div className='flex flex-col justify-center items-center text-center'>
+
+                <article className='flex flex-col justify-center items-center text-center'>
                     <Image src={work} alt='Work' className='' />
                     <div className='mt-6'>
-                        <h4 className='text-lg font-semibold font-poppins text-white md:text-xl lg:text-2xl'>
+                        <h3 className='text-lg font-semibold font-poppins text-white md:text-xl lg:text-2xl'>
                             03. Work
-                        </h4>
+                        </h3>
                         <p className='text-sm text-gray-300 font-medium font-josefin mt-3 md:text-base lg:text-md'>
                         Apply your skills in practical, industry-based projects. Our job assistance ensures you are prepared for the professional world.
                         </p>
                     </div>
-                </div>
+                </article>
             </div>
         </div>
     );

@@ -24,8 +24,8 @@ export default function Pricing() {
                         <div class="bg-gradient-to-r from-[#182073] to-blue-300 border-r-4 border-l-4 border-t-4 border-t-[#8991ee] border-b-4 border-b-[#8991ee] border-l-[#F1F1F5]  border-r-[#F1F1F5] rounded-md">
                             <div class="p-6 md:py-10 md:px-9">
                                 <div class="inline-block px-4 py-2 bg-blue-100 rounded-full">
-                                    <h3 class="text-sm font-semibold text-[#182073]">Online Classes
-                                    </h3>
+                                    <h1 class="text-sm font-semibold text-[#182073]">Online Classes
+                                    </h1>
                                 </div>
                                 <p class="mt-5 text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-900 hover:opacity-80 focus:opacity-80">$29</p>
                                 <p class="mt-2 text-base text-gray-400">Per month</p>
@@ -87,7 +87,7 @@ export default function Pricing() {
                     <div class="bg-gradient-to-r from-[#182073] to-blue-300 border-r-4 border-l-4 border-t-4 border-t-[#8991ee] shadow-inner border-b-4 border-b-[#8991ee] border-l-[#F1F1F5]  border-r-[#F1F1F5] rounded-md">
                         <div class="p-6 md:py-10 md:px-9">
                             <div class="inline-block px-4 py-2 bg-blue-100 rounded-full">
-                                <h3 class="text-sm font-semibold text-[#182073]">Pre-Recorded Classes</h3>
+                                <h1 class="text-sm font-semibold text-[#182073]">Pre-Recorded Classes</h1>
                             </div>
                             <p class="mt-5 text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-cyan-900 hover:opacity-80 focus:opacity-80">$49</p>
                             <p class="mt-2 text-base text-gray-400">Per month</p>
