@@ -6,7 +6,7 @@ import "./Contact.css";
 export const Contact = () => {
   return (
     <>
-      {/* Banner Section */}
+
       <div className="banner p-20 md:p-12 lg:p-48 mt-16">
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div></div>
@@ -18,10 +18,10 @@ export const Contact = () => {
         </div>
       </div>
 
-      {/* Contact Section */}
+
       <div className=" p-16 font-poppins w-full h-full bg-white  rounded-lg shadow-lg">
         <div className="grid grid-cols-1 lg:grid-cols-1 gap-8 items-center">
-          {/* Contact Image */}
+   
           <div className="flex items-center justify-center">
             <div className="w-full h-auto max-w-lg">
               <Image
@@ -33,7 +33,6 @@ export const Contact = () => {
             </div>
           </div>
 
-          {/* Contact Form */}
           <div className="flex items-center justify-center">
             <div className="w-full h-auto max-w-lg p-8 bg-[#182073] rounded-lg shadow-lg">
               <h1 className="text-white font-semibold font-poppins text-3xl sm:text-4xl pb-3">

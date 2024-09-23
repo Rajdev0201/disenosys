@@ -15,15 +15,15 @@ export default function Count() {
 
                 <div className="grid grid-cols-1 gap-8 text-center lg:mt-24 sm:gap-x-8 gap-y-12 md:grid-cols-3">
                     {[
-                        { end: 460000, label: "Trained" },
-                        { end: 6700, label: "Reviews with 4.5/5 rating" },
-                        { end: 7000, label: "Live Classes Every Month" },
+                        { end: 5000, label: "Trained" },
+                        { end: 3800, label: "Reviews with 5 star rating" },
+                        { end: 500, label: "Live Classes Every Month" },
                         { end: 900, label: "Corporate Partners" },
                         { end: 210, label: "College Partners" },
                         { end: 87, label: "Reported Career Benefits", isPercentage: true },
                     ].map((item, index) => (
                         <div key={index} className="p-6 border-2 border-[#F1F1F5] bg-[#182073] rounded-lg hover:border-[#182073] transition duration-300 ease-in-out">
-                            <h3 className="font-bold text-5xl sm:text-6xl lg:text-7xl">
+                            <h3 className="font-bold text-3xl sm:text-6xl lg:text-5xl">
                                 <span className=" bg-clip-text text-white">
                                     <CountUp
                                         start={0}

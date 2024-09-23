@@ -170,15 +170,12 @@ const Home = () => {
 
   return (
     <motion.section
-      style={{
-        backgroundImage,
-      }}
     >
       <div className="container-2xl bg mt-12 px-2 md:px-12 py-40 md:mt-12 lg:mt-16 w-full relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12  container mx-auto flex items-center justify-center px-6 lg:px-0 2xl:px-0">
           <div className="col-span-6">
             <div className="">
-              <h1 className="font-poppins text-3xl mt-6 md:mt-6 lg:mt-0 sm:text-3xl md:text-6xl lg:text-7xl font-bold text-dark">
+              <h1 className="font-poppins text-3xl mt-6 md:mt-6 lg:mt-0 sm:text-3xl md:text-6xl lg:text-5xl font-bold text-dark">
                 Shaping Industry Ready{" "}
                 <span className="text-[#182073]">Engineers</span> for the Future{" "}
               </h1>
