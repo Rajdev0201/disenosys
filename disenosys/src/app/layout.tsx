@@ -27,12 +27,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <LoadingWrapper>
-          <Script
-        src="https://static.elfsight.com/platform/platform.js"
-        strategy="lazyOnload"
-      />
-        <div className="elfsight-app-337f00f0-b49d-485e-a29f-8527c9028739" data-elfsight-app-lazy>
-        </div>
             <Blink/>
             <Navbar />
             {children}
