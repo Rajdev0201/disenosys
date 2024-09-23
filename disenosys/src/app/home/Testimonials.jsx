@@ -9,6 +9,7 @@ import Karthikeyan from "../assests/testimonials/Karthikeyan C.png";
 import ragul from "../assests/testimonials/Raghul Srivatsa.png";
 import rajesh from "../assests/testimonials/Rajesh Deva.png";
 import sheldon from "../assests/testimonials/Sheldon.png";
+import Ford from "../assests/ford.jpg"
 import Image from "next/image";
 
 const Testimonials = () => {
@@ -43,6 +44,7 @@ const Testimonials = () => {
     {
       name: "Arun Chinnathurai",
       company: "Ford",
+      companylogo:Ford,
       country: "Germany",
       pic: "",
       des: `Disenosys provided personalized CATIA training, helping me master real-world industry techniques beyond typical tutorials. The user-friendly sessions, expert support, and commitment helped boost my confidence. I highly recommend their programs for tailored expertise and outstanding service. Five-star experience!`,
@@ -155,8 +157,13 @@ const Testimonials = () => {
                     <p className="mt-0.5 text-lg font-medium text-gray-900">
                       {testimonial.name}
                     </p>
-                    <p className="mt-0.5 text-md font-medium text-gray-900">
-                      {testimonial.company}
+                    <p className="mt-0.5 text-md font-medium text-gray-900 flex items-center space-x-2">
+                      {/* {testimonial.company}  */}
+                      <Image 
+                      src={testimonial.companylogo}
+                      alt="c-logo"
+                      className="w-12 h-12 bg-white"
+                      />
                     </p>
                     <p className="mt-0.5 text-sm font-medium text-gray-900">
                       {testimonial.country}
