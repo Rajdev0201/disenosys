@@ -16,7 +16,7 @@ const Partner = () => {
     <div className='mt-6 py-6'>
       <div className='flex justify-center items-center mb-12 p-5'>
         <h1 className='font-bold font-poppins text-[#182073] text-xl lg:text-5xl'>
-          Hiring <span className='text-[#182073]'>P</span>artners
+          Hiring <span className='text-[#182073]'>C</span>ompanies
         </h1>
       </div>
       <div className='shadow-lg bg-white rounded'>
