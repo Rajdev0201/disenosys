@@ -63,7 +63,7 @@
     opacity: 10;
   } */
 
-.box-content h4,
+.box-content h3,
 .box-content p,
 .box-content h2,
 .box-content:hover .icon {
@@ -72,7 +72,7 @@
   transition: color 0.3s ease;
 }
 
-.box-content:hover h4,
+.box-content:hover h3,
 .box-content:hover p,
 .box-content:hover h2,
 .box-content:hover .icon {

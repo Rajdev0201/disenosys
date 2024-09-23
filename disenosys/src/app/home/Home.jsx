@@ -14,7 +14,7 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 
-const COLORS_TOP = ["#13FFAA", "#1E67C6", "#CE84CF", "#DD335C"];
+const COLORS_TOP = ["#057FE3"];
 
 // const FloatingPhone = () => {
 //   return (
@@ -175,7 +175,7 @@ const Home = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12  container mx-auto flex items-center justify-center px-6 lg:px-0 2xl:px-0">
           <div className="col-span-6">
             <div className="">
-              <h1 className="font-poppins text-3xl mt-6 md:mt-6 lg:mt-0 sm:text-3xl md:text-6xl lg:text-5xl font-bold text-dark">
+              <h1 className="font-poppins text-3xl mt-6 md:mt-6 lg:mt-0 max-w-[520px] sm:text-3xl md:text-6xl lg:text-5xl font-bold text-dark">
                 Shaping Industry Ready{" "}
                 <span className="text-[#182073]">Engineers</span> for the Future{" "}
               </h1>
@@ -213,8 +213,8 @@ const Home = () => {
 
             <div class="flex items-center justify-center">
               <form onSubmit={onSubmit}>
-                <div class="bg-[#182073] border-[4px] border-[#F1F1F5] rounded-2xl mr-0 lg:mr-12 hover:border-[#057FE3] transition-all duration-200">
-                  <div class="mx-auto flex items-center space-y-4 py-16 px-16 font-semibold text-gray-500 flex-col">
+                <div class="bg-[#182073] border-[4px] border-[#F1F1F5] rounded-2xl -mt-20 mr-0 lg:mr-12 hover:border-[#057FE3] transition-all duration-200">
+                  <div class="mx-auto flex items-center space-y-4 py-4 px-4 font-semibold text-gray-500 flex-col">
                     <BiSolidCarMechanic size={60} className="text-white" />
                     <h1 class="text-white text-sm lg:text-2xl">
                       Book a demo class today!
