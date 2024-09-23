@@ -18,8 +18,8 @@ const BlinkingAlert = () => {
     <div className="w-6 h-6 bg-[#182073] ring-2 ring-white shadow-xl rounded-full flex justify-center items-center">
     <div className="w-2 h-2 bg-red-500 animate-pulse rounded-full"></div>
 </div>
-         <span className="text-white text-2xl font-poppins">
-        We are still working on it!
+         <span className="font-semibold font-poppins text-base text-white">
+         Exciting changes ahead! Our basics are live—stay tuned for more!
       </span>
     </div>
   </div>
