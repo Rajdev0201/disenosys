@@ -175,10 +175,11 @@ const Home = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12  container mx-auto flex items-center justify-center px-6 lg:px-0 2xl:px-0">
           <div className="col-span-6">
             <div className="">
-              <h1 className="font-poppins text-3xl mt-6 md:mt-6 lg:mt-0 max-w-[250px] lg:max-w-[520px] sm:text-3xl md:text-6xl lg:text-5xl font-bold text-dark">
-                Shaping Industry Ready{" "}
-                <span className="text-[#182073]">Engineers</span> for the Future{" "}
-              </h1>
+            <h1 className="font-poppins text-3xl mt-6 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] lg:mt-0 max-w-[250px] lg:max-w-[520px] sm:text-3xl md:text-6xl lg:text-5xl font-bold text-dark">
+  Shaping Industry Ready{" "}
+  <span className="text-[#182073]">Engineers</span> for the Future{" "}
+</h1>
+
             </div>
             <div className="flex justify-start mt-6 sm:mt-8 lg:mt-12">
               {/* <button className="font-poppins font-semibold text-base sm:text-lg lg:text-xl px-4 py-2 sm:px-5 lg:px-6 sm:py-2 lg:py-3 bg-[#4BE5CA] text-white rounded-lg">
