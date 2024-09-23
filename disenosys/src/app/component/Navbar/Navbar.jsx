@@ -15,7 +15,7 @@ import { getAllCarts } from '@/app/Redux/action/addToCart.js';
 import Modal from "../Modal.jsx";
 import {ShiftingDropDown} from "../Dropdown.jsx";
 import { usePathname } from 'next/navigation';
-
+import Blink from "../Blink/BlinkingPopup";
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -93,9 +93,7 @@ const Navbar = () => {
                 </>
               }
             </div>
-          </div>
-        </div>
-        <div className='hidden md:flex justify-end'>
+            <div className='hidden md:flex'>
           {user?.user?.user?.userName ?
             <div className='hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer'>
             <span className="bg-[#057FE3] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
@@ -105,6 +103,9 @@ const Navbar = () => {
             <Modal />
           }
         </div>
+          </div>
+        </div>
+        <Blink/>
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-16 left-0 w-full bg-violet-800  shadow-lg z-50">
             <div className="flex flex-col items-center py-4 space-y-4">
