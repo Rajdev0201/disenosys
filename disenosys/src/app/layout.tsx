@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingWrapper from "./component/LoadingWrapper";
 import Script from 'next/script';
+import Blink from "./component/Blink/BlinkingPopup";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
       />
         <div className="elfsight-app-337f00f0-b49d-485e-a29f-8527c9028739" data-elfsight-app-lazy>
         </div>
+            <Blink/>
             <Navbar />
             {children}
             <Footer />

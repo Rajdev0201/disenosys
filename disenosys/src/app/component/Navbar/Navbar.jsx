@@ -15,7 +15,7 @@ import { getAllCarts } from '@/app/Redux/action/addToCart.js';
 import Modal from "../Modal.jsx";
 import {ShiftingDropDown} from "../Dropdown.jsx";
 import { usePathname } from 'next/navigation';
-import Blink from "../Blink/BlinkingPopup";
+
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -46,11 +46,11 @@ const Navbar = () => {
 
 
   return (
-    <nav className="shadow-lg bg-[#182073] fixed w-full top-0 left-0 right-0 z-50">
-      <div className=" flex flex-col md:flex-row items-center justify-evenly px-4 py-3">
+    <nav className="shadow-lg bg-[#182073] fixed w-full top-0 left-0 right-0 z-50 mt-10">
+      <div className=" flex flex-col md:flex-row items-center justify-between px-4 lg:px-32 py-3">
 
-        <div className="flex items-center w-full md:w-auto justify-between md:justify-center">
-          <Image src={logo} alt='Logo' className='w-44 h-auto p-3' />
+        <div className="flex items-center w-full md:w-auto justify-between md:justify-start">
+          <Image src={logo} alt='Logo' className='w-44 h-auto p-2' />
           <div className='md:hidden flex items-center'>
             <RiMenu4Fill size={30} className='text-white' onClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
           </div>
@@ -93,7 +93,11 @@ const Navbar = () => {
                 </>
               }
             </div>
-            <div className='hidden md:flex'>
+           
+          </div>
+        </div>
+
+        <div className='hidden md:flex'>
           {user?.user?.user?.userName ?
             <div className='hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer'>
             <span className="bg-[#057FE3] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
@@ -103,9 +107,7 @@ const Navbar = () => {
             <Modal />
           }
         </div>
-          </div>
-        </div>
-        <Blink/>
+        
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-16 left-0 w-full bg-violet-800  shadow-lg z-50">
             <div className="flex flex-col items-center py-4 space-y-4">
