@@ -15,7 +15,7 @@ export const SignupData = (userData) => async (dispatch) => {
       );
       dispatch(Signup(data));
       toast.dark('signup process done!', {
-        position: "top-right",
+        position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -27,7 +27,7 @@ export const SignupData = (userData) => async (dispatch) => {
       localStorage.setItem("profile", JSON.stringify(data));
     } catch (err) {
       toast.info(err?.response?.data?.message, {
-        position: "top-right",
+        position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -51,8 +51,8 @@ export const SignupData = (userData) => async (dispatch) => {
         userData // This is now JSON, not FormData
       );
       dispatch(Login(data));
-      toast.info('Login successful!', {
-        position: "top-right",
+      toast.dark('Login successful!', {
+        position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
@@ -65,7 +65,7 @@ export const SignupData = (userData) => async (dispatch) => {
       nav("/");
     }catch(err) {
       toast.error(err.response.data.message, {
-        position: "top-right",
+        position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,

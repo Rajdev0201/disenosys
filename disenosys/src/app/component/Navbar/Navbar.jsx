@@ -134,10 +134,18 @@ const Navbar = () => {
         <div className="hidden md:flex space-x-2">
           {user?.user?.user?.userName ? (
             <>
-              <div className="hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer">
-                <span className="bg-[#057FE3] shadow-lg px-4 py-2 gap-5 rounded-full text-white font-poppines font-bold text-lg">
+              <div className="relative hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
+                <span className="bg-[#057FE3] shadow-lg px-4 py-2 gap-5 rounded-full text-white font-poppins font-bold text-lg">
                   {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
                 </span>
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="relative">
+                    <div className="bg-white text-[#182073] text-sm font-poppins rounded-md px-4 py-1 shadow-lg">
+                      {user?.user?.user?.userName?.toLocaleUpperCase()}
+                    </div>
+                    <div className="absolute left-1/2 transform -translate-x-1/2 -top-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-white"></div>
+                  </div>
+                </div>
               </div>
 
               <div class="max-w-44 bg-transparent items-center justify-center flex border-2 border-white shadow-lg hover:bg-[#182073] text-white hover:text-white duration-300 cursor-pointer active:scale-[0.98]">
