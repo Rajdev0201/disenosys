@@ -19,7 +19,7 @@ const Partner = () => {
           Hiring <span className='text-[#182073]'>C</span>ompanies
         </h1>
       </div>
-      <div className='shadow-lg bg-white rounded'>
+      <div className='shadow-md mb-4 bg-white rounded'>
         <div className='py-6'>
           <Marquee
             speed={80}
@@ -28,34 +28,34 @@ const Partner = () => {
             className='flex items-center'
           >
             <div className="px-4">
-              <Image src={p1} alt='Partner 1' className='w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white'/>
+              <Image src={p1} alt='Partner 1' className='w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-full bg-white'/>
             </div>
             <div className="px-4">
-              <Image src={p2} alt='Partner 2' className='w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white'/>
+              <Image src={p2} alt='Partner 2' className='w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-full bg-white'/>
             </div>
             <div className="px-4">
-              <Image src={p3} alt='Partner 3' className='w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white'/>
+              <Image src={p3} alt='Partner 3' className='w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-full bg-white'/>
             </div>
             <div className="px-4">
-              <Image src={p4} alt='Partner 4' className='w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white'/>
+              <Image src={p4} alt='Partner 4' className='w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-full bg-white'/>
             </div>
             <div className="px-4">
-              <Image src={p2} alt='Partner 5' className='w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white'/>
+              <Image src={p2} alt='Partner 5' className='w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-full bg-white'/>
             </div>
             <div className="px-4">
-              <Image src={p6} alt='Partner 6' className='w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white'/>
+              <Image src={p6} alt='Partner 6' className='w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-full bg-white'/>
             </div>
             <div className="px-4">
-              <Image src={p7} alt='Partner 7' className='w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white'/>
+              <Image src={p7} alt='Partner 7' className='w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-xl bg-white'/>
             </div>
             <div className="px-4">
-              <Image src={p8} alt='Partner 8' className='w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white'/>
+              <Image src={p8} alt='Partner 8' className='w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-full bg-white'/>
             </div>
             <div className="px-4">
-              <Image src={p9} alt='Partner 9' className='w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white'/>
+              <Image src={p9} alt='Partner 9' className='w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-full bg-white'/>
             </div>
             <div className="px-4">
-              <Image src={p6} alt='Partner 10' className='w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white'/>
+              <Image src={p6} alt='Partner 10' className='w-24 h-24 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-32 lg:h-32 rounded-full bg-white'/>
             </div>
           </Marquee>
         </div>
