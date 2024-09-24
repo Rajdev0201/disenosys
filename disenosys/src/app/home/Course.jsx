@@ -93,7 +93,7 @@ const Course = () => {
           ))}
         </div>
         <div className='col-span-1 md:col-span-1 lg:col-span-1'>
-          <div className='flex flex-col space-y-6 sticky top-20'>
+          <div className='flex flex-col space-y-6 sticky top-32'>
             <button
               className={getButtonClass("All")}
               onClick={() => handleCategoryChange("All")}
