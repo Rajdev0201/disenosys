@@ -11,7 +11,7 @@ export const Whatsapp = () => {
   return (
     <div className="flex items-center gap-4 fixed top-80 -bottom-52 left-10 z-50">
       <div className="social-button">
-        <button onClick={sendWhatsAppMessage} className="relative w-20 h-20 rounded-full group" aria-label="Share on Whatsapp">
+        <button onClick={sendWhatsAppMessage} className="relative w-16 h-16 rounded-full group" aria-label="Share on Whatsapp">
           <div className="floater w-full h-full absolute top-0 left-0 bg-[#182073] rounded-full duration-300 group-hover:-top-8 group-hover:shadow-2xl"></div>
           <div className="icon relative z-10 w-full h-full flex items-center bg-green-400 justify-center rounded-full">
             <svg viewBox="0 0 16 16" className="bi bi-whatsapp" xmlns="http://www.w3.org/2000/svg">
