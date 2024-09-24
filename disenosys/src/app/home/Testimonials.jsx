@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -10,8 +10,44 @@ import ragul from "../assests/testimonials/Raghul Srivatsa.png";
 import rajesh from "../assests/testimonials/Rajesh Deva.png";
 import sheldon from "../assests/testimonials/Sheldon.png";
 import Image from "next/image";
+import { useSelector } from "react-redux";
+import LoginAlert from "../component/Alert/LoginAlert";
 
 const Testimonials = () => {
+  const [showAlert, setShowAlert] = useState(false);
+  const boxRef = useRef(null);
+  const user = useSelector((state) => state.user);
+  const name = user?.user?.user?.userName;
+ 
+
+  useEffect(() => {
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0]; 
+        if (entry.isIntersecting && !name) {
+          setShowAlert(true);
+        } else {
+          setShowAlert(false);
+        }
+      },
+      {
+        root: null, 
+        threshold: 0.2, 
+      }
+    );
+
+    if (boxRef.current) {
+      observer.observe(boxRef.current);
+    }
+
+    return () => {
+      if (boxRef.current) {
+        observer.unobserve(boxRef.current);
+      }
+    };
+  }, [name]);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -113,8 +149,13 @@ const Testimonials = () => {
   ];
 
   return (
-    <section className="">
-      <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
+    <section className="relative">
+        {showAlert && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40 flex justify-center items-center">
+          <LoginAlert />
+        </div>
+      )}
+      <div ref={boxRef} className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <h2 className="text-center font-bold font-poppins text-[#182073] text-xl lg:text-5xl mb-8">
           Read trusted reviews from our Students
         </h2>

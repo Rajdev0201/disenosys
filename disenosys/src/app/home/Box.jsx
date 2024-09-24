@@ -1,49 +1,20 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React from "react";
 import { FaChalkboardTeacher, FaBriefcase, FaProjectDiagram, FaCalendarDay } from "react-icons/fa";
 import "./Home.css";
-import LoginAlert from "../component/Alert/LoginAlert";
-import { useSelector } from "react-redux";
 
 const Box = () => {
-  const [showAlert, setShowAlert] = useState(false);
-  const boxRef = useRef(null);
-  const user = useSelector((state) => state.user);
-  const name = user?.user?.user?.userName;
- 
 
-  useEffect(() => {
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0]; 
-        if (entry.isIntersecting && !name) {
-          setShowAlert(true);
-        } else {
-          setShowAlert(false);
-        }
-      },
-      {
-        root: null, 
-        threshold: 0.2, 
-      }
-    );
-
-    if (boxRef.current) {
-      observer.observe(boxRef.current);
-    }
-
-    return () => {
-      if (boxRef.current) {
-        observer.unobserve(boxRef.current);
-      }
-    };
-  }, [name]);
 
   return (
     <div className="relative">
-         {showAlert && <LoginAlert />}
-      <div ref={boxRef} className="flex flex-col items-center py-5 lg:py-12">
+        {/* {showAlert && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40 flex justify-center items-center">
+          <LoginAlert />
+        </div>
+      )} */}
+
+      <div className="flex flex-col items-center py-5 lg:py-12">
         <div className="flex justify-center items-center mb-12 p-5">
           <h1 className="font-bold font-poppins text-[#182073] text-xl lg:text-5xl">
             Why <span className="text-[#182073]">Choose</span> Us?
