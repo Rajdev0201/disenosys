@@ -98,7 +98,7 @@ const Course = () => {
               className={getButtonClass("All")}
               onClick={() => handleCategoryChange("All")}
             >
-              All Courses
+              All Course
             </button>
             <button
               className={getButtonClass("Plastic Trims")}
