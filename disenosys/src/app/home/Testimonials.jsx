@@ -151,7 +151,7 @@ const Testimonials = () => {
   return (
     <section className="relative">
         {showAlert && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40 flex justify-center items-center">
+        <div className="fixed inset-0 bg-[#182073] bg-opacity-50 backdrop-blur-sm z-40 flex justify-center items-center">
           <LoginAlert />
         </div>
       )}
