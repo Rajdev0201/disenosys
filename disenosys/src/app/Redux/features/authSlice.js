@@ -23,17 +23,17 @@ const authSlice = createSlice({
       }
       state.user = userData;
     },
-    // LogOut: (state, action) => {
-    //   if (typeof window !== "undefined") {
-    //     localStorage.removeItem("profile");
-    //   }
-    //   state.user = null;
-    // },
+    LogOut: (state, action) => {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("profile");
+      }
+      state.user = null;
+    },
     // Forget: (state, action) => {
     //   state.user = action.payload;
     // },
   },
 });
 
-export const { Signup,Login } = authSlice.actions;
+export const { Signup,Login,LogOut } = authSlice.actions;
 export default authSlice.reducer;

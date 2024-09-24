@@ -1,36 +1,44 @@
 "use client";
-import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'
-import logo from '../../assests/logo.png';
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import logo from "../../assests/logo.png";
 import { CiSearch } from "react-icons/ci";
 import { RiMenu4Fill } from "react-icons/ri";
-import { FiEdit, FiChevronDown, FiTrash, FiShare, FiPlusSquare } from "react-icons/fi";
+import {
+  FiEdit,
+  FiChevronDown,
+  FiTrash,
+  FiShare,
+  FiPlusSquare,
+} from "react-icons/fi";
 import { IoCartSharp } from "react-icons/io5";
 import { motion } from "framer-motion";
-import Link from 'next/link';
+import Link from "next/link";
 import CartModal from "../CartModal";
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllCarts } from '@/app/Redux/action/addToCart.js';
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCarts } from "@/app/Redux/action/addToCart.js";
 import Modal from "../Modal.jsx";
-import {ShiftingDropDown} from "../Dropdown.jsx";
-import { usePathname } from 'next/navigation';
+import { ShiftingDropDown } from "../Dropdown.jsx";
+import { usePathname } from "next/navigation";
+import { LogOut } from "@/app/Redux/features/authSlice";
+import { IoMdLogOut } from "react-icons/io";
 
 const Navbar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeLink, setActiveLink] = useState('');
+  const [activeLink, setActiveLink] = useState("");
   const [cartModalOpen, setCartModalOpen] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
   const path = usePathname();
   // console.log(path);
-  
-  const user = useSelector(state => state.user)
+
+  const user = useSelector((state) => state.user);
   useEffect(() => {
     dispatch(getAllCarts());
     const currentPath = router.pathname;
-    setActiveLink(currentPath === '/' ? '/' : currentPath);
+    setActiveLink(currentPath === "/" ? "/" : currentPath);
   }, [dispatch, router.pathname]);
 
   const cart = useSelector((state) => state?.currentCart);
@@ -39,81 +47,124 @@ const Navbar = () => {
   const handleLinkClick = (link) => {
     setActiveLink(link);
     setMobileMenuOpen(false);
-    if (link !== '/company') {
+    if (link !== "/company") {
       setDropdownOpen(false);
     }
   };
 
+  const handleLogout = () => {
+    dispatch(LogOut());
+  };
 
   return (
     <nav className="shadow-lg bg-[#182073] fixed w-full top-0 left-0 right-0 z-50 mt-10">
       <div className=" flex flex-col md:flex-row items-center justify-between px-4 lg:px-32 py-3">
-
         <div className="flex items-center w-full md:w-auto justify-between md:justify-start">
-          <Image src={logo} alt='Logo' className='w-44 h-auto p-2' />
-          <div className='md:hidden flex items-center'>
-            <RiMenu4Fill size={30} className='text-white' onClick={() => setMobileMenuOpen(!mobileMenuOpen)} />
+          <Image src={logo} alt="Logo" className="w-44 h-auto p-2" />
+          <div className="md:hidden flex items-center">
+            <RiMenu4Fill
+              size={30}
+              className="text-white"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            />
           </div>
         </div>
 
-        <div className={`hidden md:flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4`}>
-     
-          <Link href="/" passHref
+        <div
+          className={`hidden md:flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4`}
+        >
+          <Link
+            href="/"
+            passHref
             // onClick={() => handleLinkClick('/')}
-            className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${path === '/' ? 'text-[#057FE3]' : 'text-white'}`}
+            className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${
+              path === "/" ? "text-[#057FE3]" : "text-white"
+            }`}
           >
             Home
           </Link>
-    
-          <ShiftingDropDown/>
 
-          {['Course', 'Gallery'].map((item) => (
-            <Link key={item} href={`/${item.toLowerCase()}`} passHref
+          <ShiftingDropDown />
+
+          {["Course", "Gallery"].map((item) => (
+            <Link
+              key={item}
+              href={`/${item.toLowerCase()}`}
+              passHref
               // onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
-              className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${path === `/${item.toLowerCase()}` ? 'text-[#057FE3]' : 'text-white'}`}
+              className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${
+                path === `/${item.toLowerCase()}`
+                  ? "text-[#057FE3]"
+                  : "text-white"
+              }`}
             >
               {item}
             </Link>
           ))}
-             <div className='hidden md:flex space-x-6  justify-center items-center'>
-            <CiSearch size={30} className='text-white hover:text-[#057FE3]' />
-            <div className='relative flex items-center gap-4 hover:cursor-pointer'>
-              <IoCartSharp size={40} className='text-white hover:text-[#057FE3]' />
-              {length > 0 &&  user?.user?.user?._id?
+          <div className="hidden md:flex space-x-6  justify-center items-center">
+            <CiSearch size={30} className="text-white hover:text-[#057FE3]" />
+            <div className="relative flex items-center gap-4 hover:cursor-pointer">
+              <IoCartSharp
+                size={40}
+                className="text-white hover:text-[#057FE3]"
+              />
+              {length > 0 && user?.user?.user?._id ? (
                 <>
-                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#057FE3] rounded-full ring-2 ring-white z-50' onClick={() => setCartModalOpen(true)}>
+                  <span
+                    className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#057FE3] rounded-full ring-2 ring-white z-50"
+                    onClick={() => setCartModalOpen(true)}
+                  >
                     {length}
                   </span>
                 </>
-                :
+              ) : (
                 <>
-                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#057FE3] rounded-full ring-2 ring-gray-400 z-50' onClick={() => setCartModalOpen(true)}>
+                  <span
+                    className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#057FE3] rounded-full ring-2 ring-gray-400 z-50"
+                    onClick={() => setCartModalOpen(true)}
+                  >
                     0
                   </span>
                 </>
-              }
+              )}
             </div>
-           
           </div>
         </div>
 
-        <div className='hidden md:flex'>
-          {user?.user?.user?.userName ?
-            <div className='hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer'>
-            <span className="bg-[#057FE3] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
-            </div>
-            :
+        <div className="hidden md:flex space-x-2">
+          {user?.user?.user?.userName ? (
+            <>
+              <div className="hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer">
+                <span className="bg-[#057FE3] shadow-lg px-4 py-2 gap-5 rounded-full text-white font-poppines font-bold text-lg">
+                  {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
+                </span>
+              </div>
 
+              <div class="max-w-44 bg-transparent items-center justify-center flex border-2 border-white shadow-lg hover:bg-[#182073] text-white hover:text-white duration-300 cursor-pointer active:scale-[0.98]">
+                <button
+                  class="px-5 py-2 flex items-center"
+                  onClick={handleLogout}
+                >
+                  <IoMdLogOut size={20} className=" mx-1" />
+                  <span className="text-center">Logout</span>
+                </button>
+              </div>
+            </>
+          ) : (
             <Modal />
-          }
+          )}
         </div>
-        
+
         {mobileMenuOpen && (
           <div className="md:hidden absolute top-16 left-0 w-full bg-violet-800  shadow-lg z-50">
             <div className="flex flex-col items-center py-4 space-y-4">
-              <Link href="/" passHref
+              <Link
+                href="/"
+                passHref
                 // onClick={() => handleLinkClick('/')}
-                className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${path === '/' ? 'text-[#057FE3]' : 'text-white'}`}
+                className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${
+                  path === "/" ? "text-[#057FE3]" : "text-white"
+                }`}
               >
                 Home
               </Link>
@@ -144,53 +195,78 @@ const Navbar = () => {
                 )}
               </div> */}
 
-                   <ShiftingDropDown/>
-              
+              <ShiftingDropDown />
 
-              {['Course', 'Gallery'].map((item) => (
-                <Link key={item} href={`/${item.toLowerCase()}`} passHref
+              {["Course", "Gallery"].map((item) => (
+                <Link
+                  key={item}
+                  href={`/${item.toLowerCase()}`}
+                  passHref
                   // onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
-                  className={`py-2 px-0 font-semibold hover:text-[#057FE3] font-poppins text-base ${path === `/${item.toLowerCase()}` ? 'text-[#057FE3]' : 'text-white' }`}
+                  className={`py-2 px-0 font-semibold hover:text-[#057FE3] font-poppins text-base ${
+                    path === `/${item.toLowerCase()}`
+                      ? "text-[#057FE3]"
+                      : "text-white"
+                  }`}
                 >
                   {item}
                 </Link>
               ))}
 
-              <div className='flex space-x-4 justify-center py-4 border-t border-gray-200'>
-                <CiSearch size={30} className='text-white hover:text-[#057FE3]' />
-                <div className='relative flex items-center gap-4 hover:cursor-pointer'>
-                <IoCartSharp size={40} className='text-white hover:text-[#057FE3]' />
-                  {length > 0 &&  user?.user?.user?._id?
-                <>
-                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#057FE3] rounded-full ring-2 ring-gray-400 z-50' onClick={() => setCartModalOpen(true)}>
-                    {length}
-                  </span>
-                </>
-                :
-                <>
-                  <span className='absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#057FE3] rounded-full ring-2 ring-gray-400 z-50' onClick={() => setCartModalOpen(true)}>
-                    0
-                  </span>
-                </>
-              }
-              </div>
+              <div className="flex space-x-4 justify-center py-4 border-t border-gray-200">
+                <CiSearch
+                  size={30}
+                  className="text-white hover:text-[#057FE3]"
+                />
+                <div className="relative flex items-center gap-4 hover:cursor-pointer">
+                  <IoCartSharp
+                    size={40}
+                    className="text-white hover:text-[#057FE3]"
+                  />
+                  {length > 0 && user?.user?.user?._id ? (
+                    <>
+                      <span
+                        className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#057FE3] rounded-full ring-2 ring-gray-400 z-50"
+                        onClick={() => setCartModalOpen(true)}
+                      >
+                        {length}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      <span
+                        className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#057FE3] rounded-full ring-2 ring-gray-400 z-50"
+                        onClick={() => setCartModalOpen(true)}
+                      >
+                        0
+                      </span>
+                    </>
+                  )}
+                </div>
               </div>
 
               <>
-              {user?.user?.user?.userName ?
-            <div className='hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer'>
-            <span className=" bg-[#057FE3] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">{user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}</span>
-            </div>
-            :
-
-            <Modal />
-          }
+                {user?.user?.user?.userName ? (
+                  <div className="hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer">
+                    <span className=" bg-[#057FE3] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">
+                      {user?.user?.user?.userName
+                        ?.toLocaleUpperCase()
+                        ?.charAt(0)}
+                    </span>
+                  </div>
+                ) : (
+                  <Modal />
+                )}
               </>
             </div>
           </div>
         )}
       </div>
-      <CartModal isOpen={cartModalOpen} setIsOpen={setCartModalOpen} cart={cart} />
+      <CartModal
+        isOpen={cartModalOpen}
+        setIsOpen={setCartModalOpen}
+        cart={cart}
+      />
     </nav>
   );
 };
@@ -212,8 +288,8 @@ const Option = ({ setDropdownOpen, Icon, text }) => {
 };
 
 const wrapperVariants = {
-  open: { opacity: 1, height: 'auto', display: 'block' },
-  closed: { opacity: 0, height: 0, transitionEnd: { display: 'none' } },
+  open: { opacity: 1, height: "auto", display: "block" },
+  closed: { opacity: 0, height: 0, transitionEnd: { display: "none" } },
 };
 
 const iconVariants = {
