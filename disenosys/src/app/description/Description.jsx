@@ -19,7 +19,7 @@ import { MdCancel } from "react-icons/md";
 import { addProductToCart } from "../Redux/action/addToCart";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCourse } from "../Redux/action/Course";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export const Description = () => {
   const [openAccordionIndex, setOpenAccordionIndex] = useState(null);
@@ -27,6 +27,7 @@ export const Description = () => {
   const dispatch = useDispatch();
   const search = useSearchParams();
   const courseId = search.get("courseId");
+  const router = useRouter();
 
   const courses = useSelector((state) => state?.course?.courses);
 
@@ -60,7 +61,10 @@ export const Description = () => {
   const courseAccordion = (index) => {
     setopencourseAccordion(opencourseAccordion === index ? null : index);
   };
-
+ 
+  const handleRoute = () => {
+    router.push("/");
+  }
   return (
     <>
       <div className="fluid">
@@ -164,8 +168,9 @@ export const Description = () => {
                     <p className="leading-7 text-start font-poppins pt-3 text-base md:text-lg text-gray-500">
                       {description.description}
                     </p>
-                    <p className="font-bold text-xl sm:text-2xl md:text-3xl text-slate-900 pt-3">
-                      Course Fee: ₹{description.price}
+                    <p className="font-bold text-xl sm:text-lg mt-2 md:text-xl bg-[#182073] text-white w-44 text-center p-2 rounded hover:cursor-pointer" onClick={handleRoute}>
+                      {/* Course Fee: ₹{description.price} */}
+                      Enquiry Now
                     </p>
                     <h1 className="text-slate-900 font-bold text-xl sm:text-2xl md:text-3xl font-poppins pt-4 pb-2">
                       Key Information
@@ -302,7 +307,7 @@ export const Description = () => {
                           </p>
 
                           <p className="py-1 text-[#182073] font-medium text-base">
-                            ₹{description.price}
+                            {/* ₹{description.price} */}
                           </p>
 
                           <div className="flex justify-end mt-4">

@@ -85,7 +85,7 @@ const Course = () => {
                   <button className='bg-[#182073] text-white px-4 py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
                     Add to Cart
                   </button>
-                  <span className="text-xl font-semibold text-[#182073] flex items-center"><FaIndianRupeeSign />{course?.price}</span>
+                  <span className="text-base font-semibold text-[#182073] flex items-center">More Info</span>
                 </div>
               </div>
         
