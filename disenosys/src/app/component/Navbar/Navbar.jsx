@@ -131,32 +131,36 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="hidden md:flex space-x-2">
+        <div className="hidden md:flex mr-0 lg:mr-20">
           {user?.user?.user?.userName ? (
             <>
               <div className="relative hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
-                <span className="bg-[#057FE3] shadow-lg px-4 py-2 gap-5 rounded-full text-white font-poppins font-bold text-lg">
+                <span className="bg-[#057FE3] shadow-lg px-4 py-2 rounded-full text-white font-poppins font-bold text-lg">
                   {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
                 </span>
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="relative">
-                    <div className="bg-white text-[#182073] text-sm font-poppins rounded-md px-4 py-1 shadow-lg">
-                      {user?.user?.user?.userName?.toLocaleUpperCase()}
+                    <div className="bg-[#057FE3]  text-white flex flex-col rounded-md px-5 py-3">
+                     <div className="text-center text-base font-bold font-poppins mt-1">
+                     {user?.user?.user?.userName?.toLocaleUpperCase()}
+                    </div> 
+
+                <div class="max-w-44  items-center justify-center text-white text-base font-poppins font-bold duration-300 cursor-pointer active:scale-[0.98]">
+                <button
+                  class="px-0 py-2 flex items-center "
+                  onClick={handleLogout}
+                >
+                  <IoMdLogOut size={20} className=" mx-0" />
+                  <span className="text-center ">LOGOUT</span>
+                </button>
+              </div>
                     </div>
                     <div className="absolute left-1/2 transform -translate-x-1/2 -top-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-white"></div>
                   </div>
                 </div>
               </div>
 
-              <div class="max-w-44 bg-transparent items-center justify-center flex border-2 border-white shadow-lg hover:bg-[#182073] text-white hover:text-white duration-300 cursor-pointer active:scale-[0.98]">
-                <button
-                  class="px-5 py-2 flex items-center"
-                  onClick={handleLogout}
-                >
-                  <IoMdLogOut size={20} className=" mx-1" />
-                  <span className="text-center">Logout</span>
-                </button>
-              </div>
+             
             </>
           ) : (
             <Modal />
