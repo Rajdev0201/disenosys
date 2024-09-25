@@ -168,9 +168,10 @@ export const Description = () => {
                     <p className="leading-7 text-start font-poppins pt-3 text-base md:text-lg text-gray-500">
                       {description.description}
                     </p>
-                    <p className="font-bold text-xl sm:text-lg mt-2 md:text-xl bg-[#182073] text-white w-44 text-center p-2 rounded hover:cursor-pointer" onClick={handleRoute}>
+                    <p className="font-bold text-xl sm:text-lg mt-2 md:text-xl bg-[#182073] flex items-center justify-center text-white w-44 text-center p-2 rounded hover:cursor-pointer" onClick={handleRoute}>
                       {/* Course Fee: ₹{description.price} */}
-                      Enquiry Now
+                      Enquiry Now 
+                      <span className="w-2 h-2 mx-2 mt-1 animate-pulse bg-[#057FE3] ring-2 ring-white shadow-xl rounded-full flex justify-center items-center"></span>
                     </p>
                     <h1 className="text-slate-900 font-bold text-xl sm:text-2xl md:text-3xl font-poppins pt-4 pb-2">
                       Key Information
@@ -371,12 +372,12 @@ export const Description = () => {
                       please fill the form.&quot;
                     </p>
                     <div className="flex justify-end mt-4">
-                      <a
-                        href="https://docs.google.com/forms/d/12YyWZs-4sPtMZ02lC-BxNPJW-uuIc8zCXYMYIVkSF2M/edit"
+                      <button
+                        href=""
                         className="bg-[#182073] text-white px-4 py-2 rounded hover:bg-blue-400"
-                      >
+                      onClick={handleRoute}>
                         Click
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </dialog>
