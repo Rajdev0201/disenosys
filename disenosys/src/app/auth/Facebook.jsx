@@ -1,6 +1,6 @@
 "use client";
+
 import { LoginSocialFacebook } from "reactjs-social-login";
-import { FacebookLoginButton } from "react-social-login-buttons";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { FacebookLog } from "../Redux/features/authSlice.js";
@@ -15,7 +15,6 @@ const Facebook = () => {
     const userName = `${first_name} ${last_name}`;
 
     try {
-   
       const result = await axios.post("https://disenosys-1.onrender.com/api/v1/user/facebook", {
         userEmail: userID,
         userName,
@@ -27,7 +26,9 @@ const Facebook = () => {
       dispatch(FacebookLog(result.data));
 
       // Save to localStorage
-      localStorage.setItem("profile", JSON.stringify({ userName, userEmail: userID }));
+      if (typeof window !== "undefined") {
+        localStorage.setItem("profile", JSON.stringify({ userName, userEmail: userID }));
+      }
     } catch (error) {
       console.error("Error saving user data:", error);
     }
@@ -44,7 +45,7 @@ const Facebook = () => {
         onResolve={handleLoginSuccess}
         onReject={handleLoginError}
       >
-           Continue with facebook
+        Continue with Facebook
       </LoginSocialFacebook>
     </div>
   );

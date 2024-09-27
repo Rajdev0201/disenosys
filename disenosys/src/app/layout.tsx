@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LoadingWrapper from "./component/LoadingWrapper";
 import Script from 'next/script';
 import Blink from "./component/Blink/BlinkingPopup";
-import Session from "./Session.js";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Session>
+ 
         <Providers>
           <LoadingWrapper>
             <Blink/>
@@ -38,7 +38,7 @@ export default function RootLayout({
             <ToastContainer />
           </LoadingWrapper>
         </Providers>
-        </Session>
+      
       </body>
     </html>
   );
