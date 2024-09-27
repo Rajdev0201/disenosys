@@ -42,16 +42,16 @@ const authSlice = createSlice({
       localStorage.removeItem("profile");
       state.user = null;
     },
-    LinkedInLog: (state, action) => {
-      const userData = action.payload || {};
-      // console.log(userData);
-      localStorage.setItem("profile", JSON.stringify(userData));
-      state.user = userData;
-    },
-    LinkedInOut: (state, action) => {
-      localStorage.removeItem("profile");
-      state.user = null;
-    },
+    // LinkedInLog: (state, action) => {
+    //   const userData = action.payload || {};
+    //   // console.log(userData);
+    //   localStorage.setItem("profile", JSON.stringify(userData));
+    //   state.user = userData;
+    // },
+    // LinkedInOut: (state, action) => {
+    //   localStorage.removeItem("profile");
+    //   state.user = null;
+    // },
     FacebookLog:(state,action) => {
       const userData = action.payload || {};
       localStorage.setItem("profile", JSON.stringify(userData));
