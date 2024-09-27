@@ -135,55 +135,55 @@
 
 // export default LinkedIn;
 
-import React, { useEffect } from "react";
+// import React, { useEffect } from "react";
 
-const LinkedInSocialLogin = () => {
-  const LINKEDIN_CLIENT_ID = "86mz8rwaet7akp";
-  const LINKEDIN_CALLBACK_URL = "http://localhost:3000/";
+// const LinkedInSocialLogin = () => {
+//   const LINKEDIN_CLIENT_ID = "86mz8rwaet7akp";
+//   const LINKEDIN_CALLBACK_URL = "http://localhost:3000/";
 
-  // LinkedIn OAuth URL
-  const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${encodeURIComponent(
-    LINKEDIN_CALLBACK_URL
-  )}&scope=openid%20profile%20email`;
+//   // LinkedIn OAuth URL
+//   const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${encodeURIComponent(
+//     LINKEDIN_CALLBACK_URL
+//   )}&scope=openid%20profile%20email`;
 
-  // Function to send the authorization code to the backend
-  const sendCodeToBackend = async (code) => {
-    try {
-      const response = await fetch("http://localhost:8000/linkedin-login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ code }),
-      });
+//   // Function to send the authorization code to the backend
+//   const sendCodeToBackend = async (code) => {
+//     try {
+//       const response = await fetch("http://localhost:8000/linkedin-login", {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ code }),
+//       });
 
-      const data = await response.json();
-      console.log("User Profile:", data); // The profile data from the backend
-    } catch (error) {
-      console.error("Error during LinkedIn login:", error);
-    }
-  };
+//       const data = await response.json();
+//       console.log("User Profile:", data); // The profile data from the backend
+//     } catch (error) {
+//       console.error("Error during LinkedIn login:", error);
+//     }
+//   };
 
-  // Extract authorization code from URL and send it to backend
-  useEffect(() => {
-    if (typeof window !== "undefined") { // Check if running in the browser
-      const queryString = window.location.search;
-      const urlParams = new URLSearchParams(queryString);
-      const code = urlParams.get("code");
+//   // Extract authorization code from URL and send it to backend
+//   useEffect(() => {
+//     if (typeof window !== "undefined") { // Check if running in the browser
+//       const queryString = window.location.search;
+//       const urlParams = new URLSearchParams(queryString);
+//       const code = urlParams.get("code");
 
-      if (code) sendCodeToBackend(code);
-    }
-  }, []);
+//       if (code) sendCodeToBackend(code);
+//     }
+//   }, []);
 
-  return (
-    <div>
-      <a href={linkedinOAuthURL}>
-        <button className="bg-blue-600 text-white px-4 py-2 rounded-md">
-          Sign in with LinkedIn
-        </button>
-      </a>
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <a href={linkedinOAuthURL}>
+//         <button className="bg-blue-600 text-white px-4 py-2 rounded-md">
+//           Sign in with LinkedIn
+//         </button>
+//       </a>
+//     </div>
+//   );
+// };
 
-export default LinkedInSocialLogin;
+// export default LinkedInSocialLogin;
