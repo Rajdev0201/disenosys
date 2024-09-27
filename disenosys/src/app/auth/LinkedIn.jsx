@@ -138,60 +138,43 @@
 import React, { useEffect } from "react";
 
 const LinkedInSocialLogin = () => {
-  const LINKEDIN_CLIENT_SECRET = "WPL_AP1.LmVZLcEe0gCCOHGT.AhiX0g==";
   const LINKEDIN_CLIENT_ID = "86mz8rwaet7akp";
-  const LINKEDIN_CALLBACK_URL = "http://localhost:3000/auth/linkedin/callback";
-  
+  const LINKEDIN_CALLBACK_URL = "http://localhost:3000/";
+
   // LinkedIn OAuth URL
   const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${encodeURIComponent(
     LINKEDIN_CALLBACK_URL
   )}&scope=openid%20profile%20email`;
 
-  // Function to handle login process once the code is obtained
-  const handleLogin = async (code) => {
-    const response = await fetch(
-      "https://www.linkedin.com/oauth/v2/accessToken",
-      {
+  // Function to send the authorization code to the backend
+  const sendCodeToBackend = async (code) => {
+    try {
+      const response = await fetch("http://localhost:8000/linkedin-login", {
         method: "POST",
-        body: new URLSearchParams({
-          grant_type: "authorization_code",
-          code,
-          redirect_uri: LINKEDIN_CALLBACK_URL,
-          client_id: LINKEDIN_CLIENT_ID,
-          client_secret: LINKEDIN_CLIENT_SECRET,
-        }),
-      }
-    );
-    
-    const data = await response.json();
-    const accessToken = data.access_token;
-
-    // Fetching LinkedIn user's profile
-    const userProfileResponse = await fetch(
-      "https://api.linkedin.com/v2/me?projection=(id,localizedFirstName,localizedLastName)",
-      {
         headers: {
-          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
         },
-      }
-    );
-    
-    const userProfile = await userProfileResponse.json();
-    console.log(`Welcome, ${userProfile.localizedFirstName} ${userProfile.localizedLastName}!`);
+        body: JSON.stringify({ code }),
+      });
+
+      const data = await response.json();
+      console.log("User Profile:", data); // The profile data from the backend
+    } catch (error) {
+      console.error("Error during LinkedIn login:", error);
+    }
   };
 
-  // Extract the authorization code from the URL query string
+  // Extract authorization code from URL and send it to backend
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const code = urlParams.get("code");
 
-    if (code) handleLogin(code); // Trigger login process if code is present in the URL
+    if (code) sendCodeToBackend(code);
   }, []);
 
   return (
     <div>
-      {/* Button to trigger LinkedIn OAuth login */}
       <a href={linkedinOAuthURL}>
         <button className="bg-blue-600 text-white px-4 py-2 rounded-md">
           Sign in with LinkedIn
@@ -202,3 +185,4 @@ const LinkedInSocialLogin = () => {
 };
 
 export default LinkedInSocialLogin;
+

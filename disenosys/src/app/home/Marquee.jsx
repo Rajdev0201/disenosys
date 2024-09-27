@@ -15,7 +15,7 @@ const companies = [
   { id: 8, name: "Company 8", image: p1 },
   { id: 9, name: "Company 9", image: p1 },
   { id: 10, name: "Company 10", image: p1 },
-  { id: 10, name: "Company 10", image: p1 },
+  { id: 11, name: "Company 10", image: p1 },
 ];
 
 const MarqueeView = () => {
