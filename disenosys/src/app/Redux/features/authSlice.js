@@ -60,5 +60,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { Signup,Login,LogOut,GoogleLog,GoogleOut,LinkedInLog,LinkedInOut,FacebookLog } = authSlice.actions;
+export const { Signup,Login,LogOut,GoogleLog,GoogleOut,FacebookLog } = authSlice.actions;
 export default authSlice.reducer;
