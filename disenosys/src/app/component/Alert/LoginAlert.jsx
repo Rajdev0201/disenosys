@@ -8,13 +8,10 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { login, SignupData } from "@/app/Redux/action/auth.js";
 import Glogin from "../../auth/Glogin.jsx";
-import LinkedInLogin from "../../auth/LinkedIn.jsx"
-// import Facebook from "../../auth/Facebook.jsx";
-import Link from "next/link.js";
+// import LinkedInLogin from "../../auth/LinkedIn.jsx"
+import Facebook from "../../auth/Facebook.jsx";
 
-const DynamicFacebook = dynamic(() => import('../../auth/Facebook.jsx'), {
-  ssr: false,
-});
+
 const LoginAlert = () => {
   const [showAlert, setShowAlert] = useState(true);
   const [show, setShow] = useState(false);
@@ -258,15 +255,15 @@ const LoginAlert = () => {
   </button>
 
   {/* Continue with LinkedIn */}
-  <button className="w-full flex items-center justify-center  text-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
+  {/* <button className="w-full flex items-center justify-center  text-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
     <img
       src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
       alt="LinkedIn Logo"
       className="w-5 h-5 mr-2"
     />
-   {/* <Link href="/login">Sign in LinkedIn</Link> */}
+   <Link href="/login">Sign in LinkedIn</Link>
     <LinkedInLogin />
-  </button>
+  </button> */}
 
   {/* Continue with Facebook */}
   <button className="w-full flex items-center justify-center  text-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
@@ -275,7 +272,7 @@ const LoginAlert = () => {
       alt="Facebook Logo"
       className="w-5 h-5 mr-2"
     />
-   <DynamicFacebook/>
+   <Facebook/>
   </button>
 </div>
 

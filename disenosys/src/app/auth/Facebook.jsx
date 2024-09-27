@@ -1,51 +1,34 @@
 "use client";
 
-import { LoginSocialFacebook } from "reactjs-social-login";
+import dynamic from 'next/dynamic';
 import { useDispatch } from "react-redux";
-import axios from "axios";
-import { FacebookLog } from "../Redux/features/authSlice.js";
 import { useEffect, useState } from "react";
+import { handleLogin } from "../Redux/action/auth.js";
+
+// Dynamically import LoginSocialFacebook and disable SSR
+const LoginSocialFacebook = dynamic(
+  () => import("reactjs-social-login").then((mod) => mod.LoginSocialFacebook),
+  { ssr: false }
+);
 
 const Facebook = () => {
   const dispatch = useDispatch();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    // This will run only on the client side
-    setIsClient(true);
+    // Ensure the code only runs on the client side
+    setIsClient(typeof window !== "undefined");
   }, []);
 
   const handleLoginSuccess = async (response) => {
-    console.log("Facebook Login Success:", response);
-
-    const { first_name, last_name, userID } = response.data;
-    const userName = `${first_name} ${last_name}`;
-
-    try {
-      const result = await axios.post("https://disenosys-1.onrender.com/api/v1/user/facebook", {
-        userEmail: userID,
-        userName,
-      });
-
-      console.log("User data saved:", result.data);
-
-      // Dispatch to Redux store
-      dispatch(FacebookLog(result.data));
-
-      // Save to localStorage only on the client side
-      if (isClient) {
-        localStorage.setItem("profile", JSON.stringify({ userName, userEmail: userID }));
-      }
-    } catch (error) {
-      console.error("Error saving user data:", error);
-    }
+    dispatch(handleLogin(response));
   };
 
   const handleLoginError = (error) => {
     console.error("Facebook Login Failed:", error);
   };
 
-  // Render null until we are on the client side
+  // Render nothing until we confirm the component is client-side
   if (!isClient) {
     return null;
   }

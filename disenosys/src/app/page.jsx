@@ -1,6 +1,4 @@
-"use client";
-
-import dynamic from 'next/dynamic';
+"use client"
 import Home from './home/Home';
 import Box from "./home/Box";
 import WhyChoose from "./home/WhyChoose";
@@ -10,15 +8,12 @@ import Count from "./home/Count";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCarts } from './Redux/action/addToCart.js';
 import { useEffect, useState } from 'react';
+import Testimonials from "./home/Testimonials";
 import LoginAlert from './component/Alert/LoginAlert';
 import Marquee from "./home/Marquee.jsx";
 
-// Dynamically import the Testimonials component without SSR
-const DynamicTestimonials = dynamic(() => import('./home/Testimonials'), {
-  ssr: false,
-});
-
 export default function Page() {
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,16 +26,18 @@ export default function Page() {
   const user = useSelector((state) => state.user);
   const name = user?.user?.user?.userName;
 
-  // Effect to track when testimonials are in view
+ 
   useEffect(() => {
     if (isTestimonialsInView && !name) {
       setHasReachedTestimonials(true);
     }
   }, [isTestimonialsInView, name]);
-
-  // Effect to show alert when testimonials are reached and user is not logged in
   useEffect(() => {
-    setShowAlert(hasReachedTestimonials && !name);
+    if (hasReachedTestimonials && !name) {
+      setShowAlert(true);
+    } else {
+      setShowAlert(false);
+    }
   }, [hasReachedTestimonials, name]);
 
   return (
@@ -52,10 +49,9 @@ export default function Page() {
       )}
       <Home />
       <Count />
-      <Marquee />
+      <Marquee/>
       <Box />
-      {/* Use the dynamically imported Testimonials component */}
-      <DynamicTestimonials setTestimonialsInView={setTestimonialsInView} />
+      <Testimonials setTestimonialsInView={setTestimonialsInView} />
       <WhyChoose />
       <Course />
       <Partner />

@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Login, Signup } from '../features/authSlice';
+import { FacebookLog, Login, Signup } from '../features/authSlice.js';
 
 
 
@@ -77,3 +77,32 @@ export const SignupData = (userData) => async (dispatch) => {
       }
   };
   
+
+  const API_URL = "https://disenosys-1.onrender.com/api/v1/user";
+
+  // Action creator for Facebook login success
+  export const handleLogin = (response) => async (dispatch) => {
+    console.log("Facebook Login Success:", response);
+  
+    const { first_name, last_name, userID } = response.data;
+    const userName = `${first_name} ${last_name}`;
+  
+    try {
+      const result = await axios.post(`${API_URL}/facebook`, {
+        userEmail: userID,
+        userName,
+      });
+  
+      console.log("User data saved:", result.data);
+  
+      // Dispatch to Redux store
+      dispatch(FacebookLog(result.data));
+  
+      // Save to localStorage only on the client side
+  
+        localStorage.setItem("profile", JSON.stringify({ userName, userEmail: userID }));
+      
+    } catch (error) {
+      console.error("Error saving user data:", error);
+    }
+  };
