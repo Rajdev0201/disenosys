@@ -166,11 +166,13 @@ const LinkedInSocialLogin = () => {
 
   // Extract authorization code from URL and send it to backend
   useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const code = urlParams.get("code");
+    if (typeof window !== "undefined") { // Check if running in the browser
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const code = urlParams.get("code");
 
-    if (code) sendCodeToBackend(code);
+      if (code) sendCodeToBackend(code);
+    }
   }, []);
 
   return (
@@ -185,4 +187,3 @@ const LinkedInSocialLogin = () => {
 };
 
 export default LinkedInSocialLogin;
-
