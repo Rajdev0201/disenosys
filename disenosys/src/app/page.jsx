@@ -10,6 +10,7 @@ import { getAllCarts } from './Redux/action/addToCart.js';
 import { useEffect, useState } from 'react';
 import Testimonials from "./home/Testimonials";
 import LoginAlert from './component/Alert/LoginAlert';
+import Marquee from "./home/Marquee.jsx";
 
 export default function Page() {
 
@@ -48,6 +49,7 @@ export default function Page() {
       )}
       <Home />
       <Count />
+      <Marquee/>
       <Box />
       <Testimonials setTestimonialsInView={setTestimonialsInView} />
       <WhyChoose />

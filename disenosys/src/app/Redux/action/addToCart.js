@@ -7,7 +7,7 @@ import {setCart} from "../features/currentCartSlice.js"
 
 export const addProductToCart = (cart) => async (dispatch) => {
     try {
-        const response = await axios.post('http://localhost:8000/api/v1/addCart', cart);
+        const response = await axios.post('https://disenosys-1.onrender.com/api/v1/addCart', cart);
         const { cartItem } = response.data;
         dispatch(addCart(cartItem));
         dispatch(getAllCarts());
