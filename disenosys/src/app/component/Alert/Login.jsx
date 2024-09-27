@@ -111,7 +111,7 @@ const LoginAlert = () => {
                   type="password"
                   id="password"
                   placeholder="Enter Password"
-                  className="w-full border-2 p-2 text-[#182073] border-gray-400 bg-gray-200 rounded outline-none focus:border-[#182073] transition-colors"
+                  className="w-full border-2 p-2 mt-2 text-[#182073] border-gray-400 bg-gray-200 rounded outline-none focus:border-[#182073] transition-colors"
              
                 />
                     <div className="flex justify-end">

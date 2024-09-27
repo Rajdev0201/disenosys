@@ -16,7 +16,7 @@ const Facebook = () => {
 
     try {
    
-      const result = await axios.post("http://localhost:8000/api/v1/user/facebook", {
+      const result = await axios.post("https://disenosys-1.onrender.com/api/v1/user/facebook", {
         userEmail: userID,
         userName,
       });
