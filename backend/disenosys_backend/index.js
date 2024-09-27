@@ -4,9 +4,12 @@ const dotenv = require("dotenv")
 const path = require("path")
 const mongoose = require("mongoose")
 const cors = require("cors")
-const errorMiddleware = require("./middlewares/error.js")
+const errorMiddleware = require("./middlewares/error.js");
+const session = require('express-session');
+const passport = require('passport');
 // const ejs = require("ejs")
-
+// require('dotenv').config();
+// require('./config/passport-set.js');
 
 dotenv.config({ path: path.join(__dirname, "./.env") })
 
@@ -16,6 +19,14 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
+// app.use(session({
+//   secret:"1234n",
+//   resave: false,
+//   saveUninitialized: true,
+// }));
+
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(cors())
 app.use(
   cors({
@@ -27,7 +38,7 @@ app.use((_req, res, next) => {
   res.header('Access-Control-Allow-Headers', '*');
   next();
 });
-const orgins = ["https://disenosys.onrender.com","http://localhost:3000"]
+const orgins = ["https://disenosys.onrender.com","http://localhost:3000",]
 app.use(cors({
   origin: orgins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],

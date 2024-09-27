@@ -23,8 +23,10 @@ import { ShiftingDropDown } from "../Dropdown.jsx";
 import { usePathname } from "next/navigation";
 import { LogOut } from "@/app/Redux/features/authSlice";
 import { IoMdLogOut } from "react-icons/io";
+// import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
+  // const { data: session } = useSession();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("");
@@ -35,6 +37,20 @@ const Navbar = () => {
   // console.log(path);
 
   const user = useSelector((state) => state.user);
+
+  // const handleApiCall = async () => {
+  //   if (session && session.accessToken) {
+  //     const response = await fetch('https://api.linkedin.com/v2/me', {
+  //       headers: {
+  //         Authorization: `Bearer ${session.accessToken}`,
+  //       },
+  //     });
+
+  //     const data = await response.json();
+  //     console.log(data);
+  //   }
+  // };
+  
   useEffect(() => {
     dispatch(getAllCarts());
     const currentPath = router.pathname;
@@ -42,6 +58,11 @@ const Navbar = () => {
   }, [dispatch, router.pathname]);
 
   const cart = useSelector((state) => state?.currentCart);
+
+  const cartUserName = cart?.cartItems?.map((item) => {
+    return item.userName;
+});
+
   const length = cart?.cartItems?.length;
   // console.log(length)
   const handleLinkClick = (link) => {
@@ -83,6 +104,8 @@ const Navbar = () => {
           >
             Home
           </Link>
+          {/* <h1>Welcome, {session?.user?.name}</h1>
+      <button onClick={handleApiCall}>Fetch LinkedIn Profile</button> */}
 
           <ShiftingDropDown />
 
@@ -108,7 +131,7 @@ const Navbar = () => {
                 size={40}
                 className="text-white hover:text-[#057FE3]"
               />
-              {length > 0 && user?.user?.user?._id ? (
+              {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
                 <>
                   <span
                     className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#057FE3] rounded-full ring-2 ring-white z-50"

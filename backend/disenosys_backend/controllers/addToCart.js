@@ -4,7 +4,7 @@ const ErrorHandler = require("../utils/ErrorHandler");
 
 
 exports.postCart = CatchAsyncError(async (req, res, next) => {
-  const { courseId, name, price, quantity, img } = req.body;
+  const { courseId, name, price, quantity, img ,userName} = req.body;
 
   const existingItem = await Cart.findOne({ courseId });
 
@@ -19,7 +19,8 @@ exports.postCart = CatchAsyncError(async (req, res, next) => {
       name,
       price,
       quantity,
-      img
+      img,
+      userName
     });
   }
 

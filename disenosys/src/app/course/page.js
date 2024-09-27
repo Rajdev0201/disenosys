@@ -5,7 +5,7 @@ export default function course () {
   return (
     <div>
         <Course />
-        <div className='mt-20'>
+        <div className='mt-20 container mx-auto'>
         <HomeCourse/>
         </div>
     </div>

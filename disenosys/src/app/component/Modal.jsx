@@ -5,6 +5,7 @@ import { LuUser2 } from "react-icons/lu";
 import Authentication from "../auth/Auth.jsx"
 import { AiOutlineClose } from "react-icons/ai";
 import "./Modal.css";
+import Login from "./Alert/Login.jsx";
 
 const MyModal = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -37,16 +38,16 @@ const MyModal = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Example Modal"
-        className="fixed top-1/2 left-1/2 right-44 transform -translate-x-1/2 -translate-y-1/2 bg-white p-6 rounded-lg shadow-lg w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-4/12 animate-slideIn mt-12"
-        overlayClassName="fixed inset-0 bg-black bg-opacity-50"
+        className="fixed top-20 left-1/2 right-44 transform -translate-x-1/2 -translate-y-1/2  p-6 rounded-lg shadow-lg w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-4/12 animate-slideIn"
+        overlayClassName="fixed inset-0 z-50 bg-black bg-opacity-50"
       >
         <button
           onClick={closeModal}
-          className="bg-[#38C3E2] text-white px-3 py-3 rounded-full mb-44 ml-20  absolute -top-7 -right-8  "
+          className=" mb-44 ml-20  absolute top-10 text-white right-8  "
         >
           <AiOutlineClose size={30} />
         </button>
-        <Authentication />
+       <Login/>
       </Modal>
     </div>
   );

@@ -73,7 +73,7 @@ export const Description = () => {
           ?.map((description, index) => (
             <>
               <div key={index}>
-              <div className="banner p-10 md:p-12 lg:p-44 relative mt-6 md:mt-12 lg:mt-20 grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="banner p-10 md:p-12 lg:p-44 relative mt-6 md:mt-12 lg:mt-28 grid grid-cols-1 lg:grid-cols-2 gap-8">
   <div>
     <p className="text-white pb-3 mt-5 lg:mt-0 font-poppins">
       Latest Release, popular

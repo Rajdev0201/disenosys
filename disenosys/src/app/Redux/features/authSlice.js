@@ -32,8 +32,33 @@ const authSlice = createSlice({
     // Forget: (state, action) => {
     //   state.user = action.payload;
     // },
+    GoogleLog: (state, action) => {
+      const userData = action.payload || {};
+      // console.log(userData);
+      localStorage.setItem("profile", JSON.stringify(userData));
+      state.user = userData;
+    },
+    GoogleOut: (state, action) => {
+      localStorage.removeItem("profile");
+      state.user = null;
+    },
+    LinkedInLog: (state, action) => {
+      const userData = action.payload || {};
+      // console.log(userData);
+      localStorage.setItem("profile", JSON.stringify(userData));
+      state.user = userData;
+    },
+    LinkedInOut: (state, action) => {
+      localStorage.removeItem("profile");
+      state.user = null;
+    },
+    FacebookLog:(state,action) => {
+      const userData = action.payload || {};
+      localStorage.setItem("profile", JSON.stringify(userData));
+      state.user = userData;
+    }
   },
 });
 
-export const { Signup,Login,LogOut } = authSlice.actions;
+export const { Signup,Login,LogOut,GoogleLog,GoogleOut,LinkedInLog,LinkedInOut,FacebookLog } = authSlice.actions;
 export default authSlice.reducer;

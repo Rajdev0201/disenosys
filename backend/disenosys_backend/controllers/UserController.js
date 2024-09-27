@@ -7,6 +7,9 @@ const nodemailer = require("nodemailer")
 const SendEmail = require("../utils/SendEmail")
 const crypto = require("crypto")
 
+const passport = require('passport');
+const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
+
 
 exports.RegisterUser = CatchAsyncError(async(req,res,next)=>{
 
@@ -134,3 +137,121 @@ exports.ResetPassword = CatchAsyncError(async(req,res)=>{
         message:"Hello World"
     })
 })
+
+
+exports.google = CatchAsyncError(async(req,res)=> {
+   
+        const { userEmail, userName } = req.body;
+    
+        try {
+      
+            let user = await UserModel.findOne({ userEmail });
+    
+            if (!user) {
+                user = await UserModel.create({
+                    userName,
+                    userEmail,
+                    password: "N/A", 
+                });
+            } else {
+                user.userName = userName; 
+                await user.save();
+            }
+    
+           
+            res.status(200).json({
+                success: true,
+                user,
+                token: user.getJwtToken(),
+            });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success: false,
+                message: 'Server error',
+            });
+        }
+    
+})
+
+
+
+exports.facebook = CatchAsyncError(async(req,res)=> {
+   
+    const { userEmail, userName } = req.body;
+
+    try {
+  
+        let user = await UserModel.findOne({ userEmail });
+
+        if (!user) {
+            user = await UserModel.create({
+                userName,
+                userEmail,
+                password: "N/A", 
+            });
+        } else {
+            user.userName = userName; 
+            await user.save();
+        }
+
+       
+        res.status(200).json({
+            success: true,
+            user,
+            token: user.getJwtToken(),
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: 'Server error',
+        });
+    }
+
+})
+
+
+exports.LinkedIn = CatchAsyncError(async (req, res) => {
+    const { userEmail, userName } = req.body;
+  
+    if (!userEmail || !userName) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide both userEmail and userName',
+      });
+    }
+  
+    try {
+      let user = await UserModel.findOne({ userEmail });
+  
+      if (!user) {
+        user = await UserModel.create({
+          userName,
+          userEmail,
+          password: "N/A",
+        });
+      } else {
+        user.userName = userName; 
+        await user.save();
+      }
+  
+      res.status(200).json({
+        success: true,
+        user,
+        token: user.getJwtToken(),
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({
+        success: false,
+        message: 'Server error',
+      });
+    }
+  });
+  
+
+
+
+
+

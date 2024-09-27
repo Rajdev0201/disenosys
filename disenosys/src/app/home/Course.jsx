@@ -40,6 +40,7 @@ const Course = () => {
         price: course?.price,
         quantity: 1,
         img: course?.imagePath,
+        userName:user?.user?.user?.userName
         // totalPrice:totalPrice
       }));
     }else{

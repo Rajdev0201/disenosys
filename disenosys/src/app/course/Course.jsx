@@ -15,7 +15,7 @@ import h from "../assests/100.svg";
 export const Course = () => {
   return (
     <>
-      <div className="bg-white px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-44 mx-auto p-12 mt-6 font-poppins">
+      <div className="bg-white px-4 sm:px-6 md:px-10 lg:px-20 xl:px-32 2xl:px-44 mx-auto p-12 mt-16 font-poppins">
         <div className="grid grid-cols-1 md:grid-cols-2 my-6 gap-6 md:gap-8">
           <div>
             <h1 className="text-blue-800 text-lg sm:text-xl md:text-xl lg:text-xl xl:text-4xl font-poppins">

@@ -26,6 +26,10 @@ const cartSchema = new mongoose.Schema({
       totalPrice : {
         type: Number
       },
+      userName : {
+        type: String,
+        required: true,
+      }
 })
 cartSchema.pre('save', function (next) {
   this.totalPrice = this.price * this.quantity;

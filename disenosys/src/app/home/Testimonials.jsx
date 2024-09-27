@@ -10,30 +10,21 @@ import ragul from "../assests/testimonials/Raghul Srivatsa.png";
 import rajesh from "../assests/testimonials/Rajesh Deva.png";
 import sheldon from "../assests/testimonials/Sheldon.png";
 import Image from "next/image";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import LoginAlert from "../component/Alert/LoginAlert";
 
-const Testimonials = () => {
-  const [showAlert, setShowAlert] = useState(false);
+const Testimonials = ({ setTestimonialsInView }) => {
   const boxRef = useRef(null);
-  const user = useSelector((state) => state.user);
-  const name = user?.user?.user?.userName;
- 
 
   useEffect(() => {
-
     const observer = new IntersectionObserver(
       (entries) => {
-        const entry = entries[0]; 
-        if (entry.isIntersecting && !name) {
-          setShowAlert(true);
-        } else {
-          setShowAlert(false);
-        }
+        const entry = entries[0];
+        setTestimonialsInView(entry.isIntersecting);
       },
       {
-        root: null, 
-        threshold: 0.2, 
+        root: null,
+        threshold: 0.2,
       }
     );
 
@@ -46,7 +37,7 @@ const Testimonials = () => {
         observer.unobserve(boxRef.current);
       }
     };
-  }, [name]);
+  }, [setTestimonialsInView]);
 
   const settings = {
     dots: true,
@@ -150,11 +141,11 @@ const Testimonials = () => {
 
   return (
     <section className="relative">
-        {showAlert && (
+        {/* {showAlert && (
         <div className="fixed inset-0 bg-[#182073] bg-opacity-50 backdrop-blur-sm z-40 flex justify-center items-center">
           <LoginAlert />
         </div>
-      )}
+      )} */}
       <div ref={boxRef} className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <h2 className="text-center font-bold font-poppins text-[#182073] text-xl lg:text-5xl mb-8">
           Read trusted reviews from our Students

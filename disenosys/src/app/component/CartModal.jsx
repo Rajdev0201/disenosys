@@ -29,6 +29,10 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
     dispatch(removeProductFromCart(itemId));
   };
 
+  const cartUserName = cart?.cartItems?.map((item) => {
+    return item.userName;
+});
+
   const handleClose = () => setIsOpen(false);
 
   const UserData = {
@@ -73,7 +77,7 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
               </div>
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4">Cart</h3>
               <div className="text-center mb-6">
-                {cart?.cartItems?.length > 0 ? (
+                {cart?.cartItems?.length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
                   cart.cartItems.map((item) => (
                     <div key={item._id} className="flex flex-col space-x-2 sm:flex-row justify-between items-center py-2 border-b text-sm sm:text-md md:text-lg">
                       <img src={item.img} className='w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-cover' alt={item.name} />

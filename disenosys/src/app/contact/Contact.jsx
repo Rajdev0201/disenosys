@@ -7,7 +7,7 @@ export const Contact = () => {
   return (
     <>
 
-      <div className="banner p-20 md:p-12 lg:p-48 mt-16">
+      <div className="banner-contact p-20 md:p-12 lg:p-48 mt-16">
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div></div>
           <div className="flex items-center justify-end">
