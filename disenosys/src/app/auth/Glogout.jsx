@@ -1,3 +1,4 @@
+"use client"
 import { GoogleLogout } from "@react-oauth/google";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
