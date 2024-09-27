@@ -4,9 +4,16 @@ import { LoginSocialFacebook } from "reactjs-social-login";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { FacebookLog } from "../Redux/features/authSlice.js";
+import { useEffect, useState } from "react";
 
 const Facebook = () => {
   const dispatch = useDispatch();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    // This will run only on the client side
+    setIsClient(true);
+  }, []);
 
   const handleLoginSuccess = async (response) => {
     console.log("Facebook Login Success:", response);
@@ -25,8 +32,8 @@ const Facebook = () => {
       // Dispatch to Redux store
       dispatch(FacebookLog(result.data));
 
-      // Save to localStorage
-      if (typeof window !== "undefined") {
+      // Save to localStorage only on the client side
+      if (isClient) {
         localStorage.setItem("profile", JSON.stringify({ userName, userEmail: userID }));
       }
     } catch (error) {
@@ -37,6 +44,11 @@ const Facebook = () => {
   const handleLoginError = (error) => {
     console.error("Facebook Login Failed:", error);
   };
+
+  // Render null until we are on the client side
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div>

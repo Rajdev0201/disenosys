@@ -1,5 +1,7 @@
 "use client"
 import React, { useState } from "react";
+
+import dynamic from 'next/dynamic';
 import { Transition } from "@headlessui/react";
 import { IoMdAlert } from "react-icons/io";
 import { useDispatch } from "react-redux";
@@ -7,10 +9,12 @@ import { useRouter } from "next/navigation";
 import { login, SignupData } from "@/app/Redux/action/auth.js";
 import Glogin from "../../auth/Glogin.jsx";
 import LinkedInLogin from "../../auth/LinkedIn.jsx"
-import Facebook from "../../auth/Facebook.jsx";
+// import Facebook from "../../auth/Facebook.jsx";
 import Link from "next/link.js";
 
-
+const DynamicFacebook = dynamic(() => import('../../auth/Facebook.jsx'), {
+  ssr: false,
+});
 const LoginAlert = () => {
   const [showAlert, setShowAlert] = useState(true);
   const [show, setShow] = useState(false);
@@ -271,7 +275,7 @@ const LoginAlert = () => {
       alt="Facebook Logo"
       className="w-5 h-5 mr-2"
     />
-   <Facebook/>
+   <DynamicFacebook/>
   </button>
 </div>
 
