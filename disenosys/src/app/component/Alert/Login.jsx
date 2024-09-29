@@ -254,14 +254,15 @@ const LoginAlert = () => {
   </button>
 
   {/* Continue with LinkedIn */}
-  {/* <button className="w-full flex items-center justify-center  text-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
+  <button className="w-full flex items-center justify-center  text-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
     <img
       src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
       alt="LinkedIn Logo"
       className="w-5 h-5 mr-2"
     />
-   <Link href="/login">Sign in LinkedIn</Link>
-  </button> */}
+   {/* <Link href="/login">Sign in LinkedIn</Link> */}
+   <LinkedInLogin/>
+  </button>
 
   {/* Continue with Facebook */}
   <button className="w-full flex items-center justify-center  text-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm">

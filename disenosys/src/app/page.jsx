@@ -10,7 +10,7 @@ import { getAllCarts } from './Redux/action/addToCart.js';
 import { useEffect, useState } from 'react';
 import Testimonials from "./home/Testimonials";
 import LoginAlert from './component/Alert/LoginAlert';
-import Marquee from "./home/Marquee.jsx";
+// import Marquee from "./home/Marquee.jsx";
 
 export default function Page() {
 
@@ -24,7 +24,8 @@ export default function Page() {
   const [isTestimonialsInView, setTestimonialsInView] = useState(false);
   const [showAlert, setShowAlert] = useState(false); 
   const user = useSelector((state) => state.user);
-  const name = user?.user?.user?.userName;
+  const name = user?.user?.user?.userName ||  user?.user?.name || user?.user?.userName ;
+
 
  
   useEffect(() => {
@@ -49,7 +50,7 @@ export default function Page() {
       )}
       <Home />
       <Count />
-      <Marquee/>
+   
       <Box />
       <Testimonials setTestimonialsInView={setTestimonialsInView} />
       <WhyChoose />

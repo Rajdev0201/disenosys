@@ -8,6 +8,7 @@ const SendEmail = require("../utils/SendEmail")
 const crypto = require("crypto")
 
 const passport = require('passport');
+const linkedin = require("../models/linkedin")
 const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
 
 
@@ -213,42 +214,25 @@ exports.facebook = CatchAsyncError(async(req,res)=> {
 
 
 exports.LinkedIn = CatchAsyncError(async (req, res) => {
-    const { userEmail, userName } = req.body;
-  
-    if (!userEmail || !userName) {
-      return res.status(400).json({
-        success: false,
-        message: 'Please provide both userEmail and userName',
-      });
-    }
-  
+   
     try {
-      let user = await UserModel.findOne({ userEmail });
+      const user = await linkedin.findById({email});
   
       if (!user) {
-        user = await UserModel.create({
-          userName,
-          userEmail,
-          password: "N/A",
-        });
-      } else {
-        user.userName = userName; 
-        await user.save();
+        return res.status(404).json({ error: 'User not found' });
       }
   
       res.status(200).json({
         success: true,
         user,
-        token: user.getJwtToken(),
       });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({
-        success: false,
-        message: 'Server error',
-      });
+      console.error('Error fetching current user:', error.message);
+      res.status(500).json({ error: 'Server error' });
     }
   });
+
+  
   
 
 

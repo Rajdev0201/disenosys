@@ -21,8 +21,9 @@ import { getAllCarts } from "@/app/Redux/action/addToCart.js";
 import Modal from "../Modal.jsx";
 import { ShiftingDropDown } from "../Dropdown.jsx";
 import { usePathname } from "next/navigation";
-import { LogOut } from "@/app/Redux/features/authSlice";
+import {  LogOut, setUser } from "@/app/Redux/features/authSlice.js";
 import { IoMdLogOut } from "react-icons/io";
+import LinkedInSocialLogin from "@/app/auth/LinkedIn";
 // import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
@@ -51,6 +52,14 @@ const Navbar = () => {
   //   }
   // };
   
+  useEffect(() => {
+    const storedUser = localStorage.getItem("profile");
+    if (storedUser) {
+      // Dispatch action to update Redux with localStorage data
+      dispatch(setUser(JSON.parse(storedUser)));
+    }
+  }, [dispatch]);
+
   useEffect(() => {
     dispatch(getAllCarts());
     const currentPath = router.pathname;
@@ -155,17 +164,17 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex mr-0 lg:mr-20">
-          {user?.user?.user?.userName ? (
+          {user?.user?.user?.userName || user?.user?.name || user?.user?.userName  ? (
             <>
               <div className="relative hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
                 <span className="bg-[#057FE3] shadow-lg px-4 py-2 rounded-full text-white font-poppins font-bold text-lg">
-                  {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
+                  {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)} { user?.user?.name?.toLocaleUpperCase()?.charAt(0)} { user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
                 </span>
                 <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="relative">
                     <div className="bg-[#057FE3]  text-white flex flex-col rounded-md px-5 py-3">
                      <div className="text-center text-base font-bold font-poppins mt-1">
-                     {user?.user?.user?.userName?.toLocaleUpperCase()}
+                     {user?.user?.user?.userName?.toLocaleUpperCase()} { user?.user?.name?.toLocaleUpperCase()}  { user?.user?.userName?.toLocaleUpperCase()} 
                     </div> 
 
                 <div class="max-w-44  items-center justify-center text-white text-base font-poppins font-bold duration-300 cursor-pointer active:scale-[0.98]">
@@ -186,8 +195,14 @@ const Navbar = () => {
              
             </>
           ) : (
+            <>
             <Modal />
+
+            </>
           )}
+            <button className="invisible flex items-end justify-end">
+    <LinkedInSocialLogin text=" " err=""/>
+</button>
         </div>
 
         {mobileMenuOpen && (
@@ -290,7 +305,9 @@ const Navbar = () => {
                     </span>
                   </div>
                 ) : (
+                  <>
                   <Modal />
+                  </>
                 )}
               </>
             </div>

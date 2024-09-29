@@ -8,9 +8,8 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { login, SignupData } from "@/app/Redux/action/auth.js";
 import Glogin from "../../auth/Glogin.jsx";
-// import LinkedInLogin from "../../auth/LinkedIn.jsx"
 import Facebook from "../../auth/Facebook.jsx";
-
+import LinkedInLogin from "../../auth/LinkedIn.jsx";
 
 const LoginAlert = () => {
   const [showAlert, setShowAlert] = useState(true);
@@ -71,7 +70,7 @@ const LoginAlert = () => {
   };
 
   return (
-    <div className="fixed inset-x-0 top-34  mt-10 flex justify-center z-50">
+    <div className="fixed inset-x-0 top-34  mt-2 flex justify-center z-50">
       <Transition
         show={showAlert}
         enter="transform transition duration-300 ease-out"
@@ -83,15 +82,15 @@ const LoginAlert = () => {
       >
         <div
           id="toast-notification"
-          class="w-full max-w-md max-h-lg  bg-[#182073] rounded-lg shadow "
+          class="w-full max-w-md max-h-lg  bg-white rounded-lg shadow "
           role="alert"
         >
-          <div class="flex items-center justify-between mb-3 p-4 bg-white ">
-            <span class="mb-1 text-xl font-semibold font-poppins text-[#182073]">
+          <div class="flex items-center justify-between mb-3 p-4 bg-[#182073] ">
+            <span class="mb-1 text-xl font-semibold font-poppins text-white">
               Auth notification
             </span>
             <button>
-              <IoMdAlert size={30} className="text-[182073]" />
+              <IoMdAlert size={30} className="text-white" />
             </button>
           </div>
 
@@ -99,7 +98,7 @@ const LoginAlert = () => {
             forgotshow ? (
               <>
                 <div className="container mx-auto pt-5">
-                  <h1 className="font-bold text-center text-gray-100 font-poppins text-2xl">
+                  <h1 className="font-bold text-center text-[#182073] font-poppins text-2xl">
                     First login or register!
                   </h1>
                   <form onSubmit={handleSignin} className="p-6">
@@ -119,14 +118,14 @@ const LoginAlert = () => {
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="bg-white w-28 mt-3 p-2 text-xl font-semibold text-[#182073] flex items-center justify-center rounded"
+                        className="bg-[#182073] w-28 mt-3 p-2 text-xl font-semibold text-white flex items-center justify-center rounded"
                       >
                         Continue
                       </button>
                     </div>
                     <div className="flex justify-end">
                       <h1
-                        className=" text-base mt-1 font-light text-white mb-6 hover:text-blue-300 hover:cursor-pointer"
+                        className=" text-base mt-1 font-light text-[#182073] mb-6 hover:text-blue-300 hover:cursor-pointer"
                         onClick={handleLogin}
                       >
                         Don&apos;t have an account?
@@ -187,7 +186,7 @@ const LoginAlert = () => {
           ) : (
             <>
               <div className="container mx-auto pt-5 ">
-              <h1 className="font-bold text-center text-gray-100 font-poppins text-2xl">
+              <h1 className="font-bold text-center text-[#182073] font-poppins text-2xl">
                     First login or register!
                   </h1>
                 <form action="" onSubmit={(e) => handleSignup(e)}className="p-6">
@@ -218,14 +217,14 @@ const LoginAlert = () => {
                     <div className="flex justify-end">
                       <button
                         type="submit"
-                        className="bg-white w-28 mt-3 p-2 text-xl font-semibold text-[#182073] flex items-center justify-center rounded"
+                        className="bg-[#182073] w-28 mt-3 p-2 text-xl font-semibold text-white flex items-center justify-center rounded"
                       >
                         Continue
                       </button>
                     </div>
                     <div className="flex justify-end">
                       <h1
-                        className=" text-base mt-1 font-light text-white mb-6 hover:text-blue-300 hover:cursor-pointer"
+                        className=" text-base mt-1 font-light text-[#182073] mb-6 hover:text-blue-300 hover:cursor-pointer"
                         onClick={handleRegister}
                       >
                         Already have an account?
@@ -244,29 +243,29 @@ const LoginAlert = () => {
           )}
           <div className="space-y-4 w-full max-w-xs mx-auto p-5">
   {/* Continue with Google */}
-  <button className="w-full flex items-center justify-center  text-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-5 h-5 mr-2">
+  <button className="w-full flex items-center justify-center  text-[#182073] border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
+  {/* <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="w-5 h-5 mr-2">
       <path fill="#4285F4" d="M44.5 20H24v8.5h11.7c-1 4.3-4.8 7.5-9.7 7.5-5.5 0-10-4.5-10-10s4.5-10 10-10c2.5 0 4.8 0.9 6.6 2.4l6.3-6.3C34.8 7 29.7 5 24 5 13.5 5 5 13.5 5 24s8.5 19 19 19c9.4 0 18-6.9 18-19 0-1.3-.1-2.7-.5-4z"/>
       <path fill="#34A853" d="M10.9 29.1c-1.5-2.4-2.4-5.2-2.4-8.1s.9-5.7 2.4-8.1l-6.3-6.3C3.3 10.2 2 16 2 24s1.3 13.8 3.6 19.2l6.3-6.1z"/>
       <path fill="#FBBC05" d="M24 44c5.2 0 9.9-1.7 13.7-4.8l-6.3-6.3c-2 1.3-4.5 2.1-7.4 2.1-4.9 0-8.7-3.2-9.7-7.5H10.9l-6.3 6.3C11.1 41.9 17.1 44 24 44z"/>
       <path fill="#EA4335" d="M44.5 20H24v8.5h11.7c-.5 2.5-1.9 4.6-3.7 6.1l6.3 6.3C41.3 37.3 44 31.1 44 24c0-1.3-.1-2.7-.5-4z"/>
-    </svg>
+    </svg> */}
    <Glogin/>
   </button>
 
   {/* Continue with LinkedIn */}
-  {/* <button className="w-full flex items-center justify-center  text-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
+  <button className="w-full flex items-center justify-center  text-[#182073] border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
     <img
       src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
       alt="LinkedIn Logo"
       className="w-5 h-5 mr-2"
     />
-   <Link href="/login">Sign in LinkedIn</Link>
-    <LinkedInLogin />
-  </button> */}
+   {/* <Link href="/login">Sign in LinkedIn</Link> */}
+    <LinkedInLogin text="Login with LinkedIn" err="linkedin OAuth error please open new tab"/>
+  </button>
 
   {/* Continue with Facebook */}
-  <button className="w-full flex items-center justify-center  text-white border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
+  <button className="w-full flex items-center justify-center  text-[#182073] border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
     <img
       src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
       alt="Facebook Logo"
