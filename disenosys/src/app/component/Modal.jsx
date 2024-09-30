@@ -43,7 +43,7 @@ const MyModal = () => {
       >
         <button
           onClick={closeModal}
-          className=" mb-44 ml-20  absolute top-10 text-white right-8  "
+          className=" mb-44 ml-20  absolute top-30 text-white right-8  "
         >
           <AiOutlineClose size={30} />
         </button>

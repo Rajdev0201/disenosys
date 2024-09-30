@@ -92,9 +92,10 @@ const LinkedInSocialLogin = ({text,err}) => {
       {!isUserLoggedIn() ? (
         <a href={linkedinOAuthURL}>{text}</a>
       ) : (
-        <div>
-          <h3>Welcome, {name}!</h3>
-        </div>
+        // <div>
+        //   <h3>Welcome, {name}!</h3>
+        // </div>
+        ""
       )}
     </div>
   );

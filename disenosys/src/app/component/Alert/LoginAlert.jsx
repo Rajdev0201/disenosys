@@ -254,25 +254,25 @@ const LoginAlert = () => {
   </button>
 
   {/* Continue with LinkedIn */}
-  <button className="w-full flex items-center justify-center  text-[#182073] border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
+  {/* <button className="w-full flex items-center justify-center  text-[#182073] border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
     <img
       src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png"
       alt="LinkedIn Logo"
       className="w-5 h-5 mr-2"
     />
-   {/* <Link href="/login">Sign in LinkedIn</Link> */}
+
     <LinkedInLogin text="Login with LinkedIn" err="linkedin OAuth error please open new tab"/>
-  </button>
+  </button> */}
 
   {/* Continue with Facebook */}
-  <button className="w-full flex items-center justify-center  text-[#182073] border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
+  {/* <button className="w-full flex items-center justify-center  text-[#182073] border border-gray-300 rounded-lg px-4 py-2 shadow-sm">
     <img
       src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
       alt="Facebook Logo"
       className="w-5 h-5 mr-2"
     />
    <Facebook/>
-  </button>
+  </button> */}
 </div>
 
         </div>
