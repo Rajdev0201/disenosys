@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "./component/Navbar/Navbar";
-import Footer from "./component/Navbar/Footer";
+// import Navbar from "./component/Navbar/Navbar";
+// import Footer from "./component/Navbar/Footer";
 import { Providers } from "./Redux/Provide";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingWrapper from "./component/LoadingWrapper";
 import Script from 'next/script';
-import Blink from "./component/Blink/BlinkingPopup";
+
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,12 +29,10 @@ export default function RootLayout({
  
         <Providers>
           <LoadingWrapper>
-            <Blink/>
-            <Navbar />
+      
         
             {children}
-           
-            <Footer />
+         
             <ToastContainer />
           </LoadingWrapper>
         </Providers>

@@ -10,6 +10,10 @@ import { getAllCarts } from './Redux/action/addToCart.js';
 import { useEffect, useState } from 'react';
 import Testimonials from "./home/Testimonials";
 import LoginAlert from './component/Alert/LoginAlert';
+import Navbar from "./component/Navbar/Navbar";
+import Footer from "./component/Navbar/Footer";
+import Blink from "./component/Blink/BlinkingPopup";
+
 // import Marquee from "./home/Marquee.jsx";
 
 export default function Page() {
@@ -48,6 +52,8 @@ export default function Page() {
           <LoginAlert />
         </div>
       )}
+      <Navbar />
+      <Blink/>
       <Home />
       <Count />
    
@@ -56,6 +62,7 @@ export default function Page() {
       <WhyChoose />
       <Course />
       <Partner />
+      <Footer />
     </div>
   );
 }
