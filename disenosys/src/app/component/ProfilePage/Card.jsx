@@ -61,6 +61,7 @@ const Card = () => {
           </>
          }
           <div className="flex items-center gap-3">
+            {user ? 
             <button
               onClick={() => setIsModalOpen(true)}
               className="bg-[#182073] transition-all gradient text-[15px] text-white px-3 py-[6px] rounded-sm flex items-center gap-1"
@@ -68,6 +69,11 @@ const Card = () => {
               Edit Profile
               <CiEdit size={25} />
             </button>
+            :
+            <>
+            <p className='text-gray-400 text-base'>Please sign in your account</p>
+            </>
+            }
           </div>
         </div>
       </div>
