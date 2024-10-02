@@ -29,21 +29,37 @@ const Card = () => {
     }
   }, [dispatch, userid]);
 
-  const profileName = profile?.name || 'NA'; 
-  const profileTitle = profile?.title || 'NA';
+  const profileName = profile?.name; 
+  const profileTitle = profile?.title;
 
   return (
     <div>
       <div className="relative rounded-xl overflow-hidden flex flex-col items-center shadow-sm bg-white font-Roboto-light">
         <div className="h-32 w-full bg-[#182073]"></div>
         <div className="top-16 z-10 flex items-center flex-col gap-4 px-5 py-5">
+          {profile ?
+          <>
           <div className="-mt-20">
             <CgProfile size={90} className='text-blue-300' />
           </div>
+
           <div className="flex items-center flex-col">
             <p className="text-black font-Roboto-md">{profileName}</p>
             <p className="text-xs text-gray-500 font-medium">{profileTitle}</p>
           </div>
+          </> 
+          :
+          <>
+             <div className="-mt-20">
+            <CgProfile size={90} className='text-blue-300' />
+          </div>
+
+          <div className="flex items-center flex-col">
+            <p className="text-black font-Roboto-md">{user?.user?.userName}</p>
+            <p className="text-xs text-gray-500 font-medium">NA</p>
+          </div>
+          </>
+         }
           <div className="flex items-center gap-3">
             <button
               onClick={() => setIsModalOpen(true)}
