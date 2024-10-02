@@ -24,10 +24,10 @@ const Profile = () => {
 
   const fetchResumes = async () => {
     try {
-      const response = await axios.get(`http://localhost:8000/resumes/${user.user.userName}`);
+      const response = await axios.get(`https://disenosys-1.onrender.com/resumes/${user.user.userName}`);
       const resumesWithUrl = response?.data?.map((resume) => ({
         ...resume,
-        fileUrl: `http://localhost:8000/uploads/${resume?.filePath?.split('\\').pop()}`,
+        fileUrl: `https://disenosys-1.onrender.com/uploads/${resume?.filePath?.split('\\').pop()}`,
       }));
       setResumeList(resumesWithUrl);
     } catch (error) {
@@ -56,7 +56,7 @@ const Profile = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/upload",
+        "https://disenosys-1.onrender.com/upload",
         formData,
         {
           headers: {
@@ -79,7 +79,7 @@ const Profile = () => {
   
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/delete/${id}`);
+      await axios.delete(`https://disenosys-1.onrender.com/delete/${id}`);
       setResumeList(resumeList?.filter(item => item._id !== id));
       alert("Resume deleted successfully!");
     } catch (error) {

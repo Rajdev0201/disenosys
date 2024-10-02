@@ -45,7 +45,7 @@ const Portfolio = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:8000/upload-portfolio",
+          "https://disenosys-1.onrender.com/upload-portfolio",
           formData,
           {
             headers: {
