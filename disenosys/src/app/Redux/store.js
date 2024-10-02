@@ -6,7 +6,7 @@ import addCart from './features/addToCartSlice.js';
 import currentCartSlice from './features/currentCartSlice.js';
 import currentUser from './features/authSlice.js';
 import payment from './features/PaymentSlice.js';
-
+import currentProfile from './features/currentProfile.js';
 export default configureStore({
   reducer: {
     course: CourseSlice,
@@ -14,6 +14,7 @@ export default configureStore({
     cart:addCart,
     currentCart:currentCartSlice,
     user: currentUser,
-    payment:payment
+    payment:payment,
+    currentProfile:currentProfile
   },
 });
