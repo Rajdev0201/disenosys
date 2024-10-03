@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import one from "../assests/models/slide1.png";
+import one from "../assests/models/slide.png";
 import Image from 'next/image';
 import { RiProfileFill } from 'react-icons/ri';
 import { useRouter } from 'next/navigation';
