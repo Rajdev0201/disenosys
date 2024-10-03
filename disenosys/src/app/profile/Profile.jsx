@@ -21,20 +21,24 @@ const Profile = () => {
       dispatch(setUser(JSON.parse(storedUser)));
     }
   }, [dispatch]);
+  
 
   const fetchResumes = async () => {
     try {
-      const response = await axios.get(`https://disenosys-1.onrender.com/resumes/${user.user.userName}`);
-      const resumesWithUrl = response?.data?.map((resume) => ({
-        ...resume,
-        fileUrl: `https://disenosys-1.onrender.com/uploads/${resume?.filePath?.split('\\').pop()}`,
-      }));
-      setResumeList(resumesWithUrl);
-    } catch (error) {
-      console.error("Error fetching resumes:", error);
-    }
-  };
+        const response = await axios.get(`https://disenosys-1.onrender.com/resumes/${user.user.userName}`);
+        
+        const resumesWithUrl = response?.data?.map((resume) => ({
+            ...resume,
+            fileUrl: resume?.filePath ? `https://disenosys-1.onrender.com/${resume.filePath}` : null,
+        }));
 
+        setResumeList(resumesWithUrl);
+    } catch (error) {
+        console.error("Error fetching resumes:", error);
+    }
+};
+
+  
   useEffect(() => {
     if (user) {
       fetchResumes(); 

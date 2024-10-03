@@ -78,6 +78,8 @@ app.get("/",(req,res) => {
 })
 
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
@@ -109,7 +111,7 @@ app.post('/upload', uploadResume.single('file'), async (req, res) => {
     return res.status(400).send('No file uploaded.');
   }
 
-  const filePath = path.join(uploadDir, file.filename);
+  const filePath = `uploads/${file.filename}`;
 
   const newResume = new resume({ name, filePath });
   await newResume.save();

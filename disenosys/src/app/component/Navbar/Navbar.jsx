@@ -140,7 +140,7 @@ const Navbar = () => {
                 size={40}
                 className="text-white hover:text-[#057FE3]"
               />
-              {length > 0 && cartUserName.includes(user?.user?.userName) ? (
+              {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
                 <>
                   <span
                     className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#057FE3] rounded-full ring-2 ring-white z-50"
@@ -164,7 +164,7 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex mr-0 lg:mr-20">
-          {user?.user?.userName || user?.user?.name || user?.user?.userName  ? (
+          {user?.user?.user?.userName || user?.user?.name || user?.user?.userName  ? (
             <>
               <div className="relative hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
                 <span className="bg-[#057FE3] shadow-lg px-4 py-2 rounded-full text-white font-poppins font-bold text-lg">

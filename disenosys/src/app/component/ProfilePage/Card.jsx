@@ -10,9 +10,9 @@ const Card = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user?.user);
+  
   const userid = user?.user?._id;
-  const profile = useSelector((state) => state.currentProfile); // Assuming currentProfile is where profile is stored
-
+  const profile = useSelector((state) => state.currentProfile); 
 
   useEffect(() => {
     const storedUser = localStorage.getItem("profile");
