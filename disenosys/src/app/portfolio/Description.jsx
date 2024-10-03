@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import Card from '../component/ProfilePage/Card';
-import one from "../assests/models/slide.png";
+import one from "../assests/slide.png";
 import { RiProfileFill } from 'react-icons/ri';
 import Image from 'next/image';
 
