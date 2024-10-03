@@ -41,7 +41,7 @@ const Card = () => {
 
   const getImageUrl = (filePath) => {
     // Use the filename directly, assuming it's already stored as just the filename
-    return `http://localhost:8000/uploadsProfile/${filePath}`; 
+    return `https://disenosys-1.onrender.com/uploadsProfile/${filePath}`; 
   };
   
   const imageUrl = getImageUrl(profile?.filePath);
