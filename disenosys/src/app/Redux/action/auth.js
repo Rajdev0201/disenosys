@@ -14,6 +14,7 @@ export const SignupData = (userData) => async (dispatch) => {
         userData
       );
       dispatch(Signup(data));
+      localStorage.setItem("profile", JSON.stringify(data));
       toast.dark('signup process done!', {
         position: "top-center",
         autoClose: 5000,
@@ -24,9 +25,9 @@ export const SignupData = (userData) => async (dispatch) => {
         progress: undefined,
         theme: "dark",
         });
-      localStorage.setItem("profile", JSON.stringify(data));
+        nav("/");
     } catch (err) {
-      toast.info(err?.response?.data?.message, {
+      toast.info("sigin process failed", {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -64,7 +65,7 @@ export const SignupData = (userData) => async (dispatch) => {
       localStorage.setItem("profile", JSON.stringify(data));
       nav("/");
     }catch(err) {
-      toast.error(err.response.data.message, {
+      toast.error(err?.response?.data?.message, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,

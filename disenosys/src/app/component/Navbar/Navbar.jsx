@@ -37,20 +37,8 @@ const Navbar = () => {
   const path = usePathname();
   // console.log(path);
 
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state?.user);
 
-  // const handleApiCall = async () => {
-  //   if (session && session.accessToken) {
-  //     const response = await fetch('https://api.linkedin.com/v2/me', {
-  //       headers: {
-  //         Authorization: `Bearer ${session.accessToken}`,
-  //       },
-  //     });
-
-  //     const data = await response.json();
-  //     console.log(data);
-  //   }
-  // };
   
   useEffect(() => {
     const storedUser = localStorage.getItem("profile");
@@ -118,7 +106,7 @@ const Navbar = () => {
 
           <ShiftingDropDown />
 
-          {["Course", "Gallery"].map((item) => (
+          {["Course","Portfolio", "Gallery"].map((item) => (
             <Link
               key={item}
               href={`/${item.toLowerCase()}`}
@@ -176,10 +164,12 @@ const Navbar = () => {
                      <div className="text-center text-base font-bold font-poppins mt-1">
                      {user?.user?.user?.userName?.toLocaleUpperCase()} { user?.user?.name?.toLocaleUpperCase()}  { user?.user?.userName?.toLocaleUpperCase()} 
                     </div> 
-
-                <div class="max-w-44  items-center justify-center text-white text-base font-poppins font-bold duration-300 cursor-pointer active:scale-[0.98]">
+                 <div className="text-center text-base font-bold font-poppins mt-1">
+                     <Link href="/dashboard">My Profile</Link>
+                 </div>
+                <div className="max-w-44  items-center justify-center text-white text-base font-poppins font-bold duration-300 cursor-pointer active:scale-[0.98]">
                 <button
-                  class="px-0 py-2 flex items-center "
+                  className="px-0 py-2 flex items-center "
                   onClick={handleLogout}
                 >
                   <IoMdLogOut size={20} className=" mx-0" />

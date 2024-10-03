@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const profileSchema = new mongoose.Schema({
-    filePath: { type: String,required:true },
+    filePath: { type: String},
     name: {
        type:String
       },
@@ -10,7 +10,6 @@ const profileSchema = new mongoose.Schema({
       },
       userId: {
         type: String,
-        required: true
       },
     lastUpdated: { type: Date, default: Date.now },
 });

@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import { CgProfile } from "react-icons/cg";
 import { CiEdit } from 'react-icons/ci';
@@ -5,14 +6,18 @@ import EditProfileModal from './EditProfileModal';
 import { setUser } from '@/app/Redux/features/authSlice.js';
 import { getProfile } from "@/app/Redux/action/editProfile.js";
 import { useDispatch, useSelector } from 'react-redux';
+import Image from 'next/image';
 
 const Card = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const user2 = useSelector((state) => state.user?.user);
+  console.log(user2)
   const user = useSelector((state) => state.user?.user);
-  
+  // console.log("first:",user.user?._id)
   const userid = user?.user?._id;
   const profile = useSelector((state) => state.currentProfile); 
+  // console.log(profile)
 
   useEffect(() => {
     const storedUser = localStorage.getItem("profile");
@@ -20,6 +25,7 @@ const Card = () => {
       dispatch(setUser(JSON.parse(storedUser)));
     }
   }, [dispatch]);
+
 
   useEffect(() => {
     if (userid) {
@@ -31,6 +37,15 @@ const Card = () => {
 
   const profileName = profile?.name; 
   const profileTitle = profile?.title;
+  
+
+  const getImageUrl = (filePath) => {
+    // Use the filename directly, assuming it's already stored as just the filename
+    return `http://localhost:8000/uploadsProfile/${filePath}`; 
+  };
+  
+  const imageUrl = getImageUrl(profile?.filePath);
+  // console.log(imageUrl);
 
   return (
     <div>
@@ -40,8 +55,11 @@ const Card = () => {
           {profile ?
           <>
           <div className="-mt-20">
-            <CgProfile size={90} className='text-blue-300' />
+           <img src={imageUrl} alt='profile-logo' className='w-24 h-24' width={20} height={20} />
           </div>
+          {/* <div className="-mt-20">
+            <CgProfile size={90} className='text-blue-300' />
+          </div> */}
 
           <div className="flex items-center flex-col">
             <p className="text-black font-Roboto-md">{profileName}</p>

@@ -4,10 +4,11 @@ import { useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 import { GoogleLog } from "../Redux/features/authSlice.js";
 import axios from 'axios';
+import { useRouter } from "next/navigation.js";
 
 const Login = () => {
     const dispatch = useDispatch();
-
+    const nav = useRouter();
     const handleLoginSuccess = async (credentialResponse) => {
         const decoded = jwtDecode(credentialResponse?.credential);
         console.log("Login Success:", decoded);
@@ -21,13 +22,14 @@ const Login = () => {
             console.log('User data saved:', response.data);
             
            
-            const { userName, userEmail } = response.data.user; 
+         
     
+            const { _id, userName, userEmail } = response.data.user; 
             
             dispatch(GoogleLog(response.data));
-    
+            nav("/")
        
-            localStorage.setItem("profile", JSON.stringify({ userName, userEmail }));
+            localStorage.setItem("profile", JSON.stringify({_id, userName, userEmail }));
         } catch (error) {
             console.error('Error saving user data:', error);
         }

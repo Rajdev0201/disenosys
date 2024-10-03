@@ -11,7 +11,7 @@ const Sidebar = () => {
   const links = [
     { href: '/dashboard', label: 'Dashboard', icon: <FaHome /> },
     { href: '/profile', label: 'Profile', icon: <FaUser /> },
-    {href:'/portfolio',label:'Portfolio',icon:<SiSololearn />},
+    {href:'/portfolioDashboard',label:'Portfolio',icon:<SiSololearn />},
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];

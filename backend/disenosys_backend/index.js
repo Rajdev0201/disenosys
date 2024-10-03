@@ -123,6 +123,7 @@ app.post('/upload', uploadResume.single('file'), async (req, res) => {
 
 
 
+app.use('/uploadsPortfolio', express.static(path.join(__dirname, 'uploadsPortfolio')));
 
 const uploadDirPort = path.join(__dirname, 'uploadsPortfolio');
 if (!fs.existsSync(uploadDirPort)) {
@@ -148,8 +149,7 @@ app.post('/upload-portfolio', uploadPort.single('file'), async (req, res) => {
     return res.status(400).send('No file uploaded.');
   }
 
-  const filePath = path.join(uploadDirPort, file.filename);
-
+  const filePath = `uploadsPortfolio/${file.filename}`;
   const newPortfolio = new PortfolioPage({ filePath, name, title, description });
   await newPortfolio.save();
 
@@ -158,63 +158,72 @@ app.post('/upload-portfolio', uploadPort.single('file'), async (req, res) => {
 
 
 
+app.use('/uploadsProfile', express.static(path.join(__dirname, 'uploadsProfile')));
 
-
-
-const uploadDirProfile = path.join(__dirname, 'uploadsPortfolio');
-if (!fs.existsSync(uploadDirPort)) {
-  fs.mkdirSync(uploadDirPort);
+// Create upload directory if it doesn't exist
+const uploadDirProfile = path.join(__dirname, 'uploadsProfile');
+if (!fs.existsSync(uploadDirProfile)) {
+  fs.mkdirSync(uploadDirProfile);
 }
 
+// Configure multer storage
 const storageProfile = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploadDirPort);
+    cb(null, uploadDirProfile); // Use the correct upload directory
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, Date.now() + path.extname(file.originalname)); // Store with timestamp to avoid name conflicts
   },
 });
 
-const uploadProfile = multer({ storage: storageProfile});
+// Create multer instance for handling file uploads
+const uploadProfile = multer({ storage: storageProfile });
 
+// Endpoint to upload profile information and image
 app.post('/upload-profile', uploadProfile.single('file'), async (req, res) => {
   const { name, title, userId } = req.body;
-  console.log(req.body);
+  console.log(req.body); // Log request body for debugging
 
+  // Validate user ID
   if (!userId) {
-      return res.status(400).send('User ID is required.');
+    return res.status(400).send('User ID is required.');
   }
 
   try {
-      const existingProfile = await ProfilePage.findOne({ userId });
+    // Check if profile already exists
+    const existingProfile = await ProfilePage.findOne({ userId });
 
-      if (existingProfile) {
-          const updatedProfile = {
-              name,
-              title,
-              ...(req.file && { filePath: path.join(uploadDirPort, req.file.filename) }),
-          };
+    if (existingProfile) {
+      // Update existing profile
+      const updatedProfile = {
+        name,
+        title,
+        ...(req.file && { filePath: req.file.filename }), // Update filePath only if a new file was uploaded
+      };
 
-          await ProfilePage.updateOne({ userId }, { $set: updatedProfile });
-          return res.status(200).json({ message: 'Profile updated successfully', userId });
-      } else {
-          // Create a new profile
-          if (!req.file) {
-              return res.status(400).send('No file uploaded.');
-          }
-
-          const filePath = path.join(uploadDirPort, req.file.filename);
-          const newProfile = new ProfilePage({ filePath, name, title, userId });
-          await newProfile.save();
-
-          return res.status(201).json({ message: 'Profile created successfully', filePath });
+      await ProfilePage.updateOne({ userId }, { $set: updatedProfile });
+      return res.status(200).json({ message: 'Profile updated successfully', userId });
+    } else {
+      // Create a new profile if it doesn't exist
+      if (!req.file) {
+        return res.status(400).send('No file uploaded.'); // Ensure a file is uploaded
       }
+
+      const newProfile = new ProfilePage({
+        filePath: req.file.filename, // Store only the filename
+        name,
+        title,
+        userId,
+      });
+      await newProfile.save();
+
+      return res.status(201).json({ message: 'Profile created successfully', filePath: req.file.filename });
+    }
   } catch (error) {
-      console.error(error);
-      return res.status(500).send('Internal server error');
+    console.error(error); // Log the error for debugging
+    return res.status(500).send('Internal server error');
   }
 });
-
 
 
 app.get('/resumes/:username', async (req, res) => {

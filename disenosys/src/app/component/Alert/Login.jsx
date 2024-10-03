@@ -52,7 +52,7 @@ const LoginAlert = () => {
       password: password,
     };
 
-    dispatch(SignupData(data));
+    dispatch(SignupData(data,nav));
   };
 
   const handleSignin = async (e) => {
