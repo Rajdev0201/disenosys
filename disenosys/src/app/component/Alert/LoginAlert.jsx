@@ -70,7 +70,7 @@ const LoginAlert = () => {
   };
 
   return (
-    <div className="fixed inset-x-0 top-34  mt-2 flex justify-center z-50">
+    <div className="fixed inset-x-0 top-32  mt-2 flex justify-center z-50">
       <Transition
         show={showAlert}
         enter="transform transition duration-300 ease-out"
