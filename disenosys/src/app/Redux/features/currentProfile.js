@@ -8,7 +8,7 @@ const currentUserSlice = createSlice({
   initialState,
   reducers: {
     setUpdate: (state, action) => {
-      return action.payload; // This should be the profile object
+      return action.payload;
     },
   },
 });

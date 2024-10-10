@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
 const resumeSchema = new mongoose.Schema({
-  name: { type: String, required: true },
+  userId: {
+    type: mongoose.Types.ObjectId,
+    ref: 'users',
+    required: true
+  },
   filePath: { type: String, required: true },
 });
 

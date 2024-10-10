@@ -1,14 +1,14 @@
 const express = require("express");
 // const ProfilePage = require("../models/profile.js");
 const ErrorHandler = require("../utils/ErrorHandler.js");
-const UserModel = require("../models/UserModel.js");
+const resume = require("../models/resume.js");
 const router = express.Router();
 
-router.get('/profile', async (req, res, next) => {
+router.get('/profile/:userId', async (req, res, next) => {
     const { userId } = req.params;
   
     try {
-      const profile = await UserModel.find(); 
+      const profile = await resume.findOne({ userId });
   
       if (!profile) {
         return next(new ErrorHandler('User not found', 404));

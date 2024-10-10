@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import logo from "../../assests/logo.png";
 import { CiSearch } from "react-icons/ci";
 import { RiMenu4Fill } from "react-icons/ri";
-import {
-  FiEdit,
-  FiChevronDown,
-  FiTrash,
-  FiShare,
-  FiPlusSquare,
-} from "react-icons/fi";
+// import {
+//   FiEdit,
+//   FiChevronDown,
+//   FiTrash,
+//   FiShare,
+//   FiPlusSquare,
+// } from "react-icons/fi";
 import { IoCartSharp } from "react-icons/io5";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -106,7 +106,7 @@ const Navbar = () => {
 
           <ShiftingDropDown />
 
-          {["Course","Portfolio", "Gallery"].map((item) => (
+          {["Course","Portfolio", "Gallery","Exam"].map((item) => (
             <Link
               key={item}
               href={`/${item.toLowerCase()}`}

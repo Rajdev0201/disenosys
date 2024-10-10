@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt")
 const crypto = require("crypto")
 
 
-const userSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
     userName:{
         type: String,
         unique: true,
@@ -20,35 +20,21 @@ const userSchema = new mongoose.Schema({
         required:[true,"Please Enter Password"],
         select: false
     },
-    filePath: { type: String},
-      title :{
-        type: String, 
-      },
-    resetPasswordToken:{
-        type: String,
-    },
-    resetPasswordTokenExpire:{
-       type: Date
-    },
-    reviews:{
-        type: mongoose.Types.ObjectId,
-        ref: "reviews"
-    }
 })
 
 
-userSchema.methods.isValidatePassword = function(enPassword){
+adminSchema.methods.isValidatePassword = function(enPassword){
 
     return  bcrypt.compare(enPassword,this.password)
   
 }
 
-userSchema.methods.getJwtToken = function (){
+adminSchema.methods.getJwtToken = function (){
     return  jwt.sign({id:this.id},process.env.JWT_SECRET)
  
  }
 
- userSchema.methods.getresetPasswordToken = function (){
+ adminSchema.methods.getresetPasswordToken = function (){
 
     const token = crypto.randomBytes(20).toString('hex');
 
@@ -61,4 +47,4 @@ userSchema.methods.getJwtToken = function (){
 
 }
 
-module.exports = mongoose.model("user",userSchema)
+module.exports = mongoose.model("admin",adminSchema)

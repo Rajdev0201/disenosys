@@ -52,11 +52,11 @@ export default function Page() {
           <LoginAlert />
         </div>
       )}
-      <Navbar />
+
       <Blink/>
+      <Navbar />
       <Home />
       <Count />
-   
       <Box />
       <Testimonials setTestimonialsInView={setTestimonialsInView} />
       <WhyChoose />

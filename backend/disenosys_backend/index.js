@@ -9,6 +9,7 @@ const fetch = require("node-fetch");
 const axios = require("axios");
 const fs = require("fs");
 const multer = require('multer');
+const XLSX = require('xlsx');
 // const fileUpload = require('express-fileupload');
 
 
@@ -22,9 +23,17 @@ const LINKEDIN_CALLBACK_URL = "https://www.disenosys.com";
 
 dotenv.config({ path: path.join(__dirname, "./.env") })
 
-mongoose.connect(process.env.MONGO_URI).then(() => {
-  console.log("Mongodb Connected")
-})
+
+
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log("MongoDB Connected");
+    })
+    .catch(err => {
+        console.error("MongoDB connection error:", err);
+    });
+
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
@@ -66,27 +75,41 @@ const PortfolioPage = require("./models/portfolio.js")
 const ProfilePage = require("./models/profile.js")
 // const ProfilePage = require("./models/profile.js")
 const profile = require("./routes/profile.js");
+const port = require("./routes/Portfolio.js");
+const resumeUpdate = require("./routes/resume.js");
+const UserModel = require("./models/UserModel.js");
+const questionRoutes = require("./routes/quiz.js");
+const Question = require("./models/quiz.js");
+const adminRoute = require("./routes/admin.js");
+const code  = require("./routes/code.js");
+const student = require("./routes/student.js");
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
 app.use("/api/v1",addCart);
 app.use("/course",payment);
 app.use("/update",profile);
+app.use("/update",port);
+app.use("/resume",resumeUpdate);
+app.use('/api/questions', questionRoutes);
+app.use('/admin',adminRoute);
+app.use('/api/admin',code);
+app.use('/api/student',student);
 
 app.get("/",(req,res) => {
  res.send("hi")
 })
 
 
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 
 const uploadDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir);
 }
 
-
-// app.use(fileUpload({
 //   debug: true,
 // }));
 
@@ -102,21 +125,26 @@ const storage = multer.diskStorage({
 
 const uploadResume = multer({ storage: storage});
 
-// Update the upload route for resume
-app.post('/upload', uploadResume.single('file'), async (req, res) => {
-  const { name } = req.body;
-  const file = req.file;
+app.post('/upload-resume', uploadResume.single('file'), async (req, res) => {
+  const { userId } = req.body;
 
-  if (!file) {
+  if (!req.file) {
     return res.status(400).send('No file uploaded.');
   }
 
-  const filePath = `uploads/${file.filename}`;
+  try {
+    const newResume = new resume({
+      filePath: req.file.filename, 
+      userId,
+    });
 
-  const newResume = new resume({ name, filePath });
-  await newResume.save();
+    await newResume.save(); 
 
-  res.status(200).json({ message: 'Resume uploaded successfully', filePath });
+    return res.status(201).json({ message: 'Resume uploaded successfully', filePath: req.file.filename });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Internal server error');
+  }
 });
 
 
@@ -142,31 +170,38 @@ const storagePort = multer.diskStorage({
 const uploadPort = multer({ storage: storagePort});
 
 app.post('/upload-portfolio', uploadPort.single('file'), async (req, res) => {
-  const { name, title, description } = req.body;
-  const file = req.file;
-
-  if (!file) {
-    return res.status(400).send('No file uploaded.');
-  }
-
-  const filePath = `uploadsPortfolio/${file.filename}`;
-  const newPortfolio = new PortfolioPage({ filePath, name, title, description });
-  await newPortfolio.save();
-
-  res.status(200).json({ message: 'Portfolio uploaded successfully', filePath });
-});
-
+    const { userId, title, description } = req.body;
+    console.log(req.body);
+    if (!req.file) {
+      return res.status(400).send('No file uploaded.');
+    }
+  
+    try {
+      const newPortfolio = new PortfolioPage({
+        filePath: req.file.filename, 
+        userId,
+        title,
+        description,
+      });
+  
+      await newPortfolio.save();
+  
+      return res.status(201).json({ message: 'Portfolio uploaded successfully', filePath: req.file.filename });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).send('Internal server error');
+    }
+  });
+  
 
 
 app.use('/uploadsProfile', express.static(path.join(__dirname, 'uploadsProfile')));
 
-// Create upload directory if it doesn't exist
 const uploadDirProfile = path.join(__dirname, 'uploadsProfile');
 if (!fs.existsSync(uploadDirProfile)) {
   fs.mkdirSync(uploadDirProfile);
 }
 
-// Configure multer storage
 const storageProfile = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, uploadDirProfile); // Use the correct upload directory
@@ -176,59 +211,45 @@ const storageProfile = multer.diskStorage({
   },
 });
 
-// Create multer instance for handling file uploads
+
 const uploadProfile = multer({ storage: storageProfile });
 
-// Endpoint to upload profile information and image
-app.post('/upload-profile', uploadProfile.single('file'), async (req, res) => {
-  const { name, title, userId } = req.body;
-  console.log(req.body); // Log request body for debugging
 
-  // Validate user ID
+app.post('/upload-profile', uploadProfile.single('file'), async (req, res) => {
+  const { userName, title, userId } = req.body;
+  console.log(req.body); 
+
   if (!userId) {
     return res.status(400).send('User ID is required.');
   }
 
   try {
-    // Check if profile already exists
-    const existingProfile = await ProfilePage.findOne({ userId });
+    const existingUser = await UserModel.findOne({ _id: userId });
 
-    if (existingProfile) {
-      // Update existing profile
+    if (existingUser) {
       const updatedProfile = {
-        name,
+        userName,
         title,
-        ...(req.file && { filePath: req.file.filename }), // Update filePath only if a new file was uploaded
+        ...(req.file && { filePath: req.file.filename }),
       };
-
-      await ProfilePage.updateOne({ userId }, { $set: updatedProfile });
+      await UserModel.updateOne({ _id: userId }, { $set: updatedProfile });
       return res.status(200).json({ message: 'Profile updated successfully', userId });
     } else {
-      // Create a new profile if it doesn't exist
-      if (!req.file) {
-        return res.status(400).send('No file uploaded.'); // Ensure a file is uploaded
-      }
-
-      const newProfile = new ProfilePage({
-        filePath: req.file.filename, // Store only the filename
-        name,
-        title,
-        userId,
-      });
-      await newProfile.save();
-
-      return res.status(201).json({ message: 'Profile created successfully', filePath: req.file.filename });
+      return res.status(404).send('User not found.');
     }
   } catch (error) {
-    console.error(error); // Log the error for debugging
+    console.error(error);
     return res.status(500).send('Internal server error');
   }
 });
 
 
-app.get('/resumes/:username', async (req, res) => {
+
+
+
+app.get('/resumes', async (req, res) => {
   try {
-    const resumes = await resume.find({ name: req.params.username });
+    const resumes = await resume.find({ userId: req.params.userId });
     res.json(resumes);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching resumes' });
@@ -337,6 +358,61 @@ app.post('/linkedin-login', async (req, res) => {
   }
 });
 
+
+
+
+const upload = multer({ dest: 'uploadsquiz/' });
+
+
+app.post('/quiz', upload.single('file'), async (req, res) => {
+  try {
+      const workbook = XLSX.readFile(req.file.path);
+      const sheetName = workbook.SheetNames[0];
+      const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+      for (const row of sheetData) {
+          console.log("Processing row:", row);
+
+          // Normalize keys and trim values
+          const normalizedRow = Object.fromEntries(
+              Object.entries(row).map(([key, value]) => [key.trim(), String(value).trim()])
+          );
+
+          const options = [
+              { text: normalizedRow['Option1'] || '', isCorrect: normalizedRow['Option1_isCorrect'].toUpperCase() === 'TRUE' },
+              { text: normalizedRow['Option2'] || '', isCorrect: normalizedRow['Option2_isCorrect'].toUpperCase() === 'TRUE' },
+              { text: normalizedRow['Option3'] || '', isCorrect: normalizedRow['Option3_isCorrect'].toUpperCase() === 'TRUE' },
+              { text: normalizedRow['Option4'] || '', isCorrect: normalizedRow['Option4_isCorrect'].toUpperCase() === 'TRUE' }
+          ];
+
+          console.log("Constructed options:", options);
+
+          // Check if the question and options are valid
+          if (normalizedRow['Question'] && options.every(option => option.text)) {
+              const question = new Question({
+                  question: normalizedRow['Question'],
+                  options
+              });
+
+              // console.log("Question object to save:", JSON.stringify(question, null, 2));
+
+              try {
+                  const savedQuestion = await question.save();
+                  console.log(`Saved question: ${savedQuestion.question}`);
+              } catch (saveError) {
+                  console.error(`Error saving question: ${saveError.message}`, saveError);
+              }
+          } else {
+              console.warn(`Skipping question due to missing fields: ${JSON.stringify(normalizedRow)}`);
+          }
+      }
+
+      res.status(200).json({ message: 'Questions uploaded and saved successfully!' });
+  } catch (err) {
+      console.error('Error details:', err);
+      res.status(500).json({ error: 'Failed to upload questions', details: err });
+  }
+});
 
 
 

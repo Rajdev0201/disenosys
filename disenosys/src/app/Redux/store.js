@@ -7,6 +7,11 @@ import currentCartSlice from './features/currentCartSlice.js';
 import currentUser from './features/authSlice.js';
 import payment from './features/PaymentSlice.js';
 import currentProfile from './features/currentProfile.js';
+import singlePort from './features/portfolioSlice.js';
+import allPort from './features/portAllSlice.js';
+import resume from './features/resumeSlice.js';
+import student  from './features/studentSlice.js';
+
 export default configureStore({
   reducer: {
     course: CourseSlice,
@@ -15,6 +20,10 @@ export default configureStore({
     currentCart:currentCartSlice,
     user: currentUser,
     payment:payment,
-    currentProfile:currentProfile
+    currentProfile:currentProfile,
+    singlePort:singlePort,
+    allPort : allPort,
+    resume : resume,
+    student : student,
   },
 });

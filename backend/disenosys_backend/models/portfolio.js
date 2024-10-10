@@ -2,10 +2,11 @@ const mongoose = require('mongoose');
 
 const portfolioSchema = new mongoose.Schema({
     filePath: { type: String,required:true },
-    name: {
-        type:String,
-        required: true
-      },
+    userId: {
+      type: mongoose.Types.ObjectId,
+      ref: 'users',
+      required: true
+    },
       title :{
         type: String,required:true 
       },

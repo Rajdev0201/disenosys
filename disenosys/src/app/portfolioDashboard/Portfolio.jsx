@@ -35,7 +35,7 @@ const Portfolio = () => {
 
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("name", user?.user?.userName);
+      formData.append("userId", user?.user?._id);
       formData.append("title", title);
       formData.append("description", description);
 
@@ -45,7 +45,7 @@ const Portfolio = () => {
 
       try {
         const response = await axios.post(
-          "https://disenosys-1.onrender.com/upload-portfolio",
+          "http://localhost:8000/upload-portfolio",
           formData,
           {
             headers: {

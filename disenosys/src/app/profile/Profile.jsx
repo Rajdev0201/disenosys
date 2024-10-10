@@ -25,20 +25,24 @@ const Profile = () => {
 
   const fetchResumes = async () => {
     try {
-        const response = await axios.get(`https://disenosys-1.onrender.com/resumes/${user.user.userName}`);
-        
-        const resumesWithUrl = response?.data?.map((resume) => ({
-            ...resume,
-            fileUrl: resume?.filePath ? `https://disenosys-1.onrender.com/${resume.filePath}` : null,
-        }));
+        const response = await axios.get(`http://localhost:8000/resumes/${user?.user?._id}`);
+       
+    const resumesWithUrl = response?.data?.map((resume) => ({
+      ...resume,
+      fileUrl: resume?.filePath ? getResumeUrl(resume.filePath) : null,
+    }));
 
-        setResumeList(resumesWithUrl);
+    setResumeList(resumesWithUrl);
     } catch (error) {
         console.error("Error fetching resumes:", error);
     }
 };
 
-  
+const getResumeUrl = (filePath) => {
+  return `http://localhost:8000/uploads/${filePath}`;
+};
+
+
   useEffect(() => {
     if (user) {
       fetchResumes(); 
@@ -49,7 +53,7 @@ const Profile = () => {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("name", user?.user?.userName);
+    formData.append("userId", user?.user?._id);
     formData.append("file", file);
 
 
@@ -60,7 +64,7 @@ const Profile = () => {
 
     try {
       const response = await axios.post(
-        "https://disenosys-1.onrender.com/upload",
+        "http://localhost:8000/upload-resume",
         formData,
         {
           headers: {
@@ -77,13 +81,14 @@ const Profile = () => {
   };
 
   const handleResumeClick = (resume) => {
-    console.log("Opening resume at URL:", resume.fileUrl);
-    window.open(resume.fileUrl, "_blank");
+    const resumeUrl = getResumeUrl(resume?.filePath);
+    window.open(resumeUrl, "_blank"); 
   };
+  
   
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://disenosys-1.onrender.com/delete/${id}`);
+      await axios.delete(`http://localhost:8000/delete/${id}`);
       setResumeList(resumeList?.filter(item => item._id !== id));
       alert("Resume deleted successfully!");
     } catch (error) {
@@ -136,15 +141,15 @@ const Profile = () => {
                   <table className="min-w-full bg-white border border-gray-300 rounded-md shadow-md">
                     <thead>
                       <tr className="bg-[#182073] text-white">
-                        <th className="py-2 px-4 text-left">Name</th>
+                        <th className="py-2 px-4 text-left">No</th>
                         <th className="py-2 px-4 text-left">Actions</th>
                         <th className="py-2 px-4 text-left">Delete</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {resumeList.map((resume) => (
+                      {resumeList.map((resume,index) => (
                         <tr key={resume._id} className="hover:bg-gray-100">
-                          <td className="py-2 px-4 border-b">{resume.name}</td>
+                          <td className="py-2 px-4 border-b">{String(index + 1).padStart(2, '0')}</td>
                           <td className="py-2 px-4 border-b">
                             <button
                               onClick={() => handleResumeClick(resume)}

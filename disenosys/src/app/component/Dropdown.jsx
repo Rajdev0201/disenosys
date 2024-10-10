@@ -174,10 +174,15 @@ const Nub = ({ selected }) => {
 const Pricing = () => {
   return (
     <div className="w-44 h-16 space-y-3 flex flex-col">
-       
-         <Link  href="/about" className="text-white  hover:text-[#057FE3] flex items-center"><FiEdit />About</Link>
-         <Link  href="/contact" className="text-white  hover:text-[#057FE3] flex items-center"><FiPlusSquare />Contact</Link>
-
+      <Link href="/about" className="text-white hover:text-[#057FE3] flex items-center">
+        <FiEdit className="mr-2" /> About
+      </Link>
+      {/* <Link href="/contact" className="text-white hover:text-[#057FE3] flex items-center">
+        <FiPlusSquare className="mr-2" /> Contact
+      </Link> */}
+      <Link href="/admin" className="text-white hover:text-[#057FE3] flex items-center">
+        <FiPlusSquare className="mr-2" /> Admin
+      </Link>
     </div>
   );
 };

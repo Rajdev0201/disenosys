@@ -8,7 +8,7 @@ const EditProfileModal = ({ isOpen, onClose,userId,valueName,valueTitle}) => {
     const dispatch = useDispatch();
     const [file, setFile] = useState(null);
     const [title, setTitle] = useState("");
-    const [name,setName] = useState("")
+    const [userName,setUserName] = useState("")
   
 
   const handleSubmit = (e) => {
@@ -16,7 +16,7 @@ const EditProfileModal = ({ isOpen, onClose,userId,valueName,valueTitle}) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("userId", userId);
-    formData.append("name", name);
+    formData.append("userName", userName);
     formData.append("title", title);
     dispatch(editProfile(formData));
     onClose();
@@ -44,7 +44,7 @@ const EditProfileModal = ({ isOpen, onClose,userId,valueName,valueTitle}) => {
             <input
               type="text"
               placeholder={valueName}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => setUserName(e.target.value)}
               className="border border-gray-300 rounded p-2 w-full"
    
             />

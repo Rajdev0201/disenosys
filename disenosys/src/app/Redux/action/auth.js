@@ -2,8 +2,8 @@
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FacebookLog, Login, Signup } from '../features/authSlice.js';
-
+import { Admin, FacebookLog, Login, Signup } from '../features/authSlice.js';
+import { setStudent, student } from "../features/studentSlice.js"
 
 
 
@@ -79,6 +79,39 @@ export const SignupData = (userData) => async (dispatch) => {
   };
   
 
+  export const admin = (userData,router) => async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:8000/admin/login",
+        userData
+      );
+      dispatch(Admin(data));
+      toast.dark('Login successful!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      localStorage.setItem("profile", JSON.stringify(data));
+      router.push("/adminroute")
+    }catch(err) {
+      toast.error(err?.response?.data?.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+      }
+  };
+
   const API_URL = "https://disenosys-1.onrender.com/api/v1/user";
 
   // Action creator for Facebook login success
@@ -107,3 +140,46 @@ export const SignupData = (userData) => async (dispatch) => {
       console.error("Error saving user data:", error);
     }
   };
+
+
+
+
+
+
+
+
+  export const studentLogin = (userData, router) => async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        "http://localhost:8000/api/student/login",
+        userData
+      );
+      console.log(data); 
+      dispatch(setStudent(data));
+      toast.dark('Login successful!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      localStorage.setItem("student", JSON.stringify(data));
+      router.push("/quiz")
+    } catch (err) {
+      const errorMessage = err.response?.data?.error || 'An unexpected error occurred';
+      toast.dark(errorMessage || 'An unexpected error occurred', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+  };
+  

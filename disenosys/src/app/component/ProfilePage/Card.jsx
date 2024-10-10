@@ -11,8 +11,8 @@ import Image from 'next/image';
 const Card = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const user2 = useSelector((state) => state.user?.user);
-  console.log(user2)
+
+
   const user = useSelector((state) => state.user?.user);
   // console.log("first:",user.user?._id)
   const userid = user?.user?._id;
@@ -35,17 +35,16 @@ const Card = () => {
     }
   }, [dispatch, userid]);
 
-  const profileName = profile?.name; 
+  const profileName = profile?.userName; 
   const profileTitle = profile?.title;
   
 
   const getImageUrl = (filePath) => {
-    // Use the filename directly, assuming it's already stored as just the filename
-    return `https://disenosys-1.onrender.com/uploadsProfile/${filePath}`; 
+    return `http://localhost:8000/uploadsProfile/${filePath}`; 
   };
   
   const imageUrl = getImageUrl(profile?.filePath);
-  // console.log(imageUrl);
+
 
   return (
     <div>
