@@ -106,7 +106,7 @@ const Navbar = () => {
 
           <ShiftingDropDown />
 
-          {["Course","Portfolio", "Gallery","Exam"].map((item) => (
+          {["Course","Portfolio", "Gallery"].map((item) => (
             <Link
               key={item}
               href={`/${item.toLowerCase()}`}
