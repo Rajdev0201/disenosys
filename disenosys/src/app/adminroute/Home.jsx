@@ -6,7 +6,7 @@ const AdminPanel = () => {
     const [generatedCode, setGeneratedCode] = useState('');
 
     const handleGenerateCode = async () => {
-        const res = await fetch('http://localhost:8000/api/admin/generate-code', {
+        const res = await fetch('https://disenosys-1.onrender.com/api/admin/generate-code', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

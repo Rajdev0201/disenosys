@@ -25,7 +25,7 @@ const Main = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/questions')
+    axios.get('https://disenosys-1.onrender.com/api/questions')
       .then(response => setQuestions(response.data))
       .catch(error => console.error('Error fetching questions:', error));
   }, []);

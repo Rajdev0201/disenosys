@@ -82,7 +82,7 @@ export const SignupData = (userData) => async (dispatch) => {
   export const admin = (userData,router) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/admin/login",
+        "https://disenosys-1.onrender.com/admin/login",
         userData
       );
       dispatch(Admin(data));
@@ -151,7 +151,7 @@ export const SignupData = (userData) => async (dispatch) => {
   export const studentLogin = (userData, router) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/student/login",
+        "https://disenosys-1.onrender.com/api/student/login",
         userData
       );
       console.log(data); 

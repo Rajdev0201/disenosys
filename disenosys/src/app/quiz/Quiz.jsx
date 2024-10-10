@@ -144,7 +144,7 @@ const handleFinish = async () => {
     const result = calculateResult();
 
     try {
-      const response = await axios.post("http://localhost:8000/api/student/updateStudentQuiz", {
+      const response = await axios.post("https://disenosys-1.onrender.com/api/student/updateStudentQuiz", {
         studentId: student._id,
         // quizResults: answers,
         totalScore: result.totalScore,
