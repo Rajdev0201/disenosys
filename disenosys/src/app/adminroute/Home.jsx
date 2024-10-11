@@ -4,8 +4,12 @@ import { useState } from 'react';
 const AdminPanel = () => {
     const [college, setCollege] = useState('');
     const [generatedCode, setGeneratedCode] = useState('');
+    const [message, setMessage] = useState('');
 
     const handleGenerateCode = async () => {
+        setMessage(''); 
+        setGeneratedCode('');
+
         const res = await fetch('https://disenosys-1.onrender.com/api/admin/generate-code', {
             method: 'POST',
             headers: {
@@ -13,8 +17,16 @@ const AdminPanel = () => {
             },
             body: JSON.stringify({ college, userType: 'college' }),
         });
+
         const data = await res.json();
-        setGeneratedCode(data.code.code);
+
+        
+        if (res.ok) {
+            setGeneratedCode(data.code.code);
+            setMessage(data.message);
+        } else {
+            setMessage(data.error || 'Failed to generate code');
+        }
     };
 
     return (
@@ -35,6 +47,12 @@ const AdminPanel = () => {
                     >
                         Generate Code
                     </button>
+
+                    {message && (
+                        <div className="p-4 bg-blue-100 rounded text-blue-700">
+                            <p>{message}</p>
+                        </div>
+                    )}
 
                     {generatedCode && (
                         <div className="p-4 bg-green-100 rounded text-green-700">

@@ -7,7 +7,6 @@ const Code = require('../models/code.js');
 router.post('/generate-code', async (req, res) => {
     const { college } = req.body;
 
-    
     const standardizedCollegeName = college.toLowerCase().trim();
 
     try {
@@ -19,17 +18,18 @@ router.post('/generate-code', async (req, res) => {
                 code: existingCode 
             });
         }
-        
+
         const code = Math.random().toString(36).substr(2, 8).toUpperCase();
 
         const newCode = new Code({
-            college: standardizedCollegeName, 
+            college: standardizedCollegeName,
             code,
             userType: 'college', 
             expiresAt: null, 
         });
 
         await newCode.save();
+
         res.json({ 
             message: `A new code has been generated for ${college}.`,
             code: newCode 
@@ -38,7 +38,6 @@ router.post('/generate-code', async (req, res) => {
         res.status(400).json({ error: 'Failed to generate code' });
     }
 });
-
 
 
 
