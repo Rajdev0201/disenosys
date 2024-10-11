@@ -3,21 +3,37 @@ const router = express.Router();
 const Code = require('../models/code.js');
 
 
+
 router.post('/generate-code', async (req, res) => {
     const { college } = req.body;
-    
-    const code = Math.random().toString(36).substr(2, 8).toUpperCase();
 
-    const newCode = new Code({
-        college,
-        code,
-        userType: 'college', 
-        expiresAt: null, 
-    });
+    
+    const standardizedCollegeName = college.toLowerCase().trim();
 
     try {
+        let existingCode = await Code.findOne({ college: standardizedCollegeName });
+
+        if (existingCode) {
+            return res.json({ 
+                message: `A code already exists for ${college}.`,
+                code: existingCode 
+            });
+        }
+        
+        const code = Math.random().toString(36).substr(2, 8).toUpperCase();
+
+        const newCode = new Code({
+            college: standardizedCollegeName, 
+            code,
+            userType: 'college', 
+            expiresAt: null, 
+        });
+
         await newCode.save();
-        res.json({ code: newCode });
+        res.json({ 
+            message: `A new code has been generated for ${college}.`,
+            code: newCode 
+        });
     } catch (error) {
         res.status(400).json({ error: 'Failed to generate code' });
     }
@@ -26,19 +42,20 @@ router.post('/generate-code', async (req, res) => {
 
 
 
+
 router.post('/generate-external-code', async (req, res) => {
     const { month, year } = req.body;
 
 
-    const expirationDate = new Date(year, month, 1); // Set to the first of the selected month
-    expirationDate.setDate(1); // Set to the first of the month
-    expirationDate.setHours(0, 0, 0, 0); // Set to midnight
+    const expirationDate = new Date(year, month, 1);
+    expirationDate.setDate(1);
+    expirationDate.setHours(0, 0, 0, 0);
 
   
-    expirationDate.setMonth(expirationDate.getMonth() + 1); // Move to next month
+    expirationDate.setMonth(expirationDate.getMonth() + 1);
 
-    // Generate a random code
-    const code = Math.random().toString(36).substr(2, 8).toUpperCase(); // Generates a random code
+
+    const code = Math.random().toString(36).substr(2, 8).toUpperCase();
 
     const newCode = new Code({
         code,
