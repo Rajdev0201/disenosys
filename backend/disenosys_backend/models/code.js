@@ -5,7 +5,8 @@ const codeSchema = new mongoose.Schema({
     userType: { type: String, required: true },
     expiresAt: { type: Date, },
     createdAt: { type: Date, default: Date.now },
-    college: { type: String }
+    college: { type: String },
+    collegeCode: { type: String, unique: true },
 });
 
 const Code = mongoose.model('Code', codeSchema);

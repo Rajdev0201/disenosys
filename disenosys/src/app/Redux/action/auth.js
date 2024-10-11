@@ -4,6 +4,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Admin, FacebookLog, Login, Signup } from '../features/authSlice.js';
 import { setStudent, student } from "../features/studentSlice.js"
+import {setCode} from "../features/codeSlice.js";
+import {setExternal} from "../features/externalSlice.js";
 
 
 
@@ -183,3 +185,27 @@ export const SignupData = (userData) => async (dispatch) => {
     }
   };
   
+
+
+
+  //student code 
+  export const studentCode = () => async (dispatch) => {
+    try {
+        const res = await axios.get("https://disenosys-1.onrender.com/api/admin/studentCode");
+        const getData = res.data;
+        dispatch(setCode(getData));
+    } catch (error) {
+        console.error('Error decreasing quantity:', error);
+    }
+}
+
+//external code 
+export const externalCode = () => async (dispatch) => {
+  try {
+      const res = await axios.get("https://disenosys-1.onrender.com/api/admin/externalCode");
+      const getData = res.data;
+      dispatch(setExternal(getData));
+  } catch (error) {
+      console.error('Error decreasing quantity:', error);
+  }
+}

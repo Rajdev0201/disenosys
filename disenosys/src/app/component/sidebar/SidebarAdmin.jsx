@@ -1,4 +1,5 @@
 "use client";
+import { LogOut } from '@/app/Redux/features/authSlice.js';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FaHome, FaUser, FaCog, FaChartBar, FaSignOutAlt} from 'react-icons/fa';
@@ -12,9 +13,16 @@ const Sidebar = () => {
     { href: '/adminroute', label: 'University Code', icon: <SiAuthentik /> },
     { href: '/external', label: 'External Code', icon: <SiAuthentik /> },
     // {href:'/portfolioDashboard',label:'Portfolio',icon:<SiSololearn />},
+    { href: '/historycode', label: 'Student-List', icon: <SiAuthentik /> },
+    { href: '/externalcode', label: 'External-List', icon: <SiAuthentik /> },
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];
+
+
+  const handleLogout = () => {
+    dispatch(LogOut());
+  };
 
   return (
     <div className="fixed top-0 left-0 w-1/6 h-screen text-white flex flex-col justify-between">
@@ -37,7 +45,7 @@ const Sidebar = () => {
         <Link href="/logout"
           className="flex items-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition-colors duration-200">
           <FaSignOutAlt className="mr-3" />
-          <span>Logout</span>
+          <span onClick={handleLogout}>Logout</span>
         </Link>
       </div>
     </div>

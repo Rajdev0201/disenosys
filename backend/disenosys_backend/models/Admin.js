@@ -20,6 +20,7 @@ const adminSchema = new mongoose.Schema({
         required:[true,"Please Enter Password"],
         select: false
     },
+    userType: { type: String, required: true },
 })
 
 

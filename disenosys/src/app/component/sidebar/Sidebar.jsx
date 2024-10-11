@@ -1,12 +1,14 @@
 "use client";
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { FaHome, FaUser, FaCog, FaChartBar, FaSignOutAlt} from 'react-icons/fa';
 import { SiSololearn } from "react-icons/si";
 
 
 const Sidebar = () => {
   const path = usePathname();
+
 
   const links = [
     { href: '/dashboard', label: 'Dashboard', icon: <FaHome /> },
@@ -16,6 +18,8 @@ const Sidebar = () => {
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];
 
+ 
+ 
   return (
     <div className="fixed top-0 left-0 w-1/6 h-screen text-white flex flex-col justify-between">
       {/* Navigation Links */}

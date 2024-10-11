@@ -178,6 +178,7 @@ const closePopupAndRedirect = () => {
   localStorage.removeItem("globalTimeRemaining");
   localStorage.removeItem("currentQuestionIndex");
   localStorage.removeItem("answers");
+  localStorage.removeItem("quizFinished");
   dispatch(LogOut());
   router.push("/");
 };
@@ -215,7 +216,7 @@ const closePopupAndRedirect = () => {
                     checked={selectedAnswer?.text === option.text}
                     onChange={() => handleAnswerChange(option)}
                     className="form-radio h-4 w-4 text-[#182073] accent-[#182073]"
-                    disabled={answers[currentQuestionIndex]?.status !== "unanswered"}
+                    disabled={answers[currentQuestionIndex]?.status === "correct" || answers[currentQuestionIndex]?.status === "wrong"} 
                   />
                   <span className="text-gray-800">{option.text}</span>
                 </label>
@@ -268,6 +269,7 @@ const closePopupAndRedirect = () => {
                         ? "bg-yellow-500"
                         : "bg-[#182073]"
                     }`}
+                    onClick={() => setCurrentQuestionIndex(index)}
                   >
                     {index + 1}
                   </button>

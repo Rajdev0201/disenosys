@@ -9,6 +9,7 @@ import { CiUser } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../Redux/features/authSlice.js";
 
+
 const Navbar = () => {
     const user = useSelector((state) => state?.user);
     const dispatch = useDispatch();

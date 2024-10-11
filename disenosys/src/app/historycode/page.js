@@ -1,11 +1,9 @@
-
-
-import Navbar from "./Navbar";
+import Navbar from "../adminroute/Navbar";
 import Sidebar from "../component/sidebar/SidebarAdmin";
-import Home from "./Home";
+import History from "./History";
 
-export default function adminRoutePage() {
-  
+
+export default function historyPage() {
 return(
     <div className="h-screen">
         <Navbar />
@@ -14,7 +12,7 @@ return(
             <Sidebar />
           </div>
           <div className="col-span-10 h-full bg-blue-50">
-            <Home />
+            <History />
           </div>
         </div>
     </div>

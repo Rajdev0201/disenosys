@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 const AdminPanel = () => {
     const [college, setCollege] = useState('');
+    const [collegeCode,setCollegeCode] = useState('');
     const [generatedCode, setGeneratedCode] = useState('');
     const [message, setMessage] = useState('');
 
@@ -10,12 +11,19 @@ const AdminPanel = () => {
         setMessage(''); 
         setGeneratedCode('');
 
+        if(!college) {
+             alert("Please enter college name or college code")
+        }
+        if(!collegeCode){
+            alert("Please enter college code")
+        }
+
         const res = await fetch('https://disenosys-1.onrender.com/api/admin/generate-code', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ college, userType: 'college' }),
+            body: JSON.stringify({ college,collegeCode, userType: 'college' }),
         });
 
         const data = await res.json();
@@ -38,8 +46,17 @@ const AdminPanel = () => {
                         type="text"
                         value={college}
                         onChange={(e) => setCollege(e.target.value)}
-                        placeholder="Enter College Name"
+                        placeholder="Enter College Full name"
                         className="p-2 border border-gray-100 rounded focus:border-[#182073]"
+                        required
+                    />
+                       <input
+                        type="text"
+                        value={collegeCode}
+                        onChange={(e) => setCollegeCode(e.target.value)}
+                        placeholder="Enter College Code"
+                        className="p-2 border border-gray-100 rounded focus:border-[#182073]"
+                        required
                     />
                     <button
                         onClick={handleGenerateCode}

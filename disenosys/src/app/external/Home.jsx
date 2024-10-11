@@ -5,8 +5,15 @@ const ExternalCodeGenerator = () => {
     const [month, setMonth] = useState('');
     const [year, setYear] = useState('');
     const [generatedCode, setGeneratedCode] = useState('');
+    const [message, setMessage] = useState('');
+
 
     const handleGenerateExternalCode = async () => {
+        setMessage(''); 
+        setGeneratedCode('');
+
+
+
         if (!month || !year) {
             alert("Please select both month and year.");
             return;
@@ -17,14 +24,19 @@ const ExternalCodeGenerator = () => {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ month: parseInt(month), year: parseInt(year), userType: 'external' }), // Include userType here
+            body: JSON.stringify({ 
+                month: parseInt(month) - 1, // Adjust for zero-based month index
+                year: parseInt(year), 
+            }),
         });
+    
         const data = await res.json();
     
         if (data.code) {
             setGeneratedCode(data.code.code);
+            setMessage(data.message);
         } else {
-            alert('Error generating code');
+            setMessage(data.error || 'Failed to generate code');
         }
     };
     
@@ -42,18 +54,9 @@ const ExternalCodeGenerator = () => {
                         className="p-2 border border-gray-100 rounded focus:border-[#182073]"
                     >
                         <option value="">Select Month</option>
-                        <option value="1">January</option>
-                        <option value="2">February</option>
-                        <option value="3">March</option>
-                        <option value="4">April</option>
-                        <option value="5">May</option>
-                        <option value="6">June</option>
-                        <option value="7">July</option>
-                        <option value="8">August</option>
-                        <option value="9">September</option>
-                        <option value="10">October</option>
-                        <option value="11">November</option>
-                        <option value="12">December</option>
+                        {Array.from({ length: 12 }, (_, index) => (
+                            <option key={index} value={index + 1}>{new Date(0, index).toLocaleString('default', { month: 'long' })}</option>
+                        ))}
                     </select>
 
                     {/* Dropdown for Year */}
@@ -63,9 +66,9 @@ const ExternalCodeGenerator = () => {
                         className="p-2 border border-gray-100 rounded focus:border-[#182073]"
                     >
                         <option value="">Select Year</option>
-                        <option value="2024">2024</option>
-                        <option value="2025">2025</option>
-                        <option value="2026">2026</option>
+                        {Array.from({ length: 5 }, (_, index) => (
+                            <option key={index} value={2024 + index}>{2024 + index}</option>
+                        ))}
                     </select>
 
                     {/* Generate Code Button */}
@@ -75,6 +78,12 @@ const ExternalCodeGenerator = () => {
                     >
                         Generate Code
                     </button>
+
+                    {message && (
+                        <div className="p-4 bg-blue-100 rounded text-blue-700">
+                            <p>{message}</p>
+                        </div>
+                    )}
 
                     {/* Display Generated Code */}
                     {generatedCode && (

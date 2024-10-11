@@ -8,7 +8,7 @@ const SendToken = require("../utils/SendToken")
 
 exports.RegisterUser = CatchAsyncError(async(req,res,next)=>{
 
-    const {userName,userEmail,password} = req.body;
+    const {userName,userEmail,password,userType} = req.body;
     console.log(req.body);
 
     const hPassword = await bcrypt.hash(password,10)
@@ -16,7 +16,8 @@ exports.RegisterUser = CatchAsyncError(async(req,res,next)=>{
     const user = await UserModel.create({
         userName: userName,
         userEmail: userEmail,
-        password: hPassword
+        password: hPassword,
+        userType:"admin"
     }
     
     )

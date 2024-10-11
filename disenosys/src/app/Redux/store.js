@@ -11,6 +11,8 @@ import singlePort from './features/portfolioSlice.js';
 import allPort from './features/portAllSlice.js';
 import resume from './features/resumeSlice.js';
 import student  from './features/studentSlice.js';
+import studentCode from './features/codeSlice.js';
+import externalCode from "./features/externalSlice.js";
 
 export default configureStore({
   reducer: {
@@ -25,5 +27,7 @@ export default configureStore({
     allPort : allPort,
     resume : resume,
     student : student,
+    code : studentCode,
+    external : externalCode,
   },
 });
