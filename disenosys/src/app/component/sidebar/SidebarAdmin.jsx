@@ -10,10 +10,10 @@ const Sidebar = () => {
   const path = usePathname();
 
   const links = [
-    { href: '/adminroute', label: 'University Code', icon: <SiAuthentik /> },
-    { href: '/external', label: 'External Code', icon: <SiAuthentik /> },
+    // { href: '/adminroute', label: 'University Code', icon: <SiAuthentik /> },
+    // { href: '/external', label: 'External Code', icon: <SiAuthentik /> },
     // {href:'/portfolioDashboard',label:'Portfolio',icon:<SiSololearn />},
-    { href: '/historycode', label: 'Student-List', icon: <SiAuthentik /> },
+    { href: '/historycode', label: 'University-List', icon: <SiAuthentik /> },
     { href: '/externalcode', label: 'External-List', icon: <SiAuthentik /> },
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },

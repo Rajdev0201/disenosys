@@ -6,7 +6,9 @@ const codeSchema = new mongoose.Schema({
     expiresAt: { type: Date, },
     createdAt: { type: Date, default: Date.now },
     college: { type: String },
-    collegeCode: { type: String, unique: true },
+    city:{ type: String },
+    country:{type:String},
+    // collegeCode: { type: String, unique: true },
 });
 
 const Code = mongoose.model('Code', codeSchema);

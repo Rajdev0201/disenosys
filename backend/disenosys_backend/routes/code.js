@@ -4,11 +4,11 @@ const Code = require('../models/code.js');
 
 
 router.post('/generate-code', async (req, res) => {
-    const { college ,collegeCode} = req.body;
+    const { college ,city,country} = req.body;
     const standardizedCollegeName = college.toLowerCase().trim();
 
     try {
-        let existingCode = await Code.findOne({ collegeCode });
+        let existingCode = await Code.findOne({ college });
 
         if (existingCode) {
             return res.json({ 
@@ -22,7 +22,8 @@ router.post('/generate-code', async (req, res) => {
 
         const newCode = new Code({
             college:standardizedCollegeName,
-            collegeCode,
+            city,
+            country,
             code,
             userType: 'college', 
             expiresAt: null, 
@@ -163,6 +164,30 @@ router.get('/studentCode', async (req,res) => {
         return res.status(500).json({err : "data is not fetched"})
     }
 })
+
+
+router.delete('/studentCode/:id', async (req,res) => {
+    const { id } = req.params;
+    try{
+    const student = await Code.find({userType:"college"});
+
+    if(!student){
+          return res.status(400).json({ error: 'No Data is available' });
+    }
+
+    const fixed = await Code.findByIdAndDelete(id);
+
+    res.status(200).json({
+        message: 'Student data is deleted',
+        data: fixed,
+      });
+    }catch(err){
+        console.log(err);
+        return res.status(500).json({err : "data is not deleted"})
+    }
+})
+
+
 
 
 router.get('/externalCode', async (req,res) => {
