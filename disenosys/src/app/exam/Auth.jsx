@@ -67,9 +67,9 @@ const Auth = () => {
                       <li><span className="text-yellow-500 font-bold">Yellow</span> for skipped questions.</li>
                     </ul>
                 </li>
-                <li>After completing all the questions, please click the <span className="text-blue-500 font-bold">"Finish"</span> button to view your results. A popup will appear with your results; you can close it afterward.</li>
+                <li>After completing all the questions, please click the <span className="text-blue-500 font-bold">&quot;Finish&quot;</span> button to view your results. A popup will appear with your results; you can close it afterward.</li>
                 <li>You will also receive an email with your results.</li>
-                <li>It is essential to click the <span className="text-blue-500 font-bold">"Finish"</span> button to submit your quiz.</li>
+                <li>It is essential to click the <span className="text-blue-500 font-bold">&quot;Finish&quot;</span> button to submit your quiz.</li>
               </ol>
             </div>
 
