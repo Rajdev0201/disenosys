@@ -99,7 +99,7 @@ export const SignupData = (userData) => async (dispatch) => {
         theme: "dark",
       });
       localStorage.setItem("profile", JSON.stringify(data));
-      router.push("/adminroute")
+      router.push("/historycode")
     }catch(err) {
       toast.error(err?.response?.data?.message, {
         position: "top-center",
