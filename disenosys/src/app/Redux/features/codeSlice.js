@@ -11,8 +11,11 @@ const codeSlice = createSlice({
     setCode: (state, action) => {
         return action.payload; 
       },
+       remove: (state, action) => {
+        state.code = action.payload;
+      },
     },
 });
 
-export const { setCode } = codeSlice.actions;
+export const { setCode ,remove} = codeSlice.actions;
 export default codeSlice.reducer;

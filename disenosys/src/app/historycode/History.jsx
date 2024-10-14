@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { studentCode } from "../Redux/action/auth.js";
+import { deleteStudentCode, studentCode } from "../Redux/action/auth.js";
 import { Pagination } from "../component/Pagination.jsx";
 import { FaWhatsappSquare } from "react-icons/fa";
-import { MdAttachEmail } from "react-icons/md";
+import { MdAttachEmail, MdDelete } from "react-icons/md";
 import Link from "next/link.js";
 
 const History = () => {
@@ -47,7 +47,7 @@ const History = () => {
     setCurrentPage(page);
   };
 
-  const handleWhatsAppShare = (code,college) => {
+  const handleWhatsAppShare = (code, college) => {
     const examLink = "https://www.disenosys.com/exam";
     const whatsappMessage = `Dear Student,\n\n${college}, has been assigned the following code for the upcoming online exam:\n\nCode: ${code}\nExam Link: ${examLink}\n\nPlease use this code during registration. If you need any assistance, feel free to contact us.\n\nGood luck with your exam!\nDisenosys\nIndia's leading Automotive Design Training & Hiring Partners`;
     const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
@@ -56,21 +56,24 @@ const History = () => {
     window.open(whatsappUrl, "_blank");
   };
 
-  const handleEmailShare = (code,college) => {
+  const handleEmailShare = (code, college) => {
     const subject = "College Code Information";
     const examLink = "https://www.disenosys.com/exam";
     const body = `Dear Student,\n\n${college}, has been assigned the following code for the upcoming online exam:\n\nCode: ${code}\nExam Link: ${examLink}\n\nPlease use this code during registration. If you need any assistance, feel free to contact us.\n\nGood luck with your exam!\nDisenosys\nIndia's leading Automotive Design Training & Hiring Partners`;
-  
+
     const mailtoUrl = `https://mail.google.com/mail/?view=cm&fs=1&su=${encodeURIComponent(
       subject
     )}&body=${encodeURIComponent(body)}`;
     window.open(mailtoUrl, "_blank");
   };
 
+  const handleDelete = (id) => {
+    dispatch(deleteStudentCode(id));
+  };
   return (
     <div className="p-6 flex flex-col w-full mt-12">
       <h2 className="text-[#182073] font-bold font-josefin text-2xl md:text-3xl lg:text-4xl text-center mb-1">
-      University Code
+        University Code
       </h2>
 
       <div className="flex justify-between items-center p-5">
@@ -95,7 +98,10 @@ const History = () => {
           </div>
         </div>
         <div className="ml-4">
-          <Link href="/adminroute" className="bg-[#182073] text-white rounded-sm font-bold px-4 py-2">
+          <Link
+            href="/adminroute"
+            className="bg-[#182073] text-white rounded-sm font-bold px-4 py-2"
+          >
             Create Code
           </Link>
         </div>
@@ -114,7 +120,13 @@ const History = () => {
                   S.No
                 </th>
                 <th className="py-3 px-4 text-center text-[#182073] border-r border-[#182073]">
-                  College
+                  College Name
+                </th>
+                <th className="py-3 px-4 text-center text-[#182073] border-r border-[#182073]">
+                  College City
+                </th>
+                <th className="py-3 px-4 text-center text-[#182073] border-r border-[#182073]">
+                  College Country
                 </th>
                 <th className="py-3 px-4 text-center text-[#182073] border-r border-[#182073]">
                   Code
@@ -122,11 +134,11 @@ const History = () => {
                 <th className="py-3 px-4 text-center text-[#182073] border-r border-[#182073]">
                   Created Date
                 </th>
-                <th className="py-3 px-4 text-center text-[#182073] border-r border-[#182073]">
+                {/* <th className="py-3 px-4 text-center text-[#182073] border-r border-[#182073]">
                   Share
-                </th>
+                </th> */}
                 <th className="py-3 px-4 text-center text-[#182073] border-r border-[#182073]">
-                  Delete
+                  Action
                 </th>
               </tr>
             </thead>
@@ -138,6 +150,12 @@ const History = () => {
                   </td>
                   <td className="py-3 px-4 text-center text-gray-400">
                     {item.college}
+                  </td>
+                  <td className="py-3 px-4 text-center text-gray-400">
+                    {item.city}
+                  </td>
+                  <td className="py-3 px-4 text-center text-gray-400">
+                    {item.country}
                   </td>
                   <td className="py-3 px-4 text-center text-gray-400">
                     {item.code}
@@ -157,7 +175,9 @@ const History = () => {
                           color="green"
                           size={24}
                           className="cursor-pointer"
-                          onClick={() => handleWhatsAppShare(item.code,item.college)}
+                          onClick={() =>
+                            handleWhatsAppShare(item.code, item.college)
+                          }
                         />
                         <div className="absolute hidden group-hover:block bg-gray-700 text-white text-xs rounded py-1 px-2 bottom-6">
                           Share on WhatsApp
@@ -169,19 +189,26 @@ const History = () => {
                           color="blue"
                           size={24}
                           className="cursor-pointer"
-                          onClick={() => handleEmailShare(item.code,item.college)}
+                          onClick={() =>
+                            handleEmailShare(item.code, item.college)
+                          }
                         />
                         <div className="absolute hidden group-hover:block bg-gray-700 text-white text-xs rounded py-1 px-2 bottom-6">
                           Share via Email
                         </div>
                       </div>
+                      <div className="group relative">
+                        <MdDelete
+                          data-tip="delete"
+                          size={24}
+                          className="text-red-500 cursor-pointer"
+                          onClick={() => handleDelete(item._id)}
+                        />
+                        <div className="absolute hidden group-hover:block bg-gray-700 text-white text-xs rounded py-1 px-2 bottom-6">
+                          Delete the code
+                        </div>
+                      </div>
                     </div>
-                  </td>
-
-                  <td className="py-1 px-4 text-center text-gray-400">
-                    <button className="text-white bg-red-600 text-center w-20 h-8 rounded-sm shadow-xl hover:bg-red-400">
-                      Delete
-                    </button>
                   </td>
                 </tr>
               ))}

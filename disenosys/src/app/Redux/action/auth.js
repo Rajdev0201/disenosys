@@ -4,8 +4,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Admin, FacebookLog, Login, Signup } from '../features/authSlice.js';
 import { setStudent, student } from "../features/studentSlice.js"
-import {setCode} from "../features/codeSlice.js";
-import {setExternal} from "../features/externalSlice.js";
+import {remove, setCode} from "../features/codeSlice.js";
+import {setExternal,removeCode} from "../features/externalSlice.js";
 
 
 
@@ -195,7 +195,7 @@ export const SignupData = (userData) => async (dispatch) => {
         const getData = res.data;
         dispatch(setCode(getData));
     } catch (error) {
-        console.error('Error decreasing quantity:', error);
+        console.error('Error fetch code:', error);
     }
 }
 
@@ -206,6 +206,53 @@ export const externalCode = () => async (dispatch) => {
       const getData = res.data;
       dispatch(setExternal(getData));
   } catch (error) {
-      console.error('Error decreasing quantity:', error);
+      console.error('Error fetch code:', error);
   }
 }
+
+
+//student-code-delete 
+
+export const deleteStudentCode = (id) => async (dispatch) => {
+  try {
+      await axios.delete(`https://disenosys-1.onrender.com/api/admin/studentCode/${id}`);
+      dispatch(remove(id));
+      dispatch(studentCode());
+      toast.dark('The code has Deleted!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+  } catch (error) {
+      console.error('Error fetch code:', error);
+  }
+}
+
+
+//external-code-delete
+
+export const deleteExternalCode = (id) => async (dispatch) => {
+  try {
+    await axios.delete(`https://disenosys-1.onrender.com/api/admin/externalCode/${id}`);
+    dispatch(removeCode(id));
+    dispatch(externalCode());
+    toast.dark('The code has Deleted!', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  } catch(error){
+    console.error('Error fetch code:', error);
+  }
+}
+

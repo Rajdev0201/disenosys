@@ -88,7 +88,12 @@ const handleAnswerClick = () => {
   setAnswers(updatedAnswers);
   localStorage.setItem("answers", JSON.stringify(updatedAnswers));
   setSelectedAnswer(null);
-  handleNext();
+
+  if (currentQuestionIndex === questions.length - 1) {
+    setCurrentQuestionIndex(currentQuestionIndex);
+  } else {
+    handleNext();
+  }
 };
 
 const handleAnswerChange = (option) => {
@@ -98,8 +103,14 @@ const handleAnswerChange = (option) => {
 const handleNext = () => {
   setCurrentQuestionIndex((prevIndex) => {
     const nextIndex = prevIndex + 1;
-    localStorage.setItem("currentQuestionIndex", nextIndex);
-    return nextIndex;
+
+    if (nextIndex < questions.length) {
+      localStorage.setItem("currentQuestionIndex", nextIndex);
+      return nextIndex;
+    } else {
+      // Stay on the last question
+      return prevIndex;
+    }
   });
 };
 

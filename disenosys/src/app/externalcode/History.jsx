@@ -1,10 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { externalCode } from "../Redux/action/auth.js";
+import { deleteExternalCode, externalCode } from "../Redux/action/auth.js";
 import { Pagination } from "../component/Pagination.jsx";
 import { FaWhatsappSquare } from "react-icons/fa";
-import { MdAttachEmail } from "react-icons/md";
+import { MdAttachEmail, MdDelete } from "react-icons/md";
 import Link from "next/link.js";
 
 const History = () => {
@@ -71,6 +71,12 @@ const History = () => {
     window.open(mailtoUrl, "_blank");
   };
 
+  
+  const handleDelete = (id) => {
+    dispatch(deleteExternalCode(id))
+   }
+
+
   return (
     <div className="p-6 flex flex-col  w-full mt-12">
       <h2 className="text-[#182073] font-bold font-josefin text-2xl md:text-3xl lg:text-4xl text-center mb-1">
@@ -131,10 +137,7 @@ const History = () => {
                   Expired Date
                 </th>
                 <th className="py-3 px-4 text-center text-[#182073] border-r border-[#182073]">
-                  Share
-                </th>
-                <th className="py-3 px-4 text-center text-[#182073] border-r border-[#182073]">
-                  Delete
+                  Action
                 </th>
               </tr>
             </thead>
@@ -168,6 +171,7 @@ const History = () => {
                       ? new Date(item?.expiresAt).toLocaleDateString()
                       : "N/A"}
                   </td>
+                
                   <td className="text-center">
                     <div className="flex justify-center items-center space-x-2">
                       <div className="group relative">
@@ -176,7 +180,9 @@ const History = () => {
                           color="green"
                           size={24}
                           className="cursor-pointer"
-                          onClick={() => handleWhatsAppShare(item.code)}
+                          onClick={() =>
+                            handleWhatsAppShare(item.code, item.college)
+                          }
                         />
                         <div className="absolute hidden group-hover:block bg-gray-700 text-white text-xs rounded py-1 px-2 bottom-6">
                           Share on WhatsApp
@@ -188,18 +194,26 @@ const History = () => {
                           color="blue"
                           size={24}
                           className="cursor-pointer"
-                          onClick={() => handleEmailShare(item.code)}
+                          onClick={() =>
+                            handleEmailShare(item.code, item.college)
+                          }
                         />
                         <div className="absolute hidden group-hover:block bg-gray-700 text-white text-xs rounded py-1 px-2 bottom-6">
                           Share via Email
                         </div>
                       </div>
+                      <div className="group relative">
+                        <MdDelete
+                          data-tip="delete"
+                          size={24}
+                          className="text-red-500 cursor-pointer"
+                          onClick={() => handleDelete(item._id)}
+                        />
+                        <div className="absolute hidden group-hover:block bg-gray-700 text-white text-xs rounded py-1 px-2 bottom-6">
+                          Delete the code
+                        </div>
+                      </div>
                     </div>
-                  </td>
-                  <td className="py-1 px-4 text-center text-gray-400">
-                    <button className="text-white bg-red-600 text-center w-20 h-8 rounded-sm shadow-xl hover:bg-red-400">
-                      Delete
-                    </button>
                   </td>
                 </tr>
               ))}

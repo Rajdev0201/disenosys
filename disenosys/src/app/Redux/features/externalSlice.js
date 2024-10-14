@@ -11,8 +11,11 @@ const externalSlice = createSlice({
     setExternal: (state,action) => {
         return action.payload; 
     },
+    removeCode: (state, action) => {
+      state.code = action.payload;
+    },
     },
 });
 
-export const { setExternal } = externalSlice.actions;
+export const { setExternal,removeCode } = externalSlice.actions;
 export default externalSlice.reducer;

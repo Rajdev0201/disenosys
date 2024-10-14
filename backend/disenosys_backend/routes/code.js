@@ -178,7 +178,7 @@ router.delete('/studentCode/:id', async (req,res) => {
     const fixed = await Code.findByIdAndDelete(id);
 
     res.status(200).json({
-        message: 'Student data is deleted',
+        message: 'Student code has deleted',
         data: fixed,
       });
     }catch(err){
@@ -187,25 +187,43 @@ router.delete('/studentCode/:id', async (req,res) => {
     }
 })
 
-
-
-
 router.get('/externalCode', async (req,res) => {
-  
+    
     try{
         const student = await Code.find({userType:"external"});
     
         if(!student){
               return res.status(400).json({ error: 'No Data is available' });
         }
-    
+   
         res.status(200).json({
-            message: 'External data is saved',
+            message: 'External code has deleted',
             data: student,
           });
         }catch(err){
             console.log(err);
-            return res.status(500).json({err : "data is not fetched"})
+            return res.status(500).json({err : "data is not deleted"})
+        }
+})
+
+
+
+router.delete('/externalCode/:id', async (req,res) => {
+    const { id } = req.params;
+    try{
+        const student = await Code.find({userType:"external"});
+    
+        if(!student){
+              return res.status(400).json({ error: 'No Data is available' });
+        }
+        const fixed = await Code.findByIdAndDelete(id);
+        res.status(200).json({
+            message: 'External code has deleted',
+            data: fixed,
+          });
+        }catch(err){
+            console.log(err);
+            return res.status(500).json({err : "data is not deleted"})
         }
 })
 
