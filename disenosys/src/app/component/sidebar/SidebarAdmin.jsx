@@ -4,11 +4,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FaHome, FaUser, FaCog, FaChartBar, FaSignOutAlt} from 'react-icons/fa';
 import { SiAuthentik, SiSololearn } from "react-icons/si";
+import { useDispatch } from 'react-redux';
 
 
 const Sidebar = () => {
   const path = usePathname();
-
+  const dispatch = useDispatch();
   const links = [
     // { href: '/adminroute', label: 'University Code', icon: <SiAuthentik /> },
     // { href: '/external', label: 'External Code', icon: <SiAuthentik /> },
@@ -42,7 +43,7 @@ const Sidebar = () => {
 
       {/* Logout Button */}
       <div className="px-6 py-4">
-        <Link href="/logout"
+        <Link href="/"
           className="flex items-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition-colors duration-200">
           <FaSignOutAlt className="mr-3" />
           <span onClick={handleLogout}>Logout</span>

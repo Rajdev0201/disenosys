@@ -47,7 +47,7 @@ const Auth = () => {
             {/* <button>
               <IoMdAlert size={30} className="text-white" />
             </button> */}
-            <Image src={icon} className="w-16 h-16"/>
+            <Image src={icon} className="w-16 h-16 ring-2 ring-white rounded-full"/>
           </div>
 
           <div className="container mx-auto p-5 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -68,8 +68,8 @@ const Auth = () => {
                     </ul>
                 </li>
                 <li>After completing all the questions, please click the <span className="text-blue-500 font-bold">&quot;Finish&quot;</span> button to view your results. A popup will appear with your results; you can close it afterward.</li>
-                <li>You will also receive an email with your results.</li>
-                <li>It is essential to click the <span className="text-blue-500 font-bold">&quot;Finish&quot;</span> button to submit your quiz.</li>
+                <li>You will also receive an <b>email</b> with your results.</li>
+                <li>Please stay on the quiz page during the exam.leaving the page will <b>prevent</b> your result from being sent to your email.</li>
               </ol>
             </div>
 

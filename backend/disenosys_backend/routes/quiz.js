@@ -4,6 +4,7 @@ const router = express.Router();
 
 
 
+
 router.get('/', async (req, res) => {
   try {
     const questions = await Question.find();
@@ -12,6 +13,12 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 });
+
+
+
+
+
+
 
 
 router.post('/add', async (req, res) => {

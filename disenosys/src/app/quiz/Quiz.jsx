@@ -49,15 +49,23 @@ useEffect(() => {
     setGlobalTimeRemaining(3600);
   }
 
+  let alertShown = false;
+
   const timer = setInterval(() => {
     setGlobalTimeRemaining((prevTime) => {
       if (prevTime > 0) {
         const newTime = prevTime - 1;
         localStorage.setItem("globalTimeRemaining", newTime);
+
+        if (newTime <= 300 && !alertShown) {
+          alert("You have only 5 minutes left!");
+          alertShown = true;
+        }
+
         return newTime;
       } else {
         clearInterval(timer);
-        alert("Time's up! Redirecting to the home page.");
+        // alert("Time's up! Redirecting to the home page.");
         handleFinish();
         return 0;
       }

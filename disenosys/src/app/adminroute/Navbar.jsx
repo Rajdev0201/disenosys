@@ -12,12 +12,12 @@ import { setUser } from "../Redux/features/authSlice.js";
 
 const Navbar = () => {
     const user = useSelector((state) => state?.user);
+    // console.log(user);
     const dispatch = useDispatch();
 
     useEffect(() => {
       const storedUser = localStorage.getItem("profile");
       if (storedUser) {
-        // Dispatch action to update Redux with localStorage data
         dispatch(setUser(JSON.parse(storedUser)));
       }
     }, [dispatch]);

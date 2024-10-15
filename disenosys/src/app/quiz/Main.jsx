@@ -40,10 +40,10 @@ const Main = () => {
     {questions.length > 0 ? (
       <Quiz questions={questions} />
     ) : (
-      <p>Loading questions...</p>
+      <p className='text-[#182073] text-center flex text-lg font-bold justify-center items-center min-h-screen'>Loading questions...</p>
     )}
   </div>
-    ): <h1 className='text-red-500 text-center flex justify-center items-center'>Redirect to home page!</h1> 
+    ): <h1 className='text-red-500 text-center flex text-base justify-center items-center min-h-screen'>Redirect to home page...</h1> 
   }
   </>
 );
