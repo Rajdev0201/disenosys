@@ -127,7 +127,7 @@ const Quiz = ({ questions }) => {
         );
         setSelectedAnswer(matchingOption || null);
       } else {
-        setSelectedAnswer(null); // Reset if unanswered
+        setSelectedAnswer(null);
       }
     }
   }, [currentQuestionIndex]);

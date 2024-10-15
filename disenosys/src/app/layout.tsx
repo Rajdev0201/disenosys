@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingWrapper from "./component/LoadingWrapper";
 import Script from 'next/script';
-
+import { Analytics } from "@vercel/analytics/react"
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -32,7 +32,7 @@ export default function RootLayout({
       
         
             {children}
-         
+            <Analytics/>
             <ToastContainer />
           </LoadingWrapper>
         </Providers>
