@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../Redux/features/authSlice.js";
 import { useEffect } from "react";
 
-export default function adminRoutePage() {
+export default function AdminRoutePage() {
   const user = useSelector((state) => state?.user);
   // console.log(user);
   const dispatch = useDispatch();

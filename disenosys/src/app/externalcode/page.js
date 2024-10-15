@@ -7,7 +7,7 @@ import { setUser } from "../Redux/features/authSlice";
 import { useEffect } from "react";
 
 
-export default function historyPage() {
+export default function HistoryPage() {
 
   const user = useSelector((state) => state?.user);
   // console.log(user);

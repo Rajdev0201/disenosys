@@ -4,9 +4,10 @@ import Navbar from "../adminroute/Navbar";
 import Sidebar from "../component/sidebar/SidebarAdmin";
 import History from "./History";
 import { useEffect } from "react";
+import { setUser } from "../Redux/features/authSlice";
 
 
-export default function historyPage() {
+export default function HistoryPage() {
 
   const user = useSelector((state) => state?.user);
   const dispatch = useDispatch();
