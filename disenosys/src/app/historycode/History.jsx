@@ -77,7 +77,7 @@ const History = () => {
       </h2>
 
       <div className="flex justify-between items-center p-5">
-        <div className="box-shadow p-2 flex-grow">
+        <div className=" p-2 flex-grow">
           <div className="flex items-center">
             <div className="flex items-center bg-[#182073] justify-center w-10  rounded-tl-lg rounded-bl-lg border-r border-gray-200 p-3">
               <svg
@@ -97,7 +97,7 @@ const History = () => {
             />
           </div>
         </div>
-        <div className="ml-4">
+        <div className="ml-4 mt-1">
           <Link
             href="/adminroute"
             className="bg-[#182073] text-white rounded-sm font-bold px-4 py-2"
