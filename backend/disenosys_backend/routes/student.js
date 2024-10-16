@@ -5,7 +5,7 @@ const Student = require('../models/students.js');
 const nodemailer = require('nodemailer');
 
 router.post('/login', async (req, res) => {
-    const { name, email, code } = req.body;
+    const { name, email, code,mobile } = req.body;
     
     try {
         const foundCode = await Code.findOne({ code });
@@ -41,6 +41,7 @@ router.post('/login', async (req, res) => {
             college: foundCode.college,
             userType: foundCode.userType,
             codeUsed: code,
+            mobile
         });
 
         const savedStudent = await student.save();

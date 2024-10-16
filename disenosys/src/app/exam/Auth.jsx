@@ -53,30 +53,29 @@ const Auth = () => {
           <div className="container mx-auto p-5 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-6 bg-gray-100 rounded-lg">
               <h1 className="font-bold text-center text-[#182073] font-poppins text-2xl mb-4">
-                Quiz Instructions
+              Certification Exam Instructions:
               </h1>
               <ol className="list-decimal pl-5 text-[#182073] font-poppins">
-                <li>First, please sign in with your details and access code.</li>
-                <li>Once signed in, you will have access to the quiz application, which consists of 50 questions.</li>
-                <li>You have a time limit of 1 hour to complete the quiz.</li>
-                <li>Click the option you want and then submit your answer.</li>
-                <li>The quiz status will be indicated by three colors: 
+                <li>Sign-In: Begin by signing in using your details and the provided access code.</li>
+                <li>Quiz Access: Once signed in, you will gain access to the quiz, which consists of 50 multiple-choice questions.</li>
+                <li>Time Limit: You have a 30-minute time limit to complete the quiz.</li>
+                <li>Answer Submission: Select your preferred option for each question and submit your answer.</li>
+                <li>Status Indicators:
                     <ul className="list-disc pl-5">
                       <li><span className="text-green-500 font-bold">Green</span> for correct answers</li>
                       <li><span className="text-red-500 font-bold">Red</span> for incorrect answers</li>
                       <li><span className="text-yellow-500 font-bold">Yellow</span> for skipped questions.</li>
                     </ul>
                 </li>
-                <li>After completing all the questions, please click the <span className="text-blue-500 font-bold">&quot;Finish&quot;</span> button to view your results. A popup will appear with your results; you can close it afterward.</li>
-                <li>You will also receive an <b>email</b> with your results.</li>
-                <li>Please stay on the quiz page during the exam.leaving the page will <b>prevent</b> your result from being sent to your email.</li>
+                <li>Completion: Once you have answered all questions, click the <span className="text-blue-500 font-bold">&quot;Finish&quot;</span>  button to review your results. A pop-up will display your performance, and an email with your results will also be sent to you.</li>
+                <li>Important Note: Ensure you stay on the quiz page for the entire duration of the exam, as leaving the page will get you DISQUALIFIED .</li>
               </ol>
             </div>
 
     
             <div className="p-6">
               <h1 className="font-bold text-center text-[#182073] font-poppins text-2xl mb-4">
-                Quiz Login
+                Exam Login
               </h1>
               <form onSubmit={handleSignin} className="p-6">
                 <input
