@@ -16,7 +16,7 @@ const Quiz = ({ questions }) => {
   );
 
   const [globalTimeRemaining, setGlobalTimeRemaining] = useState(
-    parseInt(localStorage.getItem("globalTimeRemaining")) || 3600
+    parseInt(localStorage.getItem("globalTimeRemaining")) || 1800
   );
 
   const [showResultPopup, setShowResultPopup] = useState(false);
@@ -44,7 +44,7 @@ const Quiz = ({ questions }) => {
   useEffect(() => {
     if (quizFinished) {
       localStorage.removeItem("globalTimeRemaining");
-      setGlobalTimeRemaining(3600);
+      setGlobalTimeRemaining(1800);
     }
 
     let alertShown = false;
