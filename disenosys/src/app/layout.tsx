@@ -29,8 +29,6 @@ export default function RootLayout({
  
         <Providers>
           <LoadingWrapper>
-      
-        
             {children}
             <Analytics/>
             <ToastContainer />

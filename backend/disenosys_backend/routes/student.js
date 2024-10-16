@@ -119,6 +119,7 @@ router.post('/updateStudentQuiz', async (req, res) => {
       student.totalScore = totalScore;
       student.percentage = percentage;
       student.attendedQuiz = true;
+      student. quizFinishTime = Date.now();
   
       await student.save();
       await sendResultEmail(student.email, student.name, totalScore, percentage);
