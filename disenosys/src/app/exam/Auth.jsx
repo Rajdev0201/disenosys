@@ -14,14 +14,16 @@ const Auth = () => {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [mobile, setMobile] = useState("");
   const [code, setCode] = useState("");
 
   const handleSignin = async (e) => {
     e.preventDefault();
-    dispatch(studentLogin({ name, email, code }, router));
+    dispatch(studentLogin({ name, email, code,mobile }, router));
     setName("");
     setEmail("");
     setCode("");
+    setMobile("");
   };
 
   return (
@@ -40,7 +42,7 @@ const Auth = () => {
           className="w-full max-w-4xl bg-white rounded-sm shadow-md rounded-b-lg border-b-8 border-[#182073]"
           role="alert"
         >
-          <div className="flex items-center justify-between mb-3 p-4 bg-[#182073]">
+          <div className="flex items-center justify-between mb-3 p-3 bg-[#182073]">
             <span className="mb-1 text-xl font-semibold font-poppins text-white">
               Welcome
             </span>
@@ -50,25 +52,25 @@ const Auth = () => {
             <Image src={icon} className="w-16 h-16 ring-2 ring-white rounded-full"/>
           </div>
 
-          <div className="container mx-auto p-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="container mx-auto p-3 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="p-6 bg-gray-100 rounded-lg">
               <h1 className="font-bold text-center text-[#182073] font-poppins text-2xl mb-4">
               Certification Exam Instructions:
               </h1>
               <ol className="list-decimal pl-5 text-[#182073] font-poppins">
-                <li>Sign-In: Begin by signing in using your details and the provided access code.</li>
-                <li>Quiz Access: Once signed in, you will gain access to the quiz, which consists of 50 multiple-choice questions.</li>
-                <li>Time Limit: You have a 30-minute time limit to complete the quiz.</li>
-                <li>Answer Submission: Select your preferred option for each question and submit your answer.</li>
-                <li>Status Indicators:
+                <li><b>Sign-In:</b> Begin by signing in using your details and the provided access code.</li>
+                <li><b>Quiz Access:</b> Once signed in, you will gain access to the quiz, which consists of 50 multiple-choice questions.</li>
+                <li><b>Time Limit: </b> You have a 30-minute time limit to complete the quiz.</li>
+                <li><b>Answer Submission:</b> Select your preferred option for each question and submit your answer.</li>
+                <li><b>Status Indicators:</b>
                     <ul className="list-disc pl-5">
                       <li><span className="text-green-500 font-bold">Green</span> for correct answers</li>
                       <li><span className="text-red-500 font-bold">Red</span> for incorrect answers</li>
                       <li><span className="text-yellow-500 font-bold">Yellow</span> for skipped questions.</li>
                     </ul>
                 </li>
-                <li>Completion: Once you have answered all questions, click the <span className="text-blue-500 font-bold">&quot;Finish&quot;</span>  button to review your results. A pop-up will display your performance, and an email with your results will also be sent to you.</li>
-                <li>Important Note: Ensure you stay on the quiz page for the entire duration of the exam, as leaving the page will get you DISQUALIFIED .</li>
+                <li><b>Completion:</b> Once you have answered all questions, click the <span className="text-blue-500 font-bold">&quot;Finish&quot;</span>  button to review your results. A pop-up will display your performance, and an email with your results will also be sent to you.</li>
+                <li><b>Important Note:</b> Ensure you stay on the quiz page for the entire duration of the exam, as leaving the page will get you <b>DISQUALIFIED</b>.</li>
               </ol>
             </div>
 
@@ -94,6 +96,16 @@ const Auth = () => {
                   className="w-full border-2 p-2 mt-4 text-[#182073] border-gray-400 bg-gray-200 rounded outline-none focus:border-[#182073] transition-colors required:border-red-500"
                   required
                 />
+
+                  <input
+                  type="text"
+                  value={mobile}
+                  onChange={(e) => setMobile(e.target.value)}
+                  placeholder="Enter Mobile Number"
+                  className="w-full border-2 p-2 mt-4 text-[#182073] border-gray-400 bg-gray-200 rounded outline-none focus:border-[#182073] transition-colors required:border-red-500"
+                  required
+                />
+
                 <input
                   type="text"
                   value={code}
@@ -102,6 +114,7 @@ const Auth = () => {
                   className="w-full border-2 p-2 mt-4 text-[#182073] border-gray-400 bg-gray-200 rounded outline-none focus:border-[#182073] transition-colors required:border-red-500"
                   required
                 />
+                 
                 <div className="flex justify-end">
                   <button
                     type="submit"
