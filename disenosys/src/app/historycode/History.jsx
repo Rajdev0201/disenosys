@@ -68,7 +68,10 @@ const History = () => {
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteStudentCode(id));
+    const confirmSubmit = window.confirm("Do you want to delete the code?");
+    if(confirmSubmit){
+    dispatch(deleteStudentCode(id))
+    }
   };
   return (
     <div className="p-6 flex flex-col w-full mt-12">

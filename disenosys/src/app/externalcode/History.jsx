@@ -73,7 +73,10 @@ const History = () => {
 
   
   const handleDelete = (id) => {
-    dispatch(deleteExternalCode(id))
+    const confirmSubmit = window.confirm("Do you want to delete the code?");
+    if(confirmSubmit){
+      dispatch(deleteExternalCode(id))
+    }
    }
 
 

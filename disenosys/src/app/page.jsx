@@ -55,6 +55,7 @@ export default function Page() {
 
       <Blink/>
       <Navbar />
+
       <Home />
       <Count />
       <Box />

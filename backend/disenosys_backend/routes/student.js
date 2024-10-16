@@ -3,6 +3,8 @@ const router = express.Router();
 const Code = require('../models/code.js');
 const Student = require('../models/students.js');
 const nodemailer = require('nodemailer');
+const XLSX = require('xlsx');
+const { format,isValid } = require('date-fns');
 
 router.post('/login', async (req, res) => {
     const { name, email, code,mobile } = req.body;
@@ -133,5 +135,71 @@ router.post('/updateStudentQuiz', async (req, res) => {
 });
   
   
+
+module.exports = router;
+
+
+
+
+
+router.get('/result', async (req, res) => {
+  try {
+    const result = await Student.find();
+
+    if (!result || result.length === 0) {
+      return res.status(400).json({ error: 'No Data is available' });
+    }
+
+    // Create a new workbook and worksheet
+    const workbook = XLSX.utils.book_new();
+    const worksheetData = result.map((student) => {
+      // Format the dates only if they are valid
+      const createdAtFormatted = isValid(new Date(student.createdAt))
+        ? format(new Date(student.createdAt), 'hh:mm a')
+        : 'Invalid Date'; // Fallback if the date is invalid
+
+      const quizFinishTimeFormatted = isValid(new Date(student.quizFinishTime))
+        ? format(new Date(student.quizFinishTime), 'hh:mm a')
+        : 'Invalid Date'; // Fallback if the date is invalid
+
+      return {
+        name: student.name,
+        email: student.email,
+        college: student.college || 'N/A', // Use 'N/A' for null values
+        mobile: student.mobile,
+        userType: student.userType,
+        codeUsed: student.codeUsed,
+        attendedQuiz: student.attendedQuiz,
+        createdAt: createdAtFormatted,
+        percentage: student.percentage,
+        quizFinishTime: quizFinishTimeFormatted,
+        totalScore: student.totalScore,
+      };
+    });
+
+    // Create the worksheet from the data
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+
+    // Append the worksheet to the workbook
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Results');
+
+    // Write the Excel file to a buffer
+    const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+    // Set the response headers to download the Excel file
+    res.setHeader('Content-Disposition', 'attachment; filename="results.xlsx"');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+    // Send the buffer as the response
+    res.send(excelBuffer);
+
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "Failed to generate Excel file" });
+  }
+});
+
+module.exports = router;
+
 
 module.exports = router;
