@@ -165,6 +165,28 @@ router.get('/studentCode', async (req,res) => {
     }
 })
 
+router.patch('/toggleCode/:id', async (req, res) => {
+    const { id } = req.params;
+    const { isActive } = req.body;
+  
+    try {
+      const updatedCode = await Code.findByIdAndUpdate(
+        id,
+        { isActive },
+        { new: true }
+      );
+  
+      if (!updatedCode) {
+        return res.status(400).json({ error: "Code not found" });
+      }
+  
+      res.status(200).json({ success: true, data: updatedCode });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ error: "Server error" });
+    }
+  });
+
 
 router.delete('/studentCode/:id', async (req,res) => {
     const { id } = req.params;

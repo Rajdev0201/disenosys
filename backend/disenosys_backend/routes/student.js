@@ -15,6 +15,9 @@ router.post('/login', async (req, res) => {
             return res.status(400).json({ error: 'Invalid code' });
         }
         
+    if (!foundCode.isActive) {
+      return res.status(400).json({ error: 'The code is inactive.' });
+    }
         if (foundCode.userType === 'external') {
             const currentDate = new Date();
             if (foundCode.expiresAt && foundCode.expiresAt <= currentDate) {

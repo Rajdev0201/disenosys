@@ -79,6 +79,24 @@ const History = () => {
     }
    }
 
+   const handleToggle = (id, isActive) => {
+    fetch(`https://disenosys-1.onrender.com/api/admin/toggleCode/${id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ isActive: !isActive }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(externalCode());
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+
+  
+
 
   return (
     <div className="p-6 flex flex-col  w-full mt-12">
@@ -117,7 +135,7 @@ const History = () => {
       {/* <div className="w-full max-w-[800px] border-b-4 border-[#182073] mb-6"></div> */}
       {paginatedData?.length === 0 ? (
         <p className="text-lg text-red-400 text-center">
-          No Student data Match.
+          No External data Match.
         </p>
       ) : (
         <div className="w-full overflow-x-auto">
@@ -142,6 +160,7 @@ const History = () => {
                 <th className="py-3 px-4 text-center text-[#182073] border-r border-[#182073]">
                   Action
                 </th>
+                <th className="py-3 px-4 text-center text-[#182073]">Status</th>
               </tr>
             </thead>
             <tbody>
@@ -217,6 +236,20 @@ const History = () => {
                         </div>
                       </div>
                     </div>
+                  </td>
+                  <td className="text-center">
+                    <button
+                      className={`relative inline-flex items-center h-6 w-11 rounded-full ${
+                        item.isActive ? "bg-green-500" : "bg-red-500"
+                      }`}
+                      onClick={() => handleToggle(item._id, item.isActive)}
+                    >
+                      <span
+                        className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform ${
+                          item.isActive ? "translate-x-5" : "translate-x-1"
+                        }`}
+                      />
+                    </button>
                   </td>
                 </tr>
               ))}

@@ -8,6 +8,7 @@ const codeSchema = new mongoose.Schema({
     college: { type: String },
     city:{ type: String },
     country:{type:String},
+    isActive: { type: Boolean, default: true },
     // collegeCode: { type: String, unique: true },
 });
 
