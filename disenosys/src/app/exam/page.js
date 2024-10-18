@@ -63,12 +63,12 @@ export default function AdminPage() {
         <div className="flex flex-col items-center justify-center w-full h-full p-5">
           <div className='flex flex-row space-x-8'>
           <div className="bg-[#182073] text-white text-lg p-5 rounded-lg shadow-lg max-w-md text-center space-y-6 rounded-b-lg border-b-8 border-white">
-            <h2 className="font-bold text-2xl">You're Early, But That's a Good Thing!</h2>
+            <h2 className="font-bold text-2xl">You&apos;re Early, But That&apos;s a Good Thing!</h2>
             <div className='flex justify-center items-center'>
             <LiaHourglassStartSolid size={40} className='text-yellow-100'/>
             </div>
             <p className="mt-4 text-base text-gray-200">
-            Looks like you're ready to ace the exam, but the exam window hasn't opened yet! Please come back at 11 AM IST to start your test. Set a reminder, and we’ll see you soon!
+            Looks like you&apos;re ready to ace the exam, but the exam window hasn&apos;t opened yet! Please come back at 11 AM IST to start your test. Set a reminder, and we&apos;ll see you soon!
             </p>
           </div>
           <div className="relative group cursor-pointer flex flex-col justify-center items-center w-40 h-auto bg-neutral-900 text-gray-50 rounded-2xl shadow-lg overflow-hidden">
@@ -105,7 +105,7 @@ export default function AdminPage() {
                 <TbMoodCry size={60} className='text-red-300' />
               </div>
               <p className="mt-4 text-base text-gray-300">
-              The exam window has closed for today. Don't worry though! Stay tuned for the next opportunity and be sure to check back in time next round. We’re rooting for you!
+              The exam window has closed for today. Don&apos;t worry though! Stay tuned for the next opportunity and be sure to check back in time next round. We&apos;re rooting for you!
               </p>
             </div>
 
