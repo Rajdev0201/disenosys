@@ -89,13 +89,13 @@ export const Description = () => {
               <div key={index}>
                 <div className="banner p-10 md:p-12 lg:p-52 relative mt-6 md:mt-12 lg:mt-28 grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <div>
-                    <p className="text-[#182073] pb-3 mt-5 lg:mt-0 font-poppins">
+                    <p className="text-white pb-3 mt-5 lg:mt-0 font-poppins">
                       Latest Release, popular
                     </p>
-                    <h1 className="text-[#182073] text-2xl sm:text-3xl font-poppins text-balance  md:text-4xl font-bold">
+                    <h1 className="text-white text-2xl sm:text-3xl font-poppins text-balance  md:text-4xl font-bold">
                       {description.courseName}
                     </h1>
-                    <p className="text-[#182073] pt-3 font-poppins">
+                    <p className="text-white pt-3 font-poppins">
                       Course Detail
                     </p>
                   </div>
