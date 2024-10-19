@@ -24,8 +24,8 @@ const Director = () => {
   ];
 
   return (
-    <div className="font-poppins">
-      <h1 className="text-4xl pt-5 underline font-bold text-center sm:text-left">Program Directors</h1>
+    <div className="font-poppins mt-12">
+      <h1 className="text-4xl pt-5 font-bold text-center text-[#182073] sm:text-left">Program Directors</h1>
       {directors.map((director, index) => (
         <div key={index} className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-7">
           

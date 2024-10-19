@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 
 const Course = () => {
+  const [openCurriculum, setOpenCurriculum] = useState(false);
   const [openAccordionIndex, setOpenAccordionIndex] = useState(null);
 
   const course = [
@@ -52,32 +53,53 @@ const Course = () => {
     },
   ];
 
-  const toggleAccordion = () => {
-    setOpenAccordionIndex(openAccordionIndex === 0 ? null : 0);
+  const toggleAccordion = (index) => {
+    setOpenAccordionIndex(openAccordionIndex === index ? null : index);
+  };
+
+  const toggleCurriculum = () => {
+    setOpenCurriculum(!openCurriculum);
+    setOpenAccordionIndex(null); // Reset module state when Curriculum is toggled
   };
 
   return (
     <div>
+      {/* Curriculum button to toggle all modules */}
       <button
-        onClick={toggleAccordion}
+        onClick={toggleCurriculum}
         className="w-full text-left bg-gray-200 my-2 p-2 rounded-md hover:bg-gray-300 focus:outline-none flex items-center justify-between"
       >
-        <span>{openAccordionIndex === 0 ? "Curriculum" : "Curriculum"}</span>
-        <span>{openAccordionIndex === 0 ? "▲" : "▼"}</span>
+        <span>Course Curriculum</span>
+        <span className="text-[#182073]">{openCurriculum ? "▲" : "▼"}</span>
       </button>
-      {openAccordionIndex === 0 && (
-        <ul className="list-disc pl-5 mt-2 border border-gray-300">
+
+      {/* Display modules only if Curriculum is open */}
+      {openCurriculum && (
+        <div>
           {course.map((item, idx) => (
-            <li key={idx} className="py-2">
-              <h1 className="font-bold text-2xl">Module-{idx + 1}: {item.title}</h1>
-              <ul className="list-disc pl-5 mt-1">
-                {item.subTopics.map((subTopic, subIdx) => (
-                  <li key={subIdx} className="py-1 text-lg">{subTopic}</li>
-                ))}
-              </ul>
-            </li>
+            <div key={idx}>
+              {/* Button to toggle each module */}
+              <button
+                onClick={() => toggleAccordion(idx)}
+                className="w-full text-left bg-gray-100 my-2 p-2 rounded-md hover:bg-gray-200 focus:outline-none flex items-center justify-between"
+              >
+                <span>Module-{idx + 1}: {item.title}</span>
+                <span className="text-[#182073]">{openAccordionIndex === idx ? "▲" : "▼"}</span>
+              </button>
+
+              {/* Subtopics - displayed only if the module is open */}
+              {openAccordionIndex === idx && (
+                <ul className="list-disc text-[#182073] mt-2 border border-gray-300 p-6">
+                  {item.subTopics.map((subTopic, subIdx) => (
+                    <li key={subIdx} className="py-1 text-lg">
+                      {subTopic}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );

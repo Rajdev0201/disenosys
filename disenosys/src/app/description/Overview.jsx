@@ -33,7 +33,7 @@ export const Overview = () => {
         className="w-full text-left bg-gray-200 my-2 p-2 rounded-md hover:bg-gray-300 focus:outline-none flex items-center justify-between"
       >
         <span>{openAccordionIndex === 0 ? " Overview" : " Overview"}</span>
-        <span>{openAccordionIndex === 0 ? "▲" : "▼"}</span>
+        <span className="text-[#182073]">{openAccordionIndex === 0 ? "▲" : "▼"}</span>
       </button>
       {openAccordionIndex === 0 && (
         <ul className="list-disc pl-5 mt-2 border border-gray-300">
