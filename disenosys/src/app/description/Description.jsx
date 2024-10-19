@@ -202,9 +202,12 @@ export const Description = () => {
 
                 <div className="grid grid-cols-1  gap-6 px-24">
                   <div>
-                    <Overview />
+                    {/* <Overview />
                     <Pay />
-                    <Learn />
+                    <Learn /> */}
+                    <h1 className="text-[#182073] font-bold text-xl sm:text-2xl md:text-3xl font-poppins">
+                      Course Curriculum
+                    </h1>
                     <Course />
                     {/* <Director /> */}
                   </div>

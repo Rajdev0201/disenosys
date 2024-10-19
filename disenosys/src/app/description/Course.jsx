@@ -2,7 +2,7 @@ import { useState } from "react";
 import React from "react";
 
 const Course = () => {
-  const [openCurriculum, setOpenCurriculum] = useState(false);
+
   const [openAccordionIndex, setOpenAccordionIndex] = useState(null);
 
   const course = [
@@ -65,23 +65,23 @@ const Course = () => {
   return (
     <div>
       {/* Curriculum button to toggle all modules */}
-      <button
+      {/* <button
         onClick={toggleCurriculum}
         className="w-full text-left bg-gray-200 my-2 p-2 rounded-md hover:bg-gray-300 focus:outline-none flex items-center justify-between"
       >
-        <span>Course Curriculum</span>
-        <span className="text-[#182073]">{openCurriculum ? "▲" : "▼"}</span>
-      </button>
+        <span>Curriculum</span>
+        <span>{openCurriculum ? "▲" : "▼"}</span>
+      </button> */}
 
       {/* Display modules only if Curriculum is open */}
-      {openCurriculum && (
+     
         <div>
           {course.map((item, idx) => (
             <div key={idx}>
               {/* Button to toggle each module */}
               <button
                 onClick={() => toggleAccordion(idx)}
-                className="w-full text-left bg-gray-100 my-2 p-2 rounded-md hover:bg-gray-200 focus:outline-none flex items-center justify-between"
+                className="w-full text-left bg-gray-100 my-2 p-2 mt-4 rounded-md hover:bg-gray-200 focus:outline-none flex items-center justify-between"
               >
                 <span>Module-{idx + 1}: {item.title}</span>
                 <span className="text-[#182073]">{openAccordionIndex === idx ? "▲" : "▼"}</span>
@@ -89,7 +89,7 @@ const Course = () => {
 
               {/* Subtopics - displayed only if the module is open */}
               {openAccordionIndex === idx && (
-                <ul className="list-disc text-[#182073] mt-2 border border-gray-300 p-6">
+                <ul className="list-disc pl-5 mt-2 border border-gray-300">
                   {item.subTopics.map((subTopic, subIdx) => (
                     <li key={subIdx} className="py-1 text-lg">
                       {subTopic}
@@ -100,7 +100,6 @@ const Course = () => {
             </div>
           ))}
         </div>
-      )}
     </div>
   );
 };
