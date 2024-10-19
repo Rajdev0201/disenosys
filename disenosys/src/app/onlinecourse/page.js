@@ -9,7 +9,7 @@ export default function description () {
         <Blink/>
         <Navbar />
         <Online/>
-        {/* <Footer/> */}
+        <Footer/>
         </>
     )
 }

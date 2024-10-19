@@ -62,8 +62,13 @@ export const Description = () => {
     setopencourseAccordion(opencourseAccordion === index ? null : index);
   };
 
-  const handleRoute = () => {
-    router.push("/");
+  // const handleRoute = () => {
+  //   router.push("/");
+  // };
+
+  
+  const goTOOnlineCourse = (name) => {
+    router.push(`/onlinecourse?courseName=${name}`);
   };
 
   const sendWhatsAppMessage = () => {
@@ -286,7 +291,7 @@ export const Description = () => {
                         <div className="flex justify-end mt-4">
                           <button
                             className="bg-[#182073] text-white px-4 py-2 rounded hover:bg-blue-400"
-                            onClick={() => addCart(course)}
+                            onClick={() => addCart(description)}
                           >
                             Add to Cart
                           </button>
@@ -308,13 +313,13 @@ export const Description = () => {
                     </h3>
                     <p className="py-4 text-gray-600">
                       &quot;If you would like to subscribe to a Online course,
-                      please book a demo class.&quot;
+                      please Fill Online Form.&quot;
                     </p>
                     <div className="flex justify-end mt-4">
                       <button
                         href=""
                         className="bg-[#182073] text-white px-4 py-2 rounded hover:bg-blue-400"
-                        onClick={handleRoute}
+                        onClick={() => goTOOnlineCourse(description.courseName)}
                       >
                         Click
                       </button>
