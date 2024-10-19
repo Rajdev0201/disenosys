@@ -87,16 +87,16 @@ export const Description = () => {
           ?.map((description, index) => (
             <>
               <div key={index}>
-                <div className="banner p-10 md:p-12 lg:p-56 relative mt-6 md:mt-12 lg:mt-28 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div className="banner opacity-2 p-10 md:p-12 lg:p-56 relative mt-6 md:mt-12 lg:mt-28 grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <div>
-                    <p className="text-white pb-3 mt-5 lg:mt-0 font-poppins">
-                      Latest Release, popular
+                    <p className="text-yellow-500 pb-3 mt-5 text-3xl md:text-6xl lg:text-4xl font-bold lg:mt-0 font-poppins">
+                    DSST01
                     </p>
-                    <h1 className="text-white text-2xl sm:text-3xl font-poppins text-balance  md:text-4xl font-bold">
+                    {/* <h1 className="text-white text-2xl sm:text-3xl font-poppins text-balance  md:text-4xl font-bold">
                       {description.courseName}
-                    </h1>
-                    <p className="text-white pt-3 font-poppins">
-                      Course Detail
+                    </h1> */}
+                    <p className="font-poppins text-3xl mt-6 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] lg:mt-0 max-w-[250px] lg:max-w-[520px] sm:text-3xl md:text-3xl lg:text-4xl font-bold text-white ">
+                    CATIA V5 FOUNDATIONS FOR AUTOMOTIVE DESIGNERS
                     </p>
                   </div>
 
