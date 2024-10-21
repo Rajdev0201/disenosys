@@ -102,9 +102,9 @@ const Course = () => {
                     </li>
                    </>
                   ))}
-                    <li className="py-1 text-lg">
-                      Projects
-                   </li>
+                    <h1 className="py-2 px-3 text-lg text-[#182073] font-poppins underline ">
+                      Projects:
+                   </h1>
 
                   <div className="grid grid-cols-4 gap-5 p-3">
                       <Image src={p1} alt="img-1"/>

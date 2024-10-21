@@ -21,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCourse } from "../Redux/action/Course";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export const Description = () => {
+ const Description = () => {
   const [openAccordionIndex, setOpenAccordionIndex] = useState(null);
   const [opencourseAccordion, setopencourseAccordion] = useState(null);
   const dispatch = useDispatch();
@@ -338,3 +338,5 @@ export const Description = () => {
     </>
   );
 };
+
+export default Description;
