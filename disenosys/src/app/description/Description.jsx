@@ -28,7 +28,7 @@ import { useRouter, useSearchParams } from "next/navigation";
   const search = useSearchParams();
   const courseId = search.get("courseId");
   const router = useRouter();
-
+  const user = useSelector((state) => state.user);
   const courses = useSelector((state) => state?.course?.courses);
  
   useEffect(() => {
@@ -36,8 +36,10 @@ import { useRouter, useSearchParams } from "next/navigation";
   }, [dispatch]);
 
   const addCart = (course) => {
-    // const totalPrice = course.price * 1;
-    // console.log('Total Price:', totalPrice);
+
+    if(!user){
+      alert("please signin your account");
+    }
     if (user?.user?.user?._id) {
       dispatch(
         addProductToCart({
@@ -46,6 +48,7 @@ import { useRouter, useSearchParams } from "next/navigation";
           price: course?.price,
           quantity: 1,
           img: course?.imagePath,
+          userName:user?.user?.user?.userName
           // totalPrice:totalPrice
         })
       );

@@ -4,7 +4,7 @@ import "./Online.css";
 import form from "../assests/profile/onlineform.jpg";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-
+import online from "../assests/profile/online.jpg";
 const Online = () => {
    
     const [result, setResult] = useState("");
@@ -135,9 +135,9 @@ const Online = () => {
         {/* Image Section */}
         <div className="flex justify-center items-center">
           <Image
-            src={form}
+            src={online}
             alt="Enrollment Image"
-            className="rounded-lg object-cover"
+            className="rounded-lg object-cover shadow-sm rounded-sm"
             width={400}
             height={400}
           />
