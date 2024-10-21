@@ -24,7 +24,7 @@ export default function Count() {
                     ].map((item, index) => (
                         <div key={index} className="p-6 border-2 border-[#F1F1F5] bg-[#182073] rounded-lg hover:border-[#182073] transition duration-300 ease-in-out">
                             <h3 className="font-bold text-3xl sm:text-6xl lg:text-5xl">
-                                <span className=" bg-clip-text text-white">
+                                <span className=" bg-clip-text text-red-600">
                                     <CountUp
                                         start={0}
                                         end={item.end}

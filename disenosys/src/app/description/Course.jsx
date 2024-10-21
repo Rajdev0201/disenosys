@@ -1,6 +1,11 @@
+"use client"
 import { useState } from "react";
 import React from "react";
-
+import p1 from "../assests/models/Slide1.PNG"
+import p2 from "../assests/models/Slide2.PNG"
+import p3 from "../assests/models/Slide3.PNG"
+import p4 from "../assests/models/Slide4.PNG"
+import Image from "next/image";
 const Course = () => {
 
   const [openAccordionIndex, setOpenAccordionIndex] = useState(null);
@@ -91,10 +96,22 @@ const Course = () => {
               {openAccordionIndex === idx && (
                 <ul className="list-disc pl-5 mt-2 border border-gray-300">
                   {item.subTopics.map((subTopic, subIdx) => (
+                    <>
                     <li key={subIdx} className="py-1 text-lg">
                       {subTopic}
                     </li>
+                   </>
                   ))}
+                    <li className="py-1 text-lg">
+                      Projects
+                   </li>
+
+                  <div className="grid grid-cols-4 gap-5 p-3">
+                      <Image src={p1} alt="img-1"/>
+                      <Image src={p2} alt="img-2"/>
+                      <Image src={p3} alt="img-3"/>
+                      <Image src={p4} alt="img-4"/>
+                  </div>
                 </ul>
               )}
             </div>

@@ -34,7 +34,7 @@ const companies = [
 
 const MarqueeView = () => {
   return (
-    <div className="flex flex-col space-y-6 mt-8">
+    <div className="flex flex-col space-y-6 mt-8 space-y-6">
   
       <Marquee speed={80} pauseOnHover={true} direction="left" gradient={false} className="flex items-center">
         {companies.map((company) => (
@@ -42,7 +42,7 @@ const MarqueeView = () => {
             key={company.id}
             className="flex w-52 h-48 p-3 flex-col items-center justify-center px-6"
           >
-            <div className=" border border-[#182073] rounded-md">
+            <div className=" border-2 border-[#182073] shadow-lg rounded-md">
               <Image src={company.image} alt={company.name} className="object-cover w-full h-full" />
             </div>
           </div>
@@ -57,7 +57,7 @@ const MarqueeView = () => {
             key={company.id}
             className="flex w-52 h-48 p-3 flex-col items-center justify-center px-6"
           >
-            <div className=" border border-[#182073] rounded-md">
+            <div className="border-2 border-[#182073] shadow-lg rounded-md ">
               <Image src={company.image} alt={company.name} className="object-cover w-full h-full" />
             </div>
           </div>
