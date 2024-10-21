@@ -16,31 +16,31 @@ import LoginAlert from "../component/Alert/LoginAlert";
 const Testimonials = ({ setTestimonialsInView }) => {
   const boxRef = useRef(null);
   
-  useEffect(() => {
-    // Only run this in the browser
-    if (typeof window !== "undefined") {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          const entry = entries[0];
-          setTestimonialsInView(entry.isIntersecting);
-        },
-        {
-          root: null,
-          threshold: 0.2,
-        }
-      );
+  // useEffect(() => {
+  //   // Only run this in the browser
+  //   if (typeof window !== "undefined") {
+  //     const observer = new IntersectionObserver(
+  //       (entries) => {
+  //         const entry = entries[0];
+  //         setTestimonialsInView(entry.isIntersecting);
+  //       },
+  //       {
+  //         root: null,
+  //         threshold: 0.2,
+  //       }
+  //     );
 
-      if (boxRef.current) {
-        observer.observe(boxRef.current);
-      }
+  //     if (boxRef.current) {
+  //       observer.observe(boxRef.current);
+  //     }
 
-      return () => {
-        if (boxRef.current) {
-          observer.unobserve(boxRef.current);
-        }
-      };
-    }
-  }, [setTestimonialsInView]);
+  //     return () => {
+  //       if (boxRef.current) {
+  //         observer.unobserve(boxRef.current);
+  //       }
+  //     };
+  //   }
+  // }, [setTestimonialsInView]);
   
   const settings = {
     dots: true,

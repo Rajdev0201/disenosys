@@ -50,6 +50,7 @@ const Online = () => {
     }
     setLoading(false);
   };
+  
 
     const search = useSearchParams();
     const courseName = search.get("courseName");
