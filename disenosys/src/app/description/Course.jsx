@@ -1,60 +1,66 @@
-"use client"
+"use client";
 import { useState } from "react";
 import React from "react";
-import p1 from "../assests/models/Slide1.PNG"
-import p2 from "../assests/models/Slide2.PNG"
-import p3 from "../assests/models/Slide3.PNG"
-import p4 from "../assests/models/Slide4.PNG"
+import p1 from "../assests/models/Slide1.PNG";
+import p2 from "../assests/models/Slide2.PNG";
+import p3 from "../assests/models/Slide3.PNG";
+import p4 from "../assests/models/Slide4.PNG";
 import Image from "next/image";
-const Course = () => {
 
+const Course = () => {
   const [openAccordionIndex, setOpenAccordionIndex] = useState(null);
 
   const course = [
     {
-      title: "Trim Mounting Bracket - L Shape",
+      title: "INTRODUCTION",
       subTopics: [
-        "Introduction to Trim Mounting Brackets",
-        "Design Considerations",
-        "L-Shape Variants",
-        "Mounting Procedures",
+        "Learn CATIA V5 basics: parametric model- ing, Ul navigation, file management, shape creation/editing using profiles, planes, axes, and tools.",
       ],
+      showProjects: false,
     },
     {
-      title: "Master Section Creation",
+      title: "SKETCHER",
       subTopics: [
-        "Understanding Master Sections",
-        "Designing the Section",
-        "Section Optimization",
-        "Practical Examples",
+        "Become proficient in CATIA V5 sketching: planes, axes, corner chamfers, constraints, 3D projection, and transformations across various toolsets.",
       ],
+      P1: p1,
+      P2: p2,
+      P3: p3,
+      P4: p4,
+      showProjects: true,
     },
     {
-      title: "Feature Creation and Parting Line",
+      title: "PART DESIGN",
       subTopics: [
-        "Introduction to Features",
-        "Parting Line Basics",
-        "Advanced Feature Techniques",
-        "Case Studies",
+        "Master CATIA V5 part Modeling: body, shaft, patterns, fillets, advanced features, materials, rendering, and efficient manipulation techniques like copy-paste and parameters.",
       ],
+      P1: p1,
+      P2: p2,
+      P3: p3,
+      P4: p4,
+      showProjects: true,
     },
     {
-      title: "Draft Analysis and Assembly",
+      title: "ASSEMBLY DESIGN",
       subTopics: [
-        "Draft Analysis Fundamentals",
-        "Common Issues in Drafting",
-        "Assembly Integration",
-        "Best Practices",
+        "Excel in CATIA V5 assembly: components, constraints, sub-assemblies, clash prevention, tree management, replacements, numbering, multi-instantiation for efficient work.",
       ],
+      P1: p1,
+      P2: p2,
+      P3: p3,
+      P4: p4,
+      showProjects: true,
     },
     {
-      title: "2D Drawing and Detailing",
+      title: "DETAILING",
       subTopics: [
-        "Introduction to 2D Drawing",
-        "Detailing Techniques",
-        "Dimensioning Standards",
-        "Finalizing the Drawing",
+        "Gain CATIA V5 drafting skills: view creation, annotation, dimensioning, toler- ancing, toolbar usage, frame/title block insertion for precise engineering drawings.",
       ],
+      P1: p1,
+      P2: p2,
+      P3: p3,
+      P4: p4,
+      showProjects: true,
     },
   ];
 
@@ -62,61 +68,48 @@ const Course = () => {
     setOpenAccordionIndex(openAccordionIndex === index ? null : index);
   };
 
-  const toggleCurriculum = () => {
-    setOpenCurriculum(!openCurriculum);
-    setOpenAccordionIndex(null); // Reset module state when Curriculum is toggled
-  };
-
   return (
-    <div>
-      {/* Curriculum button to toggle all modules */}
-      {/* <button
-        onClick={toggleCurriculum}
-        className="w-full text-left bg-gray-200 my-2 p-2 rounded-md hover:bg-gray-300 focus:outline-none flex items-center justify-between"
-      >
-        <span>Curriculum</span>
-        <span>{openCurriculum ? "▲" : "▼"}</span>
-      </button> */}
+    <div className="p-4">
+      <div>
+        {course.map((item, idx) => (
+          <div key={idx}>
+    
+            <button
+              onClick={() => toggleAccordion(idx)}
+              className="w-full text-left bg-gray-100 my-2 p-2 mt-4 rounded-md hover:bg-gray-200 focus:outline-none flex items-center justify-between"
+            >
+              <span>Module-{idx + 1}: {item.title}</span>
+              <span className="text-[#182073]">{openAccordionIndex === idx ? "▲" : "▼"}</span>
+            </button>
 
-      {/* Display modules only if Curriculum is open */}
-     
-        <div>
-          {course.map((item, idx) => (
-            <div key={idx}>
-              {/* Button to toggle each module */}
-              <button
-                onClick={() => toggleAccordion(idx)}
-                className="w-full text-left bg-gray-100 my-2 p-2 mt-4 rounded-md hover:bg-gray-200 focus:outline-none flex items-center justify-between"
-              >
-                <span>Module-{idx + 1}: {item.title}</span>
-                <span className="text-[#182073]">{openAccordionIndex === idx ? "▲" : "▼"}</span>
-              </button>
 
-              {/* Subtopics - displayed only if the module is open */}
-              {openAccordionIndex === idx && (
-                <ul className="list-disc pl-5 mt-2 border border-gray-300">
-                  {item.subTopics.map((subTopic, subIdx) => (
-                    <>
-                    <li key={subIdx} className="py-1 text-lg">
-                      {subTopic}
-                    </li>
-                   </>
-                  ))}
-                    <h1 className="py-2 px-3 text-lg text-[#182073] font-poppins underline ">
+            {openAccordionIndex === idx && (
+              <ul className="p-8 pl-5 mt-2 border border-gray-300 p-3 shadow-lg rounded-md bg-white">
+                {item.subTopics.map((subTopic, subIdx) => (
+                  <li key={subIdx} className="py-1 text-lg font-semibold font-poppins">
+                    {subTopic}
+                  </li>
+                ))}
+
+
+                {item.showProjects && (
+                  <>
+                    <h1 className="py-8 text-3xl text-[#182073] font-poppins underline">
                       Projects:
-                   </h1>
-
-                  <div className="grid grid-cols-4 gap-5 p-3">
-                      <Image src={p1} alt="img-1"/>
-                      <Image src={p2} alt="img-2"/>
-                      <Image src={p3} alt="img-3"/>
-                      <Image src={p4} alt="img-4"/>
-                  </div>
-                </ul>
-              )}
-            </div>
-          ))}
-        </div>
+                    </h1>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-3">
+                      <Image src={item.P1} alt="img-1" className="w-full h-auto object-cover"/>
+                      <Image src={item.P2} alt="img-2" className="w-full h-auto object-cover"/>
+                      <Image src={item.P3} alt="img-3" className="w-full h-auto object-cover"/>
+                      <Image src={item.P4} alt="img-4" className="w-full h-auto object-cover"/>
+                    </div>
+                  </>
+                )}
+              </ul>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
