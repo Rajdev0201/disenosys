@@ -33,9 +33,25 @@ const courseSchema = new mongoose.Schema({
         type: String
     },
 
-    detailsDescription:[
+    detailsDescription: [
         {
-            
+            overview: {
+                type: [String], 
+                required: [true, "Overview is required"]
+            },
+        }
+    ],
+
+    Curriculum: [
+        {
+            title: {
+                type: String,
+                required: [true, "Please enter the title"]
+            },
+            subTopics: {
+                type: String,
+                required: [true, "Please enter the subtopics"]
+            }
         }
     ],
     imagePath:{
