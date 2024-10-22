@@ -9,6 +9,7 @@ import Image from "next/image";
 
 const Course = () => {
   const [openAccordionIndex, setOpenAccordionIndex] = useState(null);
+  
 
   const course = [
     {
