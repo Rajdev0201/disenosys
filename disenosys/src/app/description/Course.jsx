@@ -8,14 +8,18 @@ import p4 from "../assests/models/Slide4.PNG";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCourse } from "../Redux/action/Course.js";
+import { useSearchParams } from "next/navigation";
 
 const Course = () => {
   const [openAccordionIndex, setOpenAccordionIndex] = useState(null);
   const dispatch = useDispatch();
-  const courseRefs = useRef([]); 
+  const courseRefs = useRef([]);
+  const search = useSearchParams();
+  const courseId = search.get("courseId"); 
 
   const courseState = useSelector((state) => state?.course);
-  const courses = courseState?.courses; // Access the courses array
+  const courses = courseState?.courses;
+  
 
   useEffect(() => {
     dispatch(fetchCourse());
@@ -57,7 +61,10 @@ const Course = () => {
   return (
     <div className="py-4">
       <div>
-        {courses?.map((course, courseIdx) => (
+        {/* {courses?.map((course, courseIdx) => ( */}
+        {courses
+          ?.filter((course) => course._id === courseId)
+          ?.map((course, courseIdx) => (
           <div key={courseIdx}>
             {course?.Curriculum?.map((item, idx) => (
               <div key={idx} ref={(el) => (courseRefs.current[idx] = el)}>

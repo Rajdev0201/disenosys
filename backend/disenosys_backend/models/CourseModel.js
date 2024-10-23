@@ -54,6 +54,31 @@ const courseSchema = new mongoose.Schema({
             }
         }
     ],
+
+    directors:[
+        {
+            name:{
+                type: String,
+            },
+            role:{
+                type: String,
+            },
+            exp:{
+                type: String,
+            },
+            PASTCOMPANIES:[
+             {
+                type:String
+             }
+            ],
+          img:{
+            type:String
+          },
+          detail:{
+            type:String
+          },
+        }
+    ],
     imagePath:{
         type: String
     },

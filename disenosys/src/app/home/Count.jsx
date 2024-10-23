@@ -17,14 +17,14 @@ export default function Count() {
                     {[
                         { end: 5000, label: "Trained" },
                         { end: 3800, label: "Reviews with 5 star rating" },
-                        { end: 500, label: "Live Classes Every Month" },
-                        { end: 900, label: "Corporate Partners" },
+                        { end: 200, label: "Live Classes Every Month" },
+                        { end: 85, label: "Corporate Partners" },
                         { end: 210, label: "College Partners" },
                         { end: 87, label: "Reported Career Benefits", isPercentage: true },
                     ].map((item, index) => (
                         <div key={index} className="p-6 border-2 border-[#F1F1F5] bg-[#182073] rounded-lg hover:border-[#182073] transition duration-300 ease-in-out">
                             <h3 className="font-bold text-3xl sm:text-6xl lg:text-5xl">
-                                <span className=" bg-clip-text text-red-600">
+                                <span className=" bg-clip-text text-white">
                                     <CountUp
                                         start={0}
                                         end={item.end}

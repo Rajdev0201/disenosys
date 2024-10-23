@@ -22,12 +22,36 @@ const Course = () => {
   }, [dispatch]);
 
 
-  const filteredCourses = selectedCategory === "All"
-    ? courses
-    : courses?.filter(course => course?.category?.includes(selectedCategory));
+  // const filteredCourses = selectedCategory === "All"
+  //   ? courses
+  //   : courses?.filter(course => course?.category?.includes(selectedCategory));
 
+  // const handleCategoryChange = (category) => {
+  //   setSelectedCategory(category);
+  // };
+
+
+  const specificCourses = [
+    "Catia Designer",
+    "Advanced CATIA Surface",
+    "Fundamentals Of BIW in Automotive Design",
+    "Fundamentals of Plastic Trims",
+    "Solid Model Remastering",
+    "Automotive B-Pillar Assembly",
+    "Bracket And Reinforcement",
+    "Automotive Close Volume & Feature Creation"
+  ];
+
+  const filteredCourses = courses?.filter(course => {
+    const isInSpecificCourses = specificCourses.includes(course?.courseName);
+    const isCategoryMatch = selectedCategory === "All" || course?.category?.includes(selectedCategory);
+    return isInSpecificCourses && isCategoryMatch;
+  });
+
+   
   const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
+    
+      setSelectedCategory(category); 
   };
 
   const addCart = (course) => {
