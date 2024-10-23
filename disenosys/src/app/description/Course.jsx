@@ -97,7 +97,7 @@ const Course = () => {
 
                     {item.title !== "INTRODUCTION" && (
                       <div>
-                        <h1 className="py-4 text-3xl text-[#182073] font-poppins underline">
+                        <h1 className="py-4 text-xl text-dark-200 font-poppins underline">
                           Projects:
                         </h1>
                         <div className="grid grid-cols-1 gap-4">

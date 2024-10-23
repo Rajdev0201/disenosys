@@ -13,7 +13,7 @@ exports.createCheckoutSession = async (req, res) => {
     try {
         const amount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0) * 100; // Convert to paise
         const options = {
-            amount: amount, // Amount in paise
+            amount: amount, 
             currency: "INR",
             receipt: `receipt_order_${Date.now()}`,
             payment_capture: 1,

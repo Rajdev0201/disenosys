@@ -32,7 +32,7 @@ const Course = () => {
 
 
   const specificCourses = [
-    "Catia Designer",
+    "CATIA Foundations for Automative Designers",
     "Advanced CATIA Surface",
     "Fundamentals Of BIW in Automotive Design",
     "Fundamentals of Plastic Trims",

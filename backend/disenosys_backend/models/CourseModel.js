@@ -75,7 +75,9 @@ const courseSchema = new mongoose.Schema({
             type:String
           },
           detail:{
+            
             type:String
+            
           },
         }
     ],
