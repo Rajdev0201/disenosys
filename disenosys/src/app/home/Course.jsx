@@ -39,7 +39,8 @@ const Course = () => {
     "Solid Model Remastering",
     "Automotive B-Pillar Assembly",
     "Bracket And Reinforcement",
-    "Automotive Close Volume & Feature Creation"
+    "Automotive Close Volume & Feature Creation",
+    "Surface Remastering for Automotive Designers"
   ];
 
   const filteredCourses = courses?.filter(course => {
