@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import React from "react";
 import p1 from "../assests/models/Slide1.PNG";
 import p2 from "../assests/models/Slide2.PNG";
@@ -12,33 +12,60 @@ import { fetchCourse } from "../Redux/action/Course.js";
 const Course = () => {
   const [openAccordionIndex, setOpenAccordionIndex] = useState(null);
   const dispatch = useDispatch();
-  
-  // Access the entire course state
+  const courseRefs = useRef([]); 
+
   const courseState = useSelector((state) => state?.course);
   const courses = courseState?.courses; // Access the courses array
 
-  // Fetch the courses when the component mounts
   useEffect(() => {
     dispatch(fetchCourse());
   }, [dispatch]);
 
-  // Toggle function for accordion
   const toggleAccordion = (index) => {
-    setOpenAccordionIndex(openAccordionIndex === index ? null : index);
+    if (openAccordionIndex === index) {
+      setOpenAccordionIndex(null); // Close the accordion if it's already open
+    } else {
+      setOpenAccordionIndex(index); // Open the clicked accordion
+  
+      setTimeout(() => {
+        const targetElement = courseRefs.current[index];
+  
+        if (targetElement) {
+          // Scroll the section into view with smooth behavior
+          targetElement.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+  
+          // Scroll to the first subtopic after the section is in view
+          const firstSubtopic = targetElement.querySelector("li"); // Adjust to target the first subtopic
+          if (firstSubtopic) {
+            const offset = firstSubtopic.getBoundingClientRect().top; // Get the position of the first subtopic
+            const scrollPosition = window.scrollY + offset - 200; // Adjust this value (-80) for the desired offset
+            
+            window.scrollTo({
+              top: scrollPosition,
+              behavior: "smooth",
+            });
+          }
+        }
+      }, 100); // Timeout ensures the accordion content is rendered before scrolling
+    }
   };
+  
 
   return (
-    <div className="p-4">
+    <div className="py-4">
       <div>
         {courses?.map((course, courseIdx) => (
           <div key={courseIdx}>
             {course?.Curriculum?.map((item, idx) => (
-              <div key={idx}>
+              <div key={idx} ref={(el) => (courseRefs.current[idx] = el)}>
                 <button
                   onClick={() => toggleAccordion(idx)}
                   className="w-full text-left bg-gray-100 my-2 p-2 mt-4 rounded-md hover:bg-gray-200 focus:outline-none flex items-center justify-between"
                 >
-                  <span>Module-{idx + 1}: {item.title}</span>
+                  <span className="font-bold text-lg font-poppins">Module-{idx + 1}: {item.title}</span>
                   <span className="text-[#182073]">
                     {openAccordionIndex === idx ? "▲" : "▼"}
                   </span>
@@ -47,21 +74,20 @@ const Course = () => {
                 {openAccordionIndex === idx && (
                   <div className={`mt-4 gap-3 ${item.title === "INTRODUCTION" ? "grid grid-cols-1" : "grid grid-cols-1 md:grid-cols-2"}`}>
                     <div className="bg-white border border-gray-300 p-4 shadow-md rounded-md">
-                      <ul className="list-disc space-y-2 px-1">
+                    <ul className="list-disc space-y-2 px-1">
                         {item.subTopics && (
                           (Array.isArray(item.subTopics)
                             ? item.subTopics
                             : item.subTopics.split(',')
                           ).map((subTopic, subIdx) => (
-                            <li key={subIdx} className="text-lg font-semibold font-poppins">
-                              {subTopic.trim()}
+                            <li key={subIdx} className="text-md font-semibold font-poppins">
+                              {subIdx === 0 ? <span className="">{subTopic.trim()}</span> : subTopic.trim()}
                             </li>
                           ))
                         )}
                       </ul>
                     </div>
 
-                    {/* Conditionally render the images if the title is not "Introduction" */}
                     {item.title !== "INTRODUCTION" && (
                       <div>
                         <h1 className="py-4 text-3xl text-[#182073] font-poppins underline">

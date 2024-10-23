@@ -177,7 +177,7 @@ router.patch('/toggleCode/:id', async (req, res) => {
       );
   
       if (!updatedCode) {
-        return res.status(400).json({ error: "Code not found" });
+        return res.status(400).json({ error: "Your exam not started yet,Please contact admin team!" });
       }
   
       res.status(200).json({ success: true, data: updatedCode });
