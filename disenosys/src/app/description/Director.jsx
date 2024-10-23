@@ -59,11 +59,11 @@ const Director = () => {
               {/* Director's Detailed Information */}
               <div className='col-span-2 text-gray-500'>
                 {/* <p className='text-xl'>{`An accomplished professional with over ${director.exp} years experience in BIW design...`}</p> */}
-                <p className='text-xl py-2'>{director?.detail.detail1}</p>
-                <p className='text-xl py-2'>{director?.detail.detail2}</p>
-                <p className='text-xl py-2'>{director?.detail.detail3}</p>
-                <p className='text-xl py-2'>{director?.detail.detail4}</p>
-                <p className='text-xl py-2'>{director?.detail.detail5}</p>
+                <p className='text-xl py-2'>{director?.detail?.detail1}</p>
+                <p className='text-xl py-2'>{director?.detail?.detail2}</p>
+                <p className='text-xl py-2'>{director?.detail?.detail3}</p>
+                <p className='text-xl py-2'>{director?.detail?.detail4}</p>
+                <p className='text-xl py-2'>{director?.detail?.detail5}</p>
               </div>
             </div>
           ))}
