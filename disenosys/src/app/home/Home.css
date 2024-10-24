@@ -6,6 +6,27 @@
 }
 
 
+.bg-1 {
+  background-image: url("../assests/profile/PGD.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-2 {
+  background-image: url("../assests/profile/BIW.PNG");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-3 {
+  background-image: url("../assests/profile/master.PNG");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .loader {
   background: url("../assests/brand-1.png");
   

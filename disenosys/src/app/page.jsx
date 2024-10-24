@@ -14,6 +14,7 @@ import Navbar from "./component/Navbar/Navbar";
 import Footer from "./component/Navbar/Footer";
 import Blink from "./component/Blink/BlinkingPopup";
 import Marquee from "./home/Marquee";
+import Placement from "./home/Placement"
 // import Marquee from "./home/Marquee.jsx";
 
 export default function Page() {
@@ -63,6 +64,7 @@ export default function Page() {
       {/* <Testimonials setTestimonialsInView={setTestimonialsInView} /> */}
       <Testimonials/>
       <WhyChoose />
+      <Placement/>
       <Course />
       <Partner />
       <Footer />
