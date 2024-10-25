@@ -16,6 +16,7 @@ const Sidebar = () => {
     // {href:'/portfolioDashboard',label:'Portfolio',icon:<SiSololearn />},
     { href: '/historycode', label: 'University-List', icon: <SiAuthentik /> },
     { href: '/externalcode', label: 'External-List', icon: <SiAuthentik /> },
+    { href: '/courselist', label: 'Paid Courses', icon: <SiAuthentik /> },
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];

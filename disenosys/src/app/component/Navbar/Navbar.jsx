@@ -196,7 +196,7 @@ const Navbar = () => {
         </div>
 
         {mobileMenuOpen && (
-          <div className="md:hidden absolute top-16 left-0 w-full bg-violet-800  shadow-lg z-50">
+          <div className="lg:hidden absolute top-16 left-0 w-full bg-violet-800  shadow-lg z-50">
             <div className="flex flex-col items-center py-4 space-y-4">
               <Link
                 href="/"
@@ -209,35 +209,9 @@ const Navbar = () => {
                 Home
               </Link>
 
-              {/* <div className="relative">
-                <button
-                  onClick={() => { setDropdownOpen(!dropdownOpen); handleLinkClick('/company'); }}
-                  className={`py-2 px-4 font-semibold text-[#182073] hover:text-[#057FE3] font-poppins text-base flex items-center ${activeLink === '/company' ? 'bg-[#2AAA94] text-[#057FE3] ' : ''}`}
-                >
-                  Company
-                  <motion.span variants={iconVariants} animate={dropdownOpen ? "open" : "closed"}>
-                    <FiChevronDown size={30} />
-                  </motion.span>
-                </button>
-
-                {dropdownOpen && (
-                  <motion.ul
-                    initial="closed"
-                    animate={dropdownOpen ? "open" : "closed"}
-                    variants={wrapperVariants}
-                    className="flex flex-col gap-2 p-2 rounded-lg bg-white shadow-xl mt-2"
-                  >
-                    <Option setDropdownOpen={setDropdownOpen} Icon={FiEdit} text="Edit" />
-                    <Option setDropdownOpen={setDropdownOpen} Icon={FiPlusSquare} text="Duplicate" />
-                    <Option setDropdownOpen={setDropdownOpen} Icon={FiShare} text="Share" />
-                    <Option setDropdownOpen={setDropdownOpen} Icon={FiTrash} text="Remove" />
-                  </motion.ul>
-                )}
-              </div> */}
-
               <ShiftingDropDown />
 
-              {["Course", "Gallery"].map((item) => (
+              {["Course","Portfolio", "Gallery"].map((item) => (
                 <Link
                   key={item}
                   href={`/${item.toLowerCase()}`}
@@ -263,7 +237,7 @@ const Navbar = () => {
                     size={40}
                     className="text-white hover:text-[#057FE3]"
                   />
-                  {length > 0 && user?.user?.user?._id ? (
+                 {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
                     <>
                       <span
                         className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#057FE3] rounded-full ring-2 ring-gray-400 z-50"
@@ -286,15 +260,37 @@ const Navbar = () => {
               </div>
 
               <>
-                {user?.user?.user?.userName ? (
-                  <div className="hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer">
-                    <span className=" bg-[#057FE3] shadow-lg px-6 py-4 gap-5 rounded-full text-white font-bold text-base">
-                      {user?.user?.user?.userName
-                        ?.toLocaleUpperCase()
-                        ?.charAt(0)}
-                    </span>
-                  </div>
-                ) : (
+              {user?.user?.user?.userName || user?.user?.name || user?.user?.userName  ?(
+                    <>
+                    <div className="relative ring-2 ring-white rounded-sm p-2 shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
+                      <span className="bg-[#057FE3] shadow-lg px-2 py-1 rounded-sm text-white font-poppins font-bold text-lg">
+                        {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)} { user?.user?.name?.toLocaleUpperCase()?.charAt(0)} { user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
+                      </span>
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="relative">
+                          <div className="bg-[#057FE3]  text-white flex flex-col rounded-md px-5 py-3">
+                           <div className="text-center text-base font-bold font-poppins mt-1">
+                           {user?.user?.user?.userName?.toLocaleUpperCase()} { user?.user?.name?.toLocaleUpperCase()}  { user?.user?.userName?.toLocaleUpperCase()} 
+                          </div> 
+                       <div className="text-center text-base font-bold font-poppins mt-1">
+                           <Link href="/dashboard">My Profile</Link>
+                       </div>
+                      <div className="max-w-44  items-center justify-center text-white text-base font-poppins font-bold duration-300 cursor-pointer active:scale-[0.98]">
+                      <button
+                        className="px-0 py-2 flex items-center "
+                        onClick={handleLogout}
+                      >
+                        <IoMdLogOut size={20} className=" mx-0" />
+                        <span className="text-center ">LOGOUT</span>
+                      </button>
+                    </div>
+                          </div>
+                          <div className="absolute left-1/2 transform -translate-x-1/2 -top-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-white"></div>
+                        </div>
+                      </div>
+                    </div>
+                    </>
+                  ) : (
                   <>
                   <Modal />
                   </>

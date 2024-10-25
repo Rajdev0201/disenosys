@@ -12,8 +12,11 @@ const PaymentSlice = createSlice({
         setPlaceOrder:(state,action) => {
             state.checkout = action.payload;
         },
+        setPayment: (state,action) => {
+            return action.payload; 
+        },
     }
 })
 
-export const { setPlaceOrder} = PaymentSlice.actions;
+export const { setPlaceOrder,setPayment} = PaymentSlice.actions;
 export default PaymentSlice.reducer;

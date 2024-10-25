@@ -1,10 +1,10 @@
-"use client"
+
+"use client";
 import axios from "axios";
-import { toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import Razorpay from "razorpay";
 import 'react-toastify/dist/ReactToastify.css';
-import { setPlaceOrder} from "../features/PaymentSlice.js";
-// import { getOrder } from "../fetures/getOrderSlice";
+import { setPayment, setPlaceOrder } from "../features/PaymentSlice.js";
 
 const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
@@ -18,21 +18,26 @@ const loadRazorpayScript = () => {
 
 export const CheckOut = (Data, nav) => async (dispatch) => {
     try {
-        const res = await axios.post("https://disenosys-1.onrender.com/course/checkout-order", Data);
+        console.log("Data sent to backend:", Data);
+        const res = await axios.post("https://disenosys-1.onrender.com/course/checkout-order", {
+            userData: Data.userData,
+            cartItems: Data.cartItems,
+        });
         const { orderId, amount, currency } = res.data;
 
         await loadRazorpayScript(); // Ensure Razorpay script is loaded
 
         const options = {
-            key: 'rzp_test_pyzRkKRrWBkgnC', // Replace with your Razorpay key ID
-            amount: amount, // Amount in currency subunits (paise for INR)
+            key: 'rzp_test_pyzRkKRrWBkgnC',
+            amount: amount,
             currency: currency,
             name: 'Disenosys',
             description: 'Course Payment',
             order_id: orderId,
             handler: async (response) => {
                 try {
-                    const captureResponse = await axios.post("https://disenosys-1.onrender.com/course/capture-payment", {
+                    // Send payment details to callback endpoint
+                    const captureResponse = await axios.post("https://disenosys-1.onrender.com/course/handle-razorpay-callback", {
                         razorpayPaymentId: response.razorpay_payment_id,
                         razorpayOrderId: response.razorpay_order_id,
                         razorpaySignature: response.razorpay_signature,
@@ -40,10 +45,12 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
 
                     dispatch(setPlaceOrder(captureResponse.data));
                     toast.success("Payment successful!");
-                    nav('/success');
+                    setTimeout(() => {
+                        window.location.href = `/success?orderId=${orderId}&paymentId=${response.razorpay_payment_id}&amount=${amount / 100}`;
+                    }, 1000);
                 } catch (err) {
-                    console.error(err);
-                    toast.error("Payment failed! Please try again.");
+                    console.error("Error during callback:", err);
+                    toast.error("Payment verification failed! Please try again.");
                 }
             },
             prefill: {
@@ -59,18 +66,19 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
         razor.open();
         toast.info("Redirecting to payment gateway...");
     } catch (err) {
-        console.error(err);
+        console.error("Error creating order:", err);
         toast.error("Error while creating order. Please try again.");
     }
 };
 
 
-// export const getPlaceOrder = () => async (dispatch) => {
-//  try{
-//     const res = await axios.get("http://localhost:8000/course/getPlaceOrder");
-//     const data = res.data
-//     dispatch(getOrder(data))
-//  }catch(err){
-//     console.error('Error fetching data:', err);
-//  }
-// }
+export const payment = () => async (dispatch) => {
+    try {
+        const res = await axios.get("https://disenosys-1.onrender.com/course/getPlaceOrder");
+        const getData = res.data;
+        dispatch(setPayment(getData));
+    } catch (error) {
+        console.error('Error fetch code:', error);
+    }
+  }
+  

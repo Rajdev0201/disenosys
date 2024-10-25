@@ -23,7 +23,7 @@ const Program = () => {
       </div>
 
 
-      <div className='grid grid-cols-1 md:grid-cols-3 p-24 gap-12'> 
+      <div className='grid grid-cols-1 md:grid-cols-3 p-0 lg:p-24 gap-12'> 
         <div className="flex flex-col bg-1 rounded-3xl w-full h-screen">  
           <div className="flex-grow flex flex-col items-center justify-center px-6 py-8 sm:p-10 sm:pb-6">
             <h2 className="text-lg font-medium tracking-tighter text-white text-center lg:text-3xl leading-relaxed tracking-tighter">

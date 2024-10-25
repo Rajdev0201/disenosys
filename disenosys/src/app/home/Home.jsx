@@ -175,7 +175,7 @@ const Home = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12  container mx-auto flex items-center justify-center px-6 lg:px-0 2xl:px-0">
           <div className="col-span-6">
             <div className="">
-            <h1 className="font-poppins text-3xl mt-6 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] lg:mt-0 max-w-[250px] lg:max-w-[520px] sm:text-3xl md:text-6xl lg:text-5xl font-bold text-dark">
+            <h1 className="font-poppins text-xl mt-1 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] lg:mt-0 max-w-[250px] lg:max-w-[520px] sm:text-3xl md:text-6xl lg:text-5xl font-bold text-dark">
   Shaping Industry Ready{" "}
   <span className="text-[#182073]">Engineers</span> for the Future{" "}
 </h1>
@@ -196,7 +196,7 @@ const Home = () => {
                 whileTap={{
                   scale: 0.985,
                 }}
-                className="group relative flex w-fit items-center  gap-1.5 rounded-full hover:text-white bg-white px-4 py-2 text-dark transition-colors hover:bg-[#182073]"
+                className="group relative flex w-fit items-center  gap-1.5 rounded-full hover:text-white bg-white px-2 py-1  lg:px-4 lg:py-2 text-dark transition-colors hover:bg-[#182073]"
               >
                 <Link href="/course"> View Course</Link>
 
@@ -214,7 +214,7 @@ const Home = () => {
 
             <div class="flex items-center justify-center">
               <form onSubmit={onSubmit}>
-                <div class="bg-[#182073] border-[4px] border-[#F1F1F5] rounded-2xl -mt-20 mr-0 lg:mr-12 hover:border-[#057FE3] transition-all duration-200">
+                <div class="bg-[#182073] border-[4px] border-[#F1F1F5] rounded-2xl mt-10 lg:-mt-20 mr-0 lg:mr-12 hover:border-[#057FE3] transition-all duration-200">
                   <div class="mx-auto flex items-center space-y-4 py-4 px-4 font-semibold text-gray-500 flex-col">
                     <BiSolidCarMechanic size={60} className="text-white" />
                     <h1 class="text-white text-sm lg:text-2xl">

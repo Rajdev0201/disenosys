@@ -14,7 +14,8 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
   const router = useRouter();
-
+//  const cartItems = cart?.cartItems;
+ 
 
   useEffect(() => {
     if (cart?.cartItems?.length > 0) {
@@ -39,9 +40,11 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
     userData:user?.user?.user,
     cartItems:cart?.cartItems
   }
+  
 
   const handlePlaceOrder = () => {
     if(cart?.cartItems?.length > 0){
+      console.log("UserData before dispatching:", UserData);
     dispatch(CheckOut(UserData,router));
     }else{
       toast.dark('Your cart is empty please chose any item', {

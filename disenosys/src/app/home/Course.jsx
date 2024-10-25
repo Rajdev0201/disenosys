@@ -108,7 +108,7 @@ const Course = () => {
                 <div className="font-bold text-xl mb-2 text-center">{course?.courseName}</div>
                 <p className="text-gray-500 font-medium text-md text-base mb-4 mt-2">{course?.description}</p>
                 <div className="flex justify-between items-center mt-auto">
-                  <button className='bg-[#182073] text-white px-4 py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
+                  <button className='bg-[#182073] text-white px-1 py-1 lg:px-4 lg:py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
                     Add to Cart
                   </button>
                   <span className="text-base font-semibold text-[#182073] flex items-center">More Info</span>

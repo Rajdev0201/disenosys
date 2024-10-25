@@ -49,7 +49,7 @@ const Placement = () => {
                 </h1>
             </div>
 
-            <div className='grid grid-cols-1 md:grid-cols-5 p-8 md:p-2 mt-3 gap-2 mb-8 fixed' > 
+            <div className='grid grid-cols-1 md:grid-cols-5 p-8 md:p-2 mt-3 gap-2 md:mb-0 lg:mb-8 lg:fixed' > 
                 {filteredCourses?.length > 0 ? (
                     filteredCourses.map((course) => (
                         <div 

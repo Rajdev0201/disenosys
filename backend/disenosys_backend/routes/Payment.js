@@ -1,10 +1,11 @@
 const express = require("express");
-const {  createCheckoutSession, getPlaceOrder } = require("../controllers/Payment.js");
+const {  createCheckoutSession, getPlaceOrder, handleRazorpayCallback } = require("../controllers/Payment.js");
 
 const router = express.Router();
 
 
 router.post("/checkout-order",createCheckoutSession)
+router.post('/handle-razorpay-callback', handleRazorpayCallback);
 router.get("/getPlaceOrder",getPlaceOrder)
 
 

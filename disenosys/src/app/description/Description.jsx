@@ -104,7 +104,7 @@ import { useRouter, useSearchParams } from "next/navigation";
                       {description.courseName}
                     </h1> */}
                     <p className="font-poppins text-3xl mt-6 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] lg:mt-0 max-w-[250px] lg:max-w-[520px] sm:text-3xl md:text-3xl lg:text-4xl font-bold text-white ">
-                    CATIA V5 FOUNDATIONS FOR AUTOMOTIVE DESIGNERS
+                    {description.courseName}
                     </p>
                   </div>
 
@@ -172,7 +172,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
                   
                 </div>
-
+                <div className="flex justify-between">
                 <div className="flex flex-col p-2 ring-2 ring-gray-200 w-64 mt-4 mx-4 rounded shadow-lg">
                   <p className="text-lg font-bold text-center text-[#182073] font-poppins">
                     Share with your Friend
@@ -184,7 +184,15 @@ import { useRouter, useSearchParams } from "next/navigation";
                     <Image src={l} className="w-10 h-10" sizes={1} alt="" />
                   </div>
                 </div>
-
+                <div className="flex flex-col p-2 ring-2 ring-gray-200 w-64 mt-4 mx-4 rounded shadow-lg">
+                  <p className="text-lg font-bold text-center text-[#182073] font-poppins">
+                 {description.courseName}
+                  </p>
+                  <div className="flex items-center justify-center gap-5 my-3">
+                    <span className="text-2xl ring-2 ring-[#182073] rounded-md shadow-xl px-2"><span className="text-2xl text-[#182073]">₹</span>{description.price}</span>
+                  </div>
+                </div>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-0 lg:p-24">
                   <div className="p-6 container mx-auto">
                     <h1 className="text-[#182073] font-bold text-xl sm:text-2xl md:text-3xl font-poppins">

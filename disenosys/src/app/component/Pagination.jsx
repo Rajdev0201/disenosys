@@ -29,7 +29,7 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         <button
           key={page + 1}
           onClick={() => onPageChange(page + 1)}
-          className={`items-center px-4 py-2 mx-1 text-white font-bold transition-colors duration-300 transform bg-[#182073] rounded-md ${currentPage === page + 1 ? 'bg-[#182073] text-white' : 'hover:bg-blue-600 hover:text-white'
+          className={`items-center px-4 py-2 mx-1 text-white font-bold transition-colors duration-300 transform bg-[#182073] rounded-md ${currentPage === page + 1 ? 'bg-green-600 text-white' : 'hover:bg-blue-600 hover:text-white'
             }`}
         >
           {page + 1}
