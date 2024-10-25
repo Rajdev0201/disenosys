@@ -8,6 +8,7 @@ import { toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {CheckOut} from "../Redux/action/Payment.js";
 import { useRouter } from 'next/navigation'
+import { MdDelete } from 'react-icons/md';
 
 const CartModal = ({ isOpen, setIsOpen, cart }) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -27,7 +28,11 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
   }, [cart]);
 
   const handleDelete = (itemId) => {
-    dispatch(removeProductFromCart(itemId));
+    const confirmSubmit = window.confirm("Do you want to delete the code?");
+    if(confirmSubmit){
+      dispatch(removeProductFromCart(itemId));
+    }
+
   };
 
   const cartUserName = cart?.cartItems?.map((item) => {
@@ -71,12 +76,12 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
             animate={{ scale: 1, rotate: "0deg" }}
             exit={{ scale: 0, rotate: "0deg" }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-gradient-to-br from-violet-600 to-indigo-600 text-white p-4 sm:p-6 md:p-8 rounded-lg w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-md  shadow-xl cursor-default relative overflow-hidden"
+            className="bg-gradient-to-br from-[#182073] to-indigo-600 text-white p-4 sm:p-6 md:p-8 rounded-lg w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-md  shadow-xl cursor-default relative overflow-hidden"
           >
             <FiShoppingCart className="text-white/10 rotate-12 text-[100px] sm:text-[150px] md:text-[200px] absolute z-0 -top-12 sm:-top-16 md:-top-24 -left-10 sm:-left-16 md:-left-24" />
             <div className="relative z-10">
               <div className="bg-white w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 mb-2 rounded-full text-xl sm:text-2xl md:text-3xl text-indigo-600 grid place-items-center mx-auto">
-                <FiShoppingCart />
+                <FiShoppingCart className='text-[#182073]'/>
               </div>
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4">Cart</h3>
               <div className="text-center mb-6">
@@ -85,8 +90,13 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
                     <div key={item._id} className="flex flex-col space-x-2 sm:flex-row justify-between items-center py-2 border-b text-sm sm:text-md md:text-lg">
                       <img src={item.img} className='w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-cover' alt={item.name} />
                       <span className="flex-1 text-center sm:text-left font-bold">{item.name}</span>
-                      <span className='text-lg font-light'>${item.price}</span>
-                      <span className='cursor-pointer text-red-500' onClick={() => handleDelete(item._id)}>delete</span>
+                      <span className='text-lg font-semibold font-poppins'>₹{item.price}</span>
+                      <span className='cursor-pointer text-red-500' ><MdDelete 
+                      data-tip="delete"
+                      size={30}
+                      className="text-red-500 cursor-pointer"
+                      onClick={() => handleDelete(item._id)}
+                      /></span>
                     </div>
                   ))
                 ) : (
@@ -95,11 +105,11 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
               </div>
               {cart?.cartItems?.length && user?.user?.user?._id ?
               <div className='flex justify-end items-end mb-4'> 
-                <span className='bg-red-300 p-2 rounded'>Total: ${totalPrice}</span>
+                <span className='bg-blue-600 p-3 text-white rounded font-bold font-poppins'>Total: ₹{totalPrice}</span>
               </div>
                    : 
                    <div className='flex justify-end items-end mb-4'> 
-                    <span className='bg-red-300 p-2 rounded'>Total: 0</span>
+                    <span className='bg-blue-600 p-2 rounded text-white'>Total: 0</span>
                     </div>
                     }
               <div className="flex flex-col sm:flex-row gap-2">
@@ -111,7 +121,7 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
                 </button>
                 {cart?.cartItems?.length > 0 &&  user?.user?.user?._id && (
                   <button
-                    className="bg-white hover:opacity-90 transition-opacity text-indigo-600 font-semibold w-full py-2 rounded"
+                    className="bg-[#182073] hover:opacity-90 transition-opacity text-white font-semibold w-full py-2 rounded"
                     onClick={handlePlaceOrder}
                   >
                     Checkout
