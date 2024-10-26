@@ -24,6 +24,7 @@ import { usePathname } from "next/navigation";
 import {  LogOut, setUser } from "@/app/Redux/features/authSlice.js";
 import { IoMdLogOut } from "react-icons/io";
 import LinkedInSocialLogin from "@/app/auth/LinkedIn";
+import { payment } from "@/app/Redux/action/Payment";
 // import { useSession } from 'next-auth/react';
 
 const Navbar = () => {
@@ -60,8 +61,20 @@ const Navbar = () => {
     return item.userName;
 });
 
-  const length = cart?.cartItems?.length;
-  // console.log(length)
+
+const pay = useSelector((state) => state.payment);
+
+useEffect(() => {
+  dispatch(payment());
+}, [dispatch]);
+
+const paidCourses = pay?.data?.flatMap(item => item?.lineItems.map(course => course.name)) || [];
+
+
+const filteredCartItems = cart?.cartItems?.filter(item => !paidCourses.includes(item.name));
+const length = filteredCartItems?.length || 0;
+
+
   const handleLinkClick = (link) => {
     setActiveLink(link);
     setMobileMenuOpen(false);
@@ -78,7 +91,11 @@ const Navbar = () => {
     <nav className="shadow-lg bg-[#182073] fixed w-full top-0 left-0 right-0 z-50 mt-10">
       <div className=" flex flex-col md:flex-row items-center justify-between px-4 lg:px-32 py-3">
         <div className="flex items-center w-full md:w-auto justify-between md:justify-start">
+           <Link
+            href="/"
+            >
           <Image src={logo} alt="Logo" className="w-44 h-auto p-2" />
+          </Link>
           <div className="md:hidden flex items-center">
             <RiMenu4Fill
               size={30}
