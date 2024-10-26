@@ -39,7 +39,7 @@ const Sidebar = () => {
 
       {/* Logout Button */}
       <div className="px-6 py-4">
-        <Link href="/logout"
+        <Link href="/"
           className="flex items-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition-colors duration-200">
           <FaSignOutAlt className="mr-3" />
           <span>Logout</span>
