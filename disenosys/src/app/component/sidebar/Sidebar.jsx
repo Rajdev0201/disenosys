@@ -14,6 +14,7 @@ const Sidebar = () => {
     { href: '/dashboard', label: 'Dashboard', icon: <FaHome /> },
     { href: '/profile', label: 'Profile', icon: <FaUser /> },
     {href:'/portfolioDashboard',label:'Portfolio',icon:<SiSololearn />},
+    {href:'/mycourse',label:'Mycourse',icon:<SiSololearn />},
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { payment } from "../Redux/action/Payment.js";
 import { Pagination } from '../component/Pagination.jsx';
+import { fetchCourse } from '../Redux/action/Course.js';
 
 const MyCourse = () => {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ const MyCourse = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
   const itemsPerPage = 10;
-
+  // console.log(pay.data.message);
   useEffect(() => {
     dispatch(payment());
   }, [dispatch]);
@@ -34,9 +35,33 @@ const MyCourse = () => {
 
   const handlePageChange = (page) => setCurrentPage(page);
 
-  const handleToggle = (id) => {
-    // Assuming toggle logic goes here
+  const handleToggle = (id, isActive) => {
+    const confirmMessage = isActive
+      ? "Do you want to deactivate this course?"
+      : "Do you want to activate this course?";
+    
+    const confirmSubmit = window.confirm(confirmMessage);
+    if (confirmSubmit) {
+      fetch(`http://localhost:8000/course/toggleCode/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isActive: !isActive }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            dispatch(fetchCourse());
+            dispatch(payment()); 
+            console.log(data)
+          } else {
+            alert(data.error);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   };
+  
+
 
   return (
     <div className="p-6 flex flex-col w-full mt-12">
@@ -85,10 +110,10 @@ const MyCourse = () => {
                   </td>
                   <td className="text-center">
                     <button
-                      className={`inline-flex items-center h-6 w-11 rounded-full ${
+                      className={`relative inline-flex items-center h-6 w-11 rounded-full ${
                         item.isActive ? "bg-green-500" : "bg-red-500"
                       }`}
-                      onClick={() => handleToggle(item._id)}
+                      onClick={() => handleToggle(item._id, item.isActive)}
                     >
                       <span
                         className={`inline-block w-4 h-4 transform bg-white rounded-full transition-transform ${
