@@ -101,7 +101,7 @@ const Course = () => {
               </div>
             )
           ) : (
-            "You don't have any courses!"
+            ""
           )
         )}
       </div>
