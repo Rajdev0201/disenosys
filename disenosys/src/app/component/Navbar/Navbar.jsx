@@ -71,7 +71,7 @@ useEffect(() => {
 const paidCourses = pay?.data?.flatMap(item => item?.lineItems.map(course => course.name)) || [];
 
 
-const filteredCartItems = cart?.cartItems?.filter(item => !paidCourses.includes(item.name));
+const filteredCartItems = cart?.cartItems?.filter(item => !paidCourses.includes(item?.name));
 const length = filteredCartItems?.length || 0;
 
 
@@ -145,7 +145,7 @@ const length = filteredCartItems?.length || 0;
                 size={40}
                 className="text-white hover:text-[#057FE3]"
               />
-              {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
+              {length > 0 && cartUserName.includes(user?.user?.user?.userName || user?.user?.name) ? (
                 <>
                   <span
                     className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#057FE3] rounded-full ring-2 ring-white z-50"

@@ -27,7 +27,7 @@ const Course = () => {
     }
   }, [dispatch]);
 
-  const goTO = (name) => {
+  const goTo = (name) => {
     router.push(`/recorded?courseName=${name}`);
   };
 
@@ -36,32 +36,32 @@ const Course = () => {
       <h4 className="text-[#182073] font-medium text-xl font-poppins">
         My Course
       </h4>
-      <div className="grid grid-cols-1 lg:grid-cols-3 container mx-auto mt-20 rounded-md">
-        {pay?.data?.map((item, i) =>
+      <div className="grid grid-cols-1 lg:grid-cols-3 container mx-auto mt-20 gap-6">
+        {pay?.data?.map((item) =>
           item.customerDetails.name === user?.user?.user?.userName ? (
             item.isActive ? (
-              <div
-                className="w-64 h-80 flex flex-col rounded-lg shadow-md"
-                key={i}
-              >
-                <div className="bg-[#182073] flex justify-between items-center px-4 py-2 ">
-                  <Image
-                    src={brand}
-                    alt="Brand logo"
-                    className="w-8 h-8 object-cover"
-                  />
-                  <h2 className="text-base font-poppins font-semibold text-white">
-                    Happy Learning!
-                  </h2>
-                </div>
-                {item?.lineItems.map((course, i) => {
-                  const matchedCourse = courses?.find(
-                    (c) => c.courseName === course.name
-                  );
+              item.lineItems.map((course, i) => {
+                const matchedCourse = courses?.find(
+                  (c) => c.courseName === course.name
+                );
 
-                  return (
+                return (
+                  <div
+                    key={`${item._id}-${i}`}
+                    className="w-64 h-80 flex flex-col rounded-lg shadow-md"
+                  >
+                    <div className="bg-[#182073] flex justify-between items-center px-4 py-2">
+                      <Image
+                        src={brand}
+                        alt="Brand logo"
+                        className="w-8 h-8 object-cover"
+                      />
+                      <h2 className="text-base font-poppins font-semibold text-white">
+                        Happy Learning!
+                      </h2>
+                    </div>
+
                     <div
-                      key={i}
                       className="w-full h-64 flex flex-col justify-end bg-cover"
                       style={{
                         backgroundImage: `url(${matchedCourse?.imagePath || ""})`,
@@ -73,36 +73,30 @@ const Course = () => {
                         </p>
                       </div>
                     </div>
-                  );
-                })}
-                <div className="bg-[#182073] flex justify-between items-center px-4 py-2">
-                  <button className="px-4 text-base font-poppins font-semibold text-white">
-                    Info
-                  </button>
-                  {item.lineItems?.map((c, i) => (
-                    <button
-                      key={i}
-                      className="bg-white px-6 py-1 text-base font-poppins rounded-sm font-semibold text-[#182073]"
-                      onClick={() => goTO(c.name)}
-                    >
-                      Start
-                    </button>
-                  ))}
-                </div>
-              </div>
+
+                    <div className="bg-[#182073] flex justify-between items-center px-4 py-2">
+                      <button className="px-4 text-base font-poppins font-semibold text-white">
+                        Info
+                      </button>
+                      <button
+                        className="bg-white px-6 py-1 text-base font-poppins rounded-sm font-semibold text-[#182073]"
+                        onClick={() => goTo(course.name)}
+                      >
+                        Start
+                      </button>
+                    </div>
+                  </div>
+                );
+              })
             ) : (
-              <div key={i}>
-                <p className="text-center text-red-600 flex justify-center font-poppins border rounded bg-white shadow-xl p-2">
+              <div key={item._id} className="text-center mt-6">
+                <p className="text-red-600 font-poppins border rounded bg-white shadow-xl p-2">
                   Please wait, you still don&apos;t have admin access.
                 </p>
-                <p className="text-center text-red-600 flex justify-center font-poppins mt-6">
-                  Loading ....
-                </p>
+                <p className="text-red-600 font-poppins mt-6">Loading...</p>
               </div>
             )
-          ) : (
-            ""
-          )
+          ) : null
         )}
       </div>
     </div>

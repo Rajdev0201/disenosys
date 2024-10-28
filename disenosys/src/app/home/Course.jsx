@@ -95,23 +95,24 @@ const Course = () => {
         <div className='col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8'>
           {filteredCourses?.map((course) => (
             
-            <div key={course?._id} className="flex flex-col justify-between bg-white rounded-lg shadow-lg overflow-hidden p-4 border border-gray-200" onClick={() => goToDescriptionPage(course?._id)}>
+            <div key={course?._id} className="flex flex-col justify-between bg-white rounded-lg shadow-lg overflow-hidden p-4 border border-gray-200" >
         
               <div className="relative w-full h-48 mb-4">
                 <img
                   src={course?.imagePath}
                   alt={course?.courseName}
                   className="object-cover w-full h-full"
+                  onClick={() => goToDescriptionPage(course?._id)}
                 />
               </div>
-              <div className="flex flex-col flex-grow">
+              <div className="flex flex-col flex-grow" >
                 <div className="font-bold text-xl mb-2 text-center">{course?.courseName}</div>
                 <p className="text-gray-500 font-medium text-md text-base mb-4 mt-2">{course?.description}</p>
                 <div className="flex justify-between items-center mt-auto">
                   <button className='bg-[#182073] text-white px-1 py-1 lg:px-4 lg:py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
                     Add to Cart
                   </button>
-                  <span className="text-base font-semibold text-[#182073] flex items-center">More Info</span>
+                  <span className="text-base font-semibold text-[#182073] flex items-center" onClick={() => goToDescriptionPage(course?._id)}>More Info</span>
                 </div>
               </div>
         

@@ -31,6 +31,10 @@ const paymentSchema = new mongoose.Schema({
       default: Date.now,
     },
     isActive: { type: Boolean, default: false },
+    isPaid: {
+      type: Boolean,
+      default: false,
+  },
   });
   
   module.exports = mongoose.model('payment', paymentSchema);

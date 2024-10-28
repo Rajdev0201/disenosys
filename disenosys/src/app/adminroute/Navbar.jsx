@@ -8,6 +8,7 @@ import { CiUser } from "react-icons/ci";
 // import { CiSearch } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../Redux/features/authSlice.js";
+import Link from "next/link";
 
 
 const Navbar = () => {
@@ -25,8 +26,9 @@ const Navbar = () => {
     <nav className="shadow-lg bg-[#182073] fixed w-full top-0 left-0 right-0 z-50 mt-0">
       <div className="flex flex-col md:flex-row items-center justify-between px-4 lg:px-32 py-3">
         <div className="flex items-center w-full md:w-auto justify-between md:justify-start">
+          <Link href="/">
           <Image src={logo} alt="Logo" className="w-44 h-auto p-2" />
-
+          </Link>
           <div className="md:hidden flex items-center">
             <RiMenu4Fill size={30} className="text-white" />
           </div>
