@@ -45,9 +45,9 @@ const Success = () => {
           </table>
         </div>
 
-        <Link href="/mycourse">
+        <Link href="/">
           <button className="inline-block px-2 py-3 mt-10 rounded-lg bg-[#182073] text-white font-semibold hover:text-[#182073] hover:bg-white transition-colors">
-            Continue to Dashboard
+            Continue to Home
           </button>
         </Link>
       </div>

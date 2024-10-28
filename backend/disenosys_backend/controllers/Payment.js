@@ -44,32 +44,72 @@ exports.createCheckoutSession = async (req, res) => {
     }
 };
 
+const sendPayment = async (studentEmail, studentName, courseName, totalPrice) => {
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'rajkumarprjpm@gmail.com',
+            pass: 'eztbnuzrbwxocizk',
+        }
+    });
+
+    const mailOptions = {
+        from: 'rajkumarprjpm@gmail.com',
+        to: studentEmail,
+        subject: 'Your Payment Confirmation from Disenosys',
+        html: `
+            <h2>Hello ${studentName},</h2>
+            <p>Thank you for purchasing the course "${courseName}". Here are your payment details:</p>
+            <table border="1" cellpadding="5" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Course Name</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>${courseName}</td>
+                        <td>${totalPrice}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Thank you for choosing Disenosys. We wish you a great learning journey!</p>
+        `
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully!');
+    } catch (error) {
+        console.error('Error sending email:', error);
+    }
+};
 
 
 exports.handleRazorpayCallback = async (req, res) => {
     const { razorpayPaymentId, razorpayOrderId, razorpaySignature } = req.body;
 
     try {
-        // Retrieve stored order data based on orderId
         const orderData = await CheckoutSession.findOne({ sessionId: razorpayOrderId });
 
         if (!orderData) {
             return res.status(404).json({ message: "Order not found." });
         }
 
-        // Extract the userData and cartItems from stored order data
         const { customerDetails, lineItems } = orderData;
 
         console.log("User Data:", customerDetails);
         console.log("Cart Items:", lineItems);
+        await sendPayment(customerDetails.email, customerDetails.name, lineItems.price, lineItems.name);
 
-        // Additional code to verify payment and update order status
         res.status(200).json({ message: "Payment verified and order updated successfully." });
     } catch (err) {
         console.error("Error handling callback:", err);
         res.status(500).json({ message: "Error verifying payment" });
     }
 };
+
 
 
 
