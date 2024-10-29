@@ -65,9 +65,9 @@ router.patch('/toggleCode/:id', async (req, res) => {
           <p style="font-size: 16px; margin: 0;"><strong>Status:</strong> Active</p>
         </div>
 
-         <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #182073;">
+         <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #f9f9f9;">
                     <thead>
-                        <tr style="background-color: #4a90e2; color: #fff;">
+                        <tr style="background-color: #182073; color: #fff;">
                             <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Course Name</th>
                             <th style="padding: 10px; border: 1px solid #ddd; text-align: right;">Total Price</th>
                         </tr>
