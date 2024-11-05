@@ -53,7 +53,7 @@ const Course = () => {
             });
           }
         }
-      }, 100); // Timeout ensures the accordion content is rendered before scrolling
+      }, 100);
     }
   };
   

@@ -6,6 +6,7 @@ import { fetchCourse } from "../Redux/action/Course.js";
 import {addProductToCart} from "../Redux/action/addToCart.js"
 import Link from 'next/link.js';
 import { useRouter } from 'next/navigation';
+import { payment } from '../Redux/action/Payment.js';
 
 const Course = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -16,6 +17,7 @@ const Course = () => {
   const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const router = useRouter();
+  const pay = useSelector((state) => state.payment);
 
   useEffect(() => {
     dispatch(fetchCourse());
@@ -55,23 +57,39 @@ const Course = () => {
       setSelectedCategory(category); 
   };
 
+  useEffect(() => {
+    dispatch(payment());
+  }, [dispatch]);
+
+  
+  const paidCourses = pay?.data
+    ?.filter((item) => item.customerDetails.name === user?.user?.user?.userName)
+    ?.flatMap((item) => item?.lineItems.map((course) => course.name)) || [];
+
   const addCart = (course) => {
-    // const totalPrice = course.price * 1;
-    // console.log('Total Price:', totalPrice);
-    if( user?.user?.user?._id){
-      dispatch(addProductToCart({
-        courseId: course?._id,
-        name: course?.courseName,
-        price: course?.price,
-        quantity: 1,
-        img: course?.imagePath,
-        userName:user?.user?.user?.userName
-        // totalPrice:totalPrice
-      }));
-    }else{
-       alert("please sign in your account")
+    if (user?.user?.user?._id) {
+      // Check if the course is already paid
+      if (paidCourses?.includes(course.courseName)) {
+        alert("You have already paid for this course.");
+        return; // Exit the function to prevent adding it again
       }
+  
+      // If not paid, add to cart
+      dispatch(
+        addProductToCart({
+          courseId: course?._id,
+          name: course?.courseName,
+          price: course?.price,
+          quantity: 1,
+          img: course?.imagePath,
+          userName: user?.user?.user?.userName,
+        })
+      );
+    } else {
+      alert("Please sign in to your account.");
+    }
   };
+  
 
   const getButtonClass = (category) => {
     return selectedCategory === category

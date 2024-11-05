@@ -17,7 +17,7 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const pay = useSelector((state) => state.payment);
-
+console.log(cart);
 
   
   useEffect(() => {
@@ -122,7 +122,7 @@ useEffect(() => {
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4">Cart</h3>
              
               <div className="text-center mb-6">
-   {cart?.cartItems?.length > 0 &&  cartUserName.includes(user?.user?.user?.userName  || user?.user?.name )? (
+   {cart?.cartItems?.length > 0 &&  cartUserName.includes(user?.user?.user?.userName)? (
   cart.cartItems.filter(item => 
     !paidCourses.includes(item?.name) 
   ).map((item) => (
@@ -147,7 +147,7 @@ useEffect(() => {
 
 
               <div className='flex justify-end items-end mb-4'>
-                {totalPrice > 0 && cartUserName.includes(user?.user?.user?.userName  || user?.user?.name )? (
+                {totalPrice > 0 && cartUserName.includes(user?.user?.user?.userName)? (
                   <span className='bg-blue-600 p-3 text-white rounded font-bold font-poppins'>Total: ₹{totalPrice}</span>
                 ) : (
                   <span className='bg-blue-600 p-2 rounded text-white'>Total: 0</span>
@@ -160,7 +160,7 @@ useEffect(() => {
                 >
                   Close
                 </button>
-                {totalPrice > 0 && cartUserName.includes(user?.user?.user?.userName  || user?.user?.name ) && (
+                {totalPrice > 0 && cartUserName.includes(user?.user?.user?.userName ) && (
                   <button
                     className="bg-[#182073] hover:opacity-90 transition-opacity text-white font-semibold w-full py-2 rounded"
                     onClick={handlePlaceOrder}
