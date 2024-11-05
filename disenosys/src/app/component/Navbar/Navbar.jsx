@@ -70,12 +70,13 @@ useEffect(() => {
 
 // const paidCourses = pay?.data?.flatMap(item => item?.lineItems.map(course => course.name)) || [];
 
-const paidCourses = pay?.data
-?.filter((item) => item.customerDetails.name === user?.user?.user?.userName)
-?.flatMap((item) => item?.lineItems.map((course) => course.name)) || [];
+// const paidCourses = pay?.data
+// ?.filter((item) => item?.customerDetails?.name === user?.user?.user?.userName)
+// ?.flatMap((item) => item?.lineItems?.map((course) => course.name)) || [];
 
-const filteredCartItems = cart?.cartItems?.filter(item => !paidCourses.includes(item?.name));
-const length = filteredCartItems?.length || 0;
+const filteredCartItems = cart?.cartItems?.filter(item => item.userName === user?.user?.user?.userName) || [];
+const length = filteredCartItems.length;
+
 
 
   const handleLinkClick = (link) => {

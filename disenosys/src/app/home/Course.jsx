@@ -61,35 +61,34 @@ const Course = () => {
     dispatch(payment());
   }, [dispatch]);
 
-  
   const paidCourses = pay?.data
-    ?.filter((item) => item.customerDetails.name === user?.user?.user?.userName)
-    ?.flatMap((item) => item?.lineItems.map((course) => course.name)) || [];
+  ?.filter((item) => item?.customerDetails?.name === user?.user?.user?.userName)
+  ?.flatMap((item) => item?.lineItems?.map((course) => course?.name)) || [];
 
-  const addCart = (course) => {
-    if (user?.user?.user?._id) {
-      // Check if the course is already paid
-      if (paidCourses?.includes(course.courseName)) {
-        alert("You have already paid for this course.");
-        return; // Exit the function to prevent adding it again
-      }
-  
-      // If not paid, add to cart
-      dispatch(
-        addProductToCart({
-          courseId: course?._id,
-          name: course?.courseName,
-          price: course?.price,
-          quantity: 1,
-          img: course?.imagePath,
-          userName: user?.user?.user?.userName,
-        })
-      );
-    } else {
-      alert("Please sign in to your account.");
+
+const addCart = (course) => {
+  if (user?.user?.user?._id) {
+    // Check if the course is already paid for by the current user
+    if (paidCourses.includes(course.courseName)) {
+      alert("You have already paid for this course.");
+      return; // Exit the function to prevent adding it again
     }
-  };
-  
+
+    // If not paid, add to cart
+    dispatch(
+      addProductToCart({
+        courseId: course?._id,
+        name: course?.courseName,
+        price: course?.price,
+        quantity: 1,
+        img: course?.imagePath,
+        userName: user?.user?.user?.userName,
+      })
+    );
+  } else {
+    alert("Please sign in to your account.");
+  }
+};
 
   const getButtonClass = (category) => {
     return selectedCategory === category

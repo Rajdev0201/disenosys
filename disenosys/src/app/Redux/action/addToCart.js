@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addCart, decrementQuantity, incrementQuantity, removeFromCart } from '../features/addToCartSlice';
 import {setCart} from "../features/currentCartSlice.js"
+import { payment } from './Payment';
 
 export const addProductToCart = (cart) => async (dispatch) => {
     try {
@@ -11,6 +12,7 @@ export const addProductToCart = (cart) => async (dispatch) => {
         const { cartItem } = response.data;
         dispatch(addCart(cartItem));
         dispatch(getAllCarts());
+        dispatch(payment());
         toast.info('course added in your cart!', {
             position: "top-right",
             autoClose: 5000,

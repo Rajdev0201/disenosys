@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiShoppingCart } from 'react-icons/fi';
@@ -17,13 +18,10 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const pay = useSelector((state) => state.payment);
-console.log(cart);
-
   
   useEffect(() => {
     const storedUser = localStorage.getItem("profile");
     if (storedUser) {
-      // Dispatch action to update Redux with localStorage data
       dispatch(setUser(JSON.parse(storedUser)));
     }
   }, [dispatch]);
@@ -33,27 +31,23 @@ console.log(cart);
   }, [dispatch]);
 
   const paidCourses = pay?.data
-    ?.filter((item) => item.customerDetails.name === user?.user?.user?.userName)
-    ?.flatMap((item) => item?.lineItems.map((course) => course.name)) || [];
- console.log(paidCourses)
+    ?.filter((item) => item?.customerDetails?.name === user?.user?.user?.userName)
+    ?.flatMap((item) => item?.lineItems?.map((course) => course?.name)) || [];
 
-const cartUserName = cart?.cartItems?.map((item) => {
-  return item.userName;
-});
+  const cartUserName = user?.user?.user?.userName; // Current user's name
 
-useEffect(() => {
-  if (cart?.cartItems?.length > 0 && (user?.user?.user?.userName || user?.user?.name)) {
-    // Calculate total price only for unpaid courses
-    const total = cart.cartItems.reduce((acc, item) => {
-      // Check if the item is not in the paid courses
-      if (!paidCourses.includes(item.name)) {
-        return acc + (item.price * item.quantity); // Assuming each item has a quantity
-      }
-      return acc;
-    }, 0);
-    setTotalPrice(total);
-  }
-}, [cart, paidCourses]);
+  useEffect(() => {
+    if (cart?.cartItems?.length > 0 && cartUserName) {
+      const total = cart.cartItems.reduce((acc, item) => {
+        // Only include items that belong to the current user
+        if (item.userName === cartUserName) {
+          return acc + (item.price * item.quantity);
+        }
+        return acc;
+      }, 0);
+      setTotalPrice(total);
+    }
+  }, [cart, cartUserName]);
 
   useEffect(() => {
     if (checkoutSuccess) {
@@ -69,22 +63,12 @@ useEffect(() => {
   };
 
   const handleClose = () => setIsOpen(false);
-  const unpaidItems = cart?.cartItems?.filter((cartItem) =>
-    pay?.data?.some(
-      (item) => item.isPaid === false && item.name === cartItem.name
-    )
-  );
-
-  const UserData = {
-    userData: user?.user?.user,
-    cartItems: cart?.cartItems
-  };
 
   const handlePlaceOrder = async () => {
     if (cart?.cartItems?.length > 0) {
       const UserData = {
         userData: user?.user?.user,
-        cartItems: cart.cartItems.filter(item => !paidCourses.includes(item.name)) // Only send unpaid items
+        cartItems: cart.cartItems.filter(item => item.userName === cartUserName) // Only send items belonging to the current user
       };
       await dispatch(CheckOut(UserData, router));
       setCheckoutSuccess(true); 
@@ -96,6 +80,7 @@ useEffect(() => {
       });
     }
   };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -122,32 +107,31 @@ useEffect(() => {
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4">Cart</h3>
              
               <div className="text-center mb-6">
-   {cart?.cartItems?.length > 0 &&  cartUserName.includes(user?.user?.user?.userName)? (
-  cart.cartItems.filter(item => 
-    !paidCourses.includes(item?.name) 
-  ).map((item) => (
-                <div key={item._id} className="flex flex-col space-x-2 sm:flex-row justify-between items-center py-2 border-b text-sm sm:text-md md:text-lg">
-                    <img src={item.img} className='w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-cover' alt={item.name} />
-                    <span className="flex-1 text-center sm:text-left font-bold">{item.name}</span>
-                    <span className='text-lg font-semibold font-poppins'>₹{item.price}</span>
-                    <span className='text-lg font-semibold font-poppins'>quantity:{item.quantity}</span>
-                    <span className='cursor-pointer text-red-500'>
-                        <MdDelete
+                {cart?.cartItems?.length > 0 && cartUserName ? (
+                  cart?.cartItems
+                    .filter(item => item.userName === cartUserName) // Show items for the current user
+                    .map((item) => (
+                      <div key={item._id} className="flex flex-col space-x-2 sm:flex-row justify-between items-center py-2 border-b text-sm sm:text-md md:text-lg">
+                        <img src={item.img} className='w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-cover' alt={item.name} />
+                        <span className="flex-1 text-center sm:text-left font-bold">{item.name}</span>
+                        <span className='text-lg font-semibold font-poppins'>₹{item.price}</span>
+                        <span className='text-lg font-semibold font-poppins'>quantity: {item.quantity}</span>
+                        <span className='cursor-pointer text-red-500'>
+                          <MdDelete
                             size={30}
                             className="text-red-500 cursor-pointer"
                             onClick={() => handleDelete(item._id)}
-                        />
-                    </span>
-                </div>
-            ))
-    ) : (
-        <p className="text-white">Your cart is empty.</p>
-    )}
-</div>
-
+                          />
+                        </span>
+                      </div>
+                    ))
+                ) : (
+                  <p className="text-white">Your cart is empty.</p>
+                )}
+              </div>
 
               <div className='flex justify-end items-end mb-4'>
-                {totalPrice > 0 && cartUserName.includes(user?.user?.user?.userName)? (
+                {totalPrice > 0 ? (
                   <span className='bg-blue-600 p-3 text-white rounded font-bold font-poppins'>Total: ₹{totalPrice}</span>
                 ) : (
                   <span className='bg-blue-600 p-2 rounded text-white'>Total: 0</span>
@@ -160,7 +144,7 @@ useEffect(() => {
                 >
                   Close
                 </button>
-                {totalPrice > 0 && cartUserName.includes(user?.user?.user?.userName ) && (
+                {totalPrice > 0 && (
                   <button
                     className="bg-[#182073] hover:opacity-90 transition-opacity text-white font-semibold w-full py-2 rounded"
                     onClick={handlePlaceOrder}
