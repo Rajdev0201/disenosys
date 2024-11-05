@@ -123,7 +123,7 @@ const addCart = (course) => {
                 />
               </div>
               <div className="flex flex-col flex-grow" >
-                <div className="font-bold text-xl mb-2 text-center">{course?.courseName}</div>
+                <div className="font-bold text-xl mb-2 text-center" onClick={() => goToDescriptionPage(course?._id)}>{course?.courseName}</div>
                 <p className="text-gray-500 font-medium text-md text-base mb-4 mt-2">{course?.description}</p>
                 <div className="flex justify-between items-center mt-auto">
                   <button className='bg-[#182073] text-white px-1 py-1 lg:px-4 lg:py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
