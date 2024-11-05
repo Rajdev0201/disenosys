@@ -56,7 +56,7 @@ const ChartsWeek = () => {
   };
 
   return (
-    <div className="p-10 bg-white shadow-md rounded-md h-96">
+    <div className="p-1 lg:p-10 bg-white shadow-md rounded-md h-auto lg:h-96">
       <h4 className="text-lg font-semibold ">Weekly Bar Chart</h4>
       <Bar data={data} options={options} />
     </div>

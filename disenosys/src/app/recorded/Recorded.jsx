@@ -274,7 +274,7 @@ const Recorded = () => {
           selectedSubtopic && (
             <div>
               <h4 className="font-bold text-xl">
-                Video for: {selectedSubtopic}
+                {selectedSubtopic}
               </h4>
               <iframe
                 width="100%"

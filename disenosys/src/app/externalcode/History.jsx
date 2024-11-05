@@ -104,7 +104,7 @@ const History = () => {
         External Code
       </h2>
     
-      <div className="flex justify-between items-center p-5">
+      <div className="flex flex-col md:flex-row justify-between items-center p-5">
         <div className=" p-2 flex-grow">
           <div className="flex items-center">
             <div className="flex items-center bg-[#182073] justify-center w-10  rounded-tl-lg rounded-bl-lg border-r border-gray-200 p-3">

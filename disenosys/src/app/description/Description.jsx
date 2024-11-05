@@ -184,14 +184,14 @@ import { useRouter, useSearchParams } from "next/navigation";
                     <Image src={l} className="w-10 h-10" sizes={1} alt="" />
                   </div>
                 </div>
-                <div className="flex flex-col p-2 ring-2 ring-gray-200 w-64 mt-4 mx-4 rounded shadow-lg">
+                {/* <div className="flex flex-col p-2 ring-2 ring-gray-200 w-64 mt-4 mx-4 rounded shadow-lg">
                   <p className="text-lg font-bold text-center text-[#182073] font-poppins">
                  {description.courseName}
                   </p>
                   <div className="flex items-center justify-center gap-5 my-3">
                     <span className="text-2xl ring-2 ring-[#182073] rounded-md shadow-xl px-2"><span className="text-2xl text-[#182073]">₹</span>{description.price}</span>
                   </div>
-                </div>
+                </div> */}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-0 lg:p-24">
                   <div className="p-6 container mx-auto">

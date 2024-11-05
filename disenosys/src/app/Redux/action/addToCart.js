@@ -37,28 +37,28 @@ export const removeProductFromCart = (cartId) => async (dispatch) => {
     }
 };
 
-// export const increaseQuantity = (cartId) => async (dispatch) => {
-//     try {
-//         const response = await axios.patch(`http://localhost:8000/api/v1/cart/${cartId}/increament`);
-//         const updatedItem = response.data;
-//         dispatch(incrementQuantity(updatedItem));
-//         dispatch(getAllCarts());
-//     } catch (error) {
-//         console.error('Error increasing quantity:', error);
-//     }
-// };
+export const increaseQuantity = (cartId) => async (dispatch) => {
+    try {
+        const response = await axios.put(`https://disenosys-1.onrender.com/api/v1/cart/${cartId}/increament`);
+        const updatedItem = response.data;
+        dispatch(incrementQuantity(updatedItem));
+        dispatch(getAllCarts());
+    } catch (error) {
+        console.error('Error increasing quantity:', error);
+    }
+};
 
 
-// export const decreaseQuantity = (cartId) => async (dispatch) => {
-//     try {
-//         const response = await axios.patch(`http://localhost:8000/api/v1/cart/${cartId}/decreament`);
-//         const updatedItem = response.data;
-//         dispatch(decrementQuantity(updatedItem));
-//         dispatch(getAllCarts());
-//     } catch (error) {
-//         console.error('Error decreasing quantity:', error);
-//     }
-// };
+export const decreaseQuantity = (cartId) => async (dispatch) => {
+    try {
+        const response = await axios.put(`https://disenosys-1.onrender.com/api/v1/cart/${cartId}/decreament`);
+        const updatedItem = response.data;
+        dispatch(decrementQuantity(updatedItem));
+        dispatch(getAllCarts());
+    } catch (error) {
+        console.error('Error decreasing quantity:', error);
+    }
+};
 
 
 export const getAllCarts = () => async (dispatch) => {

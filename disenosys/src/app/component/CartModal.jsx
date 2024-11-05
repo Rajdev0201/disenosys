@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiX, FiShoppingCart } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeProductFromCart } from '../Redux/action/addToCart.js';
+import { decreaseQuantity, increaseQuantity, removeProductFromCart } from '../Redux/action/addToCart.js';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CheckOut, payment } from "../Redux/action/Payment.js";
@@ -81,6 +81,14 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
     }
   };
 
+const handleIncrementQuantityChange = (cartId) => {
+      dispatch(increaseQuantity(cartId))
+}
+
+const handleDecrementQuantityChange = (cartId) => {
+  dispatch(decreaseQuantity(cartId))
+}
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -96,7 +104,7 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
             animate={{ scale: 1, rotate: "0deg" }}
             exit={{ scale: 0, rotate: "0deg" }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-gradient-to-br from-[#182073] to-indigo-600 text-white p-4 sm:p-6 md:p-8 rounded-lg w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-lg shadow-xl cursor-default relative overflow-hidden"
+            className="bg-gradient-to-br from-[#182073] to-indigo-600 text-white p-4 sm:p-6 md:p-8 rounded-lg w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl shadow-xl cursor-default relative overflow-hidden"
           >
             <FiShoppingCart className="text-white/10 rotate-12 text-[100px] sm:text-[150px] md:text-[200px] absolute z-0 -top-12 sm:-top-16 md:-top-24 -left-10 sm:-left-16 md:-left-24" />
              
@@ -115,7 +123,23 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
                         <img src={item.img} className='w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-cover' alt={item.name} />
                         <span className="flex-1 text-center sm:text-left font-bold">{item.name}</span>
                         <span className='text-lg font-semibold font-poppins'>₹{item.price}</span>
-                        <span className='text-lg font-semibold font-poppins'>quantity: {item.quantity}</span>
+                        {/* <span className='text-lg font-semibold font-poppins'>quantity: {item.quantity}</span> */}
+                        <div className="flex items-center">
+                <button 
+                  className="bg-blue-500 text-white rounded px-2 py-1 mr-2" 
+                  onClick={() => handleDecrementQuantityChange(item._id)}
+                  disabled={item.quantity <= 1}
+                >
+                  -
+                </button>
+                <span className='text-lg font-semibold font-poppins'>Quantity: {item.quantity}</span>
+                <button 
+                  className="bg-blue-500 text-white rounded px-2 py-1 ml-2" 
+                  onClick={() => handleIncrementQuantityChange(item._id)} 
+                >
+                  +
+                </button>
+              </div>
                         <span className='cursor-pointer text-red-500'>
                           <MdDelete
                             size={30}

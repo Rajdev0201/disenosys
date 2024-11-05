@@ -61,19 +61,18 @@ exports.increament = CatchAsyncError(async (req, res, next) => {
 exports.decreament = CatchAsyncError(async (req, res, next) => {
   const { id } = req.params;
   const item = await Cart.findById(id);
-  const cart = await cart.find();
-  const existItem = cart.find((item) => item.id === id);
 
   if (!item) {
     return next(new ErrorHandler('Item not found', 404));
   }
 
-  if (existItem.quantity > 1) {
-    existItem.quantity -= 1;
-    existItem.totalPrice -= existItem.price //500 - 100
-    await existItem.save();
+  if (item.quantity > 1) {
+    item.quantity -= 1; // Decrease the quantity
+    item.totalPrice -= item.price; // Update total price
+    await item.save(); // Save the changes to the item
   } else {
-
+    // Optionally handle the case where quantity is 1
+    // You might want to remove the item or send a message
   }
 
   res.status(200).json({
@@ -81,6 +80,7 @@ exports.decreament = CatchAsyncError(async (req, res, next) => {
     item
   });
 });
+
 
 exports.removeCart = CatchAsyncError(async (req, res, next) => {
   const { id } = req.params;

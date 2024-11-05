@@ -28,7 +28,7 @@ return(
           <div className="col-span-2 bg-[#182073] h-full">
             <Sidebar />
           </div>
-          <div className="col-span-10 h-full bg-blue-50">
+          <div className="col-span-10 lg:col-span-10 h-full bg-blue-50">
             <History />
           </div>
         </div>

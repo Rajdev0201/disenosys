@@ -1,14 +1,16 @@
 "use client";
+import { LogOut } from '@/app/Redux/features/authSlice.js';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-import { FaHome, FaUser, FaCog, FaChartBar, FaSignOutAlt} from 'react-icons/fa';
-import { SiSololearn } from "react-icons/si";
-
+import { usePathname } from 'next/navigation';
+import { FaCog, FaChartBar, FaSignOutAlt, FaBars, FaHome, FaUser } from 'react-icons/fa';
+import {  SiSololearn } from "react-icons/si";
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 const Sidebar = () => {
   const path = usePathname();
-
+  const dispatch = useDispatch();
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const links = [
     { href: '/dashboard', label: 'Dashboard', icon: <FaHome /> },
@@ -19,33 +21,55 @@ const Sidebar = () => {
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];
 
- 
- 
+  const handleLogout = () => {
+    dispatch(LogOut());
+  };
+
   return (
-    <div className="fixed top-0 left-0 w-1/6 h-screen text-white flex flex-col justify-between">
-      {/* Navigation Links */}
-      <div className="flex flex-col space-y-4 mt-20 px-6 flex-grow">
-        {links.map((link) => (
-          <Link href={link.href} key={link.label}
-            className={`flex items-center py-2 px-4 rounded-lg text-white hover:bg-blue-600 transition-colors duration-200 ${
-              path === link.href ? 'bg-blue-700' : ''
-            }`}
-          >
-            <span className="mr-3">{link.icon}</span>
-            <span>{link.label}</span>
-          </Link>
-        ))}
+    <>
+      
+      <nav className="fixed w-full bg-blue-600 text-white shadow-md flex items-center justify-between p-4 z-50 lg:hidden">
+        <button
+          className="text-white"
+          onClick={() => setSidebarOpen(!isSidebarOpen)}
+        >
+          <FaBars size={24} />
+        </button>
+      </nav>
+
+
+      <div
+        className={`fixed top-0 left-0 h-full w-64 bg-[#182073] text-white flex flex-col justify-between transition-transform duration-300 transform ${
+          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } md:translate-x-0 md:w-64 z-40`}
+      >
+        <div className="flex flex-col mt-20 px-4 flex-grow space-y-6">
+  
+
+       
+          {links.map((link) => (
+            <Link href={link.href} key={link.label} className={`flex items-center mt-12 lg:mt-0 py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === link.href ? 'bg-blue-700' : ''}`}>
+              <span className="mr-3">{link.icon}</span>
+              <span>{link.label}</span>
+            </Link>
+          ))}
+        </div>
+
+        <div className="px-6 py-4">
+          <button onClick={handleLogout} className="flex items-center py-3 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition-colors duration-200 w-full">
+            <FaSignOutAlt className="mr-3" />
+            <span>Logout</span>
+          </button>
+        </div>
       </div>
 
-      {/* Logout Button */}
-      <div className="px-6 py-4">
-        <Link href="/"
-          className="flex items-center py-2 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition-colors duration-200">
-          <FaSignOutAlt className="mr-3" />
-          <span>Logout</span>
-        </Link>
-      </div>
-    </div>
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black opacity-50 lg:hidden z-30"
+          onClick={() => setSidebarOpen(false)}
+        ></div>
+      )}
+    </>
   );
 };
 
