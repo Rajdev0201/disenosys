@@ -278,8 +278,8 @@ const Recorded = () => {
               </h4>
               <iframe
                 width="100%"
-                height="400"
-                src="https://youtu.be/5wVWjFVw1kY?feature=shared"
+                height="600"
+                src="https://player.cloudinary.com/embed/?public_id=samples%2Fcld-sample-video&cloud_name=dapilmiei&player[showLogo]=false"
                 title={selectedSubtopic}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
