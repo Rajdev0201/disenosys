@@ -12,7 +12,7 @@ const config: Config = {
       fontFamily: {
         'josefin': ['"Josefin Sans"', 'sans-serif'], 
         'poppins': ['Poppins', 'sans-serif'],        
-        'brush': ['"Brush Script MT"', 'cursive'],
+        brush: ['"Brush Script MT"', 'cursive'],
         'berlin': ['"Berlin Sans FB"', 'sans-serif'], 
       },
       backgroundImage: {
