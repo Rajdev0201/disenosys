@@ -22,7 +22,7 @@ const CertificateComponent = () => {
 
         <div className="mt-8 ml-8 ">
           <p className="text-3xl font-berlin font-light text-gray-800 mr-16 mb-4 text-center">This certifies that</p>
-          <h3 className="text-[#cc1919]  font-medium text-7xl font-sans ml-56 mb-4 text-center  cname">Saim Wajid Qureshi</h3>
+          <h3 className="text-[#cc1919]  font-medium text-7xl font-sans ml-56 mb-4 text-center font-brush">Saim Wajid Qureshi</h3>
       </div>
       <div className="mt-2 ml-16">
       <p className="text-md mt-4 text-gray-700 ml-80 w-[580px] ">
