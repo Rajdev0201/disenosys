@@ -5,7 +5,19 @@
   background-size: cover;
 }
 
+.c {
+  background-image: url("../assests/profile/c1.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
+.cname{
+  font-family: 'Brush Script MT', cursive;
+}
+.c2name{
+  font-family: 'Berlin Sans FB demi';
+}
 .bg-1 {
   background-image: url("../assests/profile/PGD.png");
   background-position: center;

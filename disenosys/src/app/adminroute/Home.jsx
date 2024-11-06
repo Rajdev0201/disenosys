@@ -1,4 +1,5 @@
 "use client";
+import Certificate from "../component/card/Certificate";
 import { useState } from "react";
 
 const AdminPanel = () => {
@@ -46,8 +47,8 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="px-6 py-6 bg-white shadow-lg rounded-sm max-w-md w-full">
+    <div className="flex items-center justify-center min-h-screen p-12">
+      {/* <div className="px-6 py-6 bg-white shadow-lg rounded-sm max-w-md w-full">
         <h4 className="text-[#182073] font-medium text-xl font-poppins text-center">
           Admin Panel - Generate Code
         </h4>
@@ -99,7 +100,8 @@ const AdminPanel = () => {
             </div>
           )}
         </div>
-      </div>
+      </div> */}
+      <Certificate/>
     </div>
   );
 };
