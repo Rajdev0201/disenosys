@@ -10,6 +10,7 @@ const axios = require("axios");
 const fs = require("fs");
 const multer = require('multer');
 const XLSX = require('xlsx');
+const nodemailer = require('nodemailer');
 // const fileUpload = require('express-fileupload');
 
 
@@ -83,6 +84,7 @@ const Question = require("./models/quiz.js");
 const adminRoute = require("./routes/admin.js");
 const code  = require("./routes/code.js");
 const student = require("./routes/student.js");
+const Student = require("./models/certificate.js")
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
@@ -360,6 +362,129 @@ app.post('/linkedin-login', async (req, res) => {
 
 
 
+const uploadxl = multer({ dest: 'uploadxl/' });
+const excelDateToJSDate = (serial) => {
+  const excelStartDate = new Date(Date.UTC(1899, 11, 30));
+  return new Date(excelStartDate.getTime() + serial * 86400000);
+};
+
+app.post("/upload-xl", uploadxl.single("file"), (req, res) => {
+  try {
+    const workbook = XLSX.readFile(req.file.path);
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const students = XLSX.utils.sheet_to_json(sheet).map(student => {
+      if (student.from) student.from = excelDateToJSDate(student.from);
+      if (student.to) student.to = excelDateToJSDate(student.to);
+      if (student.awardedDate) student.awardedDate = excelDateToJSDate(student.awardedDate);
+
+      return student;
+    });
+
+    res.json(students);
+  } catch (error) {
+    console.error("Error processing file:", error);
+    res.status(500).send("Error processing file");
+  }
+});
+
+
+
+const uploadcertificate = multer({ dest: 'uploadcertificate/' });
+app.post("/send-certificate", uploadcertificate.none(), (req, res) => {
+  const { email, pdfDataUrl,name,course } = req.body;
+  console.log(email)
+  if (!email || !pdfDataUrl) {
+    return res.status(400).send("Missing email or PDF data");
+  }
+
+
+  const base64Data = pdfDataUrl.split(";base64,").pop();
+  const pdfBuffer = Buffer.from(base64Data, "base64");
+
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: "rajkumarprjpm@gmail.com",
+      pass: "eztbnuzrbwxocizk",
+    },
+  });
+
+  const mailOptions = {
+    from: "rajkumarprjpm@gmail.com",
+    to: email,
+    subject: `Certificate for ${course}`,
+    text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,
+    attachments: [
+      {
+        filename:`${name}_certificate.pdf`,
+        content: pdfBuffer,
+      },
+    ],
+  };
+
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+      return res.status(500).send("Error sending email");
+    }
+    res.status(200).send("Certificate sent successfully");
+  });
+});
+
+
+
+const uploadsingle = multer({ dest: 'uploadcertificatesingle/' });
+
+app.post("/send-single-certificate", uploadsingle.none(),async (req, res) => {
+  try {
+    const { email, pdfDataUrl,name,course } = req.body;
+    console.log(email)
+    if (!email || !pdfDataUrl) {
+      return res.status(400).send("Missing email or PDF data");
+    }
+  
+    const base64Data = pdfDataUrl.split(";base64,").pop();
+    const pdfBuffer = Buffer.from(base64Data, "base64");
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'rajkumarprjpm@gmail.com', 
+        pass: 'eztbnuzrbwxocizk',
+      }
+    });
+  
+
+    const mailOptions = {
+      from: "rajkumarprjpm@gmail.com",
+      to: email,
+      subject: `Certificate for ${course}`,
+      text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,
+      attachments: [
+        {
+          filename:`${name}_certificate.pdf`,
+          content: pdfBuffer,
+        },
+      ],
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error("Error sending email:", err);
+        return res.status(500).send("Error sending email");
+      }
+      console.log("Email sent: " + info.response);
+      res.send("Certificate sent successfully");
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error processing the certificate request");
+  }
+});
+
+
+
 
 const upload = multer({ dest: 'uploadsquiz/' });
 
@@ -414,6 +539,28 @@ app.post('/quiz', upload.single('file'), async (req, res) => {
   }
 });
 
+
+app.post('/post-student-details', async (req, res) => {
+  const { name, course, from, to, award, email } = req.body;
+
+  try {
+   
+    const newStudent = new Student({
+      name,
+      course,
+      from,
+      to,
+      award,
+      email
+    });
+
+    await newStudent.save();
+    res.status(200).send({ studentId: newStudent._id });
+  } catch (error) {
+    console.error("Error saving student data:", error);
+    res.status(500).send("Error saving student details");
+  }
+});
 
 
 app.use(errorMiddleware);
