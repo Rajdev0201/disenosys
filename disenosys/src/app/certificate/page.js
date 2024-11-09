@@ -1,11 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useDispatch, useSelector } from "react-redux";
-import Bulkform from "../certificate/Bulkform.jsx";
 import { setUser } from "../Redux/features/authSlice.js";
-import Navbar from "../adminroute/Navbar";
-import Sidebar from "../component/sidebar/SidebarAdmin";
 import { useEffect } from "react";
+
+// Dynamically import components to run only on the client
+const Bulkform = dynamic(() => import("../certificate/Bulkform.jsx"), { ssr: false });
+const Navbar = dynamic(() => import("../adminroute/Navbar"), { ssr: false });
+const Sidebar = dynamic(() => import("../component/sidebar/SidebarAdmin"), { ssr: false });
 
 export default function CertificatePage() {
     const user = useSelector((state) => state?.user);
