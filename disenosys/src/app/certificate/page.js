@@ -7,7 +7,7 @@ import Navbar from "../adminroute/Navbar";
 import Sidebar from "../component/sidebar/SidebarAdmin";
 import { useEffect } from "react";
 
-export default function Page() {
+export default function CertificatePage() {
     const user = useSelector((state) => state?.user);
     const dispatch = useDispatch();
 
