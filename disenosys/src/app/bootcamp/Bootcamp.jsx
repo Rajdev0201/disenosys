@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import img from "../assests/models/CATIA.png";
 import Image from "next/image";
 import Mentor from "../assests/profile/f.png";
@@ -7,12 +7,63 @@ import { CiCalendarDate } from "react-icons/ci";
 import { BsClockHistory } from "react-icons/bs";
 import Testimonials from "../home/Testimonials";
 import c from "../assests/profile/b.png";
+import { FaPencilAlt } from "react-icons/fa";
+import { MdCancel } from "react-icons/md";
 
 const Bootcamp = () => {
+
+  const [bgColor, setBgColor] = useState('bg-gradient-to-r from-blue-900 via-blue-700 to-indigo-800');
+  const [showPopup, setShowPopup] = useState(false);
+
+  const colorOptions = [
+    'bg-gradient-to-r from-green-400 via-green-500 to-green-600',
+    'bg-gradient-to-r from-red-400 via-red-500 to-red-600',
+    'bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600',
+    'bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600',
+    'bg-gradient-to-r from-pink-400 via-pink-500 to-pink-600',
+    'bg-gradient-to-r from-blue-900 via-blue-700 to-indigo-800',
+    'bg-gradient-to-r from-purple-800 via-purple-500 to-purple-100',
+    'bg-gradient-to-r from-pink-800 via-pink-500 to-pink-100',
+    'bg-gradient-to-r from-blue-100 via-blue-700 to-indigo-100',
+  ];
+
+  const handleChangeColor = (color) => {
+    setBgColor(color);
+    setShowPopup(false);
+  };
+
+
   return (
     <div>
-      <div className="bg-gradient-to-r from-blue-900 via-blue-700 to-indigo-800 text-white px-4 sm:px-6 md:px-10 lg:px-32 xl:px-32 2xl:px-44 mx-auto p-12 mt-20 font-poppins rounded">
-        <div className="grid grid-cols-1 md:grid-cols-2 my-6 gap-6 md:gap-8 mx-auto container px-2 py-12">
+   <div className={`${bgColor} text-white px-4 sm:px-6 md:px-10 lg:px-32 xl:px-32 2xl:px-44 mx-auto p-12 mt-20 font-poppins rounded`}>
+    
+  
+   {showPopup && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+          <div className="bg-white rounded shadow-lg p-6 relative w-96">
+            {/* Cancel Button */}
+            <button
+              className="absolute top-6 right-2 text-gray-700 font-bold"
+              onClick={() => setShowPopup(false)}
+            >
+              <MdCancel size={30} className="text-[#182073]"/>
+            </button>
+            
+            <h3 className="text-[#182073] font-bold mb-4 text-start text-lg font-bold font-poppins">Select Background Color</h3>
+            <div className="grid grid-cols-3 gap-2">
+              {colorOptions.map((color, index) => (
+                <button
+                  key={index}
+                  className={`${color} w-16 h-16 rounded shadow-md`}
+                  onClick={() => handleChangeColor(color)}
+                >
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+        <div className="grid grid-cols-1 md:grid-cols-2 my-6 gap-6 md:gap-8 mx-auto container px-2 py-6">
           <div className="">
             <h1 className="text-xl sm:text-2xl md:text-xl lg:text-6xl font-bold">
               Master Automotive Design with{" "}
@@ -58,8 +109,9 @@ const Bootcamp = () => {
               Register Here
             </button>
           </div>
-
+          
           <div className="flex justify-center">
+            
             <Image
               src={img}
               alt="CATIA Design"
@@ -67,6 +119,15 @@ const Bootcamp = () => {
             />
           </div>
         </div>
+
+        <div className="flex justify-end mt-7">
+        <button 
+          className="bg-white text-[#182073] p-2 font-bold font-poppins text-lg rounded flex items-center gap-2"
+          onClick={() => setShowPopup(!showPopup)}
+        >
+         <FaPencilAlt size={20}/> Change Background
+        </button>
+      </div>
       </div>
 
       <section className="py-6 px-6 md:px-12 text-center bg-blue-50 rounded shadow-lg">

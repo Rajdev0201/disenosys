@@ -13,6 +13,14 @@ router.get("/getPlaceOrder",getPlaceOrder)
 
 
 
+// host: 'smtp.office365.com', 
+// port: 587,                 
+// secure: false,   
+// auth: {
+//   user: 'classes@disenosys.com',
+//   pass: 'eztbnuzrbwxocizk',
+// }
+// });
 
 const transporter = nodemailer.createTransport({
   service: 'gmail', 

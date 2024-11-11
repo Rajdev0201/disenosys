@@ -175,35 +175,33 @@ const length = filteredCartItems.length;
         <div className="hidden md:flex mr-0 lg:mr-20">
           {user?.user?.user?.userName || user?.user?.name || user?.user?.userName  ? (
             <>
-              <div className="relative hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
-                <span className="bg-[#057FE3] shadow-lg px-4 py-2 rounded-full text-white font-poppins font-bold text-lg">
-                  {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)} { user?.user?.name?.toLocaleUpperCase()?.charAt(0)} { user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
-                </span>
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="relative">
-                    <div className="bg-[#057FE3]  text-white flex flex-col rounded-md px-5 py-3">
-                     <div className="text-center text-base font-bold font-poppins mt-1">
-                     {user?.user?.user?.userName?.toLocaleUpperCase()} { user?.user?.name?.toLocaleUpperCase()}  { user?.user?.userName?.toLocaleUpperCase()} 
-                    </div> 
-                 <div className="text-center text-base font-bold font-poppins mt-1">
-                     <Link href="/dashboard">My Profile</Link>
-                 </div>
-                <div className="max-w-44  items-center justify-center text-white text-base font-poppins font-bold duration-300 cursor-pointer active:scale-[0.98]">
-                <button
-                  className="px-0 py-2 flex items-center "
-                  onClick={handleLogout}
-                >
-                  <IoMdLogOut size={20} className=" mx-0" />
-                  <span className="text-center ">LOGOUT</span>
-                </button>
-              </div>
-                    </div>
-                    <div className="absolute left-1/2 transform -translate-x-1/2 -top-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-white"></div>
-                  </div>
-                </div>
-              </div>
-
-             
+             <div className="relative hidden md:flex gap-28 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
+  <span className="bg-[#057FE3] shadow-lg px-4 py-2 rounded-full text-white font-poppins font-bold text-lg">
+    {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)} {user?.user?.name?.toLocaleUpperCase()?.charAt(0)} {user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
+  </span>
+  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+    <div className="relative">
+      <div className="bg-[#057FE3] text-white flex flex-col rounded-md px-5 py-3">
+        <div className="text-center text-base font-bold font-poppins mt-1">
+          {user?.user?.user?.userName?.toLocaleUpperCase()} {user?.user?.name?.toLocaleUpperCase()} {user?.user?.userName?.toLocaleUpperCase()}
+        </div> 
+        <div className="text-center text-base font-bold font-poppins mt-1">
+          <Link href="/dashboard">My Profile</Link>
+        </div>
+        <div className="max-w-44 items-center justify-center text-white text-base font-poppins font-bold duration-300 cursor-pointer active:scale-[0.98]">
+          <button
+            className="px-0 py-2 flex items-center"
+            onClick={handleLogout}
+          >
+            <IoMdLogOut size={20} className="mx-0" />
+            <span className="text-center">LOGOUT</span>
+          </button>
+        </div>
+      </div>
+      <div className="absolute left-1/2 transform -translate-x-1/2 -top-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-white"></div>
+    </div>
+  </div>
+</div>
             </>
           ) : (
             <>
