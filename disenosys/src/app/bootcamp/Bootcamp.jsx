@@ -2,20 +2,40 @@
 import React from "react";
 import img from "../assests/models/CATIA.png";
 import Image from "next/image";
+import Mentor from "../assests/profile/f.png";
+import { CiCalendarDate } from "react-icons/ci";
+import { BsClockHistory } from "react-icons/bs";
+import Testimonials from "../home/Testimonials";
+import c from "../assests/profile/b.png";
+
 const Bootcamp = () => {
   return (
     <div>
-      <div className="bg-gradient-to-r from-blue-900 via-blue-700 to-indigo-800 text-white px-4 sm:px-6 md:px-10 lg:px-32 xl:px-32 2xl:px-44 mx-auto p-12 mt-20 font-poppins rounded-lg">
+      <div className="bg-gradient-to-r from-blue-900 via-blue-700 to-indigo-800 text-white px-4 sm:px-6 md:px-10 lg:px-32 xl:px-32 2xl:px-44 mx-auto p-12 mt-20 font-poppins rounded">
         <div className="grid grid-cols-1 md:grid-cols-2 my-6 gap-6 md:gap-8 mx-auto container px-2 py-12">
           <div className="">
             <h1 className="text-xl sm:text-2xl md:text-xl lg:text-6xl font-bold">
               Master Automotive Design with{" "}
               <span className="text-yellow-400">CATIA</span>
             </h1>
-            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-xl xl:text-xl font-bold py-4">
+            {/* <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-xl xl:text-xl font-bold py-4">
               Join Our <span className="text-yellow-400">Intensive </span>
               Bootcamp
-            </h2>
+            </h2> */}
+            <div className="flex justify-center items-center bg-blue-500 rounded-md p-2 gap-4 w-[480px] mt-3">
+              <div className="bg-blue-900 p-2 flex items-center gap-2 rounded">
+                <CiCalendarDate size={30} className="" />
+                <h2 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-xl xl:text-xl font-bold">
+                  November 17,2024
+                </h2>
+              </div>
+              <div className="bg-blue-900 p-2 flex items-center gap-2 rounded">
+                <BsClockHistory size={30} />
+                <h2 className="text-white text-white text-2xl sm:text-3xl md:text-4xl lg:text-xl xl:text-xl font-bold">
+                  11 AM Onwards
+                </h2>
+              </div>
+            </div>
             <p className="text-lg sm:text-xl md:text-xl lg:text-lg mt-4 font-light">
               Accelerate your career with hands-on training in CATIA, the
               leading software for automotive design. This bootcamp covers
@@ -27,10 +47,15 @@ const Bootcamp = () => {
             <li>Develop real-world skills with practical, project-based learning.</li>
             <li>Network with professionals and enhance your career prospects.</li>
           </ul> */}
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-lg font-bold font-poppins rounded-lg text-white px-6 sm:px-7 md:px-8 lg:px-9 py-2 my-4 md:my-6"
-              onClick={() => document.getElementById('form-section').scrollIntoView({ behavior: 'smooth' })}
+            <button
+              className="bg-[#182073] hover:bg-yellow-600 text-lg font-bold font-poppins rounded-lg text-white px-6 sm:px-7 md:px-8 lg:px-9 py-2 my-4 md:my-6"
+              onClick={() =>
+                document
+                  .getElementById("form-section")
+                  .scrollIntoView({ behavior: "smooth" })
+              }
             >
-              Register for the Bootcamp
+              Register Here
             </button>
           </div>
 
@@ -43,71 +68,43 @@ const Bootcamp = () => {
           </div>
         </div>
       </div>
-      
-      <section className="py-16 px-6 md:px-12 text-center bg-blue-50 rounded shadow-lg">
-  <h2 className="font-bold font-poppins text-[#182073] text-3xl lg:text-5xl mb-8">
+
+      <section className="py-6 px-6 md:px-12 text-center bg-blue-50 rounded shadow-lg">
+        <h2 className="font-bold font-poppins text-center text-[#182073] text-3xl lg:text-5xl mb-12">
+          Know your mentors
+        </h2>
+
+        <div className="flex flex-col md:flex-row items-center md:items-center justify-between md:space-x-0 mt-8 px-4 sm:px-6 md:px-10 lg:px-32 xl:px-32 2xl:px-44 ">
+          <div className="bg-[#182073] rounded-full">
+            <Image
+              src={Mentor}
+              alt="Mentor Profile Picture"
+              className="w-full h-full rounded-full bg-[#182073] p-4"
+            />
+          </div>
+          <div className="text-center md:text-left max-w-md">
+            <h3 className="text-4xl font-bold text-[#182073] font-poppins">
+              John Doe
+            </h3>
+            <p className="text-gray-600 mt-3 text-xl font-poppins text-medium">
+              John is an experienced industry leader with over 15 years of
+              expertise in Automotive design and mentoring. Passionate about
+              guiding aspiring developers, he combines real-world insights with
+              hands-on learning to help students succeed in their careers.
+            </p>
+            <p className="mt-3 text-gray-600 mt-3 text-xl font-poppins text-medium">
+              <b>Specialties:</b> Automotive design, project management, and
+              career growth.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 
+      <section className="bg-white py-16 px-6 md:px-28">
+      <h2 className="font-bold font-poppins text-center text-[#182073] text-3xl lg:text-5xl mb-12">
     Why Our Bootcamp?
   </h2>
-
-  <div className="flex flex-col md:flex-row justify-center items-center gap-8 mt-12 ">
-    <div className="hover:-translate-y-2 group bg-neutral-50 duration-500 w-52 h-52 flex text-neutral-600 flex-col justify-center items-center relative rounded-xl overflow-hidden shadow-md">
-      <svg
-        viewBox="0 0 200 200"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute blur z-10 fill-[#182073] duration-500 group-hover:blur-none group-hover:scale-105"
-      >
-        <path
-          transform="translate(100 100)"
-          d="M39.5,-49.6C54.8,-43.2,73.2,-36.5,78.2,-24.6C83.2,-12.7,74.8,4.4,69,22.5C63.3,40.6,60.2,59.6,49.1,64.8C38.1,70,19,61.5,0.6,60.7C-17.9,59.9,-35.9,67,-47.2,61.9C-58.6,56.7,-63.4,39.5,-70,22.1C-76.6,4.7,-84.9,-12.8,-81.9,-28.1C-79,-43.3,-64.6,-56.3,-49.1,-62.5C-33.6,-68.8,-16.8,-68.3,-2.3,-65.1C12.1,-61.9,24.2,-55.9,39.5,-49.6Z"
-        ></path>
-      </svg>
-
-      <div className="z-20 flex flex-col justify-center items-center">
-        <span className="font-bold text-4xl text-white lg:text-5xl">34+</span>
-        <p className="font-bold text-lg  text-white lg:text-xl">Projects</p>
-      </div>
-    </div>
-
-    <div className="hover:-translate-y-2 group bg-neutral-50 duration-500 w-52 h-52 flex text-neutral-600 flex-col justify-center items-center relative rounded-xl overflow-hidden shadow-md">
-      <svg
-        viewBox="0 0 200 200"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute blur z-10 fill-[#182073] duration-500 group-hover:blur-none group-hover:scale-105"
-      >
-        <path
-          transform="translate(100 100)"
-          d="M39.5,-49.6C54.8,-43.2,73.2,-36.5,78.2,-24.6C83.2,-12.7,74.8,4.4,69,22.5C63.3,40.6,60.2,59.6,49.1,64.8C38.1,70,19,61.5,0.6,60.7C-17.9,59.9,-35.9,67,-47.2,61.9C-58.6,56.7,-63.4,39.5,-70,22.1C-76.6,4.7,-84.9,-12.8,-81.9,-28.1C-79,-43.3,-64.6,-56.3,-49.1,-62.5C-33.6,-68.8,-16.8,-68.3,-2.3,-65.1C12.1,-61.9,24.2,-55.9,39.5,-49.6Z"
-        ></path>
-      </svg>
-
-      <div className="z-20 flex flex-col justify-center items-center">
-        <span className="font-bold text-4xl text-white lg:text-5xl">100%</span>
-        <p className="font-bold text-lg  text-white lg:text-xl">Job Placement</p>
-      </div>
-    </div>
-
-    <div className="hover:-translate-y-2 group bg-neutral-50 duration-500 w-52 h-52 flex text-neutral-600 flex-col justify-center items-center relative rounded-xl overflow-hidden shadow-md">
-      <svg
-        viewBox="0 0 200 200"
-        xmlns="http://www.w3.org/2000/svg"
-        className="absolute blur z-10 fill-[#182073] duration-500 group-hover:blur-none group-hover:scale-105"
-      >
-        <path
-          transform="translate(100 100)"
-          d="M39.5,-49.6C54.8,-43.2,73.2,-36.5,78.2,-24.6C83.2,-12.7,74.8,4.4,69,22.5C63.3,40.6,60.2,59.6,49.1,64.8C38.1,70,19,61.5,0.6,60.7C-17.9,59.9,-35.9,67,-47.2,61.9C-58.6,56.7,-63.4,39.5,-70,22.1C-76.6,4.7,-84.9,-12.8,-81.9,-28.1C-79,-43.3,-64.6,-56.3,-49.1,-62.5C-33.6,-68.8,-16.8,-68.3,-2.3,-65.1C12.1,-61.9,24.2,-55.9,39.5,-49.6Z"
-        ></path>
-      </svg>
-
-      <div className="z-20 flex flex-col justify-center items-center">
-        <span className="font-bold text-4xl text-white lg:text-5xl">24/7</span>
-        <p className="font-bold text-lg lg:text-xl text-white">Mentorship</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-      <section className="bg-white py-16 px-6 md:px-28">
         <div className="space-y-12">
           <div className="flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-12">
             <Image
@@ -161,7 +158,72 @@ const Bootcamp = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+      <div className="px-4 sm:px-6 bg-blue-50 md:px-10 lg:px-32 xl:px-32 2xl:px-44">
+        <Testimonials />
+      </div>
+
+      <section className="bg-blue-50 py-16 px-6 md:px-28">
+  <div className="flex flex-col md:flex-row items-start space-y-6 md:space-y-0 md:space-x-12 h-[350px]">
+    
+    <div className="flex-1 text-center md:text-left h-full">
+      <h2 className="font-bold text-[#182073] text-3xl lg:text-5xl mb-4">
+        What you will learn
+      </h2>
+      <ul className="text-gray-600 list-disc h-full mt-3 space-y-3 font-semibold text-xl px-5 py-2 bg-white shadow-lg rounded border-l-4 border-l-[#182073] overflow-y-auto max-h-full">
+        <div className="p-4 space-y-4">
+          <li>Get certified by be10x to highlight your AI tool capabilities in your resume</li>
+          <li>Learn from IIT Kharagpur alumni</li>
+          <li>Be among the top 1% professionals to avoid being laid off</li>
+          <li>No technical AI knowledge required to master AI tools</li>
+          <li>Proven to reduce your work by 2 hours daily</li>
+        </div>
+      </ul>
+    </div>
+
+    <div className="flex-1 text-center md:text-left h-full">
+      <h2 className="font-bold text-[#182073] text-3xl lg:text-5xl mb-4">
+        Who should Attend
+      </h2>
+      <ul className="text-gray-600 list-disc h-full mt-3 space-y-3 font-semibold text-xl px-5 py-2 bg-white shadow-lg rounded border-l-4 border-l-[#182073] overflow-y-auto max-h-full">
+        <div className="p-4 space-y-4">
+          <li>Get certified by be10x to highlight your AI tool capabilities in your resume</li>
+          <li>Learn from IIT Kharagpur alumni</li>
+          <li>Be among the top 1% professionals to avoid being laid off</li>
+        </div>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<section className="bg-blue-50 py-16 px-6 md:px-28 flex justify-center">
+  <div className="flex flex-col justify-center">
+   <div className="flex justify-center">
+    <button className="bg-[#182073] text-white rounded shadow-lg p-3 text-lg font-bold"  onClick={() =>
+                document
+                  .getElementById("form-section")
+                  .scrollIntoView({ behavior: "smooth" })
+              }>Register Now for Rs.199</button>
+   </div>
+   <div className="mt-4 mb-2">
+   <h2 className="font-bold font-poppins text-center text-[#182073] text-3xl lg:text-5xl mb-12">
+   Get a certification of the workshop
+   </h2>
+   </div>
+   <div className="flex justify-center mb-2"> 
+    <Image src={c} alt="certificate-demo" className="w-96 h-auto object-cover"/>
+   </div>
+   <div className="flex justify-center ">
+    <button className="bg-[#182073] text-white rounded shadow-lg p-3 text-lg font-bold"  onClick={() =>
+                document
+                  .getElementById("form-section")
+                  .scrollIntoView({ behavior: "smooth" })
+              }>Register Now for Rs.199</button>
+   </div>
+   </div>
+ 
+</section>
 
       <section id="form-section" className="bg-blue-50 py-16 px-6 md:px-12">
         <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">

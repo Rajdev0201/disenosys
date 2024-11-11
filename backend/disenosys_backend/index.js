@@ -70,6 +70,7 @@ const UserRoute = require("./routes/UserRoute.js")
 const CourseRoute = require("./routes/CourseRoute.js")
 const addCart = require("./routes/addToCart.js")
 const payment = require("./routes/Payment.js")
+const bootcamp = require("./routes/bootcamp.js")
 const linkedin = require("./models/linkedin.js")
 const resume = require("./models/resume.js")
 const PortfolioPage = require("./models/portfolio.js")
@@ -90,6 +91,7 @@ app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
 app.use("/api/v1",addCart);
 app.use("/course",payment);
+app.use("/bootcamp",bootcamp);
 app.use("/update",profile);
 app.use("/update",port);
 app.use("/resume",resumeUpdate);

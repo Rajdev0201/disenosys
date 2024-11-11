@@ -19,7 +19,7 @@ const loadRazorpayScript = () => {
 export const CheckOut = (Data, nav) => async (dispatch) => {
     try {
         console.log("Data sent to backend:", Data);
-        const res = await axios.post("https://disenosys-1.onrender.com/course/checkout-order", {
+        const res = await axios.post("https://disenosys-1.onrender.com/bootcamp/checkout-order", {
             userData: Data.userData,
             cartItems: Data.cartItems,
         });
@@ -32,12 +32,12 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
             amount: amount,
             currency: currency,
             name: 'Disenosys',
-            description: 'Course Payment',
+            description: 'bootcamp Payment',
             order_id: orderId,
             handler: async (response) => {
                 try {
                     // Send payment details to callback endpoint
-                    const captureResponse = await axios.post("https://disenosys-1.onrender.com/course/handle-razorpay-callback", {
+                    const captureResponse = await axios.post("https://disenosys-1.onrender.com/bootcamp/handle-razorpay-callback", {
                         razorpayPaymentId: response.razorpay_payment_id,
                         razorpayOrderId: response.razorpay_order_id,
                         razorpaySignature: response.razorpay_signature,
@@ -74,7 +74,7 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
 
 export const payment = () => async (dispatch) => {
     try {
-        const res = await axios.get("https://disenosys-1.onrender.com/course/getPlaceOrder");
+        const res = await axios.get("https://disenosys-1.onrender.com/bootcamp/getPlaceOrder");
         const getData = res.data;
         dispatch(setPayment(getData));
     } catch (error) {

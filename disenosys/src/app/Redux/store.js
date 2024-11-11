@@ -13,6 +13,7 @@ import resume from './features/resumeSlice.js';
 import student  from './features/studentSlice.js';
 import studentCode from './features/codeSlice.js';
 import externalCode from "./features/externalSlice.js";
+import bootcamp from "./features/bootcampSlice.js";
 
 export default configureStore({
   reducer: {
@@ -29,5 +30,6 @@ export default configureStore({
     student : student,
     code : studentCode,
     external : externalCode,
+    bootcamp:bootcamp,
   },
 });
