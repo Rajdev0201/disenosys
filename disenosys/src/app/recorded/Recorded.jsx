@@ -30,7 +30,7 @@ const Recorded = () => {
   const router = useRouter();
   
   useEffect(() => {
-  
+    dispatch(fetchCourse());
     dispatch(payment());
   }, [dispatch]);
 
@@ -39,11 +39,7 @@ const Recorded = () => {
     localStorage.setItem("unlockedModules", JSON.stringify(unlockedModules));
   }, [unlockedModules]);
 
-  
-  
-  useEffect(() => {
-    dispatch(fetchCourse());
-  }, [dispatch]);
+
   
   useEffect(() => {
     if (courses && courses[0]?.Curriculum[0]?.subTopics && !selectedSubtopic) {
@@ -223,10 +219,11 @@ const Recorded = () => {
     ],
    
   ];
-
+  const isCoursePaid = pay?.data?.some((item) => item._id === id && item.lineItems.some((lineItem) => lineItem.name === courseId && item.isActive));
+ console.log(isCoursePaid)
   return (
     <>
-     {pay?.data?.some((item) => item._id === id) ?(
+     {isCoursePaid ? (
     <div className="">
       {courses && (
         <div className="py-2 bg-[#182073] text-[#182073] rounded-md">
