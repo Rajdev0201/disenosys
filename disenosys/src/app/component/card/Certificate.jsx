@@ -131,8 +131,9 @@ const CertificateComponent = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
   
-      console.log(`Certificate sent to ${email}`);
+      alert(`Certificate sent to ${email}`);
     } catch (error) {
+      alert("Error generating or sending certificate")
       console.error("Error generating or sending certificate:", error);
     }
     setShowCertificate(false)
@@ -162,11 +163,6 @@ const CertificateComponent = () => {
     setTimeout(() => {
       setIsSending(false);
       setIsSent(true);
-      if(setIsSent){
-        alert("Certificates have been successfully sent!");
-      }else{
-        alert("certificate have not been sent!");
-      }
      
     }, 2000);
  
