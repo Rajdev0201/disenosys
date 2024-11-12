@@ -201,8 +201,8 @@ const [showCertificate, setShowCertificate] = useState(false);
       <div className="w-64 h-24 mr-12 mb-8">
         <Image src={logo} alt="logo" className="text-blue-600" />
       </div>
-      <h2 className="text-[#cc1919] font-medium text-8xl font-berlin ml-40">Certificate</h2>
-      <p className="text-6xl font-medium font-berlin text-gray-700 mr-2 ml-16">of Internship</p>
+      <h2 className="text-[#cc1919] font-medium text-8xl font-berlin ml-28">Certificate</h2>
+      <p className="text-6xl font-medium font-berlin text-gray-700 mr-2 ml-10">of Internship</p>
     </div>
 
    

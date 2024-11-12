@@ -131,9 +131,9 @@ const CertificateComponent = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
   
-      alert(`Certificate sent to ${email}`);
+      console.log(`Certificate sent to ${email}`);
     } catch (error) {
-      alert("Error generating or sending certificate")
+      alert("Error generating or sending certificate", error)
       console.error("Error generating or sending certificate:", error);
     }
     setShowCertificate(false)
@@ -163,6 +163,11 @@ const CertificateComponent = () => {
     setTimeout(() => {
       setIsSending(false);
       setIsSent(true);
+      if(setIsSent){
+        alert("Certificates have been successfully sent!");
+      }else{
+        alert("certificate have not been sent!");
+      }
      
     }, 2000);
  
@@ -231,10 +236,10 @@ const CertificateComponent = () => {
                 <div className="w-64 h-24 mr-12 mb-8">
                   <Image src={logo} alt="logo" className="text-blue-600" />
                 </div>
-                <h2 className="text-[#cc1919] font-medium text-8xl font-berlin ml-40">
+                <h2 className="text-[#cc1919] font-medium text-8xl font-berlin ml-28">
                   Certificate
                 </h2>
-                <p className="text-6xl font-medium font-berlin text-gray-700 mr-2 ml-16">
+                <p className="text-6xl font-medium font-berlin text-gray-700 mr-2 ml-10">
                   of Internship
                 </p>
               </div>
