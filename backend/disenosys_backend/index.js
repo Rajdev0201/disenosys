@@ -404,15 +404,18 @@ app.post("/send-certificate", uploadcertificate.none(), (req, res) => {
   const pdfBuffer = Buffer.from(base64Data, "base64");
 
   const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "rajkumarprjpm@gmail.com",
-      pass: "eztbnuzrbwxocizk",
-    },
-  });
+      host: 'smtp.office365.com', 
+      port: 587,                 
+      secure: false,   
+      auth: {
+       user: process.env.USER,
+        pass: process.env.EMAIL,
+      }
+ });
+
 
   const mailOptions = {
-    from: "rajkumarprjpm@gmail.com",
+    from:process.env.USER,
     to: email,
     subject: `Certificate for ${course}`,
     text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,
@@ -450,16 +453,20 @@ app.post("/send-single-certificate", uploadsingle.none(),async (req, res) => {
     const pdfBuffer = Buffer.from(base64Data, "base64");
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'rajkumarprjpm@gmail.com', 
-        pass: 'eztbnuzrbwxocizk',
-      }
-    });
+
+      host: 'smtp.office365.com', 
+     port: 587,                 
+     secure: false,   
+     auth: {
+       user: process.env.USER,
+       pass: process.env.EMAIL,
+     }
+     });
+     
   
 
     const mailOptions = {
-      from: "rajkumarprjpm@gmail.com",
+      from: process.env.USER,
       to: email,
       subject: `Certificate for ${course}`,
       text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,

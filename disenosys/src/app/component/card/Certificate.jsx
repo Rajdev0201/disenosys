@@ -127,7 +127,7 @@ const CertificateComponent = () => {
       formData.append("name", name);
       formData.append("course", course);
   
-      await axios.post("https://disenosys-1.onrender.com/send-certificate", formData, {
+      await axios.post("http://localhost:8000/send-certificate", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
   
