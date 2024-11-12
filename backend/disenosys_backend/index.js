@@ -404,18 +404,19 @@ app.post("/send-certificate", uploadcertificate.none(), (req, res) => {
   const pdfBuffer = Buffer.from(base64Data, "base64");
 
   const transporter = nodemailer.createTransport({
-      host: 'smtp.office365.com', 
-      port: 587,                 
-      secure: false,   
-      auth: {
-       user: process.env.USER,
-        pass: process.env.EMAIL,
-      }
- });
+
+ host: 'smtp.office365.com', 
+port: 587,                 
+secure: false,   
+auth: {
+  user: 'classes@disenosys.com',
+  pass: 'xnccsypkfhfpymwg',
+}
+});
 
 
   const mailOptions = {
-    from:process.env.USER,
+    from: "classes@disenosys.com",
     to: email,
     subject: `Certificate for ${course}`,
     text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,
@@ -466,7 +467,7 @@ app.post("/send-single-certificate", uploadsingle.none(),async (req, res) => {
   
 
     const mailOptions = {
-      from: process.env.USER,
+      from: "rajkumarprjpm@gmail.com",
       to: email,
       subject: `Certificate for ${course}`,
       text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,
