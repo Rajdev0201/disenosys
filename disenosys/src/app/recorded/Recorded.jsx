@@ -2,8 +2,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { fetchCourse } from "../Redux/action/Course.js";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CiLock, CiUnlock } from "react-icons/ci";
+import { payment } from "../Redux/action/Payment.js";
 
 const Recorded = () => {
   const [openAccordionIndex, setOpenAccordionIndex] = useState(0);
@@ -20,9 +21,19 @@ const Recorded = () => {
   const courseRefs = useRef([]);
   const search = useSearchParams();
   const courseId = search.get("courseName");
-
+  console.log(courseId)
+  const pay = useSelector((state) => state.payment);
+  const id = search.get("id");
   const courseState = useSelector((state) => state?.course);
   const courses = courseState?.courses;
+  
+  const router = useRouter();
+  
+  useEffect(() => {
+  
+    dispatch(payment());
+  }, [dispatch]);
+
 
   useEffect(() => {
     localStorage.setItem("unlockedModules", JSON.stringify(unlockedModules));
@@ -214,6 +225,8 @@ const Recorded = () => {
   ];
 
   return (
+    <>
+     {pay?.data?.some((item) => item._id === id) ?(
     <div className="">
       {courses && (
         <div className="py-2 bg-[#182073] text-[#182073] rounded-md">
@@ -344,6 +357,27 @@ const Recorded = () => {
       </div>
     </div>
     </div>
+     )
+     :
+     (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+  <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm text-center">
+    <h2 className="text-2xl font-bold text-red-600 mb-4">Sorry!</h2>
+    <p className="text-gray-800 mb-4">
+      It seems like you haven't purchased this course yet. Access to the content is restricted to paid users only. Please do not attempt to bypass access — your learning journey with Disenosys awaits with a simple subscription!
+    </p>
+    <button
+      className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 font-semibold"
+      onClick={() => router.push('/course')}
+    >
+      Visit Course
+    </button>
+  </div>
+</div>
+
+     )
+    }
+    </>
   );
 };
 

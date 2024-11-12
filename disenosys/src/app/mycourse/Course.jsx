@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 
 const Course = () => {
   const pay = useSelector((state) => state.payment);
+  console.log(pay)
   const courses = useSelector((state) => state?.course?.courses);
   const user = useSelector((state) => state?.user);
   const dispatch = useDispatch();
@@ -27,9 +28,11 @@ const Course = () => {
     }
   }, [dispatch]);
 
-  const goTo = (name) => {
-    router.push(`/recorded?courseName=${name}`);
+  const goTo = (name, id) => {
+    const encodedName = encodeURIComponent(name); 
+    router.push(`/recorded?courseName=${encodedName}&id=${id}`);
   };
+  
 
   return (
     <div className="px-6 py-6">
@@ -80,7 +83,8 @@ const Course = () => {
                       </button>
                       <button
                         className="bg-white px-6 py-1 text-base font-poppins rounded-sm font-semibold text-[#182073]"
-                        onClick={() => goTo(course.name)}
+                        onClick={() => goTo(course.name,item?._id
+                        )}
                       >
                         Start
                       </button>
