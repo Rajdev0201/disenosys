@@ -459,15 +459,15 @@ app.post("/send-single-certificate", uploadsingle.none(),async (req, res) => {
      port: 587,                 
      secure: false,   
      auth: {
-       user: process.env.USER,
-       pass: process.env.EMAIL,
-     }
+      user: 'classes@disenosys.com',
+      pass: 'xnccsypkfhfpymwg',
+    }
      });
      
   
 
     const mailOptions = {
-      from: "rajkumarprjpm@gmail.com",
+      from: "classes@disenosys.com"  ,
       to: email,
       subject: `Certificate for ${course}`,
       text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,
