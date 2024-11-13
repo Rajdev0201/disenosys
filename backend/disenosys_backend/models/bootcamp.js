@@ -9,7 +9,6 @@ const bootcamp = new mongoose.Schema({
     lineItems: [{
       coursename: { type: String, required: true },
       price: { type: Number, required: true },
-      totalPrice:{type:Number,required:true}
     }],
     customerDetails: {
       name: {
@@ -20,7 +19,7 @@ const bootcamp = new mongoose.Schema({
           type: String,
           required: true,
       },
-      number:{
+      phone:{
         type: String,
           required: true,
       },

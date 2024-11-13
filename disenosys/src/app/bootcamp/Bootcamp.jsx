@@ -9,11 +9,35 @@ import Testimonials from "../home/Testimonials";
 import c from "../assests/profile/b.png";
 import { FaPencilAlt } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
+import { useDispatch } from "react-redux";
+import { CheckOut } from "../Redux/action/bootcamp.js";
 
 const Bootcamp = () => {
 
   const [bgColor, setBgColor] = useState('bg-gradient-to-r from-blue-900 via-blue-700 to-indigo-800');
   const [showPopup, setShowPopup] = useState(false);
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
+  const [cartItems, setCartItems] = useState([
+    { coursename: "CATIA Bootcamp", price: 199},
+  ]);
+
+  const [price, setPrice] = useState(199); 
+  const dispatch = useDispatch();
+
+  const handleInputChange = (e) => {
+    setUserData({ ...userData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = { userData, cartItems };
+    dispatch(CheckOut(data));
+  };
 
   const colorOptions = [
     'bg-gradient-to-r from-green-400 via-green-500 to-green-600',
@@ -265,7 +289,7 @@ const Bootcamp = () => {
                 document
                   .getElementById("form-section")
                   .scrollIntoView({ behavior: "smooth" })
-              }>Register Now for Rs.199</button>
+              }>Register Now for Rs.{price}</button>
    </div>
    <div className="mt-4 mb-2">
    <h2 className="font-bold font-poppins text-center text-[#182073] text-3xl lg:text-5xl mb-12">
@@ -280,54 +304,50 @@ const Bootcamp = () => {
                 document
                   .getElementById("form-section")
                   .scrollIntoView({ behavior: "smooth" })
-              }>Register Now for Rs.199</button>
+              }>Register Now for Rs.{price}</button>
    </div>
    </div>
  
 </section>
-
       <section id="form-section" className="bg-blue-50 py-16 px-6 md:px-12">
         <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
           <h2 className="text-3xl font-bold text-[#182073] text-center mb-6">
             Fill the Form to Join
           </h2>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-gray-600 text-sm mb-2">
-                Full Name
-              </label>
+              <label className="block text-gray-600 text-sm mb-2">Full Name</label>
               <input
                 type="text"
+                name="name"
+                value={userData.name}
+                onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-600"
+                required
               />
             </div>
             <div>
-              <label className="block text-gray-600 text-sm mb-2">
-                Email Address
-              </label>
+              <label className="block text-gray-600 text-sm mb-2">Email Address</label>
               <input
                 type="email"
+                name="email"
+                value={userData.email}
+                onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-600"
+                required
               />
             </div>
             <div>
-              <label className="block text-gray-600 text-sm mb-2">
-                Phone Number
-              </label>
+              <label className="block text-gray-600 text-sm mb-2">Phone Number</label>
               <input
                 type="tel"
+                name="phone"
+                value={userData.phone}
+                onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-600"
+                required
               />
             </div>
-            {/* <div>
-              <label className="block text-gray-600 text-sm mb-2">
-                Message
-              </label>
-              <textarea
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-600"
-                rows="4"
-              ></textarea>
-            </div> */}
             <button
               type="submit"
               className="w-full bg-[#182073] hover:bg-[#182073] text-white py-3 font-poppins rounded-lg font-semibold"
