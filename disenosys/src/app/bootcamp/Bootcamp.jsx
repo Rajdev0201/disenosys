@@ -23,7 +23,7 @@ const Bootcamp = () => {
   });
 
   const [cartItems, setCartItems] = useState([
-    { coursename: "CATIA Bootcamp", price: 199},
+    { coursename: "CATIA Bootcamp", price: 1},
   ]);
 
   const [price, setPrice] = useState(199); 
