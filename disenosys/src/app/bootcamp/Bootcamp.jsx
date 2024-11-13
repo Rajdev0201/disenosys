@@ -97,16 +97,16 @@ const Bootcamp = () => {
               Join Our <span className="text-yellow-400">Intensive </span>
               Bootcamp
             </h2> */}
-            <div className="flex justify-center items-center bg-blue-500 rounded-md p-2 gap-4 w-[480px] mt-3">
-              <div className="bg-blue-900 p-2 flex items-center gap-2 rounded">
+            <div className="flex justify-center items-center bg-blue-500 rounded-md p-2 gap-4 sm:w-[120px] lg:w-[480px] mt-3">
+              <div className="bg-blue-900 sm:px-2 py-2 lg:px-2 flex items-center gap-2 rounded">
                 <CiCalendarDate size={30} className="" />
-                <h2 className="text-white text-2xl sm:text-3xl md:text-4xl lg:text-xl xl:text-xl font-bold">
+                <h2 className="text-white text-md md:text-xl lg:text-xl xl:text-xl font-bold">
                   November 17,2024
                 </h2>
               </div>
-              <div className="bg-blue-900 p-2 flex items-center gap-2 rounded">
-                <BsClockHistory size={30} />
-                <h2 className="text-white text-white text-2xl sm:text-3xl md:text-4xl lg:text-xl xl:text-xl font-bold">
+              <div className="bg-blue-900 sm:px-2 lg:px-2 py-2 flex items-center gap-2 rounded">
+                <BsClockHistory size={30} className=""/>
+                <h2 className="text-white text-white text-md  md:text-xl lg:text-xl xl:text-xl font-bold">
                   11 AM Onwards
                 </h2>
               </div>
@@ -155,7 +155,7 @@ const Bootcamp = () => {
       </div>
 
       <section className="py-6 px-6 md:px-12 text-center bg-blue-50 rounded shadow-lg">
-        <h2 className="font-bold font-poppins text-center text-[#182073] text-3xl lg:text-5xl mb-12">
+        <h2 className="font-bold font-poppins text-center text-[#182073] text-3xl lg:text-5xl mb-2 lg:mb-12">
           Know your mentors
         </h2>
 
@@ -171,13 +171,13 @@ const Bootcamp = () => {
             <h3 className="text-4xl font-bold text-[#182073] font-poppins">
               John Doe
             </h3>
-            <p className="text-gray-600 mt-3 text-xl font-poppins text-medium">
+            <p className="text-gray-600 mt-3 text-md text-start lg:text-xl font-poppins">
               John is an experienced industry leader with over 15 years of
               expertise in Automotive design and mentoring. Passionate about
               guiding aspiring developers, he combines real-world insights with
               hands-on learning to help students succeed in their careers.
             </p>
-            <p className="mt-3 text-gray-600 mt-3 text-xl font-poppins text-medium">
+            <p className="mt-3 text-gray-600 mt-3 text-md text-start font-poppins lg:text-xl">
               <b>Specialties:</b> Automotive design, project management, and
               career growth.
             </p>
@@ -249,13 +249,13 @@ const Bootcamp = () => {
       </div>
 
       <section className="bg-blue-50 py-16 px-6 md:px-28">
-  <div className="flex flex-col md:flex-row items-start space-y-6 md:space-y-0 md:space-x-12 h-[350px]">
-    
+  <div className="flex flex-col md:flex-row items-start space-y-6 md:space-y-0 md:space-x-12">
+
     <div className="flex-1 text-center md:text-left h-full">
-      <h2 className="font-bold text-[#182073] text-3xl lg:text-5xl mb-4">
+      <h2 className="font-bold text-[#182073] text-3xl md:text-4xl lg:text-5xl mb-4">
         What you will learn
       </h2>
-      <ul className="text-gray-600 list-disc h-full mt-3 space-y-3 font-semibold text-xl px-5 py-2 bg-white shadow-lg rounded border-l-4 border-l-[#182073] overflow-y-auto max-h-full">
+      <ul className="text-gray-600 list-disc mt-3 space-y-3 font-semibold text-lg md:text-xl px-5 py-2 bg-white shadow-lg rounded border-l-4 border-l-[#182073] overflow-y-auto h-[300px] sm:h-[400px] md:h-[400px] lg:h-[400px]">
         <div className="p-4 space-y-4">
           <li>Get certified by be10x to highlight your AI tool capabilities in your resume</li>
           <li>Learn from IIT Kharagpur alumni</li>
@@ -267,10 +267,10 @@ const Bootcamp = () => {
     </div>
 
     <div className="flex-1 text-center md:text-left h-full">
-      <h2 className="font-bold text-[#182073] text-3xl lg:text-5xl mb-4">
+      <h2 className="font-bold text-[#182073] text-3xl md:text-4xl lg:text-5xl mb-4">
         Who should Attend
       </h2>
-      <ul className="text-gray-600 list-disc h-full mt-3 space-y-3 font-semibold text-xl px-5 py-2 bg-white shadow-lg rounded border-l-4 border-l-[#182073] overflow-y-auto max-h-full">
+      <ul className="text-gray-600 list-disc mt-3 space-y-3 font-semibold text-lg md:text-xl px-5 py-2 bg-white shadow-lg rounded border-l-4 border-l-[#182073] overflow-y-auto h-[300px] sm:h-[400px] md:h-[400px] lg:h-[400px]">
         <div className="p-4 space-y-4">
           <li>Get certified by be10x to highlight your AI tool capabilities in your resume</li>
           <li>Learn from IIT Kharagpur alumni</li>
@@ -282,7 +282,9 @@ const Bootcamp = () => {
   </div>
 </section>
 
-<section className="bg-blue-50 py-16 px-6 md:px-28 flex justify-center">
+
+
+          <section className="bg-blue-50 py-16 px-6 md:px-28 flex justify-center">
   <div className="flex flex-col justify-center">
    <div className="flex justify-center">
     <button className="bg-[#182073] text-white rounded shadow-lg p-3 text-lg font-bold"  onClick={() =>
@@ -292,7 +294,7 @@ const Bootcamp = () => {
               }>Register Now for Rs.{price}</button>
    </div>
    <div className="mt-4 mb-2">
-   <h2 className="font-bold font-poppins text-center text-[#182073] text-3xl lg:text-5xl mb-12">
+   <h2 className="font-bold font-poppins text-center text-[#182073] text-3xl lg:text-5xl mb-4 lg:mb-12">
    Get a certification of the workshop
    </h2>
    </div>
@@ -309,7 +311,7 @@ const Bootcamp = () => {
    </div>
  
 </section>
-      <section id="form-section" className="bg-blue-50 py-16 px-6 md:px-12">
+      <section id="form-section" className="bg-blue-50 py-4 lg:py-16 px-6 md:px-12">
         <div className="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
           <h2 className="text-3xl font-bold text-[#182073] text-center mb-6">
             Fill the Form to Join

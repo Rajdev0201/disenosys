@@ -215,7 +215,7 @@ const length = filteredCartItems.length;
         </div>
 
         {mobileMenuOpen && (
-          <div className="lg:hidden absolute top-16 left-0 w-full bg-violet-800  shadow-lg z-50">
+          <div className="absolute top-16 left-0 w-full bg-violet-800 shadow-lg z-50 xl:hidden">
             <div className="flex flex-col items-center py-4 space-y-4">
               <Link
                 href="/"

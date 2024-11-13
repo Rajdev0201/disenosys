@@ -28,7 +28,7 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
         await loadRazorpayScript(); 
 
         const options = {
-            key: 'rzp_test_pyzRkKRrWBkgnC',
+            key: 'rzp_live_OUZdMyMFCAbZp2',
             amount: amount,
             currency: currency,
             name: 'Disenosys',
