@@ -361,7 +361,7 @@ const Recorded = () => {
   <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm text-center">
     <h2 className="text-2xl font-bold text-red-600 mb-4">Sorry!</h2>
     <p className="text-gray-800 mb-4">
-      It seems like you haven't purchased this course yet. Access to the content is restricted to paid users only. Please do not attempt to bypass access — your learning journey with Disenosys awaits with a simple subscription!
+      It seems like you haven&apos;t purchased this course yet. Access to the content is restricted to paid users only. Please do not attempt to bypass access — your learning journey with Disenosys awaits with a simple subscription!
     </p>
     <button
       className="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 font-semibold"
