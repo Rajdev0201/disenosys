@@ -168,9 +168,9 @@ async function createOutlookEvent(bookingDate, bookingTime, studentName) {
             }
         );
         
-        // console.log('Outlook event created:', response.data);
-        // const eventUrl = response.data.webLink;
-        // console.log("Event Link: ", eventUrl);
+        console.log('Outlook event created:', response.data);
+        const eventUrl = response.data.webLink;
+        console.log("Event Link: ", eventUrl);
     } catch (error) {
         console.error('Error creating Outlook event:', error.response ? error.response.data : error.message);
     }
