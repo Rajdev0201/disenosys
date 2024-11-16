@@ -62,9 +62,9 @@ exports.createCheckoutSession = async (req, res) => {
 
 const msalConfig = {
     auth: {
-        clientId: '5e27ffde-97bd-482c-ba58-532146e4bb83',
-        authority: 'https://login.microsoftonline.com/63c1c6c5-4075-4c11-8d8e-fd9ee5a8a2d3',
-        clientSecret: 'fYI8Q~byGdDwwXLK3AabWY.nyk4j8PAt5NSO-ctM'
+        clientId: process.env.AZURE_CLIENT,
+        authority: `https://login.microsoftonline.com/${process.env.AZURE_TENET}`,
+        clientSecret: process.env.AZURE_SECRET
     }
 };
 
@@ -95,7 +95,7 @@ exports.handleRazorpayCallback = async (req, res) => {
         const { customerDetails, lineItems } = orderData;
 
         await sendPayment(customerDetails.email, customerDetails.name, lineItems, customerDetails.bookedtime, customerDetails.bookedSlot,customerDetails.bookeddate);
-        await sendWhatsAppMessage(customerDetails.bookedtime, customerDetails.bookedSlot,customerDetails.phone);
+        // await sendWhatsAppMessage(customerDetails.bookedtime, customerDetails.bookedSlot,customerDetails.phone);
         await createOutlookEvent(customerDetails.bookeddate, customerDetails.bookedtime, customerDetails.name);
         orderData.isPaid = true;
         await orderData.save();  
@@ -179,29 +179,29 @@ async function createOutlookEvent(bookingDate, bookingTime, studentName) {
 
 
 
-const accountSid = 'AC5979968987c526e14698da96212169a4';
-const authToken = '1cc22dea47b9a44254d8e2558b0aba99';
-const client = new twilio(accountSid, authToken);
+// const accountSid = 'AC5979968987c526e14698da96212169a4';
+// const authToken = '1cc22dea47b9a44254d8e2558b0aba99';
+// const client = new twilio(accountSid, authToken);
 
     
 
 
 
-const sendWhatsAppMessage = async (bookedTime, bookedSlot,phone) => {
-    const message = `You have a new booking for 'Job Consultation For Freshers In Auto Design'.\nBooking Time: ${bookedTime} (${bookedSlot})`;
+// const sendWhatsAppMessage = async (bookedTime, bookedSlot,phone) => {
+//     const message = `You have a new booking for 'Job Consultation For Freshers In Auto Design'.\nBooking Time: ${bookedTime} (${bookedSlot})`;
 
-    try {
-        const response = await client.messages.create({
-            body: message,
-            from: '+14242767083', 
-            to:'+916382209795'
-        });
+//     try {
+//         const response = await client.messages.create({
+//             body: message,
+//             from: '+14242767083', 
+//             to:'+916382209795'
+//         });
 
-        console.log('WhatsApp message sent:', response.sid);
-    } catch (error) {
-        console.error('Error sending WhatsApp message:', error);
-    }
-};
+//         console.log('WhatsApp message sent:', response.sid);
+//     } catch (error) {
+//         console.error('Error sending WhatsApp message:', error);
+//     }
+// };
 
 const sendPayment = async (studentEmail, studentName, lineItems, bookedTime, bookedSlot,bookingdate) => {
     const transporter = nodemailer.createTransport({
