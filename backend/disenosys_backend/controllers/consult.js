@@ -5,8 +5,8 @@ const nodemailer = require('nodemailer');
 const twilio = require('twilio');
 const msal = require('@azure/msal-node');
 const axios = require('axios');
-const { Client } = require('@microsoft/microsoft-graph-client');
-const { ClientSecretCredential } = require('@azure/identity');
+// const { Client } = require('@microsoft/microsoft-graph-client');
+// const { ClientSecretCredential } = require('@azure/identity');
 
 exports.createCheckoutSession = async (req, res) => {
     const { userData, cartItems } = req.body;
@@ -179,29 +179,6 @@ async function createOutlookEvent(bookingDate, bookingTime, studentName) {
 
 
 
-// const accountSid = 'AC5979968987c526e14698da96212169a4';
-// const authToken = '1cc22dea47b9a44254d8e2558b0aba99';
-// const client = new twilio(accountSid, authToken);
-
-    
-
-
-
-// const sendWhatsAppMessage = async (bookedTime, bookedSlot,phone) => {
-//     const message = `You have a new booking for 'Job Consultation For Freshers In Auto Design'.\nBooking Time: ${bookedTime} (${bookedSlot})`;
-
-//     try {
-//         const response = await client.messages.create({
-//             body: message,
-//             from: '+14242767083', 
-//             to:'+916382209795'
-//         });
-
-//         console.log('WhatsApp message sent:', response.sid);
-//     } catch (error) {
-//         console.error('Error sending WhatsApp message:', error);
-//     }
-// };
 
 const sendPayment = async (studentEmail, studentName, lineItems, bookedTime, bookedSlot,bookingdate) => {
     const transporter = nodemailer.createTransport({
