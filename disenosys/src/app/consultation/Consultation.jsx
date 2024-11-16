@@ -43,7 +43,7 @@ const Consultation = () => {
     const apiKey = "9RXLN3DZKG5A";
     axios
       .get(
-        `http://api.timezonedb.com/v2.1/list-time-zone?key=${apiKey}&format=json`
+        `https://api.timezonedb.com/v2.1/list-time-zone?key=${apiKey}&format=json`
       )
       .then((response) => {
         const formattedZones = response.data.zones.map((zone) => {
@@ -155,7 +155,7 @@ const Consultation = () => {
 
   return (
     <div className="bg-black h-full">
-      <div className="grid grid-cols-1 lg:grid-cols-[700px_600px] mx-auto container py-2 lg:py-24 gap-4 mt-24">
+      <div className="grid grid-cols-1 lg:grid-cols-[700px_600px] px-0 lg:px-24 py-2 lg:py-24 gap-4 mt-24">
         <div className="bg-white rounded-lg shadow-lg h-auto">
           <div className="bg-gray-200 rounded-lg shadow-lg flex justify-between items-center p-12">
             <h2 className="text-md lg:text-3xl w-44 lg:w-96 font-bold font-poppins lg:ml-10 text-[#182073]">
