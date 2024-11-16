@@ -62,9 +62,9 @@ exports.createCheckoutSession = async (req, res) => {
 
 const msalConfig = {
     auth: {
-        clientId: process.env.AZURE_CLIENT,
-        authority: `https://login.microsoftonline.com/${process.env.AZURE_TENET}`,
-        clientSecret: process.env.AZURE_SECRET
+        clientId: '5e27ffde-97bd-482c-ba58-532146e4bb83',
+        authority:'https://login.microsoftonline.com/63c1c6c5-4075-4c11-8d8e-fd9ee5a8a2d3',
+        clientSecret:'fYI8Q~byGdDwwXLK3AabWY.nyk4j8PAt5NSO-ctM'
     }
 };
 
