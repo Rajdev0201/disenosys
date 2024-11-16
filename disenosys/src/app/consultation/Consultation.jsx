@@ -186,13 +186,13 @@ const Consultation = () => {
             <p>
               Dive headfirst into the dynamic world of Product Design with our
               exclusive session tailored specifically for freshers! Whether
-              you're overwhelmed by the vast sea of information online or
-              craving clear, practical insights, you've come to the right place.
+              you&apos;re overwhelmed by the vast sea of information online or
+              craving clear, practical insights, you&apos;ve come to the right place.
               My name is Praveen Kumar, and with over a decade of experience in
-              the automotive industry, I'm here to shed light on what it truly
+              the automotive industry, I&apos;m here to shed light on what it truly
               means to be a Product Designer.
             </p>
-            <h2>Here's what you can expect from our session:</h2>
+            <h2>Here&apos;s what you can expect from our session:</h2>
             <h4>
               <b>Real-world Insights:</b> Understand the core responsibilities
               and day-to-day activities of a Product Designer.
