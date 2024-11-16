@@ -86,12 +86,14 @@ const adminRoute = require("./routes/admin.js");
 const code  = require("./routes/code.js");
 const student = require("./routes/student.js");
 const Student = require("./models/certificate.js")
+const consult = require("./routes/consult.js")
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
 app.use("/api/v1",addCart);
 app.use("/course",payment);
 app.use("/bootcamp",bootcamp);
+app.use("/consult",consult);
 app.use("/update",profile);
 app.use("/update",port);
 app.use("/resume",resumeUpdate);
