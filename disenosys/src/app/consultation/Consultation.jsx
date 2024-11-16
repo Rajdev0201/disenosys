@@ -69,7 +69,7 @@ const Consultation = () => {
     generateTimeSlots();
   }, [selectedTimezone, selectedDate]);
 
-  // const generateTimeSlots = () => {
+
   //   const slots = [];
   //   const startTime = new Date();
 
@@ -233,28 +233,46 @@ const Consultation = () => {
           <h4 className="text-lg font-bold font-poppins mb-4 mt-4 text-[#182073]">
             Select time of day
           </h4>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 overflow-y-scroll h-40 border-2 border-gray-200 p-2 rounded-lg">
-            {timeSlots?.map((time, index) => {
-              const isBooked = bookedSlots?.some((slot) => {
-                const [startTime] = slot.time.split(" - ");
-                return slot.date === selectedDate && startTime === time;
-              });
-              return (
-                <button
-                  key={index}
-                  onClick={() => !isBooked && setSelectedTime(time)}
-                  className={`p-2 text-center border rounded-lg ${
-                    selectedTime === time
-                      ? "bg-[#182073] text-white"
-                      : "border border-[#182073] text-gray-700"
-                  } ${isBooked ? "bg-gray-300 cursor-not-allowed" : ""}`}
-                  disabled={isBooked}
-                >
-                  {isBooked ? <h4 className="flex items-center justify-center gap-2 text-[#182073] font-bold font-poppins">Booked <AiOutlineFileDone className="text-[#182073] w-6 h-6"/></h4> : time}
-                </button>
-              );
-            })}
-          </div>
+           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 overflow-y-scroll h-40 border-2 border-gray-200 p-2 rounded-lg">
+  {timeSlots?.map((time, index) => {
+    const slotDateTime = new Date(`${selectedDate} ${time}`);
+    const currentTime = new Date().toLocaleString("en-US", { timeZone: selectedTimezone });
+
+    const isBooked = bookedSlots?.some((slot) => {
+      const [startTime] = slot.time.split(" - ");
+      return slot.date === selectedDate && startTime === time;
+    });
+
+    const isPastTime = slotDateTime < new Date(currentTime);
+
+    return (
+      <button
+      key={index}
+      onClick={() => !isBooked && !isPastTime && setSelectedTime(time)}
+      className={`p-2 text-center border rounded-lg ${
+        selectedTime === time
+          ? "bg-[#182073] text-white"
+          : isPastTime
+          ? "bg-red-300 shadow-md text-gray-50 cursor-not-allowed"
+          : "border border-[#182073] text-gray-700"
+      } ${isBooked ? "bg-gray-400 cursor-not-allowed" : ""}`}
+      disabled={isPastTime || isBooked}
+    >
+      {isPastTime && !isBooked ? (
+        <span className="line-through">{time}</span>
+      ) : isBooked ? (
+        <h4 className="flex items-center justify-center gap-2 text-[#182073] font-bold font-poppins">
+          Booked <AiOutlineFileDone className="text-[#182073] w-6 h-6" />
+        </h4>
+      ) : (
+        time
+      )}
+    </button>
+    
+    );
+  })}
+</div>
+
           <div className="mt-6">
             <label className="block text-sm font-bold mb-2 text-[#182073]">
               Timezone
