@@ -128,8 +128,9 @@ async function createOutlookEvent(bookingDate, bookingTime, studentName) {
         const startTime24 = formatTimeTo24HR(startTime);
         const endTime24 = formatTimeTo24HR(endTime);
 
-        const eventStart = new Date(`${bookingDate}T${startTime24}:00`);
-        const eventEnd = new Date(`${bookingDate}T${endTime24}:00`);
+        const eventStart = new Date(`${bookingDate}T${startTime24}:00Z`); 
+        const eventEnd = new Date(`${bookingDate}T${endTime24}:00Z`); 
+ 
 
         if (isNaN(eventStart.getTime()) || isNaN(eventEnd.getTime())) {
             throw new Error("Invalid date/time value");
