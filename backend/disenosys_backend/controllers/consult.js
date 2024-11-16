@@ -5,6 +5,8 @@ const nodemailer = require('nodemailer');
 const twilio = require('twilio');
 const msal = require('@azure/msal-node');
 const axios = require('axios');
+const moment = require('moment-timezone');
+
 // const { Client } = require('@microsoft/microsoft-graph-client');
 // const { ClientSecretCredential } = require('@azure/identity');
 
@@ -128,12 +130,15 @@ async function createOutlookEvent(bookingDate, bookingTime, studentName) {
         const startTime24 = formatTimeTo24HR(startTime);
         const endTime24 = formatTimeTo24HR(endTime);
 
-        const eventStart = new Date(`${bookingDate}T${startTime24}:00Z`); 
-        const eventEnd = new Date(`${bookingDate}T${endTime24}:00Z`); 
- 
+        // const eventStart = new Date(`${bookingDate}T${startTime24}:00Z`); 
+        // const eventEnd = new Date(`${bookingDate}T${endTime24}:00Z`); 
+        const startTimeUTC = moment.tz(`${bookingDate} ${startTime24}`, 'Asia/Kolkata').utc().format();
+        const endTimeUTC = moment.tz(`${bookingDate} ${endTime24}`, 'Asia/Kolkata').utc().format();
+        console.log(startTimeUTC);
+        console.log(endTimeUTC)
 
-        if (isNaN(eventStart.getTime()) || isNaN(eventEnd.getTime())) {
-            throw new Error("Invalid date/time value");
+        if (!startTimeUTC || !endTimeUTC) {
+            throw new Error("Invalid time format.");
         }
 
         const eventPayload = {
@@ -143,12 +148,12 @@ async function createOutlookEvent(bookingDate, bookingTime, studentName) {
                 content: `Booking confirmed for ${studentName}. Time: ${bookingTime}`,
             },
             start: {
-                dateTime: eventStart.toISOString(),
-                timeZone: "Asia/Kolkata",
+                dateTime: startTimeUTC,
+                timeZone: "UTC",  // Specify UTC here as it's the time being sent
             },
             end: {
-                dateTime: eventEnd.toISOString(),
-                timeZone: "Asia/Kolkata",
+                dateTime: endTimeUTC,
+                timeZone: "UTC",  // Specify UTC here as well
             },
             location: {
                 displayName: "Disenosys Online Classes",
