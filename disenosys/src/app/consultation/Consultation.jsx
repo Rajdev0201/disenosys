@@ -108,8 +108,8 @@ const Consultation = () => {
       const slotDate = selectedDate;
       const slotTime = timeInSelectedTimezone;
 
-      const isBooked = bookedSlots.some(
-        (slot) => slot.date === slotDate && slot.time === slotTime
+      const isBooked = bookedSlots?.some(
+        (slot) => slot?.date === slotDate && slot?.time === slotTime
       );
 
       if (!isBooked) {
@@ -239,8 +239,8 @@ const Consultation = () => {
     const currentTime = new Date().toLocaleString("en-US", { timeZone: selectedTimezone });
 
     const isBooked = bookedSlots?.some((slot) => {
-      const [startTime] = slot.time.split(" - ");
-      return slot.date === selectedDate && startTime === time;
+      const [startTime] = slot?.time?.split(" - ");
+      return slot?.date === selectedDate && startTime === time;
     });
 
     const isPastTime = slotDateTime < new Date(currentTime);
