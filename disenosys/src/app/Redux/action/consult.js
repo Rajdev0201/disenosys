@@ -70,7 +70,16 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
     } catch (err) {
         console.error("Error creating order:", err);
         if (err.response && err.response.status === 400) {
-            toast.error(err.response.data.message); 
+            // toast.error(err.response.data.message); 
+            toast.error(err.response.data.message, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
         } else {
             toast.error("Error while creating order. Please try again.");
         }
