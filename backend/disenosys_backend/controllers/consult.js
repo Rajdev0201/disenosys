@@ -23,22 +23,23 @@ const formatTimeTo24HR = (time) => {
 
 async function checkCalendarConflict(date, time) {
     const accessToken = await getAccessToken();
-    const userId = "classes@disenosys.com"; // Replace with your calendar's email
+    const userId = "classes@disenosys.com";
     const [startTime, endTime] = time.split(" - ");
 
-    // Convert times to 24-hour format
+
     const startTime24 = formatTimeTo24HR(startTime);
     const endTime24 = formatTimeTo24HR(endTime);
 
-    // Use moment.tz to convert the time to UTC
+    
     const startTimeMoment = moment.tz(`${date} ${startTime24}`, "YYYY-MM-DD HH:mm", "Asia/Kolkata");
     const endTimeMoment = moment.tz(`${date} ${endTime24}`, "YYYY-MM-DD HH:mm", "Asia/Kolkata");
+    endTimeMoment.subtract(1, 'minute');
 
     const startTimeUTC = startTimeMoment.utc().format();
     const endTimeUTC = endTimeMoment.utc().format();
 
-    console.log("Start Time UTC:", startTimeUTC); // Debug
-    console.log("End Time UTC:", endTimeUTC); // Debug
+    console.log("Start Time UTC:", startTimeUTC); 
+    console.log("End Time UTC:", endTimeUTC); 
 
     const query = `startDateTime=${startTimeUTC}&endDateTime=${endTimeUTC}`;
 
@@ -54,7 +55,6 @@ async function checkCalendarConflict(date, time) {
 
         const events = response.data.value;
         if (events && events.length > 0) {
-            // Save the blocked events to the database (if required)
             for (let event of events) {
                 const blockedEvent = new BlockedEvent({
                     eventId: event.id,
@@ -65,9 +65,9 @@ async function checkCalendarConflict(date, time) {
                 });
                 await blockedEvent.save();
             }
-            return true; // Conflict detected
+            return true; 
         }
-        return false; // No conflict
+        return false; 
         
     } catch (error) {
         console.error("Error checking calendar conflict:", error.response ? error.response.data : error.message);

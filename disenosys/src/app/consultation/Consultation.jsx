@@ -313,7 +313,7 @@ const Consultation = () => {
                 // Check if the slot falls within the blocked range
                 return (
                   slotDateTimeLocal >= blockStartTimeLocal &&
-                  slotDateTimeLocal <= blockEndTimeLocal
+                  slotDateTimeLocal < blockEndTimeLocal
                 );
               });
 
