@@ -1,64 +1,64 @@
-"use client";
-import React, { useEffect, useRef, useState } from 'react';
+
+// import React, { useEffect, useRef, useState } from 'react';
 import Auth from "./Auth.jsx";
-import { TbMoodCry } from "react-icons/tb";
-import { LiaHourglassStartSolid } from "react-icons/lia";
+// import { TbMoodCry } from "react-icons/tb";
+// import { LiaHourglassStartSolid } from "react-icons/lia";
 
 export default function AdminPage() {
  
-  const [isExamOpen, setIsExamOpen] = useState(false);
-  const [isBeforeExam, setIsBeforeExam] = useState(true);
-  const [currentTime, setCurrentTime] = useState({
-    formattedHour: '',
-    currentMinute: '',
-    amPm: ''
-  });
+  // const [isExamOpen, setIsExamOpen] = useState(false);
+  // const [isBeforeExam, setIsBeforeExam] = useState(true);
+  // const [currentTime, setCurrentTime] = useState({
+  //   formattedHour: '',
+  //   currentMinute: '',
+  //   amPm: ''
+  // });
 
-  const updateTime = () => {
-    const currentDate = new Date();
-    const currentHour = currentDate.getHours();
-    const currentMinute = currentDate.getMinutes();
+  // const updateTime = () => {
+  //   const currentDate = new Date();
+  //   const currentHour = currentDate.getHours();
+  //   const currentMinute = currentDate.getMinutes();
 
-    const amPmValue = currentHour < 12 ? 'AM' : 'PM';
-    const formattedHourValue = currentHour % 12 === 0 ? 12 : currentHour % 12;
+  //   const amPmValue = currentHour < 12 ? 'AM' : 'PM';
+  //   const formattedHourValue = currentHour % 12 === 0 ? 12 : currentHour % 12;
 
-    // Update state with the current time
-    setCurrentTime({
-      formattedHour: formattedHourValue,
-      currentMinute: String(currentMinute).padStart(2, '0'),
-      amPm: amPmValue
-    });
-  };
+  //   // Update state with the current time
+  //   setCurrentTime({
+  //     formattedHour: formattedHourValue,
+  //     currentMinute: String(currentMinute).padStart(2, '0'),
+  //     amPm: amPmValue
+  //   });
+  // };
 
-  const checkTime = () => {
-    const currentDate = new Date();
-    const currentHour = currentDate.getHours();
-    const currentMinute = currentDate.getMinutes();
+  // const checkTime = () => {
+  //   const currentDate = new Date();
+  //   const currentHour = currentDate.getHours();
+  //   const currentMinute = currentDate.getMinutes();
 
-    const examStartTime = currentHour === 11 && currentMinute >= 0 && currentMinute <= 30; 
-    const beforeExamTime = currentHour >= 0 && currentHour < 11; 
+  //   const examStartTime = currentHour === 11 && currentMinute >= 0 && currentMinute <= 30; 
+  //   const beforeExamTime = currentHour >= 0 && currentHour < 11; 
 
-    setIsExamOpen(examStartTime);
-    setIsBeforeExam(beforeExamTime);
-  };
+  //   setIsExamOpen(examStartTime);
+  //   setIsBeforeExam(beforeExamTime);
+  // };
 
-  useEffect(() => {
-    updateTime();
-    const timer = setInterval(() => {
-      updateTime();
-      checkTime();
-    }, 1000);
+  // useEffect(() => {
+  //   updateTime();
+  //   const timer = setInterval(() => {
+  //     updateTime();
+  //     checkTime();
+  //   }, 1000);
 
-    return () => clearInterval(timer);
-  }, []);
+  //   return () => clearInterval(timer);
+  // }, []);
 
 
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-gray-800 to-gray-900">
-      {isExamOpen ? (
+      {/* {isExamOpen ? ( */}
         <Auth />
-      ) : isBeforeExam ? (
+      {/* ) : isBeforeExam ? (
         // Box to display if the user comes before 11:00 AM
         <div className="flex flex-col items-center justify-center w-full h-full p-5">
           <div className='flex flex-row space-x-8'>
@@ -133,7 +133,7 @@ export default function AdminPage() {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
