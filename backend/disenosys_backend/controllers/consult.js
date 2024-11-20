@@ -20,26 +20,73 @@ const formatTimeTo24HR = (time) => {
 };
 
 
+// async function checkCalendarConflict(date, time) {
+//     const accessToken = await getAccessToken();
+//     const userId = "classes@disenosys.com";
+//     const [startTime, endTime] = time.split(" - ");
+
+
+//     const startTime24 = formatTimeTo24HR(startTime);
+//     const endTime24 = formatTimeTo24HR(endTime);
+
+//        const startTimeMoment = moment.tz(`${date} ${startTime24}`, "YYYY-MM-DD HH:mm", "Asia/Kolkata");
+//        const endTimeMoment = moment.tz(`${date} ${endTime24}`, "YYYY-MM-DD HH:mm", "Asia/Kolkata");
+   
+   
+//        const startTimeUTC = startTimeMoment.utc().format();
+//        const endTimeUTC = endTimeMoment.utc().format();
+   
+//        console.log("Start Time UTC:", startTimeUTC); 
+//        console.log("End Time UTC:", endTimeUTC); 
+
+//     const query = `startDateTime=${startTimeUTC}&endDateTime=${endTimeUTC}`;
+
+//     try {
+//         const response = await axios.get(
+//             `https://graph.microsoft.com/v1.0/users/${userId}/calendarView?${query}`,
+//             {
+//                 headers: {
+//                     Authorization: `Bearer ${accessToken}`,
+//                 },
+//             }
+//         );
+
+//         const events = response.data.value;
+//         if (events && events.length > 0) {
+//             for (let event of events) {
+//                 const blockedEvent = new BlockedEvent({
+//                     eventId: event.id,
+//                     subject: event.subject,
+//                     startTimeUTC: event.start.dateTime,
+//                     endTimeUTC: event.end.dateTime,
+//                     userId: userId,
+//                 });
+//                 await blockedEvent.save();
+//             }
+//             return true; 
+//         }
+//         return false; 
+        
+//     } catch (error) {
+//         console.error("Error checking calendar conflict:", error.response ? error.response.data : error.message);
+//         throw new Error("Unable to verify calendar conflicts.");
+//     }
+// }
+
 
 async function checkCalendarConflict(date, time) {
     const accessToken = await getAccessToken();
     const userId = "classes@disenosys.com";
     const [startTime, endTime] = time.split(" - ");
 
-
     const startTime24 = formatTimeTo24HR(startTime);
     const endTime24 = formatTimeTo24HR(endTime);
 
-    
     const startTimeMoment = moment.tz(`${date} ${startTime24}`, "YYYY-MM-DD HH:mm", "Asia/Kolkata");
     const endTimeMoment = moment.tz(`${date} ${endTime24}`, "YYYY-MM-DD HH:mm", "Asia/Kolkata");
-    endTimeMoment.subtract(1, 'minute');
 
     const startTimeUTC = startTimeMoment.utc().format();
     const endTimeUTC = endTimeMoment.utc().format();
-
-    console.log("Start Time UTC:", startTimeUTC); 
-    console.log("End Time UTC:", endTimeUTC); 
 
     const query = `startDateTime=${startTimeUTC}&endDateTime=${endTimeUTC}`;
 
@@ -56,23 +103,35 @@ async function checkCalendarConflict(date, time) {
         const events = response.data.value;
         if (events && events.length > 0) {
             for (let event of events) {
-                const blockedEvent = new BlockedEvent({
-                    eventId: event.id,
-                    subject: event.subject,
-                    startTimeUTC: event.start.dateTime,
-                    endTimeUTC: event.end.dateTime,
-                    userId: userId,
-                });
-                await blockedEvent.save();
+                const eventStart = moment.utc(event.start.dateTime).tz("Asia/Kolkata");
+                const eventEnd = moment.utc(event.end.dateTime).tz("Asia/Kolkata");
+
+                // Check for any overlap
+                if (isTimeSlotOverlapping(startTimeMoment, endTimeMoment, eventStart, eventEnd)) {
+                    // Save the blocked event to the database
+                    const blockedEvent = new BlockedEvent({
+                        eventId: event.id,
+                        subject: event.subject,
+                        startTimeUTC: event.start.dateTime,
+                        endTimeUTC: event.end.dateTime,
+                        userId: userId,
+                    });
+                    await blockedEvent.save();
+
+                    return true; // Conflict found
+                }
             }
-            return true; 
         }
-        return false; 
-        
+        return false; // No conflict
     } catch (error) {
         console.error("Error checking calendar conflict:", error.response ? error.response.data : error.message);
         throw new Error("Unable to verify calendar conflicts.");
     }
+}
+
+// Function to check for overlap between two time slots
+function isTimeSlotOverlapping(requestStart, requestEnd, existingStart, existingEnd) {
+    return requestStart < existingEnd && requestEnd > existingStart;
 }
 
 

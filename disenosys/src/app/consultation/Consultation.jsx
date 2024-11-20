@@ -139,7 +139,7 @@ const Consultation = () => {
         );
 
         const slotDateTime = new Date(`${slotDate} ${slotTime}`);
-        return slotDateTime >= blockStartLocal && slotDateTime <= blockEndLocal;
+        return slotDateTime >= blockStartLocal && slotDateTime < blockEndLocal;
       });
 
       if (!isBooked && !isBlocked) {
@@ -247,17 +247,9 @@ const Consultation = () => {
         </div>
 
         <div className="bg-white p-8 rounded-lg shadow-lg h-[570px]">
-          <div className="flex justify-between items-center">
-          <h4 className="text-lg font-bold font-poppins mb-4 text-[#182073]">
+        <h4 className="text-lg font-bold font-poppins mb-4 text-[#182073]">
             When should we meet?
           </h4>
-          <div className="flex flex-col">
-          <div className="flex items-center text-[#182073] text-md font-bold gap-1"><div className="border w-4 h-4 bg-red-300"></div>Time finished</div>
-          <div className="flex items-center text-[#182073] text-md font-bold gap-1"><div className="border w-4 h-4 bg-yellow-500"></div>Other meet</div>
-          <div className="flex items-center text-[#182073] text-md font-bold gap-1"><div className="border w-4 h-4 bg-gray-400"></div>Seat booked</div>
-          </div>
-          </div>
-          
 
           <div className="mb-4">
             <input
@@ -322,7 +314,7 @@ const Consultation = () => {
               if (isBooked) {
                 buttonClass += "bg-gray-400 cursor-not-allowed";
               } else if (isBlocked) {
-                buttonClass += "bg-yellow-500 text-white cursor-not-allowed";
+                buttonClass += "bg-gray-400 cursor-not-allowed";
               } else if (isPastTime) {
                 buttonClass +=
                   "bg-red-300 shadow-md text-gray-50 cursor-not-allowed";
@@ -359,7 +351,7 @@ const Consultation = () => {
                   ) : isBlocked ? (
                     // Display "Blocked" status with icon
                     <h4 className="flex items-center justify-center gap-2 text-white font-bold font-poppins">
-                      Blocked{" "}
+                      Booked{" "}
                       <AiOutlineFileDone className="text-white w-6 h-6" />
                     </h4>
                   ) : (
