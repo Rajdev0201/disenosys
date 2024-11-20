@@ -110,7 +110,7 @@ const date = search.get("date");
               name: 'phone',
               required: true,
               autoFocus: true,
-              className: 'w-[350px] border border-gray-300 p-2 ml-12 rounded-md',
+              className: 'w-[260px] lg:w-[350px] border border-gray-300 p-2 ml-12 rounded-md',
             }}
           />
         </div>

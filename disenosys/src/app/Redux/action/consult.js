@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import Razorpay from "razorpay";
 import 'react-toastify/dist/ReactToastify.css';
-import { setPayment, setPlaceOrder } from "../features/consultSlice.js";
+import { setBlock, setPayment, setPlaceOrder } from "../features/consultSlice.js";
 
 const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
@@ -15,7 +15,7 @@ const loadRazorpayScript = () => {
         document.body.appendChild(script);
     });
 };
-
+//https://disenosys-1.onrender.com/ 
 export const CheckOut = (Data, nav) => async (dispatch) => {
     try {
         console.log("Data sent to backend:", Data);
@@ -23,6 +23,8 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
             userData: Data.userData,
             cartItems: Data.cartItems,
         });
+
+    
         const { orderId, amount, currency } = res.data;
 
         await loadRazorpayScript(); 
@@ -67,7 +69,11 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
         toast.info("Redirecting to payment gateway...");
     } catch (err) {
         console.error("Error creating order:", err);
-        toast.error("Error while creating order. Please try again.");
+        if (err.response && err.response.status === 400) {
+            toast.error(err.response.data.message); 
+        } else {
+            toast.error("Error while creating order. Please try again.");
+        }
     }
 };
 
@@ -81,4 +87,15 @@ export const payment = () => async (dispatch) => {
         console.error('Error fetch code:', error);
     }
   }
+  
+  export const block = () => async (dispatch) => {
+    try {
+        const res = await axios.get("https://disenosys-1.onrender.com/consult/getBlockTime");
+        const getData = res.data;
+        dispatch(setBlock(getData));
+    } catch (error) {
+        console.error('Error fetch code:', error);
+    }
+  }
+  
   

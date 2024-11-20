@@ -6,9 +6,75 @@ const twilio = require('twilio');
 const msal = require('@azure/msal-node');
 const axios = require('axios');
 const moment = require('moment-timezone');
+const {BlockedEvent} = require('../models/blockedTime.js')
 
 // const { Client } = require('@microsoft/microsoft-graph-client');
 // const { ClientSecretCredential } = require('@azure/identity');
+
+const formatTimeTo24HR = (time) => {
+    const [hours, minutes, period] = time.match(/(\d+):(\d+) (\w+)/).slice(1);
+    let hour = parseInt(hours);
+    if (period.toUpperCase() === 'PM' && hour !== 12) hour += 12;
+    if (period.toUpperCase() === 'AM' && hour === 12) hour = 0;
+    return `${hour.toString().padStart(2, '0')}:${minutes}`;
+};
+
+
+
+async function checkCalendarConflict(date, time) {
+    const accessToken = await getAccessToken();
+    const userId = "classes@disenosys.com"; // Replace with your calendar's email
+    const [startTime, endTime] = time.split(" - ");
+
+    // Convert times to 24-hour format
+    const startTime24 = formatTimeTo24HR(startTime);
+    const endTime24 = formatTimeTo24HR(endTime);
+
+    // Use moment.tz to convert the time to UTC
+    const startTimeMoment = moment.tz(`${date} ${startTime24}`, "YYYY-MM-DD HH:mm", "Asia/Kolkata");
+    const endTimeMoment = moment.tz(`${date} ${endTime24}`, "YYYY-MM-DD HH:mm", "Asia/Kolkata");
+
+    const startTimeUTC = startTimeMoment.utc().format();
+    const endTimeUTC = endTimeMoment.utc().format();
+
+    console.log("Start Time UTC:", startTimeUTC); // Debug
+    console.log("End Time UTC:", endTimeUTC); // Debug
+
+    const query = `startDateTime=${startTimeUTC}&endDateTime=${endTimeUTC}`;
+
+    try {
+        const response = await axios.get(
+            `https://graph.microsoft.com/v1.0/users/${userId}/calendarView?${query}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        );
+
+        const events = response.data.value;
+        if (events && events.length > 0) {
+            // Save the blocked events to the database (if required)
+            for (let event of events) {
+                const blockedEvent = new BlockedEvent({
+                    eventId: event.id,
+                    subject: event.subject,
+                    startTimeUTC: event.start.dateTime,
+                    endTimeUTC: event.end.dateTime,
+                    userId: userId,
+                });
+                await blockedEvent.save();
+            }
+            return true; // Conflict detected
+        }
+        return false; // No conflict
+        
+    } catch (error) {
+        console.error("Error checking calendar conflict:", error.response ? error.response.data : error.message);
+        throw new Error("Unable to verify calendar conflicts.");
+    }
+}
+
 
 exports.createCheckoutSession = async (req, res) => {
     const { userData, cartItems } = req.body;
@@ -18,14 +84,26 @@ exports.createCheckoutSession = async (req, res) => {
         return res.status(400).json({ message: "Cart items are required to create an order." });
     }
 
-    const razorpay = new Razorpay({
-        // key_id: process.env.KEY_ID,
-        // key_secret: process.env.KEY_SECRET,
-        key_id: 'rzp_test_pyzRkKRrWBkgnC',
-        key_secret: 'CIdT8EcotbRTWc4JxdYIhEUn',
-    });
+    
 
     try {
+
+        const isConflict = await checkCalendarConflict(userData.bookeddate, userData.bookedtime);
+        console.log(isConflict)
+        if (isConflict) {
+            return res.status(400).json({ 
+                message: `The selected ${userData.bookedtime} slot is already blocked. Please choose a different time.`
+            });
+        }
+
+
+        const razorpay = new Razorpay({
+            // key_id: process.env.KEY_ID,
+            // key_secret: process.env.KEY_SECRET,
+            key_id: 'rzp_test_pyzRkKRrWBkgnC',
+            key_secret: 'CIdT8EcotbRTWc4JxdYIhEUn',
+        });
+
         const amount = cartItems.reduce((total, item) => total + item.price , 0) * 100;
         const options = {
             amount: amount,
@@ -111,13 +189,6 @@ exports.handleRazorpayCallback = async (req, res) => {
     }
 };
 
-const formatTimeTo24HR = (time) => {
-    const [hours, minutes, period] = time.match(/(\d+):(\d+) (\w+)/).slice(1);
-    let hour = parseInt(hours);
-    if (period.toUpperCase() === 'PM' && hour !== 12) hour += 12;
-    if (period.toUpperCase() === 'AM' && hour === 12) hour = 0;
-    return `${hour.toString().padStart(2, '0')}:${minutes}`;
-};
 
 
 
@@ -293,13 +364,27 @@ exports.getPlaceOrder = async(req,res) => {
     try{
         const DataList = await CheckoutSession.find({ isPaid: true });
         res.status(200).json({
-            message: 'External code has deleted',
+            message: 'data is fetched',
             data: DataList,
           });
         }catch(err){
             console.log(err);
-            return res.status(500).json({err : "data is not deleted"})
+            return res.status(500).json({err : "data is not fetched"})
         }
 }
+
+exports.getBlockTime = async(req,res) => {
+    try{
+        const DataList = await BlockedEvent.find();
+        res.status(200).json({
+            message: 'date and time fetch',
+            data: DataList,
+          });
+        }catch(err){
+            console.log(err);
+            return res.status(500).json({err : "data is not fetched"})
+        }
+}
+
 
 
