@@ -7,14 +7,26 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { block, payment } from "../Redux/action/consult.js";
-import { AiOutlineFileDone } from "react-icons/ai";
+import { AiOutlineCheck, AiOutlineFileDone } from "react-icons/ai";
 
 const Consultation = () => {
   const router = useRouter();
   const [selectedTime, setSelectedTime] = useState(null);
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().split("T")[0]
-  );
+  // const [selectedDate, setSelectedDate] = useState(
+  //   new Date().toISOString().split("T")[0]
+  // );
+
+  const today = new Date();
+  const todayDate = today.toISOString().split("T")[0];
+
+  const daysUntilFriday = (5 - today.getDay() + 7) % 7; 
+  const comingFriday = new Date(today);
+  comingFriday.setDate(today.getDate() + daysUntilFriday);
+  const fridayDate = comingFriday.toISOString().split("T")[0];
+
+ 
+  const [selectedDate, setSelectedDate] = useState(todayDate);
+
   const [selectedTimezone, setSelectedTimezone] = useState("Asia/Kolkata");
   const [timezones, setTimezones] = useState([]);
   const [timeSlots, setTimeSlots] = useState([]);
@@ -110,7 +122,7 @@ const Consultation = () => {
     const endTime = new Date();
 
     startTime.setHours(10, 0, 0, 0);
-    endTime.setHours(15, 45, 0, 0);
+    endTime.setHours(19, 45, 0, 0);
 
     while (startTime <= endTime) {
       const timeInSelectedTimezone = new Intl.DateTimeFormat("en-US", {
@@ -254,8 +266,8 @@ const Consultation = () => {
           <div className="mb-4">
             <input
               type="date"
-              min={new Date().toISOString().split("T")[0]}
-              max="2028-12-31"
+              min={todayDate} 
+              max={fridayDate} 
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
               className="w-full border-2 border-[#182073] rounded-lg p-2"
@@ -265,102 +277,104 @@ const Consultation = () => {
             Select time of day
           </h4>
 
+          
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 overflow-y-scroll h-40 border-2 border-gray-200 p-2 rounded-lg">
-            {timeSlots?.map((time, index) => {
-              // Convert the time slot to a Date object in the selected timezone
-              const slotDateTime = new Date(`${selectedDate} ${time}`);
-              const currentTime = new Date().toLocaleString("en-US", {
-                timeZone: selectedTimezone,
-              });
+  {timeSlots?.map((time, index) => {
+    // Convert the time slot to a Date object in the selected timezone
+    const slotDateTime = new Date(`${selectedDate} ${time}`);
+    const currentTime = new Date().toLocaleString("en-US", {
+      timeZone: selectedTimezone,
+    });
 
-              // Check if the slot is booked
-              const isBooked = bookedSlots?.some((slot) => {
-                const [startTime] = slot?.time?.split(" - ");
-                return slot?.date === selectedDate && startTime === time;
-              });
+    // Check if the slot is booked
+    const isBooked = bookedSlots?.some((slot) => {
+      const [startTime] = slot?.time?.split(" - ");
+      return slot?.date === selectedDate && startTime === time;
+    });
 
-              const isPastTime = slotDateTime < new Date(currentTime);
+    // Check if the slot is in the past
+    const isPastTime = slotDateTime < new Date(currentTime);
 
-              const isBlocked = blockDate?.data?.some((block) => {
-                const blockStartTimeUTC = new Date(block.startTimeUTC);
-                const blockEndTimeUTC = new Date(block.endTimeUTC);
+    // Check if the slot is blocked
+    const isBlocked = blockDate?.data?.some((block) => {
+      const blockStartTimeUTC = new Date(block.startTimeUTC);
+      const blockEndTimeUTC = new Date(block.endTimeUTC);
 
-                const blockStartTimeLocal = new Date(
-                  blockStartTimeUTC.getTime() + 5.5 * 60 * 60 * 1000
-                );
-                const blockEndTimeLocal = new Date(
-                  blockEndTimeUTC.getTime() + 5.5 * 60 * 60 * 1000
-                );
+      const blockStartTimeLocal = new Date(
+        blockStartTimeUTC.getTime() + 5.5 * 60 * 60 * 1000
+      );
+      const blockEndTimeLocal = new Date(
+        blockEndTimeUTC.getTime() + 5.5 * 60 * 60 * 1000
+      );
 
-                const slotDateTimeLocal = new Date(
-                  slotDateTime.toLocaleString("en-US", {
-                    timeZone: selectedTimezone,
-                  })
-                );
+      const slotDateTimeLocal = new Date(
+        slotDateTime.toLocaleString("en-US", {
+          timeZone: selectedTimezone,
+        })
+      );
 
-                console.log(`Slot Time (Local): ${slotDateTimeLocal}`);
-                console.log(`Blocked Start (Local): ${blockStartTimeLocal}`);
-                console.log(`Blocked End (Local): ${blockEndTimeLocal}`);
+      return (
+        slotDateTimeLocal >= blockStartTimeLocal &&
+        slotDateTimeLocal < blockEndTimeLocal
+      );
+    });
 
-                // Check if the slot falls within the blocked range
-                return (
-                  slotDateTimeLocal >= blockStartTimeLocal &&
-                  slotDateTimeLocal < blockEndTimeLocal
-                );
-              });
+    // Determine the button class based on conditions
+    let buttonClass = "p-2 text-center border rounded-lg ";
 
-              let buttonClass = "p-2 text-center border rounded-lg ";
+    if (isPastTime) {
+      // Past time overrides booked or blocked
+      buttonClass += "bg-green-400 text-white";
+    } else if (isBooked) {
+      buttonClass += "bg-gray-400 cursor-not-allowed";
+    } else if (isBlocked) {
+      buttonClass += "bg-gray-400 cursor-not-allowed";
+    } else {
+      buttonClass += "border border-[#182073] text-gray-700";
+    }
 
-              if (isBooked) {
-                buttonClass += "bg-gray-400 cursor-not-allowed";
-              } else if (isBlocked) {
-                buttonClass += "bg-gray-400 cursor-not-allowed";
-              } else if (isPastTime) {
-                buttonClass +=
-                  "bg-red-300 shadow-md text-gray-50 cursor-not-allowed";
-              } else {
-                buttonClass += "border border-[#182073] text-gray-700";
-              }
+    if (selectedTime === time) {
+      buttonClass = "p-2 text-center rounded-lg bg-[#182073] text-white"; // Selected
+    }
 
-              if (selectedTime === time) {
-                buttonClass =
-                  "p-2 text-center rounded-lg bg-[#182073] text-white"; // Selected
-              }
+    return (
+      <button
+        key={index}
+        onClick={() =>
+          !isBooked &&
+          !isPastTime &&
+          !isBlocked &&
+          setSelectedTime(time)
+        }
+        className={buttonClass}
+        disabled={isPastTime}
+      >
+        { isPastTime ? (
+          // Completed status for past time
+          <h4 className="flex items-center justify-center gap-2 text-md  text-white font-bold font-poppins">
+            Completed
+            <span> <AiOutlineCheck className="text-white w-4 h-4" /></span>
+         
+          </h4>
+        ) : isBooked ? (
+          <h4 className="flex items-center justify-center gap-2 text-white font-bold font-poppins">
+            Booked{" "}
+            <AiOutlineFileDone className="text-white w-6 h-6" />
+          </h4>
+        ) : isBlocked ? (
+          <h4 className="flex items-center justify-center gap-2 text-white font-bold font-poppins">
+            Blocked{" "}
+            <AiOutlineFileDone className="text-white w-6 h-6" />
+          </h4>
+        ) : (
+          time
+        )}
+      </button>
+    );
+  })}
+</div>
 
-              return (
-                <button
-                  key={index}
-                  onClick={() =>
-                    !isBooked &&
-                    !isPastTime &&
-                    !isBlocked &&
-                    setSelectedTime(time)
-                  }
-                  className={buttonClass}
-                  disabled={isPastTime || isBooked}
-                >
-                  {/* Conditional rendering for each state */}
-                  {isPastTime && !isBooked && !isBlocked ? (
-                    <span className="line-through">{time}</span>
-                  ) : isBooked ? (
-                    // Display "Booked" status with icon
-                    <h4 className="flex items-center justify-center gap-2 text-white font-bold font-poppins">
-                      Booked{" "}
-                      <AiOutlineFileDone className="text-white w-6 h-6" />
-                    </h4>
-                  ) : isBlocked ? (
-                    // Display "Blocked" status with icon
-                    <h4 className="flex items-center justify-center gap-2 text-white font-bold font-poppins">
-                      Booked{" "}
-                      <AiOutlineFileDone className="text-white w-6 h-6" />
-                    </h4>
-                  ) : (
-                    time
-                  )}
-                </button>
-              );
-            })}
-          </div>
+          
 
           <div className="mt-6">
             <label className="block text-sm font-bold mb-2 text-[#182073]">
