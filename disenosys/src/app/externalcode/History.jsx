@@ -7,6 +7,8 @@ import { FaWhatsappSquare } from "react-icons/fa";
 import { MdAttachEmail, MdDelete } from "react-icons/md";
 import Link from "next/link.js";
 import axios from "axios";
+import { IoIosCloudDownload } from "react-icons/io";
+import { IoCreateOutline } from "react-icons/io5";
 
 const History = () => {
   const dispatch = useDispatch();
@@ -98,7 +100,7 @@ const History = () => {
   
     const handleDownload = async () => {
       try {
-        // Send a GET request to the backend to fetch the Excel file
+
         const response = await axios.get('http://localhost:8000/api/student/result', {
           responseType: 'blob', // Important to set the response type to blob
         });
@@ -153,22 +155,22 @@ const History = () => {
         </div>
         <div className="ml-0  gap-2 flex mt-1">
   <button 
-    className="bg-[#182073] text-white rounded-sm font-bold px-4 py-0  text-center" 
+    className="bg-[#182073] text-white flex items-center gap-2  rounded-sm font-bold px-4 py-0  text-center" 
     onClick={handleDownload}
   >
-    Download Report
+    Download Report <IoIosCloudDownload size={20} className="text-green-300"/>
   </button>
   <Link 
     href="/external" 
-    className="bg-[#182073] text-white rounded-sm font-bold px-4 py-2  text-center flex justify-center items-center"
+    className="bg-[#182073] text-white flex items-center gap-2 rounded-sm  font-bold px-4 py-2  text-center flex justify-center items-center"
   >
-    Create Code
+    Create Code <IoCreateOutline size={20} className="text-green-300"/>
   </Link>
 </div>
 
       </div>
 
-      {/* <div className="w-full max-w-[800px] border-b-4 border-[#182073] mb-6"></div> */}
+     
       {paginatedData?.length === 0 ? (
         <p className="text-lg text-red-400 text-center">
           No External data Match.
