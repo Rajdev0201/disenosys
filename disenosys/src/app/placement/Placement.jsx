@@ -32,15 +32,21 @@ const Placement = () => {
             "Fundamentals Of BIW in Automotive Design",
         ],
         "Masters in Automotive Plastic Body Design": [
-            "Solid Model Remastering",
-            "Automotive B-Pillar Assembly",
+            "CATIA Foundations for Automative Designers",
+            "Advanced CATIA Surface",
+            "Surface Remastering for Automotive Designers",
+            "Automotive Close Volume & Feature Creation",
             "Bracket And Reinforcement",
+            "Solid Model Remastering",
+            "Fundamentals of Plastic Trims",
+            "Fundamentals Of BIW in Automotive Design",
+            "Automotive B-Pillar Assembly",
         ]
     };
 
     const specificCourses = courseMapping[courseName] || [];
     
-    // Filter and sort courses
+
     const filteredCourses = courses
         ?.filter(course => specificCourses.includes(course?.courseName))
         ?.sort((a, b) => specificCourses.indexOf(a.courseName) - specificCourses.indexOf(b.courseName));
@@ -50,14 +56,14 @@ const Placement = () => {
     };
 
     return (
-        <div className='bg-[#182073] min-h-screen w-full'>
+        <div className='bg-[#182073] h-auto w-full'>
             <div className='container mx-auto p-0 pt-2  text-center'>
                 <h1 className='text-2xl mt-3 font-semibold font-poppins text-[#182073] md:text-3xl lg:text-5xl'>
                     <span className='text-white'>{courseName}</span>
                 </h1>
             </div>
 
-            <div className='grid grid-cols-1 md:grid-cols-5 p-8 md:p-2 mt-3 gap-2 md:mb-0 lg:mb-8 lg:fixed' > 
+            <div className='grid grid-cols-1 md:grid-cols-5 p-8 md:p-2 mt-3 gap-2 md:mb-0 lg:mb-0 h-full' > 
                 {filteredCourses?.length > 0 ? (
                     filteredCourses.map((course) => (
                         <div 
