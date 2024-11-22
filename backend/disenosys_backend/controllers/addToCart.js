@@ -4,31 +4,54 @@ const ErrorHandler = require("../utils/ErrorHandler");
 
 
 exports.postCart = CatchAsyncError(async (req, res, next) => {
-  const { courseId, name, price, quantity, img ,userName} = req.body;
+  const { courseId, name, price, quantity, img, userName } = req.body;
+  console.log("Received request body:", req.body);  // Log the incoming data
 
-  const existingItem = await Cart.findOne({ courseId });
-
-  let cartItem;
-
-  if (existingItem) {
-    existingItem.quantity += quantity;
-    cartItem = await existingItem.save();
-  } else {
-    cartItem = await Cart.create({
-      courseId,
-      name,
-      price,
-      quantity,
-      img,
-      userName
+  // Validate input data
+  if (!courseId || !name || !price || !quantity || !img || !userName) {
+    return res.status(400).json({
+      success: false,
+      message: "Missing required fields in request body."
     });
   }
 
-  res.status(201).json({
-    success: true,
-    cartItem
-  });
+  try {
+    // Check if the course already exists in the cart for the user
+    const existingItem = await Cart.findOne({ courseId, userName });
+
+    let cartItem;
+
+    if (existingItem) {
+      // If the course already exists, update the quantity
+      existingItem.quantity += quantity;
+      cartItem = await existingItem.save();
+    } else {
+      // Otherwise, create a new cart item
+      cartItem = await Cart.create({
+        courseId,
+        name,
+        price,
+        quantity,
+        img,
+        userName
+      });
+    }
+
+    console.log("Cart item saved successfully:", cartItem);
+    
+    res.status(201).json({
+      success: true,
+      cartItem
+    });
+  } catch (error) {
+    console.error("Error saving to the database:", error);
+    return res.status(500).json({
+      success: false,
+      message: "There was an issue saving the cart item."
+    });
+  }
 });
+
 
 exports.getCart = CatchAsyncError(async (req, res, next) => {
   const cartItems = await Cart.find();

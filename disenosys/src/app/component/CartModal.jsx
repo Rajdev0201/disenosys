@@ -18,7 +18,7 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const pay = useSelector((state) => state.payment);
-  
+  console.log(cart)
   useEffect(() => {
     const storedUser = localStorage.getItem("profile");
     if (storedUser) {
@@ -30,16 +30,15 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
     dispatch(payment());
   }, [dispatch]);
 
-  const paidCourses = pay?.data
-    ?.filter((item) => item?.customerDetails?.name === user?.user?.user?.userName)
-    ?.flatMap((item) => item?.lineItems?.map((course) => course?.name)) || [];
+  // const paidCourses = pay?.data
+  //   ?.filter((item) => item?.customerDetails?.name === user?.user?.user?.userName)
+  //   ?.flatMap((item) => item?.lineItems?.map((course) => course?.name)) || [];
 
-  const cartUserName = user?.user?.user?.userName; // Current user's name
+  const cartUserName = user?.user?.user?.userName; 
 
   useEffect(() => {
     if (cart?.cartItems?.length > 0 && cartUserName) {
       const total = cart.cartItems.reduce((acc, item) => {
-        // Only include items that belong to the current user
         if (item.userName === cartUserName) {
           return acc + (item.price * item.quantity);
         }
@@ -68,7 +67,7 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
     if (cart?.cartItems?.length > 0) {
       const UserData = {
         userData: user?.user?.user,
-        cartItems: cart.cartItems.filter(item => item.userName === cartUserName) // Only send items belonging to the current user
+        cartItems: cart.cartItems.filter(item => item.userName === cartUserName)
       };
       await dispatch(CheckOut(UserData, router));
       setCheckoutSuccess(true); 
@@ -115,10 +114,10 @@ const handleDecrementQuantityChange = (cartId) => {
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4">Cart</h3>
              
               <div className="text-center mb-6">
-                {cart?.cartItems?.length > 0 && cartUserName ? (
-                  cart?.cartItems
-                    .filter(item => item.userName === cartUserName) // Show items for the current user
-                    .map((item) => (
+              {cart?.cartItems?.length > 0 && cartUserName ? (
+    cart?.cartItems
+      .filter(item => item.userName === cartUserName) // Only show items for the current user
+      .map((item) => (
                       <div key={item._id} className="flex flex-col space-x-2 sm:flex-row justify-between items-center py-2 border-b text-sm sm:text-md md:text-lg">
                         <img src={item.img} className='w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-cover' alt={item.name} />
                         <span className="flex-1 text-center sm:text-left font-bold">{item.name}</span>

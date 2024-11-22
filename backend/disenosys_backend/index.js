@@ -510,7 +510,6 @@ app.post('/quiz', upload.single('file'), async (req, res) => {
       for (const row of sheetData) {
           console.log("Processing row:", row);
 
-          // Normalize keys and trim values
           const normalizedRow = Object.fromEntries(
               Object.entries(row).map(([key, value]) => [key.trim(), String(value).trim()])
           );

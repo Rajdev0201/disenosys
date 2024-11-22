@@ -148,6 +148,7 @@ const length = filteredCartItems.length;
               <IoCartSharp
                 size={40}
                 className="text-white hover:text-[#057FE3]"
+                onClick={() => setCartModalOpen(true)}
               />
               {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
                 <>

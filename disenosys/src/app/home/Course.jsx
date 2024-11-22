@@ -68,7 +68,6 @@ const Course = () => {
 
 const addCart = (course) => {
   if (user?.user?.user?._id) {
-    // Check if the course is already paid for by the current user
     if (paidCourses.includes(course.courseName)) {
       alert("You have already paid for this course.");
       return; // Exit the function to prevent adding it again

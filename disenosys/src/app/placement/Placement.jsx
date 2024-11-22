@@ -20,11 +20,15 @@ const Placement = () => {
         "PG Diploma Plastic Trims Design": [
             "CATIA Foundations for Automative Designers",
             "Advanced CATIA Surface",
-            "Automotive Close Volume & Feature Creation",
             "Surface Remastering for Automotive Designers",
+            "Automotive Close Volume & Feature Creation",
             "Fundamentals of Plastic Trims",
         ],
         "PG Diploma Plastic BIW Design": [
+            "CATIA Foundations for Automative Designers",
+            "Advanced CATIA Surface",
+            "Surface Remastering for Automotive Designers",
+            "Bracket And Reinforcement",
             "Fundamentals Of BIW in Automotive Design",
         ],
         "Masters in Automotive Plastic Body Design": [
@@ -33,9 +37,13 @@ const Placement = () => {
             "Bracket And Reinforcement",
         ]
     };
-    
+
     const specificCourses = courseMapping[courseName] || [];
-    const filteredCourses = courses?.filter(course => specificCourses.includes(course?.courseName));
+    
+    // Filter and sort courses
+    const filteredCourses = courses
+        ?.filter(course => specificCourses.includes(course?.courseName))
+        ?.sort((a, b) => specificCourses.indexOf(a.courseName) - specificCourses.indexOf(b.courseName));
 
     const goToDescriptionPage = (courseId) => {
         router.push(`/description?courseId=${courseId}`);
@@ -74,3 +82,4 @@ const Placement = () => {
 };
 
 export default Placement;
+

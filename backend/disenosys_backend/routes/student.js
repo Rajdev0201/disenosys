@@ -66,39 +66,63 @@ router.post('/login', async (req, res) => {
 
 
 const sendResultEmail = async (studentEmail, studentName, totalScore, percentage) => {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'rajkumarprjpm@gmail.com', 
-        pass: 'eztbnuzrbwxocizk',
-      }
-    });
-  
+  const transporter = nodemailer.createTransport({
 
-    const mailOptions = {
-      from: 'rajkumarprjpm@gmail.com',
-      to: studentEmail,
-      subject: 'Your Quiz Results From Disenosys',
-      html: `
-        <h2>Hello ${studentName},</h2>
-        <p>Here are your quiz results:</p>
-        <table border="1" cellpadding="5" cellspacing="0">
-          <thead>
-            <tr>
-              <th>Total Score</th>
-              <th>Percentage</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>${totalScore}</td>
-              <td>${percentage}%</td>
-            </tr>
-          </tbody>
-        </table>
-        <p>Best of luck for your future quizzes!</p>
-      `
-    };
+    host: 'smtp.office365.com', 
+   port: 587,                 
+   secure: false,   
+   auth: {
+    user: 'classes@disenosys.com',
+    pass: 'xnccsypkfhfpymwg',
+  }
+   });
+
+   const mailOptions = {
+    from: 'classes@disenosys.com',
+    to: studentEmail,
+    subject: 'Your Quiz Results From Disenosys',
+    html: `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #f0f0f0; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+        <!-- Header -->
+        <div style="background-color: #182073; padding: 20px; text-align: center; color: #fff;">
+          <img src="https://www.disenosys.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.d25c986e.png&w=384&q=75" alt="Disenosys Logo" style="max-width: 150px; margin-bottom: 10px;">
+          <h1 style="font-size: 24px; margin: 0;">Quiz Results</h1>
+        </div>
+
+        <!-- Body -->
+        <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; max-width: 600px; margin: 20px auto; box-shadow: 0px 4px 12px rgba(0,0,0,0.1);">
+          <h2 style="color: #333;">Dear ${studentName},</h2>
+          <p style="font-size: 16px; color: #666;">We are excited to share your quiz results with you. Here’s a summary:</p>
+          
+          <!-- Results Table -->
+          <table style="width: 100%; border-collapse: collapse; margin: 20px 0; background-color: #f9f9f9;">
+            <thead>
+              <tr style="background-color: #182073; color: #fff;">
+                <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Total Score</th>
+                <th style="padding: 10px; border: 1px solid #ddd; text-align: left;">Percentage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #ddd;">${totalScore}</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">${percentage}%</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p style="font-size: 16px; color: #666;">We appreciate your efforts and encourage you to keep up the great work! Feel free to reach out for any assistance.</p>
+          
+          <p style="font-size: 16px; color: #333;">Best regards,</p>
+          <p style="font-size: 16px; color: #0d6efd; font-weight: bold;">The Disenosys Team</p>
+        </div>
+
+        <!-- Footer -->
+        <div style="text-align: center; padding: 10px; font-size: 12px; color: #999;">
+          <p style="margin: 0;">&copy; ${new Date().getFullYear()} Disenosys. All rights reserved.</p>
+        </div>
+      </div>
+    `,
+  };
   
     // Send the email
     try {
@@ -137,12 +161,6 @@ router.post('/updateStudentQuiz', async (req, res) => {
     }
 });
   
-  
-
-module.exports = router;
-
-
-
 
 
 router.get('/result', async (req, res) => {
@@ -150,25 +168,24 @@ router.get('/result', async (req, res) => {
     const result = await Student.find();
 
     if (!result || result.length === 0) {
+      console.log('No data available for download');
       return res.status(400).json({ error: 'No Data is available' });
     }
 
-    // Create a new workbook and worksheet
     const workbook = XLSX.utils.book_new();
     const worksheetData = result.map((student) => {
-      // Format the dates only if they are valid
+
       const createdAtFormatted = isValid(new Date(student.createdAt))
-        ? format(new Date(student.createdAt), 'hh:mm a')
-        : 'Invalid Date'; // Fallback if the date is invalid
+        ? format(new Date(student.createdAt), 'dd/MM/yyyy, hh:mm a')
+        : 'Invalid Date'; 
 
       const quizFinishTimeFormatted = isValid(new Date(student.quizFinishTime))
-        ? format(new Date(student.quizFinishTime), 'hh:mm a')
-        : 'Invalid Date'; // Fallback if the date is invalid
-
+        ? format(new Date(student.quizFinishTime), 'dd/MM/yyyy, hh:mm a')
+        : 'Invalid Date';
       return {
         name: student.name,
         email: student.email,
-        college: student.college || 'N/A', // Use 'N/A' for null values
+        college: student.college || 'N/A', 
         mobile: student.mobile,
         userType: student.userType,
         codeUsed: student.codeUsed,
@@ -180,20 +197,19 @@ router.get('/result', async (req, res) => {
       };
     });
 
-    // Create the worksheet from the data
+
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
 
-    // Append the worksheet to the workbook
+   
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Results');
 
-    // Write the Excel file to a buffer
     const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
 
-    // Set the response headers to download the Excel file
+    
     res.setHeader('Content-Disposition', 'attachment; filename="results.xlsx"');
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-    // Send the buffer as the response
+
     res.send(excelBuffer);
 
   } catch (err) {
@@ -205,4 +221,4 @@ router.get('/result', async (req, res) => {
 module.exports = router;
 
 
-module.exports = router;
+

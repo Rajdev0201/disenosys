@@ -15,10 +15,17 @@ const Quiz = ({ questions }) => {
       Array(questions.length).fill({ status: "unanswered" })
   );
 
-  const [globalTimeRemaining, setGlobalTimeRemaining] = useState(
-    parseInt(localStorage.getItem("globalTimeRemaining")) || 1800
-  );
-
+  const [globalTimeRemaining, setGlobalTimeRemaining] = useState(() => {
+    const startTime = localStorage.getItem("startTime");
+    if (startTime) {
+      const now = new Date();
+      const elapsedTime = now - new Date(startTime);
+      const remainingTime = Math.max(1800 - elapsedTime / 1000, 0); 
+      return remainingTime;
+    }
+    return 1800; 
+  });
+  
   const [showResultPopup, setShowResultPopup] = useState(false);
   const [quizFinished, setQuizFinished] = useState(() => {
     return localStorage.getItem("quizFinished") === "true";
@@ -35,52 +42,57 @@ const Quiz = ({ questions }) => {
     } else {
       try {
         dispatch(setStudent(JSON.parse(storedUser)));
+  
+        // Set startTime only if it's not already set
+        if (!localStorage.getItem("startTime")) {
+          const now = new Date();
+          localStorage.setItem("startTime", now.toISOString());
+        }
       } catch (error) {
         console.error("Error parsing stored student:", error);
       }
     }
   }, [dispatch, router]);
-
+  
   useEffect(() => {
-    if (quizFinished) {
-      localStorage.removeItem("globalTimeRemaining");
-      setGlobalTimeRemaining(1800);
-    }
-
+    const startTime = new Date(localStorage.getItem("startTime"));
+    const examDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
     let alertShown = false;
-
+  
     const timer = setInterval(() => {
-      setGlobalTimeRemaining((prevTime) => {
-        if (prevTime > 0) {
-          const newTime = prevTime - 1;
-          localStorage.setItem("globalTimeRemaining", newTime);
-
-          if (newTime <= 300 && !alertShown) {
-            alert("You have only 5 minutes left!");
-            alertShown = true;
-          }
-
-          return newTime;
-        } else {
-          clearInterval(timer);
-          // alert("Time's up! Redirecting to the home page.");
-          handleFinish();
-          return 0;
+      const now = new Date();
+      const timeElapsed = now - startTime;
+      const timeRemaining = Math.max((examDuration - timeElapsed) / 1000, 0); // Convert to seconds
+  
+      if (timeRemaining <= 0) {
+        clearInterval(timer);
+        handleFinish();
+      } else {
+        setGlobalTimeRemaining(timeRemaining);
+        localStorage.setItem("globalTimeRemaining", timeRemaining);
+  
+        if (timeRemaining <= 300 && !alertShown) {
+          alert("You have only 5 minutes left!");
+          alertShown = true;
         }
-      });
+      }
     }, 1000);
-
+  
     return () => clearInterval(timer);
   }, [quizFinished]);
+  
 
-  const formatTime = (time) => {
-    const minutes = Math.floor(time / 60);
-    const seconds = time % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
-      2,
-      "0"
-    )}`;
+  const formatTime = (timeInSeconds) => {
+    const totalSeconds = Math.floor(timeInSeconds); 
+    const minutes = Math.floor(totalSeconds / 60); 
+    const seconds = totalSeconds % 60; 
+  
+    
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+  
+    return `${minutes}:${formattedSeconds}`;
   };
+  
 
   const handleAnswerClick = () => {
     if (selectedAnswer === null) return;

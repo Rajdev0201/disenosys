@@ -117,13 +117,13 @@ const Nub = ({ selected }) => {
 };
 
 const Pricing = () => (
-  <div className="w-24 h-12 lg:w-44 lg:h-16 space-y-3 flex flex-col">
+  <div className="w-24 h-12 lg:w-44 lg:h-5 space-y-3 flex flex-col">
     <Link href="/about" className="text-white hover:text-[#057FE3] flex items-center">
       <FiEdit className="mr-2" /> About
     </Link>
-    <Link href="/admin" className="text-white hover:text-[#057FE3] flex items-center">
+    {/* <Link href="/admin" className="text-white hover:text-[#057FE3] flex items-center">
       <FiPlusSquare className="mr-2" /> Admin
-    </Link>
+    </Link> */}
   </div>
 );
 

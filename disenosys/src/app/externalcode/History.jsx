@@ -6,11 +6,11 @@ import { Pagination } from "../component/Pagination.jsx";
 import { FaWhatsappSquare } from "react-icons/fa";
 import { MdAttachEmail, MdDelete } from "react-icons/md";
 import Link from "next/link.js";
+import axios from "axios";
 
 const History = () => {
   const dispatch = useDispatch();
   const student = useSelector((state) => state.external);
-  console.log(student);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
@@ -96,6 +96,32 @@ const History = () => {
 
 
   
+    const handleDownload = async () => {
+      try {
+        // Send a GET request to the backend to fetch the Excel file
+        const response = await axios.get('http://localhost:8000/api/student/result', {
+          responseType: 'blob', // Important to set the response type to blob
+        });
+  
+        // Create a URL for the file
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+  
+        // Set the download attribute with the filename
+        link.setAttribute('download', 'results.xlsx');
+  
+        // Append the link to the document and click it to start the download
+        document.body.appendChild(link);
+        link.click();
+  
+        // Cleanup
+        document.body.removeChild(link);
+      } catch (error) {
+        console.error('Error downloading the file:', error);
+        alert('Failed to download the file',error);
+      }
+    };
 
 
   return (
@@ -125,11 +151,21 @@ const History = () => {
             />
           </div>
         </div>
-        <div className="ml-4 mt-1">
-          <Link href="/external" className="bg-[#182073] text-white rounded-sm font-bold px-4 py-2">
-            Create Code
-          </Link>
-        </div>
+        <div className="ml-0  gap-2 flex mt-1">
+  <button 
+    className="bg-[#182073] text-white rounded-sm font-bold px-4 py-0  text-center" 
+    onClick={handleDownload}
+  >
+    Download Report
+  </button>
+  <Link 
+    href="/external" 
+    className="bg-[#182073] text-white rounded-sm font-bold px-4 py-2  text-center flex justify-center items-center"
+  >
+    Create Code
+  </Link>
+</div>
+
       </div>
 
       {/* <div className="w-full max-w-[800px] border-b-4 border-[#182073] mb-6"></div> */}
