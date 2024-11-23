@@ -6,6 +6,8 @@ import { Pagination } from "../component/Pagination.jsx";
 import { FaWhatsappSquare } from "react-icons/fa";
 import { MdAttachEmail, MdDelete } from "react-icons/md";
 import Link from "next/link.js";
+import { IoIosCloudDownload } from "react-icons/io";
+import { IoCreateOutline } from "react-icons/io5";
 
 const History = () => {
   const dispatch = useDispatch();
@@ -89,6 +91,33 @@ const History = () => {
       .catch((err) => console.log(err));
   };
 
+  const handleDownload = async () => {
+    try {
+
+      const response = await axios.get('http://localhost:8000/api/student/result', {
+        responseType: 'blob', // Important to set the response type to blob
+      });
+
+      // Create a URL for the file
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+
+      // Set the download attribute with the filename
+      link.setAttribute('download', 'results.xlsx');
+
+      // Append the link to the document and click it to start the download
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+      alert('Failed to download the file',error);
+    }
+  };
+
   return (
     <div className="p-6 flex flex-col w-full mt-12">
       <h2 className="text-[#182073] font-bold font-josefin text-2xl md:text-3xl lg:text-4xl text-center mb-1">
@@ -116,12 +145,18 @@ const History = () => {
             />
           </div>
         </div>
-        <div className="ml-4 mt-1">
+        <div className="ml-0  gap-2 flex mt-1">
+  <button 
+    className="bg-[#182073] text-white flex items-center gap-2  rounded-sm font-bold px-4 py-0  text-center" 
+    onClick={handleDownload}
+  >
+    Download Report <IoIosCloudDownload size={20} className="text-green-300"/>
+  </button>
           <Link
             href="/adminroute"
-            className="bg-[#182073] text-white rounded-sm font-bold px-4 py-2"
+            className="bg-[#182073] text-white flex items-center gap-2  rounded-sm font-bold px-4 py-2"
           >
-            Create Code
+            Create Code <IoCreateOutline size={20} className="text-green-300"/>
           </Link>
         </div>
       </div>

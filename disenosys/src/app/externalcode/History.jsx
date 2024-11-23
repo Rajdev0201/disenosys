@@ -101,7 +101,7 @@ const History = () => {
     const handleDownload = async () => {
       try {
 
-        const response = await axios.get('http://localhost:8000/api/student/result', {
+        const response = await axios.get('https://disenosys-1.onrender.com/api/student/result', {
           responseType: 'blob', // Important to set the response type to blob
         });
   

@@ -171,7 +171,7 @@ const Home = () => {
   return (
     <motion.section
     >
-      <div className="container-2xl bg mt-12 px-2 md:px-12 py-40 md:mt-12 lg:mt-36 w-full relative">
+      <div className="container-2xl bg mt-12 px-2 md:px-12 lg:px-16 xl:px-24 py-40 md:mt-12 lg:mt-36 w-full relative">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12  container mx-auto flex items-center justify-center px-6 lg:px-0 2xl:px-0">
           <div className="col-span-6">
             <div className="">
