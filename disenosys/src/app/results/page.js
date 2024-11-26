@@ -1,25 +1,36 @@
-import Results from "./Results";
-
-// const metaTitle = `Your English Proficiency Score: ${yourScore}%`;
-const metaDescription = `Take the challenge and improve your skills! Visit now to explore your results.`;
-// const metaImage = `https://www.disenosys.com/assests/brand-1-${Math.round(yourScore)}.png`;
-// const metaUrl = `https://www.disenosys.com/quicktest`;
-
+import Head from 'next/head';
+import Results from './Results';
 
 const getImageUrl = (score) => {
-    return `https://www.disenosys.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fl.8f3043b1.jpg&w=3840&q=75`;
-  };
-  
-  export const metadata = {
-    title: "Take the challenge and improve your skills! Visit now to explore your results.",
-    description: metaDescription,
-    image: getImageUrl(75), 
-  };
+    return `https://www.disenosys.com/assets/profile/score-image-${score}.png`; // Dynamic URL based on score
+};
 
 export default function Page() {
-   return(
-    <div>
-        <Results/>
-    </div>
-   )
+    const score = 75; // Replace with the actual score you want to display
+    const imageUrl = getImageUrl(score);
+
+    return (
+        <>
+            <Head>
+                {/* Open Graph metadata */}
+                <meta property="og:title" content="Your English Proficiency Score" />
+                <meta property="og:description" content="Take the challenge and improve your skills! Visit now to explore your results." />
+                <meta property="og:image" content={imageUrl} /> {/* Dynamic image URL */}
+                <meta property="og:url" content="https://www.disenosys.com/quicktest" />
+
+                {/* Twitter Card metadata */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Your English Proficiency Score" />
+                <meta name="twitter:description" content="Take the challenge and improve your skills! Visit now to explore your results." />
+                <meta name="twitter:image" content={imageUrl} />
+
+                {/* Title */}
+                <title>Your English Proficiency Score</title>
+            </Head>
+
+            <div>
+                <Results />
+            </div>
+        </>
+    );
 }
