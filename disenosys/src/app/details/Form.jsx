@@ -58,7 +58,7 @@ const Form = () => {
         const productScore = localStorage.getItem("totalScoreProduct") || 0;
         const productPercentage = localStorage.getItem("productPercentage") || 0;
   
-        const response = await axios.post("http://localhost:8000/exam/details", {
+        const response = await axios.post("https://disenosys-1.onrender.com/exam/details", {
           firstName: formData.firstName,
           lastName: formData.lastName,
           email: formData.email,
