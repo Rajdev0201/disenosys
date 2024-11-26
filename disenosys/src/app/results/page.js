@@ -7,26 +7,16 @@ const metaDescription = `Take the challenge and improve your skills! Visit now t
 
 
 const getImageUrl = (score) => {
-    return `https://www.disenosys.com/assets/profile/brand-${Math.round(score)}.png`;
+    return `https://www.disenosys.com/assets/profile/l.jpg`;
   };
   
-//   export const metadata = {
-//     title: "Take the challenge and improve your skills! Visit now to explore your results.",
-//     description: metaDescription,
-//     image: getImageUrl(75), 
-//   };
+  export const metadata = {
+    title: "Take the challenge and improve your skills! Visit now to explore your results.",
+    description: metaDescription,
+    image: getImageUrl(75), 
+  };
 
 export default function Page() {
-    const catia = 75; // Replace with dynamic value
-    const product = 85; // Replace with dynamic value
-    const yourScore = (catia + product) / 2; // Calculate the average score
-    
-    // Set dynamic metadata
-    const metadata = {
-      title: `Your English Proficiency Score: ${yourScore}%`,
-      description: metaDescription,
-      image: getImageUrl(yourScore), // Dynamic image URL based on score
-    };
    return(
     <div>
         <Results/>
