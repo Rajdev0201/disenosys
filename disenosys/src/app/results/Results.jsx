@@ -1,7 +1,6 @@
 "use client"
 import { useSearchParams } from 'next/navigation'
 import React from 'react'
-import Head from "next/head";
 import { FaFacebook, FaLinkedin } from 'react-icons/fa'
 import { IoLinkSharp } from 'react-icons/io5'
 
@@ -34,35 +33,6 @@ const Results = () => {
       return "C1/C2 Advanced";
     };
     const yourLevel = getCEFRLevel(yourScore);
-
-   const scorePageUrl = `https://www.disenosys.com/quicktest`;
-   const shareToLinkedIn = () => {
-    const scorePageUrl = `https://www.disenosys.com/results`;
-    const metaTitle = `Your English Proficiency Score: ${yourScore}%`;
-    const metaDescription = `Take the challenge and improve your skills! Visit now to explore your results.`;
-
-    window.open(
-        `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(scorePageUrl)}&title=${encodeURIComponent(metaTitle)}&summary=${encodeURIComponent(metaDescription)}`,
-        "_blank"
-    );
-};
-
-
-  
-
-  const shareToFacebook = () => {
-    window.open(
-      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        scorePageUrl
-      )}`,
-      "_blank"
-    );
-  };
-
-    // const shareToWhatsApp = () => {
-    //   const text = encodeURIComponent(`Check out my score on the test! ${window.location.href}`);
-    //   window.open(`https://wa.me/?text=${text}`, '_blank');
-    // };
 
    
   return (
@@ -108,10 +78,16 @@ const Results = () => {
           <div className="mt-8 text-center">
             <p className="text-md mb-2 font-bold font-poppins">Share your score</p>
             <div className="flex space-x-2 justify-center">
-              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110" onClick={shareToFacebook}>
+              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110" >
               <FaFacebook className='w-6 h-6'/>
               </button>
-              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110" onClick={shareToLinkedIn}>
+              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"
+              onClick={() => {
+                const examLink = `https://www.disenosys.com/quicktest?catia=${catia}&product=${product}`;
+                const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(examLink)}`;
+                window.open(linkedInShareUrl, "_blank");
+              }}
+              >
               <FaLinkedin className="w-6 h-6"/>
               </button>
               <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110">
