@@ -7,7 +7,7 @@ const metaDescription = `Take the challenge and improve your skills! Visit now t
 
 
 const getImageUrl = (score) => {
-    return `https://www.disenosys.com/assets/profile/l.jpg`;
+    return `https://www.disenosys.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fl.8f3043b1.jpg&w=3840&q=75`;
   };
   
   export const metadata = {
