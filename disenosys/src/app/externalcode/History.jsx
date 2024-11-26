@@ -111,7 +111,11 @@ const History = () => {
         link.href = url;
   
         // Set the download attribute with the filename
-        link.setAttribute('download', 'results.xlsx');
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getFullYear()}`;
+        
+        // Set the download attribute with the dynamic filename
+        link.setAttribute('download', `Certification_results_${formattedDate}.xlsx`);
   
         // Append the link to the document and click it to start the download
         document.body.appendChild(link);

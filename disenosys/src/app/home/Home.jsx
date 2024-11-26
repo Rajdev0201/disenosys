@@ -198,7 +198,7 @@ const Home = () => {
                 }}
                 className="group relative flex w-fit items-center  gap-1.5 rounded-full hover:text-white bg-white px-2 py-1  lg:px-4 lg:py-2 text-dark transition-colors hover:bg-[#182073]"
               >
-                <Link href="/course"> View Course</Link>
+                <Link href="/quicktest">Take Test</Link>
 
                 <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12" />
               </motion.button>

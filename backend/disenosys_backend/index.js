@@ -81,7 +81,9 @@ const port = require("./routes/Portfolio.js");
 const resumeUpdate = require("./routes/resume.js");
 const UserModel = require("./models/UserModel.js");
 const questionRoutes = require("./routes/quiz.js");
+const catiaExam = require("./routes/results.js")
 const Question = require("./models/quiz.js");
+const Catia = require("./models/catia.js");
 const adminRoute = require("./routes/admin.js");
 const code  = require("./routes/code.js");
 const student = require("./routes/student.js");
@@ -98,6 +100,7 @@ app.use("/update",profile);
 app.use("/update",port);
 app.use("/resume",resumeUpdate);
 app.use('/api/questions', questionRoutes);
+app.use('/exam',catiaExam)
 app.use('/admin',adminRoute);
 app.use('/api/admin',code);
 app.use('/api/student',student);
@@ -549,6 +552,60 @@ app.post('/quiz', upload.single('file'), async (req, res) => {
       res.status(500).json({ error: 'Failed to upload questions', details: err });
   }
 });
+
+
+const catia = multer({ dest: 'uploadsquiz/' });
+app.post('/catia', catia.single('file'), async (req, res) => {
+  try {
+      const workbook = XLSX.readFile(req.file.path);
+      const sheetName = workbook.SheetNames[0];
+      const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+      for (const row of sheetData) {
+          console.log("Processing row:", row);
+
+          const normalizedRow = Object.fromEntries(
+              Object.entries(row).map(([key, value]) => [key.trim(), String(value).trim()])
+          );
+
+          const options = [
+              { text: normalizedRow['Option1'] || '', isCorrect: normalizedRow['Option1_isCorrect'].toUpperCase() === 'TRUE' },
+              { text: normalizedRow['Option2'] || '', isCorrect: normalizedRow['Option2_isCorrect'].toUpperCase() === 'TRUE' },
+              { text: normalizedRow['Option3'] || '', isCorrect: normalizedRow['Option3_isCorrect'].toUpperCase() === 'TRUE' },
+              { text: normalizedRow['Option4'] || '', isCorrect: normalizedRow['Option4_isCorrect'].toUpperCase() === 'TRUE' }
+          ];
+
+          console.log("Constructed options:", options);
+
+          // Check if the question and options are valid
+          if (normalizedRow['Question'] && options.every(option => option.text)) {
+              const question = new Catia({
+                  question: normalizedRow['Question'],
+                  options
+              });
+
+              // console.log("Question object to save:", JSON.stringify(question, null, 2));
+
+              try {
+                  const savedQuestion = await question.save();
+                  console.log(`Saved question: ${savedQuestion.question}`);
+              } catch (saveError) {
+                  console.error(`Error saving question: ${saveError.message}`, saveError);
+              }
+          } else {
+              console.warn(`Skipping question due to missing fields: ${JSON.stringify(normalizedRow)}`);
+          }
+      }
+
+      res.status(200).json({ message: 'Questions uploaded and saved successfully!' });
+  } catch (err) {
+      console.error('Error details:', err);
+      res.status(500).json({ error: 'Failed to upload questions', details: err });
+  }
+});
+
+
+
 
 
 app.post('/post-student-details', async (req, res) => {

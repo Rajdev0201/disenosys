@@ -56,7 +56,7 @@ const Placement = () => {
     };
 
     return (
-        <div className='bg-[#182073] h-auto w-full'>
+        <div className='bg-black h-auto w-full'>
             <div className='container mx-auto p-0 pt-2  text-center'>
                 <h1 className='text-2xl mt-3 font-semibold font-poppins text-[#182073] md:text-3xl lg:text-5xl'>
                     <span className='text-white'>{courseName}</span>
