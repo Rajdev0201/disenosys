@@ -83,7 +83,7 @@ const Results = () => {
               </button>
               <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"
               onClick={() => {
-                const examLink = `https://www.disenosys.com/quicktest?catia=${catia}&product=${product}`;
+                const examLink = `https://www.disenosys.com/results`;
                 const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(examLink)}`;
                 window.open(linkedInShareUrl, "_blank");
               }}

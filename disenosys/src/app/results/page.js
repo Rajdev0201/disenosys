@@ -12,21 +12,9 @@ export async function generateMetadata({ params, searchParams }) {
   const metaDescription = `Your English proficiency score is ${yourScore}%. Take the challenge and improve your skills!`;
 
   return {
-    title: `Your English Proficiency Score: ${yourScore}%`,
+    title: `Your English Proficiency Score: ${yourScore}% ,Take the challenge and improve your skills!`,
     description: metaDescription,
     image: getImageUrl(yourScore),
-    openGraph: {
-      title: `Your English Proficiency Score: ${yourScore}%`,
-      description: metaDescription,
-      image: getImageUrl(yourScore),
-      url: `https://www.disenosys.com/quicktest?catia=${catia}&product=${product}`,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `Your English Proficiency Score: ${yourScore}%`,
-      description: metaDescription,
-      image: getImageUrl(yourScore),
-    },
   };
 }
 
