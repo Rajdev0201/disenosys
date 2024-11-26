@@ -4,7 +4,10 @@ import React from 'react'
 import Head from "next/head";
 import { FaFacebook, FaLinkedin } from 'react-icons/fa'
 import { IoLinkSharp } from 'react-icons/io5'
-import { Metadata } from "next";
+
+
+
+
 
 const Results = () => {
     const search = useSearchParams();
