@@ -94,7 +94,7 @@ const Form = () => {
   return (
     <div className="bg-blue-100 min-h-screen flex items-center justify-center px-4">
       <div className="bg-white shadow-md rounded-lg w-full max-w-md p-6">
-        <h1 className="text-2xl font-bold text-center mb-2">You're almost there...</h1>
+        <h1 className="text-2xl font-bold text-center mb-2">You&apos;re almost there...</h1>
         <p className="text-gray-600 text-center mb-6">Confirm your details</p>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
