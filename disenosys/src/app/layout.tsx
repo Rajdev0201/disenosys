@@ -9,13 +9,18 @@ import 'react-toastify/dist/ReactToastify.css';
 import LoadingWrapper from "./component/LoadingWrapper";
 // import Script from 'next/script';
 import { Analytics } from "@vercel/analytics/react"
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
+// import DynamicMetadata from "./DynamicMetadata";
 
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Disenosys",
+  title: {
+  absolute:"",
+  default:"Disenosys",
+  template:"%s | Disenosys"
+  },
   description:"We provide various Post Graduate courses on Automotive Body Design in a range of domains such as BIW, Plastic Trims, Seating and many more.",
 };
 
@@ -30,6 +35,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+      {/* <DynamicMetadata />  */}
         <Providers>
           <LoadingWrapper>
             {children}

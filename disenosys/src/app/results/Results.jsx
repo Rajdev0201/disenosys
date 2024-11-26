@@ -4,6 +4,7 @@ import React from 'react'
 import Head from "next/head";
 import { FaFacebook, FaLinkedin } from 'react-icons/fa'
 import { IoLinkSharp } from 'react-icons/io5'
+import { Metadata } from "next";
 
 const Results = () => {
     const search = useSearchParams();
@@ -31,19 +32,19 @@ const Results = () => {
     };
     const yourLevel = getCEFRLevel(yourScore);
 
-   const scorePageUrl = `https://www.disenosys.com/quicktest?score=${yourScore}`;
-
-   const metaTitle = `Your English Proficiency Score: ${yourScore}%`;
-   const metaDescription = `Take the challenge and improve your skills! Visit now to explore your results.`;
-   const metaImage = `https://www.disenosys.com/assests/brand-1-${Math.round(yourScore)}.png`;
-   const metaUrl = `https://www.disenosys.com/quicktest`;
-
+   const scorePageUrl = `https://www.disenosys.com/quicktest`;
    const shareToLinkedIn = () => {
+    const scorePageUrl = `https://www.disenosys.com/quicktest`;
+    const metaTitle = `Your English Proficiency Score: ${yourScore}%`;
+    const metaDescription = `Take the challenge and improve your skills! Visit now to explore your results.`;
+
     window.open(
-      `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(metaUrl)}&title=${encodeURIComponent(metaTitle)}&summary=${encodeURIComponent(metaDescription)}`,
-      "_blank"
+        `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(scorePageUrl)}&title=${encodeURIComponent(metaTitle)}&summary=${encodeURIComponent(metaDescription)}`,
+        "_blank"
     );
-  };
+};
+
+
   
 
   const shareToFacebook = () => {
@@ -60,17 +61,11 @@ const Results = () => {
     //   window.open(`https://wa.me/?text=${text}`, '_blank');
     // };
 
-  
-    
+   
   return (
     <>    
-     <Head>
-    <meta property="og:title" content={metaTitle} />
-    <meta property="og:description" content={metaDescription} />
-    <meta property="og:image" content={metaImage} />
-    <meta property="og:url" content={metaUrl} />
-    <title>{metaTitle}</title>
-  </Head>
+  
+
     <div className="min-h-screen bg-blue-100 flex justify-center items-center font-poppins p-4">
       <div className="grid sm:grid-cols-2  w-full max-w-4xl">
 
