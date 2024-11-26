@@ -8,11 +8,11 @@ const getImageUrl = (score) => {
   };
   
   export async function generateMetadata({ params, searchParams }) {
-    const catia = parseFloat(searchParams.catia) || 0;
-    const product = parseFloat(searchParams.product) || 0;
+    const catia = parseFloat(searchParams.catia);
+    const product = parseFloat(searchParams.product);
     const yourScore = (catia + product) / 2;
   
-    const metaDescription = `Your English proficiency score is ${yourScore}%. Take the challenge and improve your skills!`;
+    const metaDescription = `Automotive Product Design quiz!`;
   
     return {
       title: `Take the challenge and improve your skills!`,

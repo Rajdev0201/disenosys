@@ -1,7 +1,8 @@
 "use client"
+import Head from 'next/head'
 import { useSearchParams } from 'next/navigation'
-import React from 'react'
-import { FaFacebook, FaLinkedin } from 'react-icons/fa'
+import React, { useState } from 'react'
+import { FaFacebook, FaLinkedin, FaWhatsappSquare } from 'react-icons/fa'
 import { IoLinkSharp } from 'react-icons/io5'
 
 
@@ -36,20 +37,62 @@ const Results = () => {
 
     const shareOnLinkedIn = () => {
       const examLink = `https://www.disenosys.com/quicktest`;
-      const title = encodeURIComponent(`I scored ${yourScore}% on the CEFR Quiz!`);
+      const title = encodeURIComponent(`I scored ${yourScore}% on the Automotive Product Design quiz!`);
       const summary = encodeURIComponent(
         `My level is ${yourLevel}. Try the quiz and see your score!`
       );
       const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
         examLink
       )}&title=${title}&summary=${summary}`;
-  
+      
       window.open(linkedInUrl, "_blank");
+    };
+    
+    const shareOnFacebook = () => {
+      const examLink = `https://www.disenosys.com/quicktest`;
+      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(examLink)}`;
+      
+      window.open(facebookUrl, "_blank", "noopener,noreferrer");
+    };
+    
+    const shareOnWhatsApp = () => {
+      const examLink = `https://www.disenosys.com/quicktest`;
+      const message = `I scored ${yourScore}% on the Automotive Product Design quiz! My level is ${yourLevel}. Check it out here: ${examLink}`;
+      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+      
+      window.open(whatsappUrl, "_blank");
+    };
+    
+    // const handleWhatsAppShare = (code) => {
+    //   const message = `Check out this college code: ${code}`;
+    //   const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
+    //     message
+    //   )}`;
+    //   window.open(whatsappUrl, "_blank");
+    // };
+    
+    const examLink = "https://www.disenosys.com/quicktest";
+    const [copySuccess, setCopySuccess] = useState("");
+
+    const copyLink = () => {
+      navigator.clipboard.writeText(examLink).then(() => {
+        setCopySuccess("Link copied!");
+        setTimeout(() => setCopySuccess(""), 2000); 
+      });
     };
    
   return (
     <>    
-  
+    <Head>
+    <meta property="og:title" content="Take the CEFR Quiz!" />
+<meta property="og:description" content="Find out your CEFR level by taking this quick quiz!" />
+<meta property="og:image" content="https://www.disenosys.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fl.8f3043b1.jpg&w=3840&q=75" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://www.disenosys.com/quicktest" />
+<meta property="og:type" content="website" />
+
+    </Head>
 
     <div className="min-h-screen bg-blue-100 flex justify-center items-center font-poppins p-4">
       <div className="grid sm:grid-cols-2  w-full max-w-4xl">
@@ -90,7 +133,7 @@ const Results = () => {
           <div className="mt-8 text-center">
             <p className="text-md mb-2 font-bold font-poppins">Share your score</p>
             <div className="flex space-x-2 justify-center">
-              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110" >
+              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"onClick={shareOnFacebook}>
               <FaFacebook className='w-6 h-6'/>
               </button>
               <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"
@@ -100,9 +143,15 @@ const Results = () => {
               >
               <FaLinkedin className="w-6 h-6"/>
               </button>
-              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110">
+              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110" onClick={shareOnWhatsApp}>
+              <FaWhatsappSquare className='w-6 h-6' />
+              </button>
+              <button className='bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110' onClick={copyLink}>
               <IoLinkSharp className='w-6 h-6' />
               </button>
+              {copySuccess && (
+        <span className="text-sm text-green-500 font-semibold">{copySuccess}</span>
+      )}
             </div>
           </div>
         </div>
