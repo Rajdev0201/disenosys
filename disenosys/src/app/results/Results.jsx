@@ -34,7 +34,7 @@ const Results = () => {
 
    const scorePageUrl = `https://www.disenosys.com/quicktest`;
    const shareToLinkedIn = () => {
-    const scorePageUrl = `https://www.disenosys.com/quicktest`;
+    const scorePageUrl = `https://www.disenosys.com/results`;
     const metaTitle = `Your English Proficiency Score: ${yourScore}%`;
     const metaDescription = `Take the challenge and improve your skills! Visit now to explore your results.`;
 
