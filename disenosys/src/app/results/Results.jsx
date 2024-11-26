@@ -34,6 +34,18 @@ const Results = () => {
     };
     const yourLevel = getCEFRLevel(yourScore);
 
+    const shareOnLinkedIn = () => {
+      const examLink = `https://www.disenosys.com/quicktest`;
+      const title = encodeURIComponent(`I scored ${yourScore}% on the CEFR Quiz!`);
+      const summary = encodeURIComponent(
+        `My level is ${yourLevel}. Try the quiz and see your score!`
+      );
+      const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+        examLink
+      )}&title=${title}&summary=${summary}`;
+  
+      window.open(linkedInUrl, "_blank");
+    };
    
   return (
     <>    
@@ -82,11 +94,9 @@ const Results = () => {
               <FaFacebook className='w-6 h-6'/>
               </button>
               <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"
-              onClick={() => {
-                const examLink = `https://www.disenosys.com/quicktest`;
-                const linkedInShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(examLink)}`;
-                window.open(linkedInShareUrl, "_blank");
-              }}
+              onClick={ 
+               shareOnLinkedIn
+              }
               >
               <FaLinkedin className="w-6 h-6"/>
               </button>
