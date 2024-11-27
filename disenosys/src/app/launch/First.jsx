@@ -22,11 +22,10 @@ const First = () => {
 
 
   useEffect(() => {
-    axios.get('https://disenosys-1.onrender.com/api/questions')
+    axios.get('https://disenosys-1.onrender.com/api/questions/catia')
       .then(response => {
-        // Get only the first 10 questions from the response data
         const firstTenQuestions = response.data.slice(0, 10);
-        setQuestions(firstTenQuestions); // Update state with the 10 questions
+        setQuestions(firstTenQuestions);
       })
       .catch(error => {
         console.error('Error fetching questions:', error);

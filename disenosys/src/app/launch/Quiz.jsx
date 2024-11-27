@@ -6,18 +6,18 @@ const QuizScreen = ({ questions }) => {
   const router = useRouter();
 
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(
-    parseInt(localStorage.getItem("currentQuestionIndex")) || 0
+    parseInt(localStorage.getItem("currentQuestionIndex0")) || 0
   );
 
   const [selectedAnswer, setSelectedAnswer] = useState(null);
 
   const [answers, setAnswers] = useState(
-    JSON.parse(localStorage.getItem("answers")) ||
+    JSON.parse(localStorage.getItem("answers0")) ||
       Array(questions?.length || 0).fill({ status: "unanswered" })
   );
 
   const [globalTimeRemaining, setGlobalTimeRemaining] = useState(() => {
-    const startTime = localStorage.getItem("startTime");
+    const startTime = localStorage.getItem("startTime0");
     if (startTime) {
       const now = new Date();
       const elapsedTime = now - new Date(startTime);
@@ -28,14 +28,14 @@ const QuizScreen = ({ questions }) => {
   });
 
   useEffect(() => {
-    if (!localStorage.getItem("startTime")) {
+    if (!localStorage.getItem("startTime0")) {
       const now = new Date();
-      localStorage.setItem("startTime", now.toISOString());
+      localStorage.setItem("startTime0", now.toISOString());
     }
   }, []);
 
   useEffect(() => {
-    const startTime = new Date(localStorage.getItem("startTime"));
+    const startTime = new Date(localStorage.getItem("startTime0"));
     const examDuration = 450 * 1000;
 
     const timer = setInterval(() => {
@@ -77,12 +77,12 @@ const QuizScreen = ({ questions }) => {
     };
 
     setAnswers(updatedAnswers);
-    localStorage.setItem("answers", JSON.stringify(updatedAnswers));
+    localStorage.setItem("answers0", JSON.stringify(updatedAnswers));
 
     if (currentQuestionIndex < questions.length - 1) {
       const nextIndex = currentQuestionIndex + 1;
       setCurrentQuestionIndex(nextIndex);
-      localStorage.setItem("currentQuestionIndex", nextIndex);
+      localStorage.setItem("currentQuestionIndex0", nextIndex);
       setSelectedAnswer(null);
     } else {
       handleFinish();

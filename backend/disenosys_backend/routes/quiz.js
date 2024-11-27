@@ -1,5 +1,7 @@
 const express = require('express');
 const Question = require('../models/quiz.js');
+const catia = require('../models/catia.js');
+const product = require('../models/product.js');
 const router = express.Router();
 
 
@@ -17,7 +19,24 @@ router.get('/', async (req, res) => {
 
 
 
+router.get('/catia', async (req, res) => {
+  try {
+    const questions = await catia.find();
+    res.json(questions);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
 
+
+router.get('/product', async (req, res) => {
+  try {
+    const questions = await product.find();
+    res.json(questions);
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error' });
+  }
+});
 
 
 

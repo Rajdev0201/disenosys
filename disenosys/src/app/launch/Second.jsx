@@ -20,7 +20,7 @@ import axios from 'axios';
 
       
   useEffect(() => {
-    axios.get('https://disenosys-1.onrender.com/api/questions')
+    axios.get('https://disenosys-1.onrender.com/api/questions/product')
       .then(response => {
         // Get only the first 10 questions from the response data
         const firstTenQuestions = response.data.slice(0, 10);
