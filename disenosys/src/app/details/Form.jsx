@@ -89,12 +89,12 @@ const Form = () => {
         localStorage.removeItem("catiaPercentage");
         localStorage.removeItem("totalScoreProduct");
         localStorage.removeItem("productPercentage");
-        localStorage.removeItem("answers");
-        localStorage.removeItem("startTime");
+        localStorage.removeItem("answers0");
+        localStorage.removeItem("startTime0");
         localStorage.removeItem("answers1");
         localStorage.removeItem("startTime1");
         localStorage.removeItem("currentQuestionIndex1");
-        localStorage.removeItem("currentQuestionIndex");
+        localStorage.removeItem("currentQuestionIndex0");
 
         router.push(`results?catia=${catiaScore}&product=${productScore}`);
         console.log("Result submitted successfully:", response.data);
