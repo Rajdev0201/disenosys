@@ -102,7 +102,7 @@ const ProductQuizScreen = ({ questions }) => {
   };
 
   const handleFinish = async () => {
-    // const result = calculateResult();
+    // const result = calculateResult();//
     calculateResult();
 
     alert("Product Quiz submitted successfully! Proceed to the next section.");
