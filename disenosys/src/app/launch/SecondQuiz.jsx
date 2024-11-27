@@ -141,7 +141,7 @@ const ProductQuizScreen = ({ questions }) => {
                 key={index}
                 className={`flex items-center bg-white border ${
                   selectedAnswer === option
-                    ? "border-blue-500"
+                    ? "border-[#182073] border-4 bg-[#182073] text-white"
                     : "border-gray-300"
                 } rounded-lg py-2 px-4`}
                 onClick={() => handleAnswerChange(option)}
@@ -149,7 +149,7 @@ const ProductQuizScreen = ({ questions }) => {
                 <input
                   type="radio"
                   name={`question-${currentQuestionIndex}`}
-                  className="form-radio text-[#182073] mr-4"
+                  className="form-radio text-[#182073] accent-[#182073] mr-4"
                   checked={selectedAnswer === option}
                   readOnly
                 />

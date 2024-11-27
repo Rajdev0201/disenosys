@@ -1,9 +1,9 @@
-"use client"
+"use client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import PhoneInput from 'react-phone-input-2';
-import 'react-phone-input-2/lib/style.css';
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const Form = () => {
   const [formData, setFormData] = useState({
@@ -15,8 +15,7 @@ const Form = () => {
     dob: "",
   });
 
-
- const router = useRouter();
+  const router = useRouter();
   const [errors, setErrors] = useState({});
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -32,16 +31,27 @@ const Form = () => {
 
   const handlePhoneChange = (phone) => {
     setFormData({ ...formData, phone });
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      phone: "",
+    }));
   };
 
   const validate = () => {
     const newErrors = {};
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required.";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required.";
+    if (!formData.firstName.trim())
+      newErrors.firstName = "First name is required.";
+    if (!formData.lastName.trim())
+      newErrors.lastName = "Last name is required.";
     if (!formData.email.trim()) newErrors.email = "Email is required.";
-    else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Invalid email format.";
+    else if (!/\S+@\S+\.\S+/.test(formData.email))
+      newErrors.email = "Invalid email format.";
+    if (!formData.phone.trim()) newErrors.phone = "Phone number is required.";
+    else if (!/^\d{10,15}$/.test(formData.phone))
+      newErrors.phone = "Invalid phone number format. Enter 10-15 digits.";  
     if (!formData.dob.trim()) newErrors.dob = "Year of birth is required.";
-    else if (!/^\d{4}$/.test(formData.dob)) newErrors.dob = "Enter a valid year (YYYY).";
+    else if (!/^\d{4}$/.test(formData.dob))
+      newErrors.dob = "Enter a valid year (YYYY).";
 
     return newErrors;
   };
@@ -56,21 +66,25 @@ const Form = () => {
         const catiaScore = localStorage.getItem("totalScoreCatia") || 0;
         const catiaPercentage = localStorage.getItem("catiaPercentage") || 0;
         const productScore = localStorage.getItem("totalScoreProduct") || 0;
-        const productPercentage = localStorage.getItem("productPercentage") || 0;
-  
-        const response = await axios.post("https://disenosys-1.onrender.com/exam/details", {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          phone: formData.phone,
-          country: formData.country,
-          dob: formData.dob,
-          catiaScore,
-          catiaPercentage,
-          productScore,
-          productPercentage,
-        });
-  
+        const productPercentage =
+          localStorage.getItem("productPercentage") || 0;
+
+        const response = await axios.post(
+          "https://disenosys-1.onrender.com/exam/details",
+          {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            phone: formData.phone,
+            country: formData.country,
+            dob: formData.dob,
+            catiaScore,
+            catiaPercentage,
+            productScore,
+            productPercentage,
+          }
+        );
+
         localStorage.removeItem("totalScoreCatia");
         localStorage.removeItem("catiaPercentage");
         localStorage.removeItem("totalScoreProduct");
@@ -80,7 +94,7 @@ const Form = () => {
         localStorage.removeItem("answers1");
         localStorage.removeItem("startTime1");
         localStorage.removeItem("currentQuestionIndex1");
-        localStorage.removeItem("currentQuestionIndex")
+        localStorage.removeItem("currentQuestionIndex");
 
         router.push(`results?catia=${catiaScore}&product=${productScore}`);
         console.log("Result submitted successfully:", response.data);
@@ -89,16 +103,20 @@ const Form = () => {
       }
     }
   };
-  
 
   return (
     <div className="bg-blue-100 min-h-screen flex items-center justify-center px-4">
       <div className="bg-white shadow-md rounded-lg w-full max-w-md p-6">
-        <h1 className="text-2xl font-bold text-center mb-2">You&apos;re almost there...</h1>
+        <h1 className="text-2xl font-bold text-center mb-2">
+          You&apos;re almost there...
+        </h1>
         <p className="text-gray-600 text-center mb-6">Confirm your details</p>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="firstName">
+            <label
+              className="block text-sm font-medium text-gray-700 mb-1"
+              htmlFor="firstName"
+            >
               * First name(s)
             </label>
             <input
@@ -113,11 +131,16 @@ const Form = () => {
               onChange={handleChange}
               placeholder="Enter your first name"
             />
-            {errors.firstName && <p className="text-sm text-red-500 mt-1">{errors.firstName}</p>}
+            {errors.firstName && (
+              <p className="text-sm text-red-500 mt-1">{errors.firstName}</p>
+            )}
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="lastName">
+            <label
+              className="block text-sm font-medium text-gray-700 mb-1"
+              htmlFor="lastName"
+            >
               * Last name(s)
             </label>
             <input
@@ -132,11 +155,16 @@ const Form = () => {
               onChange={handleChange}
               placeholder="Enter your last name"
             />
-            {errors.lastName && <p className="text-sm text-red-500 mt-1">{errors.lastName}</p>}
+            {errors.lastName && (
+              <p className="text-sm text-red-500 mt-1">{errors.lastName}</p>
+            )}
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="email">
+            <label
+              className="block text-sm font-medium text-gray-700 mb-1"
+              htmlFor="email"
+            >
               * Email address
             </label>
             <input
@@ -151,32 +179,45 @@ const Form = () => {
               onChange={handleChange}
               placeholder="Enter your email"
             />
-            {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
+            {errors.email && (
+              <p className="text-sm text-red-500 mt-1">{errors.email}</p>
+            )}
           </div>
 
-          
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="phone">
-            * Phone
+            <label
+              className="block text-sm font-medium text-gray-700 mb-1"
+              htmlFor="phone"
+            >
+              * Phone
             </label>
             <div className="flex">
-            <PhoneInput
-            country={'in'}
-            value={formData.phone}
-            onChange={handlePhoneChange}
-            placeholder="Enter your number"
-            inputProps={{
-              name: 'phone',
-              required: true,
-              autoFocus: true,
-              className: 'w-[260px] lg:w-[350px] border border-gray-300 p-2 ml-12 rounded-md',
-            }}
-          />
+              <PhoneInput
+                country={"in"}
+                id="phone"
+                value={formData.phone}
+                onChange={handlePhoneChange}
+                placeholder="Enter your number"
+                inputProps={{
+                  name: "phone",
+                  required: true,
+                  autoFocus: true,
+                  className: `w-[250px] md:w-[350px] border ${
+                    errors.phone ? "border-red-500" : "border-gray-300"
+                  } p-2 ml-12 rounded-md`,
+                }}
+              />
             </div>
+            {errors.phone && (
+    <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
+  )}
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="country">
+            <label
+              className="block text-sm font-medium text-gray-700 mb-1"
+              htmlFor="country"
+            >
               * Country of residence
             </label>
             <select
@@ -187,11 +228,24 @@ const Form = () => {
             >
               <option value="India">India</option>
               <option value="USA">USA</option>
+              <option value="Canada">Canada</option>
+              <option value="United Kingdom">United Kingdom</option>
+              <option value="Australia">Australia</option>
+              <option value="Germany">Germany</option>
+              <option value="France">France</option>
+              <option value="Japan">Japan</option>
+              <option value="China">China</option>
+              <option value="Brazil">Brazil</option>
+              <option value="South Africa">South Africa</option>
+              <option value="Russia">Russia</option>
             </select>
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-gray-700 mb-1" htmlFor="dob">
+            <label
+              className="block text-sm font-medium text-gray-700 mb-1"
+              htmlFor="dob"
+            >
               * Year of birth (YYYY)
             </label>
             <input
@@ -206,7 +260,9 @@ const Form = () => {
               onChange={handleChange}
               placeholder="Enter your year of birth"
             />
-            {errors.dob && <p className="text-sm text-red-500 mt-1">{errors.dob}</p>}
+            {errors.dob && (
+              <p className="text-sm text-red-500 mt-1">{errors.dob}</p>
+            )}
           </div>
 
           <button

@@ -4,16 +4,16 @@ import React from 'react';
 
 const Main = () => {
   return (
-    <div className="bg-[#D0D2E3] min-h-screen flex flex-col items-center justify-center mt-12">
-      <h1 className="text-4xl md:text-5xl font-bold mb-4 text-center text-[#182073]">
+    <div className="bg-[#D0D2E3] min-h-screen flex flex-col items-center justify-center mt-20 lg:mt-12">
+      <h1 className="text-2xl md:text-5xl font-bold mb-4 mt-10 text-center text-[#182073]">
          Automotive Product Design quiz
       </h1>
 
     
-      <div className="bg-white shadow-lg rounded-lg mt-2 flex flex-col md:flex-row items-center md:items-start w-11/12 md:w-3/4 lg:w-3/4 px-20 py-16">
+      <div className="bg-white shadow-lg rounded-lg mt-4 flex flex-col md:flex-row items-center w-full sm:w-11/12 md:w-3/4 lg:w-2/3 px-6 sm:px-10 lg:px-20 py-6 sm:py-10 lg:py-16 space-y-6 md:space-y-0">
         
-        <div className="flex items-center justify-center text-green-500 font-bold text-6xl md:text-7xl mr-4">
-          <div className="flex justify-center items-center mt-16 gap-2">
+        <div className="flex items-start lg:items-center justify-start lg:justify-center text-green-500 font-bold text-6xl md:text-7xl mr-4">
+          <div className="flex justify-center items-center mt-3 lg:mt-1 gap-2">
             <span className='text-[#182073]'>15</span>
             <div className="text-sm md:text-base font-medium text-gray-700">
               <span className="block text-sm font-light">MIN</span>
@@ -23,9 +23,9 @@ const Main = () => {
           </div>
         </div>
   
-  <div className='border-2 border-r-gray-200 h-48'></div>
+  <div className='border-2 lg:border-b-gray-200 lg:border-2 lg:border-r-gray-200 w-full lg:w-0 lg:h-48'></div>
 
-        <div className="flex flex-col text-gray-600 text-md space-y-6 font-semibold md:ml-6">
+        <div className="flex flex-col text-gray-600 text-md space-y-6 mt-2 lg:mt-0 font-semibold md:ml-6">
           <p>
           This quick quiz assesses your Automotive Product Design skills in just 15 minutes, covering CATIA V5 proficiency and key product design concepts.
           </p>
