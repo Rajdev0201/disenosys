@@ -55,50 +55,53 @@ const LinkedInAuth = () => {
         return canvas.toDataURL("image/png"); // Convert it to a base64 image URL
     };
 
-    const sharePost = async () => {
-        if (!accessToken || !userUrn) {
-            alert("Please fetch your profile first!");
-            return;
-        }
+ const sharePost = async () => {
+    if (!accessToken || !userUrn) {
+        alert("Please fetch your profile first!");
+        return;
+    }
 
-        // Generate the score image
-        const imageUrl = await generateScoreImage();
+    // Generate the score image
+    const imageUrl = await generateScoreImage();
 
-        const postBody = {
-            author: `urn:li:person:${userUrn}`,
-            lifecycleState: "PUBLISHED",
-            "specificContent": {
-                "com.linkedin.ugc.ShareContent": {
-                    "shareCommentary": {
-                        "text": "Check out my score!"
-                    },
-                    "shareMediaCategory": "IMAGE", // Share image instead of article
-                    "media": [
-                        {
-                            "status": "READY",
-                            "description": {
-                                "text": "Here's my scorecard!"
-                            },
-                            "originalUrl": imageUrl, // Image URL from canvas
-                            "title": {
-                                "text": "My Score Card"
-                            }
+    const postBody = {
+        author: `urn:li:person:${userUrn}`,
+        lifecycleState: "PUBLISHED",
+        "specificContent": {
+            "com.linkedin.ugc.ShareContent": {
+                "shareCommentary": {
+                    "text": "Check out my score!"
+                },
+                "shareMediaCategory": "IMAGE", // Share image instead of article
+                "media": [
+                    {
+                        "status": "READY",
+                        "description": {
+                            "text": "Here's my scorecard!"
+                        },
+                        "originalUrl": imageUrl, // Image URL from canvas
+                        "title": {
+                            "text": "My Score Card"
                         }
-                    ]
-                }
-            },
-            visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
-        };
-
-        try {
-            await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
-                headers: { Authorization: `Bearer ${accessToken}` },
-            });
-            alert("Post shared successfully!");
-        } catch (error) {
-            console.error("Error sharing post:", error);
-        }
+                    }
+                ]
+            }
+        },
+        visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
     };
+
+    try {
+        const response = await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
+            headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        alert("Post shared successfully!");
+    } catch (error) {
+        // Enhanced error handling
+        console.error("Error sharing post:", error.response?.data || error.message);
+        alert("Error sharing post: " + (error.response?.data?.message || error.message));
+    }
+};
+
 
     // Automatically detect authorization code from URL and exchange for token
     useEffect(() => {
