@@ -42,7 +42,7 @@ const Results = () => {
       return "C1/C2 Advanced";
     };
     const yourLevel = getCEFRLevel(yourScore);
-
+    console.log("Sharing post with score:", yourScore);
     const [accessToken, setAccessToken] = useState("");
     const [userUrn, setUserUrn] = useState("");
     const [showFetchProfilePopup, setShowFetchProfilePopup] = useState(false);
@@ -107,7 +107,7 @@ const Results = () => {
         "specificContent": {
           "com.linkedin.ugc.ShareContent": {
             "shareCommentary": {
-              "text": "I scored " + yourScore + "% in my recent quiz! #CEFR #Learning"
+              "text": `I scored ${yourScore}% in my recent quiz! #CEFR #Learning`
           },
           "shareMediaCategory": "ARTICLE",
           "media": [
