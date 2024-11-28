@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { FaFacebook, FaLinkedin, FaWhatsappSquare } from 'react-icons/fa'
 import { IoLinkSharp } from 'react-icons/io5'
-
+import { useRef } from "react";
+import { toPng } from "html-to-image";
 
 
 
@@ -77,7 +78,6 @@ const Results = () => {
       }
     };
   
-    // Get LinkedIn profile using access token
     const getProfile = async () => {
       if (!accessToken) return;
   
@@ -88,58 +88,73 @@ const Results = () => {
   
         setUserUrn(data.profile.sub);
         console.log("Profile data:", data.profile.sub);
-        setShowFetchProfilePopup(false); // Close fetch profile popup after successful fetch
-        setShowSharePostPopup(true); // Show the share post popup after profile is fetched
+        setShowFetchProfilePopup(false);
+        setShowSharePostPopup(true);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
     };
   
-    const sharePost = async () => {
-      if (!accessToken || !userUrn) {
-        alert("Please fetch your profile first!");
-        return;
-      }
-  
-      const postBody = {
-        author: `urn:li:person:${userUrn}`,
-        lifecycleState: "PUBLISHED",
-        "specificContent": {
-          "com.linkedin.ugc.ShareContent": {
-            "shareCommentary": {
-              "text": `I scored ${yourScore}% in my recent quiz! #CEFR #Learning`
-          },
-          "shareMediaCategory": "ARTICLE",
-          "media": [
-              {
-                  "status": "READY",
-                  "description": {
-                      "text": "Check out my score and learn more about CEFR."
-                  },
-                  "originalUrl": "https://www.disenosys.com/quicktest",
-                  "title": {
-                      "text": "CEFR Quiz Score"
-                  }
-              }
-          ]
-      }
-  },
-        visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
-      };
-  
-      try {
-        await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        alert("Post shared successfully!");
-        setShowSharePostPopup(false);
-        router.push("/")
-      } catch (error) {
-        console.error("Error sharing post:", error);
-      }
-    };
 
-    // Automatically detect authorization code from URL and exchange for token
+const sharePost = async () => {
+  if (!accessToken || !userUrn) {
+    alert("Please fetch your profile first!");
+    return;
+  }
+
+  // Convert score template to image
+  const templateRef = useRef(null);
+  const image = await toPng(templateRef.current);
+
+  const postBody = {
+    author: `urn:li:person:${userUrn}`,
+    lifecycleState: "PUBLISHED",
+    specificContent: {
+      "com.linkedin.ugc.ShareContent": {
+        "shareCommentary": {
+          text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
+        },
+        "shareMediaCategory": "IMAGE",
+        media: [
+          {
+            status: "READY",
+            description: {
+              text: "Check out my score and learn more about automotive design quiz.",
+            },
+            originalUrl: image, // Use the generated image URL
+            title: {
+              text: "CEFR Quiz Score",
+            },
+          },
+          {
+            status: "READY",
+            description: {
+              text: "Discover more at the link below!",
+            },
+            originalUrl: "https://www.disenosys.com/quicktest", // Include the link as an additional media item
+            title: {
+              text: "Automotive Design Quiz",
+            },
+          },
+        ],
+      },
+    },
+    visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+  };
+
+  try {
+    await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    });
+    alert("Post shared successfully!");
+    setShowSharePostPopup(false);
+    router.push("/");
+  } catch (error) {
+    console.error("Error sharing post:", error);
+  }
+};
+
+
     useEffect(() => {
         const queryParams = new URLSearchParams(window.location.search);
         const code = queryParams.get("code");
@@ -165,7 +180,7 @@ const Results = () => {
       <div className="grid sm:grid-cols-2  w-full max-w-4xl">
 
         <div className="flex flex-col items-center bg-white rounded-md shadow-md ml-24 w-80 h-96">
-        <div className='bg-[#182073] w-full p-6 text-center flex flex-col items-center'>
+        <div ref={templateRef} className='bg-[#182073] w-full p-6 text-center flex flex-col items-center'>
           <p className="text-lg font-semibold text-white">Your Score:</p>
           <p className="text-xl font-bold text-white">{yourLevel}</p>
           <div className="flex items-center justify-center w-28 h-28  mt-5">
@@ -213,8 +228,8 @@ const Results = () => {
         
         <>
           {showFetchProfilePopup && (
-  <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-    <div className="bg-white p-5 rounded-md shadow-md w-64 text-center">
+  <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white p-5 rounded-md shadow-md w-64 h-12 text-center">
       <h2 className="text-lg font-bold mb-4">Ready to post</h2>
       <button 
         onClick={getProfile} 
@@ -225,10 +240,9 @@ const Results = () => {
   </div>
 )}
 
-          {/* Show the share post popup after profile fetch */}
           {showSharePostPopup && (
-             <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
-             <div className="bg-white p-5 rounded-md shadow-md w-64 text-center">
+             <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+             <div className="bg-white p-5 rounded-md shadow-md w-64 h-12 text-center">
                <h2 className="text-lg font-bold mb-4">Share to post</h2>
                 <button onClick={sharePost} className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
                   Share
