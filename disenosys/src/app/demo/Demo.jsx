@@ -15,7 +15,7 @@ const LinkedInAuth = () => {
     const startLinkedInAuth = async () => {
         try {
             const { data } = await axios.get("https://disenosys-1.onrender.com/exam/auth");
-            window.location.href = data.url; // Redirect user to LinkedIn for authentication
+            window.location.href = data.url;
         } catch (error) {
             console.error("Error starting LinkedIn auth:", error);
         }

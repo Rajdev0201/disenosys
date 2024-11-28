@@ -312,7 +312,7 @@ router.post('/details', async (req, res) => {
 // LinkedIn API Configuration
 const CLIENT_ID = '86tuwotemzkyou';
 const CLIENT_SECRET = 'WPL_AP1.0tC5x2NKzBmqgcTL.f5A/ug==';
-const REDIRECT_URI = 'https://www.disenosys.com/results';
+const REDIRECT_URI = 'https://www.disenosys.com/demo';
 
 
 // Step 1: Generate Authorization URL
