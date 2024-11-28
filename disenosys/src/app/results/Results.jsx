@@ -1,11 +1,11 @@
 "use client"
 import axios from 'axios'
 import Head from 'next/head'
+import { useRouter } from 'next/navigation'
 // import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { FaFacebook, FaLinkedin, FaWhatsappSquare } from 'react-icons/fa'
 import { IoLinkSharp } from 'react-icons/io5'
-
 
 
 
@@ -16,7 +16,7 @@ const Results = () => {
     // const product = Number(search.get("product")) || 0;
     // const catia = clamp(Number(search.get("catia")) || 0, 0, 100); 
     // const product = clamp(Number(search.get("product")) || 0, 0, 100);
-
+    const router = useRouter()
 
     const catiaPercentage = localStorage.getItem("catiaPercentage") || 0;
     const productPercentage =
@@ -133,6 +133,7 @@ const Results = () => {
         });
         alert("Post shared successfully!");
         setShowSharePostPopup(false);
+        router.push("/")
       } catch (error) {
         console.error("Error sharing post:", error);
       }
@@ -229,7 +230,7 @@ const Results = () => {
              <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
              <div className="bg-white p-5 rounded-md shadow-md w-64 text-center">
                <h2 className="text-lg font-bold mb-4">Share to post</h2>
-                <button onClick={sharePost} className="bg-blue-500 ml-2">
+                <button onClick={sharePost} className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
                   Share
                 </button>
               </div>
