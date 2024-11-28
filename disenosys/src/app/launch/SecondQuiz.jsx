@@ -129,7 +129,7 @@ const ProductQuizScreen = ({ questions }) => {
         </h1>
       </div>
 
-      <div className="bg-[#D0D2E3] h-screen flex flex-col items-center pt-20 border-4 border-t-[#182073]">
+      <div className="bg-blue-100 h-screen flex flex-col items-center pt-20 border-4 border-t-[#182073]">
         <div className="bg-[#E7E8F1] shadow-lg rounded-lg w-11/12 sm:w-3/4 md:w-2/5 lg:w-1/3 p-6">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             {questions[currentQuestionIndex].question}

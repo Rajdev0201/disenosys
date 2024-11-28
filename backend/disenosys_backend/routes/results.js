@@ -3,6 +3,8 @@ const router = express.Router();
 const catia = require("../models/catia");
 const Result = require('../models/results');
 const nodemailer = require('nodemailer');
+const axios = require('axios');
+const qs = require('qs');
 
 
 
@@ -12,7 +14,7 @@ router.get('/getcatia', async (req, res) => {
       res.json(questions);
     } catch (error) {
       res.status(500).json({ message: 'Server Error' });
-    }
+    }ś
   });
 
 
@@ -63,6 +65,123 @@ router.get('/getcatia', async (req, res) => {
 //     }
 // });
 
+
+// Backend: Exchange Authorization Code for Access Token
+
+
+
+// router.post('/auth/exchangeCodeForToken', async (req, res) => {
+//     const { code } = req.body;  // The authorization code from LinkedIn
+  
+//     if (!code) {
+//       return res.status(400).json({ error: 'Authorization code is missing' });
+//     }
+  
+//     const clientId = '86tuwotemzkyou';  
+//     const clientSecret = 'WPL_AP1.0tC5x2NKzBmqgcTL.f5A/ug==';  // Replace with your LinkedIn Client Secret
+//     const redirectUri = 'http://localhost:3000/results';  // Replace with your redirect URI
+    
+  
+//     try {
+//       // Make a POST request to exchange the authorization code for an access token
+//       const response = await axios.post(
+//         'https://www.linkedin.com/oauth/v2/accessToken', 
+//         qs.stringify({
+//           grant_type: 'authorization_code',
+//           code: code,
+//           redirect_uri: redirectUri,
+//           client_id: clientId,
+//           client_secret: clientSecret
+//         }),
+//         {
+//           headers: {
+//             'Content-Type': 'application/x-www-form-urlencoded',
+//           },
+//         }
+//       );
+  
+//       const { access_token } = response.data;
+     
+//       if (access_token) {
+//         res.status(200).json({ accessToken: access_token });
+//       } else {
+//         res.status(400).json({ error: 'Failed to obtain access token' });
+//       }
+//     } catch (error) {
+//         const errorMsg = error.response?.data || error.message;
+//         console.error('Token exchange error:', errorMsg);
+//         if (error.response?.status === 401) {
+//             res.status(401).json({ error: 'Unauthorized. Please reauthorize.' });
+//         } else {
+//             res.status(500).json({ error: 'Server error during token exchange.' });
+//         }
+//     }
+//   });
+
+//   async function getUserURN(accessToken) {
+//     try {
+//         // Fetch user profile information
+//         const response = await axios.get('https://api.linkedin.com/v2/me', {
+//             headers: {
+//                 'Authorization': `Bearer ${accessToken}`,
+//                 'X-Restli-Protocol-Version': '2.0.0',
+//             }
+//         });
+
+//         // LinkedIn API returns the user ID under the 'id' field
+//         const userURN = response.data.id;
+//         // Return the URN in the required format
+//         return `urn:li:person:${userURN}`;
+//     } catch (error) {
+//         // Improved error logging
+//         console.error('Error fetching LinkedIn profile:', error.response ? error.response.data : error.message);
+//         throw new Error('Unable to fetch LinkedIn user data');
+//     }
+// }
+
+
+
+// router.post('/shareLinkedIn', async (req, res) => {
+//     const { accessToken, message } = req.body; 
+//     const userURN = await getUserURN(accessToken);
+//     if (!userURN) {
+//         throw new Error('Invalid user URN');
+//     }
+
+//     const url = 'https://api.linkedin.com/v2/ugcPosts';
+//     const headers = {
+//       'Authorization': `Bearer ${accessToken}`,
+//       'X-Restli-Protocol-Version': '2.0.0',
+//       'Content-Type': 'application/json',
+//     };
+  
+//     const postBody = {
+//       author: userURN, 
+//       lifecycleState: 'PUBLISHED',
+//       specificContent: {
+//         'com.linkedin.ugc.ShareContent': {
+//           shareCommentary: {
+//             text: message,
+//           },
+//           shareMediaCategory: 'NONE',
+//         },
+//       },
+//       visibility: {
+//         'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
+//       },
+//     };
+  
+//     try {
+//       const response = await axios.post(url, postBody, { headers });
+//       res.status(200).json({ message: 'Post shared successfully!', data: response.data });
+//     }  catch (error) {
+//         console.error('Post sharing error:', error.message);
+//         res.status(500).json({ error: error.message });
+//     }
+
+//   });
+  
+  
 
 
 const sendResultEmail = async (studentEmail, studentName, catiaScore, productScore, totalScore) => {
@@ -186,5 +305,99 @@ router.post('/details', async (req, res) => {
         console.log(error);
     }
 });
+
+
+
+
+// LinkedIn API Configuration
+const CLIENT_ID = '86tuwotemzkyou';
+const CLIENT_SECRET = 'WPL_AP1.0tC5x2NKzBmqgcTL.f5A/ug==';
+const REDIRECT_URI = 'https://www.disenosys.com/demo';
+
+
+// Step 1: Generate Authorization URL
+router.get("/auth", (req, res) => {
+  const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
+      REDIRECT_URI
+  )}&scope=openid%20profile%20email%20w_member_social`;
+  res.json({ url: authUrl });
+});
+
+
+// Step 2: Exchange Authorization Code for Access Token
+router.post("/get-access-token", async (req, res) => {
+  const { code } = req.body; 
+
+  try {
+    const response = await axios.post('https://www.linkedin.com/oauth/v2/accessToken', null, {
+      params: {
+        grant_type: "authorization_code",
+        code : code,
+        redirect_uri: REDIRECT_URI,
+        client_id: CLIENT_ID,
+        client_secret:CLIENT_SECRET,
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+    const tokenData = response.data;
+   console.log(tokenData);
+      // On success, return the access token
+      res.json({ accessToken: tokenData.access_token });
+  } catch (error) {
+      console.error("Error getting access token:", error.response?.data || error.message);
+      res.status(500).json({ error: "Failed to get access token" });
+  }
+});
+
+
+// Step 3: Fetch User's LinkedIn Profile (URN)
+router.get("/profile", async (req, res) => {
+    const { authorization } = req.headers;
+
+    try {
+        const response = await axios.get("https://api.linkedin.com/v2/userinfo", {
+            headers: { Authorization: authorization }
+        });
+
+        const urn = `urn:li:person:${response.data.id}`;
+        res.json({ urn, profile: response.data });
+    } catch (error) {
+        console.error("Error fetching profile:", error.response?.data || error.message);
+        res.status(500).json({ error: "Failed to fetch profile" });
+    }
+});
+
+// Step 4: Share a Post on LinkedIn
+router.post("/share", async (req, res) => {
+    const { authorization } = req.headers;
+    const postBody = req.body;
+
+    try {
+        const response = await axios.post("https://api.linkedin.com/v2/ugcPosts", postBody, {
+            headers: {
+                Authorization: authorization,
+                "Content-Type": "application/json",
+                "X-Restli-Protocol-Version": "2.0.0"
+            }
+        });
+
+        res.status(201).json({ message: "Post shared successfully!", data: response.data });
+    } catch (error) {
+        console.error("Error sharing post:", error.response?.data || error.message);
+        res.status(500).json({ error: "Failed to share post" });
+    }
+});
+
+
+
+
+
+
+
+
+
 
 module.exports = router;
