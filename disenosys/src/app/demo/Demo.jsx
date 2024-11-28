@@ -49,7 +49,6 @@ const LinkedInAuth = () => {
         }
     };
     
-    // Share a post to LinkedIn
     const sharePost = async () => {
         if (!accessToken || !userUrn) {
             alert("Please fetch your profile first!");
@@ -59,11 +58,25 @@ const LinkedInAuth = () => {
         const postBody = {
             author: `urn:li:person:${userUrn}`,
             lifecycleState: "PUBLISHED",
-            specificContent: {
+            "specificContent": {
                 "com.linkedin.ugc.ShareContent": {
-                    shareCommentary: { text: "Hello LinkedIn!" },
-                    shareMediaCategory: "NONE",
-                },
+                    "shareCommentary": {
+                        "text": "Learning more about LinkedIn by reading the LinkedIn Blog!"
+                    },
+                    "shareMediaCategory": "ARTICLE",
+                    "media": [
+                        {
+                            "status": "READY",
+                            "description": {
+                                "text": "Official LinkedIn Blog - Your source for insights and information about LinkedIn."
+                            },
+                            "originalUrl": "https://www.disenosys.com/quicktest",
+                            "title": {
+                                "text": "Official LinkedIn Blog"
+                            }
+                        }
+                    ]
+                }
             },
             visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
         };

@@ -1,7 +1,8 @@
 "use client"
+import axios from 'axios'
 import Head from 'next/head'
 import { useSearchParams } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaFacebook, FaLinkedin, FaWhatsappSquare } from 'react-icons/fa'
 import { IoLinkSharp } from 'react-icons/io5'
 
@@ -14,8 +15,8 @@ const Results = () => {
     // const catia = Number(search.get("catia")) || 0; 
     // const product = Number(search.get("product")) || 0;
     const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
-    const catia = clamp(Number(search.get("catia")) || 0, 0, 100); // Ensure valid score
-  const product = clamp(Number(search.get("product")) || 0, 0, 100);
+    const catia = clamp(Number(search.get("catia")) || 0, 0, 100); 
+    const product = clamp(Number(search.get("product")) || 0, 0, 100);
   
     const calculateYourScore = (catia, product) => (catia + product) / 2;
   
@@ -35,52 +36,105 @@ const Results = () => {
     };
     const yourLevel = getCEFRLevel(yourScore);
 
-    const shareOnLinkedIn = () => {
-      const examLink = `https://www.disenosys.com/quicktest`;
-      const title = encodeURIComponent(`I scored ${yourScore}% on the Automotive Product Design quiz!`);
-      const summary = encodeURIComponent(
-        `My level is ${yourLevel}. Try the quiz and see your score!`
-      );
-      const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-        examLink
-      )}&title=${title}&summary=${summary}`;
-      
-      window.open(linkedInUrl, "_blank");
+    const [accessToken, setAccessToken] = useState("");
+    const [userUrn, setUserUrn] = useState("");
+  
+    // Start the LinkedIn OAuth flow
+    const startLinkedInAuth = async () => {
+      try {
+        const { data } = await axios.get("https://disenosys-1.onrender.com/exam/auth");
+        window.location.href = data.url; 
+      } catch (error) {
+        console.error("Error starting LinkedIn auth:", error);
+      }
     };
-    
-    const shareOnFacebook = () => {
-      const examLink = `https://www.disenosys.com/quicktest`;
-      const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(examLink)}`;
-      
-      window.open(facebookUrl, "_blank", "noopener,noreferrer");
+  
+    // Exchange authorization code for an access token
+    const exchangeCodeForToken = async (code) => {
+      try {
+        const { data } = await axios.post("https://disenosys-1.onrender.com/exam/get-access-token", {
+          code,
+        });
+  
+        if (data && data.accessToken) {
+          setAccessToken(data.accessToken);
+          alert("Access token obtained successfully!");
+          getProfile(); // Automatically call getProfile after successful authentication
+        } else {
+          console.error("Access token not obtained");
+        }
+      } catch (error) {
+        console.error("Error exchanging code for token:", error.response?.data || error.message);
+      }
     };
-    
-    const shareOnWhatsApp = () => {
-      const examLink = `https://www.disenosys.com/quicktest`;
-      const message = `I scored ${yourScore}% on the Automotive Product Design quiz! My level is ${yourLevel}. Check it out here: ${examLink}`;
-      const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
-      
-      window.open(whatsappUrl, "_blank");
+  
+    // Get LinkedIn profile using access token
+    const getProfile = async () => {
+      if (!accessToken) return;
+  
+      try {
+        const { data } = await axios.get("https://disenosys-1.onrender.com/exam/profile", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+  
+        setUserUrn(data.profile.sub);
+        console.log("Profile data:", data.profile.sub);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
     };
-    
-    // const handleWhatsAppShare = (code) => {
-    //   const message = `Check out this college code: ${code}`;
-    //   const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(
-    //     message
-    //   )}`;
-    //   window.open(whatsappUrl, "_blank");
-    // };
-    
-    const examLink = "https://www.disenosys.com/quicktest";
-    const [copySuccess, setCopySuccess] = useState("");
+  
+    const sharePost = async () => {
+      if (!accessToken || !userUrn) {
+        alert("Please fetch your profile first!");
+        return;
+      }
+  
+      const postBody = {
+        author: `urn:li:person:${userUrn}`,
+        lifecycleState: "PUBLISHED",
+        "specificContent": {
+          "com.linkedin.ugc.ShareContent": {
+            "shareCommentary": {
+              "text": "I scored " + yourScore + "% in my recent quiz! #CEFR #Learning"
+          },
+          "shareMediaCategory": "ARTICLE",
+          "media": [
+              {
+                  "status": "READY",
+                  "description": {
+                      "text": "Check out my score and learn more about CEFR."
+                  },
+                  "originalUrl": "https://www.disenosys.com/quicktest",
+                  "title": {
+                      "text": "CEFR Quiz Score"
+                  }
+              }
+          ]
+      }
+  },
+        visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+      };
+  
+      try {
+        await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        alert("Post shared successfully!");
+      } catch (error) {
+        console.error("Error sharing post:", error);
+      }
+    };
 
-    const copyLink = () => {
-      navigator.clipboard.writeText(examLink).then(() => {
-        setCopySuccess("Link copied!");
-        setTimeout(() => setCopySuccess(""), 2000); 
-      });
-    };
-   
+    // Automatically detect authorization code from URL and exchange for token
+    useEffect(() => {
+        const queryParams = new URLSearchParams(window.location.search);
+        const code = queryParams.get("code");
+        if (code) {
+            exchangeCodeForToken(code);
+        }
+    }, []);
+
   return (
     <>    
     <Head>
@@ -133,25 +187,25 @@ const Results = () => {
           <div className="mt-8 text-center">
             <p className="text-md mb-2 font-bold font-poppins">Share your score</p>
             <div className="flex space-x-2 justify-center">
-              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"onClick={shareOnFacebook}>
+              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110">
               <FaFacebook className='w-6 h-6'/>
               </button>
               <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"
-              onClick={ 
-               shareOnLinkedIn
-              }
+             
+                onClick={startLinkedInAuth}
+              
               >
               <FaLinkedin className="w-6 h-6"/>
               </button>
-              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110" onClick={shareOnWhatsApp}>
+              <button onClick={sharePost} className="bg-blue-500 ml-2" disabled={!userUrn}>
+                get and share post
+            </button>
+              <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110" >
               <FaWhatsappSquare className='w-6 h-6' />
               </button>
-              <button className='bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110' onClick={copyLink}>
+              <button className='bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110' >
               <IoLinkSharp className='w-6 h-6' />
               </button>
-              {copySuccess && (
-        <span className="text-sm text-green-500 font-semibold">{copySuccess}</span>
-      )}
             </div>
           </div>
         </div>
