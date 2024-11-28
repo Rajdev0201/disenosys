@@ -3,11 +3,10 @@ import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
 // import { useSearchParams } from 'next/navigation'
-import React, { useEffect, useState ,useCallback, useRef  } from "react";
+import React, { useEffect, useState } from "react";
 import { FaFacebook, FaLinkedin, FaWhatsappSquare } from "react-icons/fa";
 import { IoLinkSharp } from "react-icons/io5";
 
-import { toPng } from "html-to-image";
 
 const Results = () => {
   // const search = useSearchParams();
@@ -103,79 +102,69 @@ const Results = () => {
     }
   };
 
-  const ref = useRef(null)
-
-  const onButtonClick = useCallback(async () => {
-    if (ref.current === null) {
-      return;
-    }
-  
-    try {
-      const dataUrl = await toPng(ref.current, { cacheBust: true });
-      return dataUrl;
-    } catch (err) {
-      console.log(err);
-    }
-  }, [ref]);
-
   const sharePost = async () => {
     if (!accessToken || !userUrn) {
       alert("Please fetch your profile first!");
       return;
     }
-
-    // Convert score template to image
-    const image = await onButtonClick();
-
-  if (!image) {
-    alert("Error generating the image!");
-    return;
-  }
-
+  
+    // Register the image first
+    const imageUploadResponse = await axios.post(
+      "https://api.linkedin.com/v2/assets?action=registerUpload",
+      {
+        registerUploadRequest: {
+          recipes: ["urn:li:digitalmediaRecipe:feedshare-image"],
+          owner: `urn:li:person:${userUrn}`,
+          serviceRelationships: [
+            {
+              relationshipType: "OWNER",
+              identifier: "urn:li:userGeneratedContent",
+            },
+          ],
+        },
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+  
+    const imageUrl = imageUploadResponse.data.value.asset; // The image URL from the response
+  
     const postBody = {
       author: `urn:li:person:${userUrn}`,
       lifecycleState: "PUBLISHED",
       specificContent: {
         "com.linkedin.ugc.ShareContent": {
           shareCommentary: {
-            text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
+            text: `I scored ${yourScore}% in my recent quiz! My level is ${yourLevel}. #quiz #Learning`,
           },
-          shareMediaCategory: "IMAGE",
+          shareMediaCategory: "ARTICLE",
           media: [
             {
               status: "READY",
               description: {
                 text: "Check out my score and learn more about automotive design quiz.",
               },
-              originalUrl: image,
+              originalUrl: "https://www.disenosys.com/quicktest",
               title: {
                 text: "CEFR Quiz Score",
               },
-            },
-            {
-              status: "READY",
-              description: {
-                text: "Discover more at the link below!",
-              },
-              originalUrl: "https://www.disenosys.com/quicktest", // Include the link as an additional media item
-              title: {
-                text: "Automotive Design Quiz",
-              },
+              mediaUrl: imageUrl, // Adding the registered image URL
             },
           ],
         },
       },
-      visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+      visibility: {
+        "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC",
+      },
     };
-
+  
     try {
-      await axios.post(
-        "https://disenosys-1.onrender.com/exam/share",
-        postBody,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
+      await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
       alert("Post shared successfully!");
       setShowSharePostPopup(false);
       router.push("/");
@@ -183,7 +172,7 @@ const Results = () => {
       console.error("Error sharing post:", error);
     }
   };
-
+  
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const code = queryParams.get("code");
@@ -213,13 +202,15 @@ const Results = () => {
       <div className="min-h-screen bg-blue-100 flex justify-center items-center font-poppins p-4">
         <div className="grid sm:grid-cols-2  w-full max-w-4xl">
           <div className="flex flex-col items-center bg-white rounded-md shadow-md ml-24 w-80 h-96">
-            <div
-              ref={ref}
-              className="bg-[#182073] w-full p-6 text-center flex flex-col items-center"
-            >
+            <div className="bg-[#182073] w-full p-6 text-center flex flex-col items-center">
               <p className="text-lg font-semibold text-white">Your Score:</p>
               <p className="text-xl font-bold text-white">{yourLevel}</p>
-              <div className="flex items-center justify-center w-28 h-28  mt-5">
+              <div className="flex items-center justify-center w-28 h-28  mt-5"
+              style={{
+                backgroundImage: `url('https://www.disenosys.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fl.8f3043b1.jpg&w=3840&q=75')`,
+                position: 'relative',
+              }}
+              >
                 <svg
                   height={radius * 2}
                   width={radius * 2}
@@ -269,7 +260,7 @@ const Results = () => {
                   <>
                     {showFetchProfilePopup && (
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-12 text-center">
+                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-44 text-center">
                           <h2 className="text-lg font-bold mb-4">
                             Ready to post
                           </h2>
@@ -285,7 +276,7 @@ const Results = () => {
 
                     {showSharePostPopup && (
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-12 text-center">
+                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-44 text-center">
                           <h2 className="text-lg font-bold mb-4">
                             Share to post
                           </h2>
