@@ -1,8 +1,16 @@
 "use client"
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const Main = () => {
+   const router = useRouter();
+   
+  const onClick = () => {
+      localStorage.removeItem("catiaPercentage");
+      localStorage.removeItem("productPercentage");
+      router.push('/launch')
+  }
   return (
     <div className="bg-[#D0D2E3] min-h-screen flex flex-col items-center justify-center mt-20 lg:mt-12">
       <h1 className="text-2xl md:text-5xl font-bold mb-4 mt-10 text-center text-[#182073]">
@@ -39,9 +47,9 @@ const Main = () => {
             Take the quiz as many times as you like to track your improvement.
             </li>
           </ul>
-          <Link href="/launch" className="bg-[#182073] text-white font-medium py-2 px-4 rounded-md mt-4 self-start hover:bg-blue-300 transition duration-300">
+          <button onClick={onClick} className="bg-[#182073] text-white font-medium py-2 px-4 rounded-md mt-4 self-start hover:bg-blue-300 transition duration-300">
             Start 15 min test
-          </Link>
+          </button>
         </div>
       </div>
     </div>
