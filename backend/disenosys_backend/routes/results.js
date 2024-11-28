@@ -383,12 +383,15 @@ router.post("/share", async (req, res) => {
                 "X-Restli-Protocol-Version": "2.0.0"
             }
         });
-
+        console.log('LinkedIn response:', response.data); 
         res.status(201).json({ message: "Post shared successfully!", data: response.data });
     } catch (error) {
-        console.error("Error sharing post:", error.response?.data || error.message);
-        res.status(500).json({ error: "Failed to share post" });
-    }
+      console.error("Error sharing post:", error.response?.data || error.message);
+      if (error.response) {
+          console.error('LinkedIn API error response:', error.response.data);
+      }
+      res.status(500).json({ error: "Failed to share post", details: error.message });
+  }
 });
 
 
