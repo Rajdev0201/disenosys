@@ -55,52 +55,83 @@ const LinkedInAuth = () => {
         return canvas.toDataURL("image/png"); 
     };
 
- const sharePost = async () => {
-    if (!accessToken || !userUrn) {
-        alert("Please fetch your profile first!");
-        return;
-    }
-
-    const imageUrl = await generateScoreImage();
-
-    const postBody = {
-        author: `urn:li:person:${userUrn}`,
-        lifecycleState: "PUBLISHED",
-        "specificContent": {
-            "com.linkedin.ugc.ShareContent": {
-                "shareCommentary": {
-                    "text": "Check out my score!"
-                },
-                "shareMediaCategory": "IMAGE", 
-                "media": [
-                    {
-                        "status": "READY",
-                        "description": {
-                            "text": "Here's my scorecard!"
-                        },
-                        "originalUrl": imageUrl, 
-                        "title": {
-                            "text": "My Score Card"
-                        }
-                    }
-                ]
-            }
-        },
-        visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+    const uploadImageToLinkedIn = async (base64Image) => {
+        try {
+            // Step 1: Upload the image to LinkedIn
+            const { data } = await axios.post("https://api.linkedin.com/media/upload", {
+                data: base64Image, // The image in Base64 format
+            }, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                }
+            });
+    
+            // Step 2: Get the media URN from the response
+            const mediaUrn = data.mediaUrn;
+    
+            return mediaUrn;
+        } catch (error) {
+            console.error("Error uploading image:", error);
+            throw error;
+        }
     };
 
-    try {
-        const response = await axios.post("http://localhost:8000/exam/share", postBody, {
-            headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        alert("Post shared successfully!");
-    } catch (error) {
-        // Enhanced error handling
-        console.error("Error sharing post:", error.response?.data || error.message);
-        alert("Error sharing post: " + (error.response?.data?.message || error.message));
-    }
-};
-
+    
+    const sharePost = async () => {
+        if (!accessToken || !userUrn) {
+            alert("Please fetch your profile first!");
+            return;
+        }
+    
+        try {
+            const imageUrl = await generateScoreImage();
+            const mediaUrn = await uploadImageToLinkedIn(imageUrl);  // Upload image and get mediaUrn
+    
+            const postBody = {
+                author: `urn:li:person:${userUrn}`,
+                lifecycleState: "PUBLISHED",
+                specificContent: {
+                    "com.linkedin.ugc.ShareContent": {
+                        "shareCommentary": {
+                            "text": "Check out my score!",
+                        },
+                        "shareMediaCategory": "IMAGE",
+                        "media": [
+                            {
+                                "status": "READY",
+                                "description": {
+                                    "text": "Here's my scorecard!"
+                                },
+                                "mediaUrn": mediaUrn,  // Use the mediaUrn
+                                "title": {
+                                    "text": "My Score Card"
+                                }
+                            }
+                        ]
+                    }
+                },
+                visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+                score: 85
+            };
+    
+            console.log("Post Body to be sent:", postBody);
+    
+            const response = await axios.post("http://localhost:8000/exam/share", postBody, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                    "Content-Type": "application/json",
+                }
+            });
+    
+            alert("Post shared successfully!");
+        } catch (error) {
+            console.error("Error sharing post:", error.response?.data || error.message);
+            alert("Error sharing post: " + (error.response?.data?.message || error.message));
+        }
+    };
+    
+    
 
     // Automatically detect authorization code from URL and exchange for token
     useEffect(() => {

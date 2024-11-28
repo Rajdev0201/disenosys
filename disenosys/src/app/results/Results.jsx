@@ -232,7 +232,7 @@ const Results = () => {
                   <>
                     {showFetchProfilePopup && (
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-32 text-center">
+                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-36 text-center">
                           <h2 className="text-lg font-bold mb-4">
                             Ready to post
                           </h2>
@@ -248,7 +248,7 @@ const Results = () => {
 
                     {showSharePostPopup && (
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-32 text-center">
+                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-36 text-center">
                           <h2 className="text-lg font-bold mb-4">
                             Share to post
                           </h2>

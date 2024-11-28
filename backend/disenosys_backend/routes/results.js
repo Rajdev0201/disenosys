@@ -4,8 +4,8 @@ const catia = require("../models/catia");
 const Result = require('../models/results');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
-const qs = require('qs');
-
+// const qs = require('qs');
+// const { createCanvas, loadImage } = require('canvas');
 
 
 router.get('/getcatia', async (req, res) => {
@@ -312,7 +312,7 @@ router.post('/details', async (req, res) => {
 // LinkedIn API Configuration
 const CLIENT_ID = '86tuwotemzkyou';
 const CLIENT_SECRET = 'WPL_AP1.0tC5x2NKzBmqgcTL.f5A/ug==';
-const REDIRECT_URI = 'https://www.disenosys.com/demo';
+const REDIRECT_URI = 'https://www.disenosys.com/results';
 
 
 // Step 1: Generate Authorization URL
@@ -383,16 +383,69 @@ router.post("/share", async (req, res) => {
                 "X-Restli-Protocol-Version": "2.0.0"
             }
         });
-        console.log('LinkedIn response:', response.data); 
+
         res.status(201).json({ message: "Post shared successfully!", data: response.data });
     } catch (error) {
-      console.error("Error sharing post:", error.response?.data || error.message);
-      if (error.response) {
-          console.error('LinkedIn API error response:', error.response.data);
-      }
-      res.status(500).json({ error: "Failed to share post", details: error.message });
-  }
+        console.error("Error sharing post:", error.response?.data || error.message);
+        res.status(500).json({ error: "Failed to share post" });
+    }
 });
+
+
+
+
+
+
+
+
+
+
+
+// router.post("/share", async (req, res) => {
+//   const { authorization } = req.headers;
+//   const { score, postBody } = req.body;
+//   console.log("Received postBody:", postBody);
+
+//   if (!postBody || !postBody.specificContent || !postBody.specificContent["com.linkedin.ugc.ShareContent"]) {
+//       return res.status(400).json({ error: "Invalid post body structure" });
+//   }
+
+//   // Generate the image with the score if needed
+//   const base64Image = await generateImageWithScore(score);
+
+//   // Update the postBody with the generated image
+//   postBody.specificContent["com.linkedin.ugc.ShareContent"].media[0].originalUrl = base64Image;
+
+//   try {
+//       const response = await axios.post("https://api.linkedin.com/v2/ugcPosts", postBody, {
+//           headers: {
+//               Authorization: authorization,
+//               "Content-Type": "application/json",
+//               "X-Restli-Protocol-Version": "2.0.0"
+//           }
+//       });
+
+//       res.status(201).json({ message: "Post shared successfully!", data: response.data });
+//   } catch (error) {
+//       console.error("Error sharing post:", error.response?.data || error.message);
+//       res.status(500).json({ error: "Failed to share post", details: error.message });
+//   }
+// });
+
+
+// // Helper function to generate the image with the score
+// async function generateImageWithScore(score) {
+//     const canvas = createCanvas(600, 400);
+//     const ctx = canvas.getContext('2d');
+//     const background = await loadImage('path_to_background_image.png'); // or use a default background
+//     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+//     ctx.font = '40px Arial';
+//     ctx.fillStyle = 'white';
+//     ctx.fillText(`Score: ${score}`, 50, 50); // Position the score
+//     return canvas.toDataURL(); // Returns base64 string of the image
+// }
+
+
 
 
 
