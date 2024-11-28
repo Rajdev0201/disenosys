@@ -9,7 +9,7 @@ const LinkedInAuth = () => {
     // Start the LinkedIn OAuth flow
     const startLinkedInAuth = async () => {
         try {
-            const { data } = await axios.get("http://localhost:8000/exam/auth");
+            const { data } = await axios.get("https://disenosys-1.onrender.com/exam/auth");
             window.location.href = data.url; // Redirect user to LinkedIn for authentication
         } catch (error) {
             console.error("Error starting LinkedIn auth:", error);
@@ -19,7 +19,7 @@ const LinkedInAuth = () => {
     // Exchange authorization code for an access token
     const exchangeCodeForToken = async (code) => {
         try {
-            const { data } = await axios.post("http://localhost:8000/exam/get-access-token", {
+            const { data } = await axios.post("https://disenosys-1.onrender.com/exam/get-access-token", {
                 code,
             });
             
@@ -39,7 +39,7 @@ const LinkedInAuth = () => {
         if (!accessToken) return;
 
         try {
-            const { data } = await axios.get("http://localhost:8000/exam/profile", {
+            const { data } = await axios.get("https://disenosys-1.onrender.com/exam/profile", {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
             setUserUrn(data.id); // Extract the user's URN
@@ -69,7 +69,7 @@ const LinkedInAuth = () => {
         };
 
         try {
-            await axios.post("http://localhost:8000/exam/share", postBody, {
+            await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
             alert("Post shared successfully!");
