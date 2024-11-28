@@ -42,8 +42,8 @@ const LinkedInAuth = () => {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
     
-            setUserUrn(data.sub); 
-            console.log("Profile data:", data.sub);
+            setUserUrn(data.profile.sub); 
+            console.log("Profile data:", data.profile.sub);
         } catch (error) {
             console.error("Error fetching profile:", error);
         }
