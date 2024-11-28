@@ -355,28 +355,20 @@ router.post("/get-access-token", async (req, res) => {
 
 // Step 3: Fetch User's LinkedIn Profile (URN)
 router.get("/profile", async (req, res) => {
-  const { authorization } = req.headers;
+    const { authorization } = req.headers;
 
-  try {
-      const response = await axios.get("https://api.linkedin.com/v2/me", {
-          headers: { Authorization: authorization }
-      });
+    try {
+        const response = await axios.get("https://api.linkedin.com/v2/userinfo", {
+            headers: { Authorization: authorization }
+        });
 
-      // Check if `id` exists
-      if (!response.data.id) {
-          return res.status(400).json({ error: "User ID not found in LinkedIn response" });
-      }
-
-      // Create the URN using the valid ID
-      const urn = `urn:li:person:${response.data.id}`;
-      console.log(urn)
-      res.json({ urn, profile: response.data });
-  } catch (error) {
-      console.error("Error fetching profile:", error.response?.data || error.message);
-      res.status(500).json({ error: "Failed to fetch profile" });
-  }
+        const urn = `urn:li:person:${response.data.id}`;
+        res.json({ urn, profile: response.data });
+    } catch (error) {
+        console.error("Error fetching profile:", error.response?.data || error.message);
+        res.status(500).json({ error: "Failed to fetch profile" });
+    }
 });
-
 
 // Step 4: Share a Post on LinkedIn
 router.post("/share", async (req, res) => {
