@@ -86,9 +86,9 @@ const Form = () => {
         );
 
         localStorage.removeItem("totalScoreCatia");
-        localStorage.removeItem("catiaPercentage");
+        // localStorage.removeItem("catiaPercentage");
         localStorage.removeItem("totalScoreProduct");
-        localStorage.removeItem("productPercentage");
+        // localStorage.removeItem("productPercentage");
         localStorage.removeItem("answers0");
         localStorage.removeItem("startTime0");
         localStorage.removeItem("answers1");
@@ -96,7 +96,8 @@ const Form = () => {
         localStorage.removeItem("currentQuestionIndex1");
         localStorage.removeItem("currentQuestionIndex0");
 
-        router.push(`results?catia=${catiaScore}&product=${productScore}`);
+        // router.push(`results?catia=${catiaScore}&product=${productScore}`);
+        router.push('/results');
         console.log("Result submitted successfully:", response.data);
       } catch (error) {
         console.error("Error submitting result:", error);

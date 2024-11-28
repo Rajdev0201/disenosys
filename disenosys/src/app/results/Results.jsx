@@ -1,7 +1,7 @@
 "use client"
 import axios from 'axios'
 import Head from 'next/head'
-import { useSearchParams } from 'next/navigation'
+// import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { FaFacebook, FaLinkedin, FaWhatsappSquare } from 'react-icons/fa'
 import { IoLinkSharp } from 'react-icons/io5'
@@ -11,12 +11,19 @@ import { IoLinkSharp } from 'react-icons/io5'
 
 
 const Results = () => {
-    const search = useSearchParams();
+    // const search = useSearchParams();
     // const catia = Number(search.get("catia")) || 0; 
     // const product = Number(search.get("product")) || 0;
+    // const catia = clamp(Number(search.get("catia")) || 0, 0, 100); 
+    // const product = clamp(Number(search.get("product")) || 0, 0, 100);
+
+
+    const catiaPercentage = localStorage.getItem("catiaPercentage") || 0;
+    const productPercentage =
+      localStorage.getItem("productPercentage") || 0;
     const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
-    const catia = clamp(Number(search.get("catia")) || 0, 0, 100); 
-    const product = clamp(Number(search.get("product")) || 0, 0, 100);
+    const catia = clamp(parseInt(catiaPercentage, 10), 0, 100);
+    const product = clamp(parseInt(productPercentage, 10), 0, 100);
   
     const calculateYourScore = (catia, product) => (catia + product) / 2;
   
@@ -38,6 +45,8 @@ const Results = () => {
 
     const [accessToken, setAccessToken] = useState("");
     const [userUrn, setUserUrn] = useState("");
+    const [showFetchProfilePopup, setShowFetchProfilePopup] = useState(false);
+    const [showSharePostPopup, setShowSharePostPopup] = useState(false); 
   
     // Start the LinkedIn OAuth flow
     const startLinkedInAuth = async () => {
@@ -59,7 +68,7 @@ const Results = () => {
         if (data && data.accessToken) {
           setAccessToken(data.accessToken);
           alert("Access token obtained successfully!");
-          getProfile(); // Automatically call getProfile after successful authentication
+          setShowFetchProfilePopup(true);
         } else {
           console.error("Access token not obtained");
         }
@@ -79,6 +88,8 @@ const Results = () => {
   
         setUserUrn(data.profile.sub);
         console.log("Profile data:", data.profile.sub);
+        setShowFetchProfilePopup(false); // Close fetch profile popup after successful fetch
+        setShowSharePostPopup(true); // Show the share post popup after profile is fetched
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -121,6 +132,7 @@ const Results = () => {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
         alert("Post shared successfully!");
+        setShowSharePostPopup(false);
       } catch (error) {
         console.error("Error sharing post:", error);
       }
@@ -190,16 +202,49 @@ const Results = () => {
               <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110">
               <FaFacebook className='w-6 h-6'/>
               </button>
+              {!accessToken ? (
               <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"
-             
                 onClick={startLinkedInAuth}
-              
               >
               <FaLinkedin className="w-6 h-6"/>
               </button>
-              <button onClick={sharePost} className="bg-blue-500 ml-2" disabled={!userUrn}>
-                get and share post
-            </button>
+            ) : (
+        
+        <>
+          {showFetchProfilePopup && (
+            <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+              <div className="bg-white p-5 rounded-md">
+                <button onClick={getProfile} className="bg-blue-500 ml-2">
+                  Fetch Profile
+                </button>
+                <button
+                  onClick={() => setShowFetchProfilePopup(false)}
+                  className="bg-red-500 ml-2 mt-2 text-white"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* Show the share post popup after profile fetch */}
+          {showSharePostPopup && (
+            <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
+              <div className="bg-white p-5 rounded-md">
+                <button onClick={sharePost} className="bg-blue-500 ml-2">
+                  Share Post
+                </button>
+                <button
+                  onClick={() => setShowSharePostPopup(false)}
+                  className="bg-red-500 ml-2 mt-2 text-white"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+        </>
+      )}
               <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110" >
               <FaWhatsappSquare className='w-6 h-6' />
               </button>
