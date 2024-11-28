@@ -51,8 +51,8 @@ const LinkedInAuth = () => {
     };
 
     const generateScoreImage = async () => {
-        const canvas = await html2canvas(scoreCardRef.current); // Capture the score card div
-        return canvas.toDataURL("image/png"); // Convert it to a base64 image URL
+        const canvas = await html2canvas(scoreCardRef.current);
+        return canvas.toDataURL("image/png"); 
     };
 
  const sharePost = async () => {
@@ -61,7 +61,6 @@ const LinkedInAuth = () => {
         return;
     }
 
-    // Generate the score image
     const imageUrl = await generateScoreImage();
 
     const postBody = {
@@ -72,14 +71,14 @@ const LinkedInAuth = () => {
                 "shareCommentary": {
                     "text": "Check out my score!"
                 },
-                "shareMediaCategory": "IMAGE", // Share image instead of article
+                "shareMediaCategory": "IMAGE", 
                 "media": [
                     {
                         "status": "READY",
                         "description": {
                             "text": "Here's my scorecard!"
                         },
-                        "originalUrl": imageUrl, // Image URL from canvas
+                        "originalUrl": imageUrl, 
                         "title": {
                             "text": "My Score Card"
                         }
@@ -91,7 +90,7 @@ const LinkedInAuth = () => {
     };
 
     try {
-        const response = await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
+        const response = await axios.post("http://localhost:8000/exam/share", postBody, {
             headers: { Authorization: `Bearer ${accessToken}` },
         });
         alert("Post shared successfully!");
