@@ -107,38 +107,14 @@ const Results = () => {
       alert("Please fetch your profile first!");
       return;
     }
-  
-    // Register the image first
-    const imageUploadResponse = await axios.post(
-      "https://api.linkedin.com/v2/assets?action=registerUpload",
-      {
-        registerUploadRequest: {
-          recipes: ["urn:li:digitalmediaRecipe:feedshare-image"],
-          owner: `urn:li:person:${userUrn}`,
-          serviceRelationships: [
-            {
-              relationshipType: "OWNER",
-              identifier: "urn:li:userGeneratedContent",
-            },
-          ],
-        },
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-  
-    const imageUrl = imageUploadResponse.data.value.asset; // The image URL from the response
-  
+
     const postBody = {
       author: `urn:li:person:${userUrn}`,
       lifecycleState: "PUBLISHED",
       specificContent: {
         "com.linkedin.ugc.ShareContent": {
           shareCommentary: {
-            text: `I scored ${yourScore}% in my recent quiz! My level is ${yourLevel}. #quiz #Learning`,
+            text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
           },
           shareMediaCategory: "ARTICLE",
           media: [
@@ -151,20 +127,21 @@ const Results = () => {
               title: {
                 text: "CEFR Quiz Score",
               },
-              mediaUrl: imageUrl, // Adding the registered image URL
             },
           ],
         },
       },
-      visibility: {
-        "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC",
-      },
+      visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
     };
-  
+
     try {
-      await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      });
+      await axios.post(
+        "https://disenosys-1.onrender.com/exam/share",
+        postBody,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
       alert("Post shared successfully!");
       setShowSharePostPopup(false);
       router.push("/");
@@ -172,7 +149,7 @@ const Results = () => {
       console.error("Error sharing post:", error);
     }
   };
-  
+
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
     const code = queryParams.get("code");
@@ -205,12 +182,7 @@ const Results = () => {
             <div className="bg-[#182073] w-full p-6 text-center flex flex-col items-center">
               <p className="text-lg font-semibold text-white">Your Score:</p>
               <p className="text-xl font-bold text-white">{yourLevel}</p>
-              <div className="flex items-center justify-center w-28 h-28  mt-5"
-              style={{
-                backgroundImage: `url('https://www.disenosys.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fl.8f3043b1.jpg&w=3840&q=75')`,
-                position: 'relative',
-              }}
-              >
+              <div className="flex items-center justify-center w-28 h-28  mt-5">
                 <svg
                   height={radius * 2}
                   width={radius * 2}
@@ -260,13 +232,13 @@ const Results = () => {
                   <>
                     {showFetchProfilePopup && (
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-44 text-center">
+                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-32 text-center">
                           <h2 className="text-lg font-bold mb-4">
                             Ready to post
                           </h2>
                           <button
                             onClick={getProfile}
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md"
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 mt-4 rounded-md"
                           >
                             Next
                           </button>
@@ -276,13 +248,13 @@ const Results = () => {
 
                     {showSharePostPopup && (
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-44 text-center">
+                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-32 text-center">
                           <h2 className="text-lg font-bold mb-4">
                             Share to post
                           </h2>
                           <button
                             onClick={sharePost}
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md"
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 mt-4 px-4 rounded-md"
                           >
                             Share
                           </button>
