@@ -1,116 +1,35 @@
 "use client"
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useCallback, useRef } from 'react';
+import { toPng } from 'html-to-image';
 
-const LinkedInAuth = () => {
-    const [accessToken, setAccessToken] = useState("")
-    const [userUrn, setUserUrn] = useState("");
+const Demo = () => {
+  const ref = useRef(null)
 
-    // Start the LinkedIn OAuth flow
-    const startLinkedInAuth = async () => {
-        try {
-            const { data } = await axios.get("https://disenosys-1.onrender.com/exam/auth");
-            window.location.href = data.url; // Redirect user to LinkedIn for authentication
-        } catch (error) {
-            console.error("Error starting LinkedIn auth:", error);
-        }
-    };
+  const onButtonClick = useCallback(() => {
+    if (ref.current === null) {
+      return
+    }
 
-    // Exchange authorization code for an access token
-    const exchangeCodeForToken = async (code) => {
-        try {
-            const { data } = await axios.post("https://disenosys-1.onrender.com/exam/get-access-token", {
-                code,
-            });
-            
-            if (data && data.accessToken) {
-                setAccessToken(data.accessToken);
-                alert("Access token obtained successfully!");
-            } else {
-                console.error("Access token not obtained");
-            }
-        } catch (error) {
-            console.error("Error exchanging code for token:", error.response?.data || error.message);
-        }
-    };
-    
-    const getProfile = async () => {
-        if (!accessToken) return;
-    
-        try {
-            const { data } = await axios.get("https://disenosys-1.onrender.com/exam/profile", {
-                headers: { Authorization: `Bearer ${accessToken}` },
-            });
-    
-            setUserUrn(data.profile.sub); 
-            console.log("Profile data:", data.profile.sub);
-        } catch (error) {
-            console.error("Error fetching profile:", error);
-        }
-    };
-    
-    const sharePost = async () => {
-        if (!accessToken || !userUrn) {
-            alert("Please fetch your profile first!");
-            return;
-        }
+    toPng(ref.current, { cacheBust: true, })
+      .then((dataUrl) => {
+        const link = document.createElement('a')
+        link.download = 'my-image-name.png'
+        link.href = dataUrl
+        link.click()
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [ref])
 
-        const postBody = {
-            author: `urn:li:person:${userUrn}`,
-            lifecycleState: "PUBLISHED",
-            "specificContent": {
-                "com.linkedin.ugc.ShareContent": {
-                    "shareCommentary": {
-                        "text": "Learning more about LinkedIn by reading the LinkedIn Blog!"
-                    },
-                    "shareMediaCategory": "ARTICLE",
-                    "media": [
-                        {
-                            "status": "READY",
-                            "description": {
-                                "text": "Official LinkedIn Blog - Your source for insights and information about LinkedIn."
-                            },
-                            "originalUrl": "https://www.disenosys.com/quicktest",
-                            "title": {
-                                "text": "Official LinkedIn Blog"
-                            }
-                        }
-                    ]
-                }
-            },
-            visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
-        };
+  return (
+    <>
+      <div ref={ref}>
+     <p>raja</p>
+      </div>
+      <button onClick={onButtonClick}>Click me</button>
+    </>
+  )
+}
 
-        try {
-            await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
-                headers: { Authorization: `Bearer ${accessToken}` },
-            });
-            alert("Post shared successfully!");
-        } catch (error) {
-            console.error("Error sharing post:", error);
-        }
-    };
-
-    // Automatically detect authorization code from URL and exchange for token
-    useEffect(() => {
-        const queryParams = new URLSearchParams(window.location.search);
-        const code = queryParams.get("code");
-        if (code) {
-            exchangeCodeForToken(code);
-        }
-    }, []);
-
-    return (
-        <div>
-            <button onClick={startLinkedInAuth} className="bg-blue-500">Login with LinkedIn</button>
-            <button onClick={getProfile} className="bg-blue-500 ml-2" disabled={!accessToken}>
-                Fetch Profile
-            </button>
-            <button onClick={sharePost} className="bg-blue-500 ml-2" disabled={!userUrn}>
-                Share Post
-            </button>
-        </div>
-    );
-};
-
-export default LinkedInAuth;
+export default Demo;
