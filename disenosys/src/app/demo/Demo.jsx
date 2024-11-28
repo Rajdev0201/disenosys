@@ -37,18 +37,20 @@ const LinkedInAuth = () => {
     // Fetch LinkedIn profile information
     const getProfile = async () => {
         if (!accessToken) return;
-
+    
         try {
             const { data } = await axios.get("https://disenosys-1.onrender.com/exam/profile", {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
-            setUserUrn(data.id); // Extract the user's URN
+    
+            // Set the URN correctly
+            setUserUrn(data.urn);  // Use the 'urn' field, not 'id'
             console.log("Profile data:", data);
         } catch (error) {
             console.error("Error fetching profile:", error);
         }
     };
-
+    
     // Share a post to LinkedIn
     const sharePost = async () => {
         if (!accessToken || !userUrn) {
