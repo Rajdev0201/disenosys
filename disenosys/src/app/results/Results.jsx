@@ -212,33 +212,25 @@ const Results = () => {
         
         <>
           {showFetchProfilePopup && (
-            <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
-              <div className="bg-white p-5 rounded-md">
-                <button onClick={getProfile} className="bg-blue-500 ml-2">
-                  Fetch Profile
-                </button>
-                <button
-                  onClick={() => setShowFetchProfilePopup(false)}
-                  className="bg-red-500 ml-2 mt-2 text-white"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          )}
+  <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+    <div className="bg-white p-5 rounded-md shadow-md w-64 text-center">
+      <h2 className="text-lg font-bold mb-4">Ready to post</h2>
+      <button 
+        onClick={getProfile} 
+        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md">
+        Next
+      </button>
+    </div>
+  </div>
+)}
 
           {/* Show the share post popup after profile fetch */}
           {showSharePostPopup && (
-            <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
-              <div className="bg-white p-5 rounded-md">
+             <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-500 bg-opacity-50 flex justify-center items-center z-50">
+             <div className="bg-white p-5 rounded-md shadow-md w-64 text-center">
+               <h2 className="text-lg font-bold mb-4">Share to post</h2>
                 <button onClick={sharePost} className="bg-blue-500 ml-2">
-                  Share Post
-                </button>
-                <button
-                  onClick={() => setShowSharePostPopup(false)}
-                  className="bg-red-500 ml-2 mt-2 text-white"
-                >
-                  Close
+                  Share
                 </button>
               </div>
             </div>
