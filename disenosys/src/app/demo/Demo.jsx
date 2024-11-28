@@ -34,21 +34,21 @@ const LinkedInAuth = () => {
         }
     };
     
-    // Fetch LinkedIn profile information
     const getProfile = async () => {
         if (!accessToken) return;
-
+    
         try {
             const { data } = await axios.get("https://disenosys-1.onrender.com/exam/profile", {
                 headers: { Authorization: `Bearer ${accessToken}` },
             });
-            setUserUrn(data.id); // Extract the user's URN
-            console.log("Profile data:", data);
+    
+            setUserUrn(data.sub); 
+            console.log("Profile data:", data.sub);
         } catch (error) {
             console.error("Error fetching profile:", error);
         }
     };
-
+    
     // Share a post to LinkedIn
     const sharePost = async () => {
         if (!accessToken || !userUrn) {
@@ -57,7 +57,7 @@ const LinkedInAuth = () => {
         }
 
         const postBody = {
-            author: `urn:li:person:${userUrn}`, // Use the dynamic URN
+            author: `urn:li:person:${userUrn}`,
             lifecycleState: "PUBLISHED",
             specificContent: {
                 "com.linkedin.ugc.ShareContent": {
