@@ -10,7 +10,7 @@ const LinkedInSocialLogin = ({text,err}) => {
   const user = useSelector((state) => state.user);
   const name = user?.user?.name;
   const LINKEDIN_CLIENT_ID = "86xiq0kdd6l43i"; // Your LinkedIn client ID
-  const LINKEDIN_CALLBACK_URL = "https://www.disenosys.com"; // Your registered callback URL
+  const LINKEDIN_CALLBACK_URL = "https://www.disenosys.com/course"; // Your registered callback URL
   const linkedinOAuthURL = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${LINKEDIN_CLIENT_ID}&redirect_uri=${encodeURIComponent(LINKEDIN_CALLBACK_URL)}&scope=openid%20profile%20email`;
 
   const search = useSearchParams();
@@ -27,7 +27,7 @@ const LinkedInSocialLogin = ({text,err}) => {
   const sendCodeToBackend = async (code) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/linkedin-login", // Your backend API
+        "https://disenosys-1.onrender.com/linkedin-login", // Your backend API
         { code },
         {
           headers: {
