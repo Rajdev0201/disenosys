@@ -18,9 +18,10 @@ const nodemailer = require('nodemailer');
 // require('dotenv').config();
 // require('./config/passport-set.js');
 
-const LINKEDIN_CLIENT_ID = "86xiq0kdd6l43i";
-const LINKEDIN_CLIENT_SECRET = "WPL_AP1.ojibLusdShatmsUq.07+vuQ==";
-const LINKEDIN_CALLBACK_URL = "https://www.disenosys.com/course";
+const CLIENT_ID = "86xiq0kdd6l43i";
+const CLIENT_SECRET = "WPL_AP1.ojibLusdShatmsUq.07+vuQ==";
+const REDIRECT_URI = "https://www.disenosys.com/course";
+
 
 dotenv.config({ path: path.join(__dirname, "./.env") })
 
@@ -293,23 +294,100 @@ app.delete('/delete/:id', async (req, res) => {
 });
 
 
-app.post('/linkedin-login', async (req, res) => {
-  const { code } = req.body;
-  console.log(code);
+// app.post('/linkedin-login', async (req, res) => {
+//   const { code } = req.body;
+//   console.log(code);
 
-  if (!code) {
-    return res.status(400).json({ error: 'Authorization code is missing' });
-  }
+//   if (!code) {
+//     return res.status(400).json({ error: 'Authorization code is missing' });
+//   }
+
+//   try {
+//     // Step 1: Exchange code for access token
+//     const response = await axios.post('https://www.linkedin.com/oauth/v2/accessToken', null, {
+//       params: {
+//         grant_type: "authorization_code",
+//         code,
+//         redirect_uri: LINKEDIN_CALLBACK_URL,
+//         client_id: LINKEDIN_CLIENT_ID,
+//         client_secret: LINKEDIN_CLIENT_SECRET,
+//       },
+//       headers: {
+//         'Content-Type': 'application/x-www-form-urlencoded',
+//       },
+//     });
+
+//     const tokenData = response.data;
+
+//     if (!tokenData.access_token) {
+//       return res.status(400).json({ error: tokenData.error_description || 'Failed to fetch access token' });
+//     }
+
+//     const accessToken = tokenData.access_token;
+
+//     // Step 2: Fetch user profile information
+//     const profileResponse = await axios.get('https://api.linkedin.com/v2/userinfo', {
+//       headers: {
+//         Authorization: `Bearer ${accessToken}`,
+//       },
+//     });
+
+//     const userProfile = profileResponse.data;
+//     console.log('User Profile:', userProfile);
+
+//     // Step 3: Extract relevant fields
+//     const name = userProfile.name; // Full name
+//     const email = userProfile.email; // Email address
+//     // const picture = userProfile.picture; // Profile picture URL
+
+//     // Step 4: Save or update user in your database
+//     let user = await linkedin.findOne({ email }); // Search by email
+
+//     if (!user) {
+//       // Create a new user if it doesn't exist
+//       user = await linkedin.create({
+//         name,
+//         email,
+//         // picture, // Store profile picture URL
+//       });
+//     } else {
+//       // Update existing user if they are already in the database
+//       user.name = name;
+//       // user.picture = picture; // Update profile picture URL if needed
+//       await user.save();
+//     }
+
+//     // Step 5: Respond with the user data
+//     res.status(200).json({
+//       success: true,
+//       user,
+//     });
+
+//   } catch (error) {
+//     console.error('Error during LinkedIn OAuth process:', error.response ? error.response.data : error.message);
+//     res.status(500).json({ error: 'LinkedIn OAuth failed', details: error.response ? error.response.data : error.message });
+//   }
+// });
+
+
+app.get("/auth", (req, res) => {
+  const authUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(
+      REDIRECT_URI
+  )}&scope=openid%20profile%20email%20w_member_social`;
+  res.json({ url: authUrl });
+});
+
+app.post("/get-access-token", async (req, res) => {
+  const { code } = req.body; 
 
   try {
-    // Step 1: Exchange code for access token
     const response = await axios.post('https://www.linkedin.com/oauth/v2/accessToken', null, {
       params: {
         grant_type: "authorization_code",
-        code,
-        redirect_uri: LINKEDIN_CALLBACK_URL,
-        client_id: LINKEDIN_CLIENT_ID,
-        client_secret: LINKEDIN_CLIENT_SECRET,
+        code : code,
+        redirect_uri: REDIRECT_URI,
+        client_id: CLIENT_ID,
+        client_secret:CLIENT_SECRET,
       },
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -317,54 +395,55 @@ app.post('/linkedin-login', async (req, res) => {
     });
 
     const tokenData = response.data;
-
-    if (!tokenData.access_token) {
-      return res.status(400).json({ error: tokenData.error_description || 'Failed to fetch access token' });
-    }
-
-    const accessToken = tokenData.access_token;
-
-    // Step 2: Fetch user profile information
-    const profileResponse = await axios.get('https://api.linkedin.com/v2/userinfo', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    const userProfile = profileResponse.data;
-    console.log('User Profile:', userProfile);
-
-    // Step 3: Extract relevant fields
-    const name = userProfile.name; // Full name
-    const email = userProfile.email; // Email address
-    // const picture = userProfile.picture; // Profile picture URL
-
-    // Step 4: Save or update user in your database
-    let user = await linkedin.findOne({ email }); // Search by email
-
-    if (!user) {
-      // Create a new user if it doesn't exist
-      user = await linkedin.create({
-        name,
-        email,
-        // picture, // Store profile picture URL
-      });
-    } else {
-      // Update existing user if they are already in the database
-      user.name = name;
-      // user.picture = picture; // Update profile picture URL if needed
-      await user.save();
-    }
-
-    // Step 5: Respond with the user data
-    res.status(200).json({
-      success: true,
-      user,
-    });
-
+      // On success, return the access token
+      res.json({ accessToken: tokenData.access_token });
   } catch (error) {
-    console.error('Error during LinkedIn OAuth process:', error.response ? error.response.data : error.message);
-    res.status(500).json({ error: 'LinkedIn OAuth failed', details: error.response ? error.response.data : error.message });
+      console.error("Error getting access token:", error.response?.data || error.message);
+      res.status(500).json({ error: "Failed to get access token" });
+  }
+});
+
+app.get("/profile", async (req, res) => {
+  const { authorization } = req.headers;
+
+  try {
+      const profileResponse  = await axios.get("https://api.linkedin.com/v2/userinfo", {
+          headers: { Authorization: authorization }
+      });
+
+      const userProfile = profileResponse.data;
+      console.log('User Profile:', userProfile);
+  
+      // Step 3: Extract relevant fields
+      const name = userProfile.name; // Full name
+      const email = userProfile.email; // Email address
+      // const picture = userProfile.picture; // Profile picture URL
+  
+      // Step 4: Save or update user in your database
+      let user = await linkedin.findOne({ email }); // Search by email
+  
+      if (!user) {
+        // Create a new user if it doesn't exist
+        user = await linkedin.create({
+          name,
+          email,
+          // picture, // Store profile picture URL
+        });
+      } else {
+        // Update existing user if they are already in the database
+        user.name = name;
+        // user.picture = picture; // Update profile picture URL if needed
+        await user.save();
+      }
+  
+      // Step 5: Respond with the user data
+      res.status(200).json({
+        success: true,
+        user,
+      });
+  } catch (error) {
+      console.error("Error fetching profile:", error.response?.data || error.message);
+      res.status(500).json({ error: "Failed to fetch profile" });
   }
 });
 
