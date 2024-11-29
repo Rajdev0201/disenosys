@@ -41,13 +41,13 @@ const LinkedInSocialLogin = ({ text, err }) => {
         setAccessToken(data.accessToken);
 
         // Fetch user profile using the access token
-        const profileResponse = await axios.get(
+        const {profileResponse} = await axios.get(
           "https://disenosys-1.onrender.com/profile",
           {
             headers: { Authorization: `Bearer ${data.accessToken}` },
           }
         );
-        console.log(profileResponse)
+        console.log(profileResponse.data)
 
         if (profileResponse.data) {
           const { name, email } = profileResponse.data;
