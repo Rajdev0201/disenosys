@@ -411,36 +411,10 @@ app.get("/profile", async (req, res) => {
           headers: { Authorization: authorization }
       });
 
-      const userProfile = profileResponse.data;
-      console.log('User Profile:', userProfile);
+      // const userProfile = profileResponse.data;
+      res.json({ profile: profileResponse.data });
+      // console.log('User Profile:', userProfile);
   
-      // Step 3: Extract relevant fields
-      const name = userProfile.name; // Full name
-      const email = userProfile.email; // Email address
-      // const picture = userProfile.picture; // Profile picture URL
-  
-      // Step 4: Save or update user in your database
-      let user = await linkedin.findOne({ email }); // Search by email
-  
-      if (!user) {
-        // Create a new user if it doesn't exist
-        user = await linkedin.create({
-          name,
-          email,
-          // picture, // Store profile picture URL
-        });
-      } else {
-        // Update existing user if they are already in the database
-        user.name = name;
-        // user.picture = picture; // Update profile picture URL if needed
-        await user.save();
-      }
-  
-      // Step 5: Respond with the user data
-      res.status(200).json({
-        success: true,
-        user,
-      });
   } catch (error) {
       console.error("Error fetching profile:", error.response?.data || error.message);
       res.status(500).json({ error: "Failed to fetch profile" });
