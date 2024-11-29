@@ -20,7 +20,7 @@ const nodemailer = require('nodemailer');
 
 const LINKEDIN_CLIENT_ID = "86xiq0kdd6l43i";
 const LINKEDIN_CLIENT_SECRET = "WPL_AP1.ojibLusdShatmsUq.07+vuQ==";
-const LINKEDIN_CALLBACK_URL = "https://www.disenosys.com";
+const LINKEDIN_CALLBACK_URL = "https://www.disenosys.com/course";
 
 dotenv.config({ path: path.join(__dirname, "./.env") })
 
