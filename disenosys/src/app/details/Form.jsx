@@ -14,7 +14,8 @@ const Form = () => {
     country: "India",
     dob: "",
   });
-
+ 
+  const[load,setLoad] = useState(false)
   const router = useRouter();
   const [errors, setErrors] = useState({});
   const handleChange = (e) => {
@@ -63,6 +64,7 @@ const Form = () => {
       setErrors(newErrors);
     } else {
       try {
+        setLoad(true)
         const catiaScore = localStorage.getItem("totalScoreCatia") || 0;
         const catiaPercentage = localStorage.getItem("catiaPercentage") || 0;
         const productScore = localStorage.getItem("totalScoreProduct") || 0;
@@ -101,6 +103,8 @@ const Form = () => {
         console.log("Result submitted successfully:", response.data);
       } catch (error) {
         console.error("Error submitting result:", error);
+      } finally {
+        setLoad(false); // Reset the load state regardless of success or failure
       }
     }
   };
@@ -270,7 +274,7 @@ const Form = () => {
             type="submit"
             className="w-full bg-[#182073] text-white font-bold py-2 rounded-lg hover:bg-blue-400"
           >
-            View Score
+           {load ? "Loading..." : "View Score"}
           </button>
         </form>
       </div>
