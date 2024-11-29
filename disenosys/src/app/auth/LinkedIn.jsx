@@ -47,6 +47,7 @@ const LinkedInSocialLogin = ({ text, err }) => {
             headers: { Authorization: `Bearer ${data.accessToken}` },
           }
         );
+        console.log(profileResponse)
 
         if (profileResponse.data) {
           const { name, email } = profileResponse.data;
@@ -78,7 +79,6 @@ const LinkedInSocialLogin = ({ text, err }) => {
 
   return (
     <div>
-      {error && <p style={{ color: "red" }}>{err || error}</p>}
 
       {!isUserLoggedIn() ? (
         <button onClick={startLinkedInAuth}>{text}</button>
