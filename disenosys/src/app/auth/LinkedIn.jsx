@@ -27,7 +27,7 @@ const LinkedInSocialLogin = ({text,err}) => {
   const sendCodeToBackend = async (code) => {
     try {
       const response = await axios.post(
-        "https://disenosys-1.onrender.com/linkedin-login", // Your backend API
+        "http://localhost:8000/linkedin-login", // Your backend API
         { code },
         {
           headers: {
