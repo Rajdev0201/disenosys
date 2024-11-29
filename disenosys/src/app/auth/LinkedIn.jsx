@@ -47,10 +47,10 @@ const LinkedInSocialLogin = ({ text, err }) => {
             headers: { Authorization: `Bearer ${data.accessToken}` },
           }
         );
-        console.log(profileResponse.data)
+        console.log(profileResponse.profile)
 
         if (profileResponse.data) {
-          const { name, email } = profileResponse.data;
+          const { name, email } = profileResponse.profile;
           console.log(name)
           dispatch(LinkedInLog(profileResponse.data));
           localStorage.setItem("profile", JSON.stringify({ name, email }));
