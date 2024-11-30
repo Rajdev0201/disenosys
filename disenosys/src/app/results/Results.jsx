@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaFacebook, FaLinkedin, FaWhatsappSquare } from "react-icons/fa";
 import { IoLinkSharp } from "react-icons/io5";
+import html2canvas from "html2canvas";
 
 
 const Results = () => {
@@ -45,7 +46,7 @@ const Results = () => {
   const [showFetchProfilePopup, setShowFetchProfilePopup] = useState(false);
   const [showSharePostPopup, setShowSharePostPopup] = useState(false);
 
-  // Start the LinkedIn OAuth flow
+
   const startLinkedInAuth = async () => {
     try {
       const { data } = await axios.get(
@@ -57,7 +58,7 @@ const Results = () => {
     }
   };
 
-  // Exchange authorization code for an access token
+
   const exchangeCodeForToken = async (code) => {
     try {
       const { data } = await axios.post(
@@ -102,11 +103,20 @@ const Results = () => {
     }
   };
 
+  const captureScoreTemplate = async () => {
+    const element = document.getElementById("score-template");
+    const canvas = await html2canvas(element);
+    const image = canvas.toDataURL("image/png");
+    return image;
+  };
+
   const sharePost = async () => {
     if (!accessToken || !userUrn) {
       alert("Please fetch your profile first!");
       return;
     }
+
+    const image = await captureScoreTemplate();
 
     const postBody = {
       author: `urn:li:person:${userUrn}`,
@@ -116,16 +126,16 @@ const Results = () => {
           shareCommentary: {
             text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
           },
-          shareMediaCategory: "ARTICLE",
+          shareMediaCategory: "IMAGE",
           media: [
             {
               status: "READY",
               description: {
-                text: "Check out my score and learn more about automotive design quiz.",
+                text: "Check out my score and learn more about the quiz.",
               },
-              originalUrl: "https://www.disenosys.com/quicktest",
+              media: image, // Add the generated image as the media
               title: {
-                text: "CEFR Quiz Score",
+                text: "My Quiz Score",
               },
             },
           ],
@@ -136,7 +146,7 @@ const Results = () => {
 
     try {
       await axios.post(
-        "https://disenosys-1.onrender.com/exam/share",
+        "http://localhost:8000/exam/share",
         postBody,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
@@ -179,7 +189,7 @@ const Results = () => {
       <div className="min-h-screen bg-blue-100 flex justify-center items-center font-poppins p-4">
         <div className="grid sm:grid-cols-2  w-full max-w-4xl">
           <div className="flex flex-col items-center bg-white rounded-md shadow-md ml-24 w-80 h-96">
-            <div className="bg-[#182073] w-full p-6 text-center flex flex-col items-center">
+            <div id="score-template" className="bg-[#182073] w-full p-6 text-center flex flex-col items-center">
               <p className="text-lg font-semibold text-white">Your Score:</p>
               <p className="text-xl font-bold text-white">{yourLevel}</p>
               <div className="flex items-center justify-center w-28 h-28  mt-5">

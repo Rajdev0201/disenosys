@@ -372,24 +372,28 @@ router.get("/profile", async (req, res) => {
 
 // Step 4: Share a Post on LinkedIn
 router.post("/share", async (req, res) => {
-    const { authorization } = req.headers;
-    const postBody = req.body;
-
+    const { author, specificContent, visibility } = req.body;
+  
     try {
-        const response = await axios.post("https://api.linkedin.com/v2/ugcPosts", postBody, {
-            headers: {
-                Authorization: authorization,
-                "Content-Type": "application/json",
-                "X-Restli-Protocol-Version": "2.0.0"
-            }
-        });
-
-        res.status(201).json({ message: "Post shared successfully!", data: response.data });
+      const response = await axios.post(
+        "https://api.linkedin.com/v2/ugcPosts",
+        { author, specificContent, visibility },
+        {
+          headers: {
+            Authorization: req.headers.authorization,
+            "X-Restli-Protocol-Version": "2.0.0",
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      res.status(200).json({ success: true, response: response.data });
     } catch (error) {
-        console.error("Error sharing post:", error.response?.data || error.message);
-        res.status(500).json({ error: "Failed to share post" });
+      console.error("Error sharing post:", error.response?.data || error.message);
+      res.status(500).json({ error: "Failed to share post" });
     }
-});
+  });
+  
 
 
 
