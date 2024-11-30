@@ -186,7 +186,7 @@ const sharePost = async () => {
 
   try {
       await axios.post(
-          "https://disenosys-1.onrender.com/exam/share",
+          "http://localhost:8000/exam/share",
           { score: yourScore, postBody },
           {
               headers: { Authorization: `Bearer ${accessToken}` },
