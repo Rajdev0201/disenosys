@@ -102,9 +102,10 @@ const Results = () => {
     }
   };
 
+  
   const createImageAndShare = async () => {
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
 
     // Set the canvas size for the image
     const width = 600;
@@ -113,107 +114,38 @@ const Results = () => {
     canvas.height = height;
 
     // Fill background color
-    ctx.fillStyle = "#182073"; // Dark Blue
+    ctx.fillStyle = '#182073'; // Dark Blue
     ctx.fillRect(0, 0, width, height);
 
     // Add Score Text
-    ctx.fillStyle = "#fff"; // White
-    ctx.font = "30px Arial";
+    ctx.fillStyle = '#fff'; // White
+    ctx.font = '30px Arial';
     ctx.fillText(`Your Score: ${yourScore}%`, 50, 100);
 
     // Add CEFR Level Text
-    ctx.font = "20px Arial";
+    ctx.font = '20px Arial';
     ctx.fillText(`Level: ${yourLevel}`, 50, 150);
 
     // Convert canvas to base64 image
-    const base64Image = canvas.toDataURL("image/png");
-
-    // Call LinkedIn API to register the image
-    const registerImageResponse = await axios.post(
-      "https://api.linkedin.com/v2/assets?action=registerUpload",
-      {
-        registerUploadRequest: {
-          recipes: ["urn:li:digitalmediaRecipe:feedshare-image"],
-          owner: `urn:li:person:${userUrn}`,
-          serviceRelationships: [
-            {
-              relationshipType: "OWNER",
-              identifier: "urn:li:userGeneratedContent",
-            },
-          ],
-        },
-      },
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
-    );
-
-    const asset = registerImageResponse?.data?.value?.asset;
-
-    if (!asset) {
-      console.error("Asset registration failed, no asset ID found.");
-      return;
-    }
-
-    const uploadUrl = registerImageResponse.data.value.uploadMechanism.com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest.uploadUrl;
- 
-    if (!uploadUrl) {
-      console.error("No upload URL found.");
-      return;
-    }
-    // Now upload the image to LinkedIn
-    await axios.post(uploadUrl, base64Image, {
-      headers: {
-        "Content-Type": "image/png",
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    // Once image is uploaded, share it on LinkedIn
-    const postBody = {
-      author: `urn:li:person:${userUrn}`,
-      lifecycleState: "PUBLISHED",
-      specificContent: {
-        "com.linkedin.ugc.ShareContent": {
-          shareCommentary: {
-            text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
-          },
-          shareMediaCategory: "ARTICLE",
-          media: [
-            {
-              status: "READY",
-              description: {
-                text: "Check out my score and learn more about automotive design quiz.",
-              },
-              originalUrl: "https://www.disenosys.com/quicktest",
-              title: {
-                text: "CEFR Quiz Score",
-              },
-              mediaUrl: base64Image,
-            },
-          ],
-        },
-      },
-      visibility: {
-        "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC",
-      },
-    };
+    const base64Image = canvas.toDataURL('image/png');
 
     try {
-      await axios.post(
-        "https://disenosys-1.onrender.com/exam/share",
-        postBody,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
-      alert("Post shared successfully!");
+      // Send the image and details to backend
+      const response = await axios.post('https://disenosys-1.onrender.com/api/linkedin/upload', {
+        image: base64Image,
+        userUrn,
+        accessToken,
+        score: yourScore,
+        level: yourLevel,
+      });
+
+      alert('Post shared successfully!');
       setShowSharePostPopup(false);
-      router.push("/");
     } catch (error) {
-      console.error("Error sharing post:", error);
+      console.error('Error sharing post:', error);
     }
   };
+
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
