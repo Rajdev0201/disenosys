@@ -206,25 +206,97 @@ router.get("/profile", async (req, res) => {
 });
 
 //Step 4: Share a Post on LinkedIn
+// router.post("/share", async (req, res) => {
+//     const { authorization } = req.headers;
+//     const postBody = req.body;
+
+//     try {
+//         const response = await axios.post("https://api.linkedin.com/v2/ugcPosts", postBody, {
+//             headers: {
+//                 Authorization: authorization,
+//                 "Content-Type": "application/json",
+//                 "X-Restli-Protocol-Version": "2.0.0"
+//             }
+//         });
+
+//         res.status(201).json({ message: "Post shared successfully!", data: response.data });
+//     } catch (error) {
+//         console.error("Error sharing post:", error.response?.data || error.message);
+//         res.status(500).json({ error: "Failed to share post" });
+//     }
+// });
+
+
+
 router.post("/share", async (req, res) => {
     const { authorization } = req.headers;
-    const postBody = req.body;
+    const { imageUrl, commentary, userUrn, yourScore } = req.body;
 
     try {
-        const response = await axios.post("https://api.linkedin.com/v2/ugcPosts", postBody, {
+        // Step 1: Register the image upload with LinkedIn API
+        const imageUploadResponse = await axios.post(
+            "https://api.linkedin.com/v2/assets?action=registerUpload",
+            {
+                registerUploadRequest: {
+                    owner: `urn:li:person:${userUrn}`,
+                    mediaType: "image/jpeg",  // Update to your image format if needed
+                    fileSize: 123456,  // Replace with actual image size
+                    fileName: "quiz_image.jpg",  // Replace with the actual image name
+                },
+            },
+            {
+                headers: {
+                    Authorization: authorization,
+                    "X-Restli-Protocol-Version": "2.0.0",
+                },
+            }
+        );
+
+        const imageUrn = imageUploadResponse.data.value.asset;  // Retrieve the URN for the uploaded image
+
+        // Step 2: Share the post with the uploaded image
+        const postBody = {
+            author: `urn:li:person:${userUrn}`,
+            lifecycleState: "PUBLISHED",
+            specificContent: {
+                "com.linkedin.ugc.ShareContent": {
+                    shareCommentary: {
+                        text: commentary,
+                    },
+                    shareMediaCategory: "IMAGE",
+                    media: [
+                        {
+                            status: "READY",
+                            description: {
+                                text: "Check out my score and learn more about automotive design quiz.",
+                            },
+                            media: `urn:li:digitalmediaAsset:${imageUrn}`, // Use the image URN
+                            title: {
+                                text: `CEFR Quiz Image`,
+                            },
+                        },
+                    ],
+                },
+            },
+            visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+        };
+
+        // Step 3: Make the request to LinkedIn API to post the content
+        await axios.post("https://api.linkedin.com/v2/ugcPosts", postBody, {
             headers: {
                 Authorization: authorization,
-                "Content-Type": "application/json",
-                "X-Restli-Protocol-Version": "2.0.0"
-            }
+                "X-Restli-Protocol-Version": "2.0.0",
+            },
         });
 
-        res.status(201).json({ message: "Post shared successfully!", data: response.data });
+        res.status(201).json({ message: "Post shared successfully!" });
     } catch (error) {
         console.error("Error sharing post:", error.response?.data || error.message);
         res.status(500).json({ error: "Failed to share post" });
     }
 });
+
+
 
 
 

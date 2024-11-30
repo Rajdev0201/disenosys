@@ -62,76 +62,31 @@ const LinkedInAuth = () => {
           console.error("Error fetching profile:", error);
         }
       };
-      const uploadImage = async (imageUrl) => {
-        try {
-          const { data } = await axios.post(
-            "https://api.linkedin.com/v2/assets?action=registerUpload",
-            {
-              registerUploadRequest: {
-                owner: `urn:li:person:${userUrn}`,
-                mediaType: "image/jpeg", // Update based on your image type
-                fileSize: 123456, // Adjust based on your image size
-                fileName: "quiz_image.jpg", // Adjust with your image name
-              },
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                "X-Restli-Protocol-Version": "2.0.0",
-              },
-            }
-          );
-          return data.value.asset;
-        } catch (error) {
-          console.error("Error uploading image:", error);
-        }
-      };
+      
       
       const sharePost = async () => {
-        const imageUrn = await uploadImage("https://via.placeholder.com/800x400.png?text=Dummy+Image");
-      
+        const imageUrl = "https://via.placeholder.com/800x400.png?text=Dummy+Image";  // Example dummy image
+    
         const postBody = {
-          author: `urn:li:person:${userUrn}`,
-          lifecycleState: "PUBLISHED",
-          specificContent: {
-            "com.linkedin.ugc.ShareContent": {
-              shareCommentary: {
-                text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
-              },
-              shareMediaCategory: "IMAGE",
-              media: [
-                {
-                  status: "READY",
-                  description: {
-                    text: "Check out my score and learn more about automotive design quiz.",
-                  },
-                  media: `urn:li:digitalmediaAsset:${imageUrn}`, // Use the uploaded image URN
-                  title: {
-                    text: "CEFR Quiz Image",
-                  },
-                },
-              ],
-            },
-          },
-          visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+            imageUrl: imageUrl,  // Image URL to be sent to the backend
+            commentary: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
+            userUrn: userUrn,
+            yourScore: yourScore,
         };
-      
+    
         try {
-          await axios.post(
-            "https://api.linkedin.com/v2/ugcPosts",
-            postBody,
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                "X-Restli-Protocol-Version": "2.0.0",
-              },
-            }
-          );
-          alert("Post shared successfully with image!");
+            // Send the post data to your backend
+            await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            alert("Post shared successfully with image!");
         } catch (error) {
-          console.error("Error sharing post with image:", error);
+            console.error("Error sharing post with image:", error);
         }
-      };
+    };
+    
       
     // Automatically detect authorization code from URL and exchange for token
     useEffect(() => {
