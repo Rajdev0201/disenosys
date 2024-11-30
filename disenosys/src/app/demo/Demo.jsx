@@ -68,26 +68,26 @@ const LinkedInAuth = () => {
     }
 
     const postBody = {
-      author: `urn:li:person:${userUrn}`,
-      lifecycleState: "PUBLISHED",
-      specificContent: {
-        "com.linkedin.ugc.ShareContent": {
-          shareCommentary: {
-            text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
-          },
-          shareMediaCategory: "ARTICLE",
-          media: [
-            {
-              status: "READY",
-              description: {
-                text: "Check out my score and learn more about automotive design quiz.",
+        author: `urn:li:person:${userUrn}`,
+        lifecycleState: "PUBLISHED",
+        specificContent: {
+          "com.linkedin.ugc.ShareContent": {
+            shareCommentary: {
+              text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
+            },
+            shareMediaCategory: "ARTICLE",
+            media: [
+              {
+                status: "READY",
+                description: {
+                  text: "Check out my score and learn more about automotive design quiz.",
+                },
+                originalUrl: "https://www.disenosys.com/quicktest",
+                title: {
+                  text: "CEFR Quiz Score",
+                },
               },
-              originalUrl: "https://www.disenosys.com/quicktest",
-              title: {
-                text: "CEFR Quiz Score",
-              },
-              // Add image to media
-              media: {
+              {
                 status: "READY",
                 description: {
                   text: "Learn more about the automotive design quiz.",
@@ -98,12 +98,14 @@ const LinkedInAuth = () => {
                   text: "CEFR Quiz Image",
                 },
               },
-            },
-          ],
+            ],
+          },
         },
-      },
-      visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
-    };
+        visibility: {
+          "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC",
+        },
+      };
+      
 
     try {
       await axios.post(
