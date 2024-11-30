@@ -44,6 +44,8 @@ const Results = () => {
   const [userUrn, setUserUrn] = useState("");
   const [showFetchProfilePopup, setShowFetchProfilePopup] = useState(false);
   const [showSharePostPopup, setShowSharePostPopup] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null); // To store the image URL for preview
+  const [isPosting, setIsPosting] = useState(false);
 
   // Start the LinkedIn OAuth flow
   const startLinkedInAuth = async () => {
@@ -102,51 +104,100 @@ const Results = () => {
     }
   };
 
-  
-  const createImageAndShare = async () => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
 
-    // Set the canvas size for the image
-    const width = 600;
-    const height = 400;
-    canvas.width = width;
-    canvas.height = height;
+  const generateImagePreview = async () => {
+    if (!accessToken || !userUrn) {
+        alert("Please fetch your profile first!");
+        return;
+    }
 
-    // Fill background color
-    ctx.fillStyle = '#182073'; // Dark Blue
-    ctx.fillRect(0, 0, width, height);
-
-    // Add Score Text
-    ctx.fillStyle = '#fff'; // White
-    ctx.font = '30px Arial';
-    ctx.fillText(`Your Score: ${yourScore}%`, 50, 100);
-
-    // Add CEFR Level Text
-    ctx.font = '20px Arial';
-    ctx.fillText(`Level: ${yourLevel}`, 50, 150);
-
-    // Convert canvas to base64 image
-    const base64Image = canvas.toDataURL('image/png');
+    const postBody = {
+        author: `urn:li:person:${userUrn}`,
+        lifecycleState: "PUBLISHED",
+        specificContent: {
+            "com.linkedin.ugc.ShareContent": {
+                shareCommentary: {
+                    text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
+                },
+                shareMediaCategory: "ARTICLE",
+                media: [
+                    {
+                        status: "READY",
+                        description: {
+                            text: "Check out my score and learn more about automotive design quiz.",
+                        },
+                        originalUrl: "https://www.disenosys.com/quicktest",
+                        title: {
+                            text: "CEFR Quiz Score",
+                        },
+                    },
+                ],
+            },
+        },
+        visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+    };
 
     try {
-        const response = await axios.post('http://localhost:8000/exam/linkedin/upload', {
-            image: base64Image,  // Send base64 image
-            userUrn,
-            accessToken,
-            score: yourScore,
-            level: yourLevel,
-        },
-      );
-      console.log(response)
-        alert('Post shared successfully!');
-        // router.push("/");  // Redirect or show success message
-        setShowSharePostPopup(false);
+        const response = await axios.post(
+            "https://disenosys-1.onrender.com/exam/share",
+            { score: yourScore, postBody },
+            {
+                headers: { Authorization: `Bearer ${accessToken}` },
+            }
+        );
+
+        // Set the image URL for preview
+        setImageUrl(response.data.imageUrl);
+
+        alert("Post ready to share!");
+        setShowFetchProfilePopup(false);
+      setShowSharePostPopup(true);
     } catch (error) {
-        console.error('Error sharing post:', error);
+        console.error("Error generating preview:", error);
     }
 };
+   
+const sharePost = async () => {
+  const postBody = {
+      author: `urn:li:person:${userUrn}`,
+      lifecycleState: "PUBLISHED",
+      specificContent: {
+          "com.linkedin.ugc.ShareContent": {
+              shareCommentary: {
+                  text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
+              },
+              shareMediaCategory: "ARTICLE",
+              media: [
+                  {
+                      status: "READY",
+                      description: {
+                          text: "Check out my score and learn more about automotive design quiz.",
+                      },
+                      originalUrl: imageUrl, // Use the generated image URL here
+                      title: {
+                          text: "CEFR Quiz Score",
+                      },
+                  },
+              ],
+          },
+      },
+      visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+  };
 
+  try {
+      await axios.post(
+          "https://disenosys-1.onrender.com/exam/share",
+          { score: yourScore, postBody },
+          {
+              headers: { Authorization: `Bearer ${accessToken}` },
+          }
+      );
+      alert("Post shared successfully!");
+      setShowSharePostPopup(false);
+  } catch (error) {
+      console.error("Error sharing post:", error);
+  }
+};
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -219,6 +270,12 @@ const Results = () => {
                 <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110">
                   <FaFacebook className="w-6 h-6" />
                 </button>
+                <button
+              onClick={generateImagePreview}
+              className="bg-[#0077B5] text-white p-2 px-6 rounded-md mt-4"
+            >
+              Generate Image Preview
+            </button>
                 {!accessToken ? (
                   <button
                     className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"
@@ -244,6 +301,13 @@ const Results = () => {
                       </div>
                     )}
 
+{imageUrl && (
+                <div className="mt-4">
+                    <p>Preview of your post:</p>
+                    <img src={imageUrl} alt="Score Image Preview" className="max-w-xs mx-auto" />
+                </div>
+            )}
+
                     {showSharePostPopup && (
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
                         <div className="bg-white p-5 rounded-md shadow-md w-64 h-36 text-center">
@@ -251,7 +315,7 @@ const Results = () => {
                             Share to post
                           </h2>
                           <button
-                           onClick={createImageAndShare}
+                            onClick={sharePost}
                             className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 mt-4 px-4 rounded-md"
                           >
                             Share

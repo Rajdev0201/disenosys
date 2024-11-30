@@ -370,164 +370,171 @@ router.get("/profile", async (req, res) => {
     }
 });
 
-// Step 4: Share a Post on LinkedIn
-// router.post("/share", async (req, res) => {
-//     const { authorization } = req.headers;
-//     const postBody = req.body;
+//Step 4: Share a Post on LinkedIn
+// Backend: /share route for generating image and posting to LinkedIn
 
-//     try {
-//         const response = await axios.post("https://api.linkedin.com/v2/ugcPosts", postBody, {
-//             headers: {
-//                 Authorization: authorization,
-//                 "Content-Type": "application/json",
-//                 "X-Restli-Protocol-Version": "2.0.0"
-//             }
-//         });
-
-//         res.status(201).json({ message: "Post shared successfully!", data: response.data });
-//     } catch (error) {
-//         console.error("Error sharing post:", error.response?.data || error.message);
-//         res.status(500).json({ error: "Failed to share post" });
-//     }
-// });
-
-
-router.post('/linkedin/upload', async (req, res) => {
-    const { image, userUrn, accessToken, score, level } = req.body;
+router.post("/share", async (req, res) => {
+    const { authorization } = req.headers;
+    const { score, postBody } = req.body;
 
     try {
-        // Step 1: Register the image with LinkedIn
-        const registerImageResponse = await axios.post(
-            'https://api.linkedin.com/v2/assets?action=registerUpload',
+        // Generate the image (you'll need to implement this logic to generate an image based on the score)
+        const imageBuffer = await generateImage(score);
+
+        // Upload image to an image hosting service (e.g., AWS S3, Cloudinary, etc.)
+        const imageUploadResponse = await axios.post(
+            'https://www.disenosys.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.d25c986e.png&w=384&q=75', // Replace with the actual API to upload the image (e.g., Cloudinary)
+            imageBuffer,
             {
-                registerUploadRequest: {
-                    recipes: ['urn:li:digitalmediaRecipe:feedshare-image'],
-                    owner: `urn:li:person:${userUrn}`,
-                    serviceRelationships: [
-                        {
-                            relationshipType: 'OWNER',
-                            identifier: 'urn:li:userGeneratedContent',
-                        },
-                    ],
+                headers: {
+                    'Content-Type': 'image/png',
                 },
-            },
-            {
-                headers: { Authorization: `Bearer ${accessToken}` },
             }
         );
-        
-        const asset = registerImageResponse?.data?.value?.asset;
-        console.log('Registered Asset:', asset);
-        
-        const uploadUrl = registerImageResponse?.data?.value?.uploadMechanism?.['com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest']?.uploadUrl;
 
-        if (!asset || !uploadUrl) {
-            return res.status(400).send('Error registering image or missing upload URL');
-        }
+        // Get the image URL from the upload response
+        const imageUrl = imageUploadResponse.data.secure_url; // Assuming the hosting service returns a URL
 
-        console.log('Registered Asset ID:', asset);
-        console.log('Upload URL:', uploadUrl);
+        // Add the image URL to the post body for LinkedIn
+        postBody.specificContent["com.linkedin.ugc.ShareContent"].media.push({
+            status: "READY",
+            description: {
+                text: "My dynamic score image!",
+            },
+            originalUrl: imageUrl,
+            title: {
+                text: "Quiz Score Image",
+            },
+        });
 
-        // Step 2: Upload the image to LinkedIn
-        const byteCharacters = atob(image.split(',')[1]); // Decode base64 string
-        const byteArrays = [];
-        
-        for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
-            const slice = byteCharacters.slice(offset, offset + 1024);
-            const byteNumbers = new Array(slice.length);
-            for (let i = 0; i < slice.length; i++) {
-                byteNumbers[i] = slice.charCodeAt(i);
-            }
-            byteArrays.push(new Uint8Array(byteNumbers));
-        }
-
-        const byteArray = new Blob(byteArrays, { type: 'image/png' });
-
-        const uploadImageResponse = await axios.post(uploadUrl, byteArray, {
+        // Post to LinkedIn
+        const response = await axios.post("https://api.linkedin.com/v2/ugcPosts", postBody, {
             headers: {
-                'Content-Type': 'image/png',
-                'X-Restli-Protocol-Version': '2.0.0',
-                Authorization: `Bearer ${accessToken}`,
+                Authorization: authorization,
+                "Content-Type": "application/json",
+                "X-Restli-Protocol-Version": "2.0.0",
             },
         });
-        console.log('Image Upload Response:', uploadImageResponse.data);
-        
 
-        console.log('Image Upload Response:', uploadImageResponse.data);
-
-        // Step 3: Check asset status to ensure it's ready
-        let assetStatus = '';
-        let retryCount = 0;
-        const maxRetries = 5;
-        
-        while (assetStatus !== 'READY' && retryCount < maxRetries) {
-            const assetStatusResponse = await axios.get(
-                `https://api.linkedin.com/v2/assets/${asset}`,
-                { headers: { Authorization: `Bearer ${accessToken}` } }
-            );
-            assetStatus = assetStatusResponse.data.status;
-            console.log(`Asset Status: ${assetStatus}`);
-        
-            if (assetStatus !== 'READY') {
-                await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds before retrying
-                retryCount++;
-            }
-        }
-        
-        if (assetStatus !== 'READY') {
-            return res.status(400).send('Asset is not ready after maximum retries');
-        }
-        
-        // Step 4: Create and share the post
-        const postBody = {
-            author: `urn:li:person:${userUrn}`,
-            lifecycleState: 'PUBLISHED',
-            specificContent: {
-                'com.linkedin.ugc.ShareContent': {
-                    shareCommentary: {
-                        text: `Check out my image!`,
-                    },
-                    shareMediaCategory: 'IMAGE',  // Ensure you use the correct category
-                    media: [
-                        {
-                            status: 'READY',
-                            description: {
-                                text: 'Image description',
-                            },
-                            media: asset,  // Use the correct asset ID here
-                            title: {
-                                text: 'Sample Image',
-                            },
-                        },
-                    ],
-                },
-            },
-            visibility: {
-                'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
-            },
-        };
-        
-       
-        
-        console.log('Post shared successfully:', postResponse.data);
-        
-
-        // Step 5: Share the post on LinkedIn
-        const postResponse = await axios.post('https://api.linkedin.com/v2/ugcPosts', postBody, {
-            headers: { Authorization: `Bearer ${accessToken}` },
-        });
-
-        console.log('Post shared successfully:', postResponse.data);
-        res.status(200).send('Post shared successfully');
+        res.status(201).json({ message: "Post shared successfully!", data: response.data, imageUrl });
     } catch (error) {
-        console.error('Error processing LinkedIn post:', error.response ? error.response.data : error.message);
-        res.status(500).send('Error processing LinkedIn post');
+        console.error("Error sharing post:", error.response?.data || error.message);
+        res.status(500).json({ error: "Failed to share post" });
     }
 });
 
 
 
-  
+// router.post('/linkedin/upload', async (req, res) => {
+//     const { image, userUrn, accessToken, score, level } = req.body;
+
+//     try {
+//         // Step 1: Register the image with LinkedIn
+//         const registerImageResponse = await axios.post(
+//             'https://api.linkedin.com/v2/assets?action=registerUpload',
+//             {
+//                 registerUploadRequest: {
+//                     recipes: ['urn:li:digitalmediaRecipe:feedshare-image'],
+//                     owner: `urn:li:person:${userUrn}`,
+//                     serviceRelationships: [
+//                         {
+//                             relationshipType: 'OWNER',
+//                             identifier: 'urn:li:userGeneratedContent',
+//                         },
+//                     ],
+//                 },
+//             },
+//             {
+//                 headers: { Authorization: `Bearer ${accessToken}` },
+//             }
+//         );
+
+//         console.log('LinkedIn Register Image Response:', registerImageResponse.data);
+
+//         const asset = registerImageResponse?.data?.value?.asset;
+//         const uploadUrl = registerImageResponse?.data?.value?.uploadMechanism?.['com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest']?.uploadUrl;
+
+//         if (!asset || !uploadUrl) {
+//             return res.status(400).send('Error registering image or missing upload URL');
+//         }
+
+//         // Step 2: Upload the image to LinkedIn
+//         const uploadImageResponse = await axios.post(uploadUrl, image, {
+//             headers: {
+//                 'Content-Type': 'image/png', // Ensure this matches your image type
+//                 Authorization: `Bearer ${accessToken}`,
+//             },
+//         });
+
+//         console.log('Image Upload Response:', uploadImageResponse.data);
+
+//         // Step 3: Check asset status to ensure it's ready
+//         let assetReady = false;
+//         const maxRetries = 5; // Maximum number of retries
+//         for (let i = 0; i < maxRetries; i++) {
+//             await new Promise(resolve => setTimeout(resolve, 2000)); // wait for 2 seconds
+
+//             const assetStatusResponse = await axios.get(
+//                 `https://api.linkedin.com/v2/assets/${asset}`,
+//                 { headers: { Authorization: `Bearer ${accessToken}` } }
+//             );
+
+//             console.log(`Asset Status (Attempt ${i + 1}):`, assetStatusResponse.data);
+
+//             // Check if the asset is ready
+//             if (assetStatusResponse.data.status === 'READY') {
+//                 assetReady = true;
+//                 break;
+//             } else {
+//                 console.log(`Asset status is not ready yet. Current status: ${assetStatusResponse.data.status}`);
+//             }
+//         }
+
+//         if (!assetReady) {
+//             return res.status(400).send('Asset is not ready for posting after multiple attempts');
+//         }
+
+//         // Step 4: Create and share the post
+//         const postBody = {
+//             author: `urn:li:person:${userUrn}`,
+//             lifecycleState: 'PUBLISHED',
+//             specificContent: {
+//                 'com.linkedin.ugc.ShareContent': {
+//                     shareCommentary: {
+//                         text: `I scored ${score}% in my recent quiz! Level: ${level} #quiz #Learning`,
+//                     },
+//                     shareMediaCategory: 'ARTICLE',
+//                     media: [
+//                         {
+//                             status: 'READY',
+//                             description: {
+//                                 text: 'Check out my score and learn more about automotive design quiz.',
+//                             },
+//                             media: asset, // Use the asset ID directly
+//                             title: {
+//                                 text: 'CEFR Quiz Score' 
+//                             }
+//                         }
+//                     ]
+//                 }
+//             }
+//         };
+
+//         const postResponse = await axios.post(
+//             'https://api.linkedin.com/v2/ugcPosts',
+//             postBody,
+//             {
+//                 headers: { Authorization: `Bearer ${accessToken}`, 'Content-Type': 'application/json' }
+//             }
+//         );
+
+//         console.log('Post Response:', postResponse.data);
+//         return res.status(201).send('Post created successfully');
+//     } catch (error) {
+//         console.error('Error processing LinkedIn post:', error.response ? error.response.data : error.message);
+//         return res.status(500).send('Error processing LinkedIn post');
+//     }
+// });
 
 
 
