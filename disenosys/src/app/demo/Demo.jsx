@@ -49,7 +49,7 @@ const LinkedInAuth = () => {
     
         try {
           const { data } = await axios.get(
-            "https://disenosys-1.onrender.com/exam/profile",
+            "http://localhost:8000/exam/profile",
             {
               headers: { Authorization: `Bearer ${accessToken}` },
             }
