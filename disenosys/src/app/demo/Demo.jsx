@@ -49,7 +49,7 @@ const LinkedInAuth = () => {
     
         try {
           const { data } = await axios.get(
-            "http://localhost:8000/exam/profile",
+            "https://disenosys-1.onrender.com/exam/profile",
             {
               headers: { Authorization: `Bearer ${accessToken}` },
             }
@@ -76,7 +76,7 @@ const LinkedInAuth = () => {
     
         try {
             // Send the post data to your backend
-            await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
+            await axios.post("http://localhost:8000/exam/share", postBody, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
                 },
