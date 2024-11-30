@@ -44,8 +44,6 @@ const Results = () => {
   const [userUrn, setUserUrn] = useState("");
   const [showFetchProfilePopup, setShowFetchProfilePopup] = useState(false);
   const [showSharePostPopup, setShowSharePostPopup] = useState(false);
-  const [imageUrl, setImageUrl] = useState(null); // To store the image URL for preview
-  const [isPosting, setIsPosting] = useState(false);
 
   // Start the LinkedIn OAuth flow
   const startLinkedInAuth = async () => {
@@ -104,100 +102,53 @@ const Results = () => {
     }
   };
 
-
-  const generateImagePreview = async () => {
+  const sharePost = async () => {
     if (!accessToken || !userUrn) {
-        alert("Please fetch your profile first!");
-        return;
+      alert("Please fetch your profile first!");
+      return;
     }
 
     const postBody = {
-        author: `urn:li:person:${userUrn}`,
-        lifecycleState: "PUBLISHED",
-        specificContent: {
-            "com.linkedin.ugc.ShareContent": {
-                shareCommentary: {
-                    text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
-                },
-                shareMediaCategory: "ARTICLE",
-                media: [
-                    {
-                        status: "READY",
-                        description: {
-                            text: "Check out my score and learn more about automotive design quiz.",
-                        },
-                        originalUrl: "https://www.disenosys.com/quicktest",
-                        title: {
-                            text: "CEFR Quiz Score",
-                        },
-                    },
-                ],
-            },
-        },
-        visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
-    };
-
-    try {
-        const response = await axios.post(
-            "https://disenosys-1.onrender.com/exam/share",
-            { score: yourScore, postBody },
-            {
-                headers: { Authorization: `Bearer ${accessToken}` },
-            }
-        );
-
-        // Set the image URL for preview
-        setImageUrl(response.data.imageUrl);
-
-        alert("Post ready to share!");
-        setShowFetchProfilePopup(false);
-      setShowSharePostPopup(true);
-    } catch (error) {
-        console.error("Error generating preview:", error);
-    }
-};
-   
-const sharePost = async () => {
-  const postBody = {
       author: `urn:li:person:${userUrn}`,
       lifecycleState: "PUBLISHED",
       specificContent: {
-          "com.linkedin.ugc.ShareContent": {
-              shareCommentary: {
-                  text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
-              },
-              shareMediaCategory: "ARTICLE",
-              media: [
-                  {
-                      status: "READY",
-                      description: {
-                          text: "Check out my score and learn more about automotive design quiz.",
-                      },
-                      originalUrl: imageUrl, // Use the generated image URL here
-                      title: {
-                          text: "CEFR Quiz Score",
-                      },
-                  },
-              ],
+        "com.linkedin.ugc.ShareContent": {
+          shareCommentary: {
+            text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
           },
+          shareMediaCategory: "ARTICLE",
+          media: [
+            {
+              status: "READY",
+              description: {
+                text: "Check out my score and learn more about automotive design quiz.",
+              },
+              originalUrl: "https://www.disenosys.com/quicktest",
+              title: {
+                text: "CEFR Quiz Score",
+              },
+            },
+          ],
+        },
       },
       visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
-  };
+    };
 
-  try {
+    try {
       await axios.post(
-          "http://localhost:8000/exam/share",
-          { score: yourScore, postBody },
-          {
-              headers: { Authorization: `Bearer ${accessToken}` },
-          }
+        "https://disenosys-1.onrender.com/exam/share",
+        postBody,
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
       );
       alert("Post shared successfully!");
       setShowSharePostPopup(false);
-  } catch (error) {
+      router.push("/");
+    } catch (error) {
       console.error("Error sharing post:", error);
-  }
-};
+    }
+  };
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);
@@ -270,12 +221,6 @@ const sharePost = async () => {
                 <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110">
                   <FaFacebook className="w-6 h-6" />
                 </button>
-                <button
-              onClick={generateImagePreview}
-              className="bg-[#0077B5] text-white p-2 px-6 rounded-md mt-4"
-            >
-              Generate Image Preview
-            </button>
                 {!accessToken ? (
                   <button
                     className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"
@@ -300,13 +245,6 @@ const sharePost = async () => {
                         </div>
                       </div>
                     )}
-
-{imageUrl && (
-                <div className="mt-4">
-                    <p>Preview of your post:</p>
-                    <img src={imageUrl} alt="Score Image Preview" className="max-w-xs mx-auto" />
-                </div>
-            )}
 
                     {showSharePostPopup && (
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">

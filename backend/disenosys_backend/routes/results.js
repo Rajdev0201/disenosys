@@ -18,28 +18,6 @@ router.get('/getcatia', async (req, res) => {
   });
 
 
-//   router.post('/catia', async (req, res) => {
-//     const {catiaScore, catiaPercentage } = req.body;
-    
-//     try {
-       
-//         const catia = new Result({
-//            catiaScore,
-//            catiaPercentage
-//         });
-
-//         const saveCatia = await catia.save();
-
-//         res.json({ 
-//             message: 'Catia exam completed.', 
-//             user: saveCatia 
-//         });
-
-//     } catch (error) {
-//         res.status(400).json({ error: 'exam failed' });
-//         console.log(error);
-//     }
-// });
 
 
 // router.post('/product', async (req, res) => {
@@ -371,52 +349,20 @@ router.get("/profile", async (req, res) => {
 });
 
 //Step 4: Share a Post on LinkedIn
-// Backend: /share route for generating image and posting to LinkedIn
-
 router.post("/share", async (req, res) => {
     const { authorization } = req.headers;
-    const { score, postBody } = req.body;
+    const postBody = req.body;
 
     try {
-        // Generate the image (you'll need to implement this logic to generate an image based on the score)
-        const imageBuffer = await generateImage(score);
-
-        // Upload image to an image hosting service (e.g., AWS S3, Cloudinary, etc.)
-        const imageUploadResponse = await axios.post(
-            'https://www.disenosys.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.d25c986e.png&w=384&q=75', // Replace with the actual API to upload the image (e.g., Cloudinary)
-            imageBuffer,
-            {
-                headers: {
-                    'Content-Type': 'image/png',
-                },
-            }
-        );
-
-        // Get the image URL from the upload response
-        const imageUrl = imageUploadResponse.data.secure_url; // Assuming the hosting service returns a URL
-
-        // Add the image URL to the post body for LinkedIn
-        postBody.specificContent["com.linkedin.ugc.ShareContent"].media.push({
-            status: "READY",
-            description: {
-                text: "My dynamic score image!",
-            },
-            originalUrl: imageUrl,
-            title: {
-                text: "Quiz Score Image",
-            },
-        });
-
-        // Post to LinkedIn
         const response = await axios.post("https://api.linkedin.com/v2/ugcPosts", postBody, {
             headers: {
                 Authorization: authorization,
                 "Content-Type": "application/json",
-                "X-Restli-Protocol-Version": "2.0.0",
-            },
+                "X-Restli-Protocol-Version": "2.0.0"
+            }
         });
 
-        res.status(201).json({ message: "Post shared successfully!", data: response.data, imageUrl });
+        res.status(201).json({ message: "Post shared successfully!", data: response.data });
     } catch (error) {
         console.error("Error sharing post:", error.response?.data || error.message);
         res.status(500).json({ error: "Failed to share post" });
