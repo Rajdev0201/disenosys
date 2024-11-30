@@ -121,7 +121,7 @@ const LinkedInAuth = () => {
 
     return (
         <div>
-            <div ref={scoreCardRef} className="score-card">
+            <div className="score-card">
                 {/* Design the score card */}
                 <div className="p-4 border rounded shadow-md">
                     <h2 className="text-lg font-semibold">Your Score:</h2>
