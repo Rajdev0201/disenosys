@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaFacebook, FaLinkedin, FaWhatsappSquare } from "react-icons/fa";
 import { IoLinkSharp } from "react-icons/io5";
-import html2canvas from "html2canvas";
 
 
 const Results = () => {
@@ -46,7 +45,7 @@ const Results = () => {
   const [showFetchProfilePopup, setShowFetchProfilePopup] = useState(false);
   const [showSharePostPopup, setShowSharePostPopup] = useState(false);
 
-
+  // Start the LinkedIn OAuth flow
   const startLinkedInAuth = async () => {
     try {
       const { data } = await axios.get(
@@ -58,7 +57,7 @@ const Results = () => {
     }
   };
 
-
+  // Exchange authorization code for an access token
   const exchangeCodeForToken = async (code) => {
     try {
       const { data } = await axios.post(
@@ -103,21 +102,74 @@ const Results = () => {
     }
   };
 
-  const captureScoreTemplate = async () => {
-    const element = document.getElementById("score-template");
-    const canvas = await html2canvas(element);
-    const image = canvas.toDataURL("image/png");
-    return image;
-  };
+  const createImageAndShare = async () => {
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
 
-  const sharePost = async () => {
-    if (!accessToken || !userUrn) {
-      alert("Please fetch your profile first!");
+    // Set the canvas size for the image
+    const width = 600;
+    const height = 400;
+    canvas.width = width;
+    canvas.height = height;
+
+    // Fill background color
+    ctx.fillStyle = "#182073"; // Dark Blue
+    ctx.fillRect(0, 0, width, height);
+
+    // Add Score Text
+    ctx.fillStyle = "#fff"; // White
+    ctx.font = "30px Arial";
+    ctx.fillText(`Your Score: ${yourScore}%`, 50, 100);
+
+    // Add CEFR Level Text
+    ctx.font = "20px Arial";
+    ctx.fillText(`Level: ${yourLevel}`, 50, 150);
+
+    // Convert canvas to base64 image
+    const base64Image = canvas.toDataURL("image/png");
+
+    // Call LinkedIn API to register the image
+    const registerImageResponse = await axios.post(
+      "https://api.linkedin.com/v2/assets?action=registerUpload",
+      {
+        registerUploadRequest: {
+          recipes: ["urn:li:digitalmediaRecipe:feedshare-image"],
+          owner: `urn:li:person:${userUrn}`,
+          serviceRelationships: [
+            {
+              relationshipType: "OWNER",
+              identifier: "urn:li:userGeneratedContent",
+            },
+          ],
+        },
+      },
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
+
+    const asset = registerImageResponse?.data?.value?.asset;
+
+    if (!asset) {
+      console.error("Asset registration failed, no asset ID found.");
       return;
     }
 
-    const image = await captureScoreTemplate();
+    const uploadUrl = registerImageResponse.data.value.uploadMechanism.com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest.uploadUrl;
+ 
+    if (!uploadUrl) {
+      console.error("No upload URL found.");
+      return;
+    }
+    // Now upload the image to LinkedIn
+    await axios.post(uploadUrl, base64Image, {
+      headers: {
+        "Content-Type": "image/png",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
 
+    // Once image is uploaded, share it on LinkedIn
     const postBody = {
       author: `urn:li:person:${userUrn}`,
       lifecycleState: "PUBLISHED",
@@ -126,27 +178,30 @@ const Results = () => {
           shareCommentary: {
             text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
           },
-          shareMediaCategory: "IMAGE",
+          shareMediaCategory: "ARTICLE",
           media: [
             {
               status: "READY",
               description: {
-                text: "Check out my score and learn more about the quiz.",
+                text: "Check out my score and learn more about automotive design quiz.",
               },
-              media: image, // Add the generated image as the media
+              originalUrl: "https://www.disenosys.com/quicktest",
               title: {
-                text: "My Quiz Score",
+                text: "CEFR Quiz Score",
               },
+              mediaUrl: base64Image,
             },
           ],
         },
       },
-      visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+      visibility: {
+        "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC",
+      },
     };
 
     try {
       await axios.post(
-        "http://localhost:8000/exam/share",
+        "https://disenosys-1.onrender.com/exam/share",
         postBody,
         {
           headers: { Authorization: `Bearer ${accessToken}` },
@@ -189,7 +244,7 @@ const Results = () => {
       <div className="min-h-screen bg-blue-100 flex justify-center items-center font-poppins p-4">
         <div className="grid sm:grid-cols-2  w-full max-w-4xl">
           <div className="flex flex-col items-center bg-white rounded-md shadow-md ml-24 w-80 h-96">
-            <div id="score-template" className="bg-[#182073] w-full p-6 text-center flex flex-col items-center">
+            <div className="bg-[#182073] w-full p-6 text-center flex flex-col items-center">
               <p className="text-lg font-semibold text-white">Your Score:</p>
               <p className="text-xl font-bold text-white">{yourLevel}</p>
               <div className="flex items-center justify-center w-28 h-28  mt-5">
@@ -263,7 +318,7 @@ const Results = () => {
                             Share to post
                           </h2>
                           <button
-                            onClick={sharePost}
+                           onClick={createImageAndShare}
                             className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 mt-4 px-4 rounded-md"
                           >
                             Share
