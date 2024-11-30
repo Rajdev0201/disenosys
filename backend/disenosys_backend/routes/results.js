@@ -395,7 +395,7 @@ router.get("/profile", async (req, res) => {
 
 
 // Endpoint to register and upload the image, and share the post on LinkedIn
-router.post('/api/linkedin/upload', async (req, res) => {
+router.post('/linkedin/upload', async (req, res) => {
   const { image, userUrn, accessToken, score, level } = req.body;
 
   // Step 1: Register the image with LinkedIn
