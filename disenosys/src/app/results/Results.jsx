@@ -130,21 +130,22 @@ const Results = () => {
     const base64Image = canvas.toDataURL('image/png');
 
     try {
-      // Send the image and details to backend
-      const response = await axios.post('http://localhost:8000/exam/linkedin/upload', {
-        image: base64Image,
-        userUrn,
-        accessToken,
-        score: yourScore,
-        level: yourLevel,
-      });
-
-      alert('Post shared successfully!');
-      setShowSharePostPopup(false);
+        const response = await axios.post('http://localhost:8000/exam/linkedin/upload', {
+            image: base64Image,  // Send base64 image
+            userUrn,
+            accessToken,
+            score: yourScore,
+            level: yourLevel,
+        },
+      );
+      console.log(response)
+        alert('Post shared successfully!');
+        // router.push("/");  // Redirect or show success message
+        setShowSharePostPopup(false);
     } catch (error) {
-      console.error('Error sharing post:', error);
+        console.error('Error sharing post:', error);
     }
-  };
+};
 
 
   useEffect(() => {
