@@ -131,7 +131,7 @@ const Results = () => {
 
     try {
       // Send the image and details to backend
-      const response = await axios.post('https://disenosys-1.onrender.com/exam/linkedin/upload', {
+      const response = await axios.post('/ehttp://localhost:8000/exam/linkedin/upload', {
         image: base64Image,
         userUrn,
         accessToken,
