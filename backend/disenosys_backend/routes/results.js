@@ -4,8 +4,7 @@ const catia = require("../models/catia");
 const Result = require('../models/results');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
-// const qs = require('qs');
-// const { createCanvas, loadImage } = require('canvas');
+
 
 
 router.get('/getcatia', async (req, res) => {
@@ -18,148 +17,6 @@ router.get('/getcatia', async (req, res) => {
   });
 
 
-
-
-// router.post('/product', async (req, res) => {
-//     const { productScore , productPercentage } = req.body;
-    
-//     try {
-       
-//         const product = new Result({
-//             productScore ,
-//             productPercentage
-//         });
-
-//         const saveProduct = await product.save();
-
-//         res.json({ 
-//             message: 'Product exam completed.', 
-//             user: saveProduct 
-//         });
-
-//     } catch (error) {
-//         res.status(400).json({ error: 'exam failed' });
-//         console.log(error);
-//     }
-// });
-
-
-// Backend: Exchange Authorization Code for Access Token
-
-
-
-// router.post('/auth/exchangeCodeForToken', async (req, res) => {
-//     const { code } = req.body;  // The authorization code from LinkedIn
-  
-//     if (!code) {
-//       return res.status(400).json({ error: 'Authorization code is missing' });
-//     }
-  
-//     const clientId = '86tuwotemzkyou';  
-//     const clientSecret = 'WPL_AP1.0tC5x2NKzBmqgcTL.f5A/ug==';  // Replace with your LinkedIn Client Secret
-//     const redirectUri = 'http://localhost:3000/results';  // Replace with your redirect URI
-    
-  
-//     try {
-//       // Make a POST request to exchange the authorization code for an access token
-//       const response = await axios.post(
-//         'https://www.linkedin.com/oauth/v2/accessToken', 
-//         qs.stringify({
-//           grant_type: 'authorization_code',
-//           code: code,
-//           redirect_uri: redirectUri,
-//           client_id: clientId,
-//           client_secret: clientSecret
-//         }),
-//         {
-//           headers: {
-//             'Content-Type': 'application/x-www-form-urlencoded',
-//           },
-//         }
-//       );
-  
-//       const { access_token } = response.data;
-     
-//       if (access_token) {
-//         res.status(200).json({ accessToken: access_token });
-//       } else {
-//         res.status(400).json({ error: 'Failed to obtain access token' });
-//       }
-//     } catch (error) {
-//         const errorMsg = error.response?.data || error.message;
-//         console.error('Token exchange error:', errorMsg);
-//         if (error.response?.status === 401) {
-//             res.status(401).json({ error: 'Unauthorized. Please reauthorize.' });
-//         } else {
-//             res.status(500).json({ error: 'Server error during token exchange.' });
-//         }
-//     }
-//   });
-
-//   async function getUserURN(accessToken) {
-//     try {
-//         // Fetch user profile information
-//         const response = await axios.get('https://api.linkedin.com/v2/me', {
-//             headers: {
-//                 'Authorization': `Bearer ${accessToken}`,
-//                 'X-Restli-Protocol-Version': '2.0.0',
-//             }
-//         });
-
-//         // LinkedIn API returns the user ID under the 'id' field
-//         const userURN = response.data.id;
-//         // Return the URN in the required format
-//         return `urn:li:person:${userURN}`;
-//     } catch (error) {
-//         // Improved error logging
-//         console.error('Error fetching LinkedIn profile:', error.response ? error.response.data : error.message);
-//         throw new Error('Unable to fetch LinkedIn user data');
-//     }
-// }
-
-
-
-// router.post('/shareLinkedIn', async (req, res) => {
-//     const { accessToken, message } = req.body; 
-//     const userURN = await getUserURN(accessToken);
-//     if (!userURN) {
-//         throw new Error('Invalid user URN');
-//     }
-
-//     const url = 'https://api.linkedin.com/v2/ugcPosts';
-//     const headers = {
-//       'Authorization': `Bearer ${accessToken}`,
-//       'X-Restli-Protocol-Version': '2.0.0',
-//       'Content-Type': 'application/json',
-//     };
-  
-//     const postBody = {
-//       author: userURN, 
-//       lifecycleState: 'PUBLISHED',
-//       specificContent: {
-//         'com.linkedin.ugc.ShareContent': {
-//           shareCommentary: {
-//             text: message,
-//           },
-//           shareMediaCategory: 'NONE',
-//         },
-//       },
-//       visibility: {
-//         'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
-//       },
-//     };
-  
-//     try {
-//       const response = await axios.post(url, postBody, { headers });
-//       res.status(200).json({ message: 'Post shared successfully!', data: response.data });
-//     }  catch (error) {
-//         console.error('Post sharing error:', error.message);
-//         res.status(500).json({ error: error.message });
-//     }
-
-//   });
-  
-  
 
 
 const sendResultEmail = async (studentEmail, studentName, catiaScore, productScore, totalScore) => {
@@ -290,7 +147,7 @@ router.post('/details', async (req, res) => {
 // LinkedIn API Configuration
 const CLIENT_ID = '86tuwotemzkyou';
 const CLIENT_SECRET = 'WPL_AP1.0tC5x2NKzBmqgcTL.f5A/ug==';
-const REDIRECT_URI = 'https://www.disenosys.com/results';
+const REDIRECT_URI = 'https://www.disenosys.com/demo';
 
 
 // Step 1: Generate Authorization URL
@@ -481,54 +338,6 @@ router.post("/share", async (req, res) => {
 //         return res.status(500).send('Error processing LinkedIn post');
 //     }
 // });
-
-
-
-// router.post("/share", async (req, res) => {
-//   const { authorization } = req.headers;
-//   const { score, postBody } = req.body;
-//   console.log("Received postBody:", postBody);
-
-//   if (!postBody || !postBody.specificContent || !postBody.specificContent["com.linkedin.ugc.ShareContent"]) {
-//       return res.status(400).json({ error: "Invalid post body structure" });
-//   }
-
-//   // Generate the image with the score if needed
-//   const base64Image = await generateImageWithScore(score);
-
-//   // Update the postBody with the generated image
-//   postBody.specificContent["com.linkedin.ugc.ShareContent"].media[0].originalUrl = base64Image;
-
-//   try {
-//       const response = await axios.post("https://api.linkedin.com/v2/ugcPosts", postBody, {
-//           headers: {
-//               Authorization: authorization,
-//               "Content-Type": "application/json",
-//               "X-Restli-Protocol-Version": "2.0.0"
-//           }
-//       });
-
-//       res.status(201).json({ message: "Post shared successfully!", data: response.data });
-//   } catch (error) {
-//       console.error("Error sharing post:", error.response?.data || error.message);
-//       res.status(500).json({ error: "Failed to share post", details: error.message });
-//   }
-// });
-
-
-// // Helper function to generate the image with the score
-// async function generateImageWithScore(score) {
-//     const canvas = createCanvas(600, 400);
-//     const ctx = canvas.getContext('2d');
-//     const background = await loadImage('path_to_background_image.png'); // or use a default background
-//     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-//     ctx.font = '40px Arial';
-//     ctx.fillStyle = 'white';
-//     ctx.fillText(`Score: ${score}`, 50, 50); // Position the score
-//     return canvas.toDataURL(); // Returns base64 string of the image
-// }
-
-
 
 
 
