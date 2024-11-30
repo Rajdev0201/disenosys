@@ -6,7 +6,7 @@ const LinkedInAuth = () => {
   const [accessToken, setAccessToken] = useState("");
   const [userUrn, setUserUrn] = useState("");
   const yourScore = 85;
-  const imageUrl = "https://www.disenosys.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Flogo.d25c986e.png&w=384&q=75";
+  const imageUrl = "https://via.placeholder.com/1200x627.png?text=Sample+Image";
 
   const startLinkedInAuth = async () => {
     try {
