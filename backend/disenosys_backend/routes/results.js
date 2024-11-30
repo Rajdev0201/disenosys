@@ -396,85 +396,86 @@ router.get("/profile", async (req, res) => {
 
 // Endpoint to register and upload the image, and share the post on LinkedIn
 router.post('/linkedin/upload', async (req, res) => {
-  const { image, userUrn, accessToken, score, level } = req.body;
-
-  // Step 1: Register the image with LinkedIn
-  try {
-    const registerImageResponse = await axios.post(
-      'https://api.linkedin.com/v2/assets?action=registerUpload',
-      {
-        registerUploadRequest: {
-          recipes: ['urn:li:digitalmediaRecipe:feedshare-image'],
-          owner: `urn:li:person:${userUrn}`,
-          serviceRelationships: [
-            {
-              relationshipType: 'OWNER',
-              identifier: 'urn:li:userGeneratedContent',
-            },
-          ],
-        },
-      },
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
-    );
-
-    const asset = registerImageResponse?.data?.value?.asset;
-    const uploadUrl = registerImageResponse?.data?.value?.uploadMechanism?.com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest?.uploadUrl;
-
-    if (!asset || !uploadUrl) {
-      return res.status(400).send('Error registering image or missing upload URL');
-    }
-
-    // Step 2: Upload the image to LinkedIn
-    await axios.post(uploadUrl, image, {
-      headers: {
-        'Content-Type': 'image/png',
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
-
-    // Step 3: Create and share the post
-    const postBody = {
-      author: `urn:li:person:${userUrn}`,
-      lifecycleState: 'PUBLISHED',
-      specificContent: {
-        'com.linkedin.ugc.ShareContent': {
-          shareCommentary: {
-            text: `I scored ${score}% in my recent quiz! Level: ${level} #quiz #Learning`,
+    const { image, userUrn, accessToken, score, level } = req.body;
+  
+    // Step 1: Register the image with LinkedIn
+    try {
+      const registerImageResponse = await axios.post(
+        'https://api.linkedin.com/v2/assets?action=registerUpload',
+        {
+          registerUploadRequest: {
+            recipes: ['urn:li:digitalmediaRecipe:feedshare-image'],
+            owner: `urn:li:person:${userUrn}`,
+            serviceRelationships: [
+              {
+                relationshipType: 'OWNER',
+                identifier: 'urn:li:userGeneratedContent',
+              },
+            ],
           },
-          shareMediaCategory: 'ARTICLE',
-          media: [
-            {
-              status: 'READY',
-              description: {
-                text: 'Check out my score and learn more about automotive design quiz.',
-              },
-              originalUrl: 'https://www.disenosys.com/quicktest',
-              title: {
-                text: 'CEFR Quiz Score',
-              },
-              mediaUrl: image, // Use base64 image URL here
-            },
-          ],
         },
-      },
-      visibility: {
-        'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
-      },
-    };
-
-    // Step 4: Share the post on LinkedIn
-    await axios.post('https://api.linkedin.com/v2/ugcPosts', postBody, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-
-    res.status(200).send('Post shared successfully');
-  } catch (error) {
-    console.error('Error processing LinkedIn post:', error);
-    res.status(500).send('Error processing LinkedIn post');
-  }
-});
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+  
+      const asset = registerImageResponse?.data?.value?.asset;
+      const uploadUrl = registerImageResponse?.data?.value?.uploadMechanism?.com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest?.uploadUrl;
+  
+      if (!asset || !uploadUrl) {
+        return res.status(400).send('Error registering image or missing upload URL');
+      }
+  
+      // Step 2: Upload the image to LinkedIn
+      await axios.post(uploadUrl, image, {
+        headers: {
+          'Content-Type': 'image/png',
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+  
+      // Step 3: Create and share the post
+      const postBody = {
+        author: `urn:li:person:${userUrn}`,
+        lifecycleState: 'PUBLISHED',
+        specificContent: {
+          'com.linkedin.ugc.ShareContent': {
+            shareCommentary: {
+              text: `I scored ${score}% in my recent quiz! Level: ${level} #quiz #Learning`,
+            },
+            shareMediaCategory: 'ARTICLE',
+            media: [
+              {
+                status: 'READY',
+                description: {
+                  text: 'Check out my score and learn more about automotive design quiz.',
+                },
+                originalUrl: 'https://www.disenosys.com/quicktest',
+                title: {
+                  text: 'CEFR Quiz Score',
+                },
+                mediaUrl: image, // Use base64 image URL here
+              },
+            ],
+          },
+        },
+        visibility: {
+          'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC',
+        },
+      };
+  
+      // Step 4: Share the post on LinkedIn
+      await axios.post('https://api.linkedin.com/v2/ugcPosts', postBody, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+  
+      res.status(200).send('Post shared successfully');
+    } catch (error) {
+      console.error('Error processing LinkedIn post:', error.response ? error.response.data : error.message);
+      res.status(500).send('Error processing LinkedIn post');
+    }
+  });
+  
 
 
 
