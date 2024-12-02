@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import SecondQuiz from "./SecondQuiz"
 import axios from 'axios';
+import Image from 'next/image';
+import das from "../assests/profile/dassault.png"
  const Second = () => {
     const [mcq,setMcq] = useState(false);
     const [questions, setQuestions] = useState([]);
