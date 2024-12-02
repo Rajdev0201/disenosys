@@ -351,8 +351,8 @@ const createImageWithScore = (score,level) => {
         ctx.fillText(`${level}`, width / 2, 120 + marginY);
 
 
-        const centerX = width / 2;
-        const centerY = height / 2 + 40;
+        const centerX = width / 4; //ipo 200/2 or 400/4
+        const centerY = height / 4 + 60 + marginY;
         const circleRadius = 100;
 
         ctx.beginPath();
