@@ -448,14 +448,14 @@ const createImageWithScore = (score) => {
         const circleRadius = 150;
         const centerX = width / 2;
         const centerY = height / 2;
-        ctx.fillStyle = '#f39c12'; 
+        ctx.fillStyle = '#fffff'; 
         ctx.beginPath();
         ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        ctx.font = '60px Arial'; 
-        ctx.fillStyle = '#fff'; 
-        const text = `Score: ${score}%`;
+        ctx.font = '60px Arial bold'; 
+        ctx.fillStyle = '#ffff'; 
+        const text = `${score}%`;
 
     
         const textWidth = ctx.measureText(text).width;

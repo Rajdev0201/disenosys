@@ -44,7 +44,7 @@ const Results = () => {
   const [userUrn, setUserUrn] = useState("");
   const [showFetchProfilePopup, setShowFetchProfilePopup] = useState(false);
   const [showSharePostPopup, setShowSharePostPopup] = useState(false);
-
+  const link = "https://www.disenosys.com/quicktest";
   // Start the LinkedIn OAuth flow
   const startLinkedInAuth = async () => {
     try {
@@ -156,9 +156,10 @@ const Results = () => {
 
     const postBody = {
         imageUrl: imageUrl,  // Image URL to be sent to the backend
-        commentary: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
+        commentary: `I scored ${yourScore}% in my recent automotive product development quiz! #quiz #Learning ${link}`,
         userUrn: userUrn,
         yourScore: yourScore,
+
     };
 
     try {
