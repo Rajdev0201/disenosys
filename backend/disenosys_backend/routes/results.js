@@ -435,8 +435,8 @@ router.post("/share", async (req, res) => {
 
 const createImageWithScore = (score,level) => {
     return new Promise((resolve, reject) => {
-        const width = 300; 
-        const height = 300; 
+        const width = 400; 
+        const height = 400; 
         const canvas = createCanvas(width, height);
         const ctx = canvas.getContext('2d');
         ctx.fillStyle = '#182073';
@@ -450,7 +450,7 @@ const createImageWithScore = (score,level) => {
 
         ctx.font = 'bold 26px Arial';
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(`${level}:`, width / 2, 120);
+        ctx.fillText(`${level}`, width / 2, 120);
 
 
         const centerX = width / 2;
@@ -471,10 +471,10 @@ const createImageWithScore = (score,level) => {
         ctx.lineWidth = 15;
         ctx.stroke();
 
-        const marginTop = 20;
+        // const marginTop = 20;
         ctx.font = 'bold 40px Arial';
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(`${score}%`, centerX, centerY + 15 + marginTop);
+        ctx.fillText(`${score}%`, centerX, centerY + 15);
 
     
         const imagePath = './output-score-image.png';
