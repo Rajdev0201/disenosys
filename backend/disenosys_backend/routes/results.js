@@ -435,34 +435,50 @@ router.post("/share", async (req, res) => {
 
 const createImageWithScore = (score) => {
     return new Promise((resolve, reject) => {
-        const width = 800;
-        const height = 400;
+        const width = 400; // Canvas width
+        const height = 400; // Canvas height
         const canvas = createCanvas(width, height);
         const ctx = canvas.getContext('2d');
 
-    
+        // Set background color
         ctx.fillStyle = '#182073';
         ctx.fillRect(0, 0, width, height);
 
-      
-        const circleRadius = 150;
+        // Add the score title
+        ctx.font = '28px Arial';
+        ctx.fillStyle = '#ffffff';
+        ctx.textAlign = 'center';
+        ctx.fillText('Your Score:', width / 2, 80);
+
+        // Add score level
+        ctx.font = 'bold 26px Arial';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText('A1/A2 Beginner', width / 2, 120);
+
+        // Draw the circular progress bar
         const centerX = width / 2;
-        const centerY = height / 2;
-        ctx.fillStyle = '#ffff'; 
+        const centerY = height / 2 + 40;
+        const circleRadius = 100;
+
+        // Draw the background circle
         ctx.beginPath();
         ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.strokeStyle = '#d9d9d9';
+        ctx.lineWidth = 15;
+        ctx.stroke();
 
-        ctx.font = '60px Arial'; 
-        ctx.fillStyle = '#182073'; 
-        const text = `${score}%`;
+        // Draw the progress bar
+        const progress = (score / 100) * Math.PI * 2; // Convert score to angle
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, circleRadius, -Math.PI / 2, progress - Math.PI / 2);
+        ctx.strokeStyle = '#f0a500';
+        ctx.lineWidth = 15;
+        ctx.stroke();
 
-    
-        const textWidth = ctx.measureText(text).width;
-        const textX = centerX - textWidth / 2; 
-        const textY = centerY + 20; 
-
-        ctx.fillText(text, textX, textY); 
+        // Add the score percentage text
+        ctx.font = 'bold 40px Arial';
+        ctx.fillStyle = '#ffffff';
+        ctx.fillText(`${score}%`, centerX, centerY + 15);
 
     
         const imagePath = './output-score-image.png';

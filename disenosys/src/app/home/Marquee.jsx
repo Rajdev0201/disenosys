@@ -40,7 +40,7 @@ const MarqueeView = () => {
         {companies.map((company) => (
           <div
             key={company.id}
-            className="flex w-52 h-48 p-3 flex-col items-center justify-center px-6"
+            className="flex w-44 h-48 p-3 flex-col items-center justify-center px-6"
           >
             <div className=" border-2 border-[#182073] shadow-lg rounded-md">
               <Image src={company.image} alt={company.name} className="object-cover w-full h-full" />
@@ -55,7 +55,7 @@ const MarqueeView = () => {
         {companies.map((company) => (
           <div
             key={company.id}
-            className="flex w-52 h-48 p-3 flex-col items-center justify-center px-6"
+            className="flex w-44 h-48 p-3 flex-col items-center justify-center px-6" //52 48
           >
             <div className="border-2 border-[#182073] shadow-lg rounded-md ">
               <Image src={company.image} alt={company.name} className="object-cover w-full h-full" />

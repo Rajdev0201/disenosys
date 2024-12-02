@@ -14,8 +14,8 @@ const Form = () => {
     country: "India",
     dob: "",
   });
- 
-  const[load,setLoad] = useState(false)
+
+  const [load, setLoad] = useState(false);
   const router = useRouter();
   const [errors, setErrors] = useState({});
   const handleChange = (e) => {
@@ -49,7 +49,7 @@ const Form = () => {
       newErrors.email = "Invalid email format.";
     if (!formData.phone.trim()) newErrors.phone = "Phone number is required.";
     else if (!/^\d{10,15}$/.test(formData.phone))
-      newErrors.phone = "Invalid phone number format. Enter 10-15 digits.";  
+      newErrors.phone = "Invalid phone number format. Enter 10-15 digits.";
     if (!formData.dob.trim()) newErrors.dob = "Year of birth is required.";
     else if (!/^\d{4}$/.test(formData.dob))
       newErrors.dob = "Enter a valid year (YYYY).";
@@ -64,7 +64,7 @@ const Form = () => {
       setErrors(newErrors);
     } else {
       try {
-        setLoad(true)
+        setLoad(true);
         const catiaScore = localStorage.getItem("totalScoreCatia") || 0;
         const catiaPercentage = localStorage.getItem("catiaPercentage") || 0;
         const productScore = localStorage.getItem("totalScoreProduct") || 0;
@@ -99,7 +99,7 @@ const Form = () => {
         localStorage.removeItem("currentQuestionIndex0");
 
         // router.push(`results?catia=${catiaScore}&product=${productScore}`);
-        router.push('/results');
+        router.push("/results");
         console.log("Result submitted successfully:", response.data);
       } catch (error) {
         console.error("Error submitting result:", error);
@@ -214,8 +214,8 @@ const Form = () => {
               />
             </div>
             {errors.phone && (
-    <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
-  )}
+              <p className="text-sm text-red-500 mt-1">{errors.phone}</p>
+            )}
           </div>
 
           <div className="mb-4">
@@ -272,9 +272,21 @@ const Form = () => {
 
           <button
             type="submit"
-            className="w-full bg-[#182073] text-white font-bold py-2 rounded-lg hover:bg-blue-400"
+            className={`w-full py-3 rounded-lg font-bold text-xl ${
+              !load
+                ? "bg-[#182073] text-white hover:bg-blue-400"
+                : "bg-blue-50 hover:bg-gray-200"
+            }`}
           >
-           {load ? "Loading..." : "View Score"}
+            {load ? (
+              <div class="flex flex-row gap-2 items-center justify-center">
+                <div class="w-4 h-4 rounded-full bg-blue-500 animate-bounce [animation-delay:.7s]"></div>
+                <div class="w-4 h-4 rounded-full bg-green-500 animate-bounce [animation-delay:.3s]"></div>
+                <div class="w-4 h-4 rounded-full bg-purple-500 animate-bounce [animation-delay:.7s]"></div>
+              </div>
+            ) : (
+              "View Score"
+            )}
           </button>
         </form>
       </div>

@@ -5,6 +5,7 @@ import axios from 'axios';
  const Second = () => {
     const [mcq,setMcq] = useState(false);
     const [questions, setQuestions] = useState([]);
+ 
 
     useEffect(() => {
         const activeSection = localStorage.getItem("activeSection");
@@ -19,17 +20,33 @@ import axios from 'axios';
       };
 
       
+  // useEffect(() => {
+  //   axios.get('https://disenosys-1.onrender.com/api/questions/product')
+  //     .then(response => {
+  //       // Get only the first 10 questions from the response data
+  //       const firstTenQuestions = response.data.slice(0, 10);
+  //       setQuestions(firstTenQuestions); // Update state with the 10 questions
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching questions:', error);
+  //     });
+  // }, []);
+ 
+  
   useEffect(() => {
     axios.get('https://disenosys-1.onrender.com/api/questions/product')
       .then(response => {
-        // Get only the first 10 questions from the response data
-        const firstTenQuestions = response.data.slice(0, 10);
-        setQuestions(firstTenQuestions); // Update state with the 10 questions
+        const totalQuestions = response.data;
+        const shuffledQuestions = totalQuestions.sort(() => Math.random() - 0.5); 
+        const randomTenQuestions = shuffledQuestions.slice(0, 10); 
+        setQuestions(randomTenQuestions);
       })
       .catch(error => {
         console.error('Error fetching questions:', error);
       });
   }, []);
+
+
 
   return (
     <>
@@ -43,7 +60,7 @@ import axios from 'axios';
               You are about to start the <b> Product Devlopement</b> section
             </h4>
             <div className="bg-[#E7E8F1] flex flex-col w-full text-center p-6 space-y-2 flex justify-center items-center">
-              {/* Add Image Here */}
+               <Image src={das} className="w-64 h-16 "/>
               <h5 className="text-lg font-poppins"> Product Devlopement</h5>
               <h5 className="font-bold text-lg font-poppins">7.5 mins</h5>
             </div>

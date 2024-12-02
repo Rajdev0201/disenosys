@@ -7,6 +7,7 @@ import axios from "axios";
 const First = () => {
   const [mcq,setMcq] = useState(false);
   const [questions, setQuestions] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const activeSection = localStorage.getItem("activeSection");
@@ -22,16 +23,32 @@ const First = () => {
 
 
   useEffect(() => {
+    // setIsLoading(true);
     axios.get('https://disenosys-1.onrender.com/api/questions/catia')
       .then(response => {
-        const firstTenQuestions = response.data.slice(0, 10);
-        setQuestions(firstTenQuestions);
+        const totalQuestions = response.data;
+        const shuffledQuestions = totalQuestions.sort(() => Math.random() - 0.5); 
+        const randomTenQuestions = shuffledQuestions.slice(0, 10); 
+        setQuestions(randomTenQuestions);
+        // setIsLoading(false);
       })
       .catch(error => {
         console.error('Error fetching questions:', error);
+        // setIsLoading(false);
       });
   }, []);
   
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <div className="flex-col gap-4 w-full flex items-center justify-center">
+  //         <div className="w-20 h-20 border-4 border-transparent text-blue-400 text-4xl animate-spin flex items-center justify-center border-t-[#182073] rounded-full">
+  //           <div className="w-16 h-16 border-4 border-transparent text-red-400 text-2xl animate-spin flex items-center justify-center border-t-red-400 rounded-full"></div>
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
@@ -61,7 +78,19 @@ const First = () => {
       </div>
     </div>
         ) :(
-            <Quiz questions={questions} />
+          <div>
+          {questions.length > 0 ? (
+       <Quiz questions={questions}/>
+     ) : (
+       <div className="flex justify-center items-center h-screen">
+       <div className="flex-col gap-4 w-full flex items-center justify-center">
+         <div className="w-20 h-20 border-4 border-transparent text-blue-400 text-4xl animate-spin flex items-center justify-center border-t-[#182073] rounded-full">
+           <div className="w-16 h-16 border-4 border-transparent text-red-400 text-2xl animate-spin flex items-center justify-center border-t-red-400 rounded-full"></div>
+         </div>
+       </div>
+     </div>
+     )}
+       </div>
         )
     }
     </>
