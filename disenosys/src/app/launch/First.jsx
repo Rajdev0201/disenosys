@@ -9,12 +9,12 @@ const First = () => {
   const [questions, setQuestions] = useState([]);
   // const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const activeSection = localStorage.getItem("activeSection");
-    if (activeSection === "CATIA") {
-      setMcq(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const activeSection = localStorage.getItem("activeSection");
+  //   if (activeSection === "CATIA") {
+  //     setMcq(true);
+  //   }
+  // }, []);
 
   const handleClick = () => {
     setMcq(true);

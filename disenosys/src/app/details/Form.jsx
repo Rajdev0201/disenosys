@@ -97,6 +97,7 @@ const Form = () => {
         localStorage.removeItem("startTime1");
         localStorage.removeItem("currentQuestionIndex1");
         localStorage.removeItem("currentQuestionIndex0");
+        localStorage.removeItem("activeSection", "PRODUCT"); 
 
         // router.push(`results?catia=${catiaScore}&product=${productScore}`);
         router.push("/results");
