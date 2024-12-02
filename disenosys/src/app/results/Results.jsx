@@ -169,6 +169,7 @@ const Results = () => {
             },
         });
         alert("Post shared successfully with image!");
+        router.push('/quicktest')
     } catch (error) {
         console.error("Error sharing post with image:", error);
     }

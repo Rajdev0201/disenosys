@@ -339,10 +339,9 @@ router.post("/share", async (req, res) => {
     const { commentary, userUrn, yourScore } = req.body;
 
     try {
-        // Step 1: Generate an image with the score dynamically using Canvas
+        
         const imageUrl = await createImageWithScore(yourScore); // Generate image
 
-        // Step 2: Register the image upload with LinkedIn API
         const imageUploadResponse = await axios.post(
             "https://api.linkedin.com/v2/assets?action=registerUpload",
             {
@@ -441,36 +440,35 @@ const createImageWithScore = (score) => {
         const canvas = createCanvas(width, height);
         const ctx = canvas.getContext('2d');
 
-        // Set background color to #182073
-        ctx.fillStyle = '#182073'; // New background color
+    
+        ctx.fillStyle = '#182073';
         ctx.fillRect(0, 0, width, height);
 
-        // Draw a circular background for the score
+      
         const circleRadius = 150;
         const centerX = width / 2;
         const centerY = height / 2;
-        ctx.fillStyle = '#f39c12'; // Circle color for score highlight
+        ctx.fillStyle = '#f39c12'; 
         ctx.beginPath();
         ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
         ctx.fill();
 
-        // Add the score text in the center
-        ctx.font = '60px Arial'; // Large font size
-        ctx.fillStyle = '#fff'; // Text color
+        ctx.font = '60px Arial'; 
+        ctx.fillStyle = '#fff'; 
         const text = `Score: ${score}%`;
 
-        // Measure the text width to center it horizontally
+    
         const textWidth = ctx.measureText(text).width;
-        const textX = centerX - textWidth / 2; // Center the text horizontally
-        const textY = centerY + 20; // Slightly below the center
+        const textX = centerX - textWidth / 2; 
+        const textY = centerY + 20; 
 
-        ctx.fillText(text, textX, textY); // Draw the text on the canvas
+        ctx.fillText(text, textX, textY); 
 
-        // Save the image as a buffer and store it locally
+    
         const imagePath = './output-score-image.png';
         const buffer = canvas.toBuffer('image/png');
         fs.writeFileSync(imagePath, buffer);
-        resolve(imagePath); // Return the path to the saved image
+        resolve(imagePath); 
     });
 };
 
