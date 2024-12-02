@@ -7,6 +7,7 @@ const Main = () => {
    const router = useRouter();
    
   const onClick = () => {
+      localStorage.removeItem("startTime0");
       localStorage.removeItem("catiaPercentage");
       localStorage.removeItem("productPercentage");
       router.push('/launch')

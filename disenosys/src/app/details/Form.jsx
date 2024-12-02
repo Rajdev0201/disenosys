@@ -112,6 +112,16 @@ const Form = () => {
   return (
     <div className="bg-blue-100 min-h-screen flex items-center justify-center px-4">
       <div className="bg-white shadow-md rounded-lg w-full max-w-md p-6">
+        {load ? 
+            <div className="flex justify-center items-center h-screen">
+            <div className="flex-col gap-4 w-full flex items-center justify-center">
+              <div className="w-20 h-20 border-4 border-transparent text-blue-400 text-4xl animate-spin flex items-center justify-center border-t-[#182073] rounded-full">
+                <div className="w-16 h-16 border-4 border-transparent text-red-400 text-2xl animate-spin flex items-center justify-center border-t-red-400 rounded-full"></div>
+              </div>
+            </div>
+          </div>
+          :(
+         <>
         <h1 className="text-2xl font-bold text-center mb-2">
           You&apos;re almost there...
         </h1>
@@ -289,6 +299,8 @@ const Form = () => {
             )}
           </button>
         </form>
+        </>
+         )}
       </div>
     </div>
   );
