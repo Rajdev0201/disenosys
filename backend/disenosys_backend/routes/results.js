@@ -147,7 +147,7 @@ router.post('/details', async (req, res) => {
 // LinkedIn API Configuration
 const CLIENT_ID = '86tuwotemzkyou';
 const CLIENT_SECRET = 'WPL_AP1.0tC5x2NKzBmqgcTL.f5A/ug==';
-const REDIRECT_URI = 'https://www.disenosys.com/demo';
+const REDIRECT_URI = 'https://www.disenosys.com/results';
 
 
 // Step 1: Generate Authorization URL
@@ -227,21 +227,134 @@ router.get("/profile", async (req, res) => {
 // });
 
 
+// const fetch = require("node-fetch"); 
+
+// router.post("/share", async (req, res) => {
+//     const { authorization } = req.headers;
+//     const { imageUrl, commentary, userUrn } = req.body;
+
+//     try {
+//         // Step 1: Register the image upload with LinkedIn API
+//         const imageUploadResponse = await axios.post(
+//             "https://api.linkedin.com/v2/assets?action=registerUpload",
+//             {
+//                 registerUploadRequest: {
+//                     recipes: ["urn:li:digitalmediaRecipe:feedshare-image"],
+//                     owner: `urn:li:person:${userUrn}`,
+//                     serviceRelationships: [
+//                         {
+//                             relationshipType: "OWNER",
+//                             identifier: "urn:li:userGeneratedContent",
+//                         },
+//                     ],
+//                 },
+//             },
+//             {
+//                 headers: {
+//                     Authorization: authorization,
+//                     "X-Restli-Protocol-Version": "2.0.0",
+//                 },
+//             }
+//         );
+
+//         const imageUrn = imageUploadResponse.data.value.asset; // URN for the uploaded image
+//         const uploadUrl = imageUploadResponse.data.value.uploadMechanism[
+//             "com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest"
+//         ].uploadUrl;
+
+//         console.log("Image URN:", imageUrn);
+//         console.log("Upload URL:", uploadUrl);
+
+//    //step 2
+//         const imageResponse = await fetch(imageUrl);
+// const imageBuffer = await imageResponse.buffer();
+
+// const uploadResponse = await axios.put(uploadUrl, imageBuffer, {
+//     headers: {
+//         "Content-Type": "image/jpeg", // Ensure this matches the image format
+//     },
+// });
+//         console.log("Upload Response:", uploadResponse.status);
+
+//         if (uploadResponse.status !== 201) {
+//             throw new Error("Failed to upload image to LinkedIn");
+//         }
+
+//         // Step 3: Share the post with the uploaded image
+//         const postBody = {
+//             author: `urn:li:person:${userUrn}`,
+//             lifecycleState: "PUBLISHED",
+//             specificContent: {
+//                 "com.linkedin.ugc.ShareContent": {
+//                     shareCommentary: {
+//                         text: commentary,
+//                     },
+//                     shareMediaCategory: "IMAGE",
+//                     media: [
+//                         {
+//                             status: "READY",
+//                             description: {
+//                                 text: "Check out my score and learn more about the automotive design quiz.",
+//                             },
+//                             media: imageUrn,
+//                             title: {
+//                                 text: "CEFR Quiz Image",
+//                             },
+//                         },
+//                     ],
+//                 },
+//             },
+//             visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+//         };
+
+//         const postResponse = await axios.post(
+//             "https://api.linkedin.com/v2/ugcPosts",
+//             postBody,
+//             {
+//                 headers: {
+//                     Authorization: authorization,
+//                     "X-Restli-Protocol-Version": "2.0.0",
+//                 },
+//             }
+//         );
+
+//         console.log("Post Response:", postResponse.data);
+//         res.status(201).json({ message: "Post shared successfully!" });
+//     } catch (error) {
+//         console.error(
+//             "Error sharing post:",
+//             error.response?.data || error.message
+//         );
+//         res.status(500).json({ error: "Failed to share post" });
+//     }
+// });
+
+
+const { createCanvas } = require('canvas');
+
+const fs = require('fs');
 
 router.post("/share", async (req, res) => {
     const { authorization } = req.headers;
-    const { imageUrl, commentary, userUrn, yourScore } = req.body;
+    const { commentary, userUrn, yourScore } = req.body;
 
     try {
-        // Step 1: Register the image upload with LinkedIn API
+        // Step 1: Generate an image with the score dynamically using Canvas
+        const imageUrl = await createImageWithScore(yourScore); // Generate image
+
+        // Step 2: Register the image upload with LinkedIn API
         const imageUploadResponse = await axios.post(
             "https://api.linkedin.com/v2/assets?action=registerUpload",
             {
                 registerUploadRequest: {
+                    recipes: ["urn:li:digitalmediaRecipe:feedshare-image"],
                     owner: `urn:li:person:${userUrn}`,
-                    mediaType: "image/jpeg",  // Update to your image format if needed
-                    fileSize: 123456,  // Replace with actual image size
-                    fileName: "quiz_image.jpg",  // Replace with the actual image name
+                    serviceRelationships: [
+                        {
+                            relationshipType: "OWNER",
+                            identifier: "urn:li:userGeneratedContent",
+                        },
+                    ],
                 },
             },
             {
@@ -252,9 +365,29 @@ router.post("/share", async (req, res) => {
             }
         );
 
-        const imageUrn = imageUploadResponse.data.value.asset;  // Retrieve the URN for the uploaded image
+        const imageUrn = imageUploadResponse.data.value.asset; // URN for the uploaded image
+        const uploadUrl = imageUploadResponse.data.value.uploadMechanism[
+            "com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest"
+        ].uploadUrl;
 
-        // Step 2: Share the post with the uploaded image
+        console.log("Image URN:", imageUrn);
+        console.log("Upload URL:", uploadUrl);
+
+        // Step 3: Upload the generated image to LinkedIn
+        const imageBuffer = fs.readFileSync(imageUrl); // Read the generated image file
+        const uploadResponse = await axios.put(uploadUrl, imageBuffer, {
+            headers: {
+                "Content-Type": "image/png", // Ensure this matches the image format
+            },
+        });
+
+        console.log("Upload Response:", uploadResponse.status);
+
+        if (uploadResponse.status !== 201) {
+            throw new Error("Failed to upload image to LinkedIn");
+        }
+
+        // Step 4: Share the post with the uploaded image
         const postBody = {
             author: `urn:li:person:${userUrn}`,
             lifecycleState: "PUBLISHED",
@@ -268,11 +401,11 @@ router.post("/share", async (req, res) => {
                         {
                             status: "READY",
                             description: {
-                                text: "Check out my score and learn more about automotive design quiz.",
+                                text: "Check out my score and learn more about the automotive design quiz.",
                             },
-                            media: `urn:li:digitalmediaAsset:${imageUrn}`, // Use the image URN
+                            media: imageUrn,
                             title: {
-                                text: `CEFR Quiz Image`,
+                                text: "CEFR Quiz Image",
                             },
                         },
                     ],
@@ -281,14 +414,18 @@ router.post("/share", async (req, res) => {
             visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
         };
 
-        // Step 3: Make the request to LinkedIn API to post the content
-        await axios.post("https://api.linkedin.com/v2/ugcPosts", postBody, {
-            headers: {
-                Authorization: authorization,
-                "X-Restli-Protocol-Version": "2.0.0",
-            },
-        });
+        const postResponse = await axios.post(
+            "https://api.linkedin.com/v2/ugcPosts",
+            postBody,
+            {
+                headers: {
+                    Authorization: authorization,
+                    "X-Restli-Protocol-Version": "2.0.0",
+                },
+            }
+        );
 
+        console.log("Post Response:", postResponse.data);
         res.status(201).json({ message: "Post shared successfully!" });
     } catch (error) {
         console.error("Error sharing post:", error.response?.data || error.message);
@@ -296,6 +433,46 @@ router.post("/share", async (req, res) => {
     }
 });
 
+
+const createImageWithScore = (score) => {
+    return new Promise((resolve, reject) => {
+        const width = 800;
+        const height = 400;
+        const canvas = createCanvas(width, height);
+        const ctx = canvas.getContext('2d');
+
+        // Set background color to #182073
+        ctx.fillStyle = '#182073'; // New background color
+        ctx.fillRect(0, 0, width, height);
+
+        // Draw a circular background for the score
+        const circleRadius = 150;
+        const centerX = width / 2;
+        const centerY = height / 2;
+        ctx.fillStyle = '#f39c12'; // Circle color for score highlight
+        ctx.beginPath();
+        ctx.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Add the score text in the center
+        ctx.font = '60px Arial'; // Large font size
+        ctx.fillStyle = '#fff'; // Text color
+        const text = `Score: ${score}%`;
+
+        // Measure the text width to center it horizontally
+        const textWidth = ctx.measureText(text).width;
+        const textX = centerX - textWidth / 2; // Center the text horizontally
+        const textY = centerY + 20; // Slightly below the center
+
+        ctx.fillText(text, textX, textY); // Draw the text on the canvas
+
+        // Save the image as a buffer and store it locally
+        const imagePath = './output-score-image.png';
+        const buffer = canvas.toBuffer('image/png');
+        fs.writeFileSync(imagePath, buffer);
+        resolve(imagePath); // Return the path to the saved image
+    });
+};
 
 
 

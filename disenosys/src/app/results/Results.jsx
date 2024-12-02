@@ -102,53 +102,77 @@ const Results = () => {
     }
   };
 
+  // const sharePost = async () => {
+  //   if (!accessToken || !userUrn) {
+  //     alert("Please fetch your profile first!");
+  //     return;
+  //   }
+
+  //   const postBody = {
+  //     author: `urn:li:person:${userUrn}`,
+  //     lifecycleState: "PUBLISHED",
+  //     specificContent: {
+  //       "com.linkedin.ugc.ShareContent": {
+  //         shareCommentary: {
+  //           text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
+  //         },
+  //         shareMediaCategory: "ARTICLE",
+  //         media: [
+  //           {
+  //             status: "READY",
+  //             description: {
+  //               text: "Check out my score and learn more about automotive design quiz.",
+  //             },
+  //             originalUrl: "https://www.disenosys.com/quicktest",
+  //             title: {
+  //               text: "CEFR Quiz Score",
+  //             },
+  //           },
+  //         ],
+  //       },
+  //     },
+  //     visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+  //   };
+
+  //   try {
+  //     await axios.post(
+  //       "https://disenosys-1.onrender.com/exam/share",
+  //       postBody,
+  //       {
+  //         headers: { Authorization: `Bearer ${accessToken}` },
+  //       }
+  //     );
+  //     alert("Post shared successfully!");
+  //     setShowSharePostPopup(false);
+  //     router.push("/");
+  //   } catch (error) {
+  //     console.error("Error sharing post:", error);
+  //   }
+  // };
+
+        
   const sharePost = async () => {
-    if (!accessToken || !userUrn) {
-      alert("Please fetch your profile first!");
-      return;
-    }
+    const imageUrl = "https://via.placeholder.com/800x400.png?text=Dummy+Image"; 
 
     const postBody = {
-      author: `urn:li:person:${userUrn}`,
-      lifecycleState: "PUBLISHED",
-      specificContent: {
-        "com.linkedin.ugc.ShareContent": {
-          shareCommentary: {
-            text: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
-          },
-          shareMediaCategory: "ARTICLE",
-          media: [
-            {
-              status: "READY",
-              description: {
-                text: "Check out my score and learn more about automotive design quiz.",
-              },
-              originalUrl: "https://www.disenosys.com/quicktest",
-              title: {
-                text: "CEFR Quiz Score",
-              },
-            },
-          ],
-        },
-      },
-      visibility: { "com.linkedin.ugc.MemberNetworkVisibility": "PUBLIC" },
+        imageUrl: imageUrl,  // Image URL to be sent to the backend
+        commentary: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
+        userUrn: userUrn,
+        yourScore: yourScore,
     };
 
     try {
-      await axios.post(
-        "https://disenosys-1.onrender.com/exam/share",
-        postBody,
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        }
-      );
-      alert("Post shared successfully!");
-      setShowSharePostPopup(false);
-      router.push("/");
+        // Send the post data to your backend
+        await axios.post("https://disenosys-1.onrender.com/exam/share", postBody, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        });
+        alert("Post shared successfully with image!");
     } catch (error) {
-      console.error("Error sharing post:", error);
+        console.error("Error sharing post with image:", error);
     }
-  };
+};
 
   useEffect(() => {
     const queryParams = new URLSearchParams(window.location.search);

@@ -65,7 +65,7 @@ const LinkedInAuth = () => {
       
       
       const sharePost = async () => {
-        const imageUrl = "https://via.placeholder.com/800x400.png?text=Dummy+Image";  // Example dummy image
+        const imageUrl = "https://via.placeholder.com/800x400.png?text=Dummy+Image"; 
     
         const postBody = {
             imageUrl: imageUrl,  // Image URL to be sent to the backend
