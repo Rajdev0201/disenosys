@@ -447,10 +447,10 @@ const createImageWithScore = (score,level) => {
         ctx.fillStyle = '#ffffff';
         ctx.textAlign = 'center';
         ctx.fillText('Your Score:', width / 2, 80);
-
+        const marginY = 20;
         ctx.font = 'bold 26px Arial';
         ctx.fillStyle = '#ffffff';
-        ctx.fillText(`${level}`, width / 2, 120);
+        ctx.fillText(`${level}`, width / 2, 120 + marginY);
 
 
         const centerX = width / 2;
