@@ -237,7 +237,8 @@ const SharedScore = require('../models/sharePost.js');
 router.post("/share", async (req, res) => {
     const { authorization } = req.headers;
     const { commentary, userUrn, yourScore,yourlevel,name,email,phone} = req.body;
-      console.log(yourScore)
+
+      console.log(req.body)
     try {
         
         const imageUrl = await createImageWithScore(yourScore,yourlevel); // Generate image

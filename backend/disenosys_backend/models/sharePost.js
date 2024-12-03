@@ -1,13 +1,13 @@
 const mongoose = require('mongoose');
 
 const sharedScoreSchema = new mongoose.Schema({
-    userUrn: { type: String, required: true },
-    name: { type: String, required: true }, 
-    email: { type: String, required: true },  
-    phone: {type : String,required:true},
-    commentary: { type: String, required: true },
-    yourScore: { type: Number, required: true },
-    yourLevel: { type: String, required: true },
+    userUrn: { type: String},
+    name: { type: String }, 
+    email: { type: String},  
+    phone: {type : String},
+    commentary: { type: String},
+    yourScore: { type: Number},
+    yourLevel: { type: String},
     sharedAt: { type: Date, default: Date.now },
   });
   
