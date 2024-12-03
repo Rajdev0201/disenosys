@@ -21,6 +21,7 @@ const Results = () => {
   const createStrokeDashoffset = (score) =>
     circumference - (score / 100) * circumference;
   const yourScore = calculateYourScore(catia, product);
+
   const getCEFRLevel = (score) => {
     if (score < 10) return "A1-Foundation";
     if (score < 30) return "A2-Trainee";
@@ -223,10 +224,13 @@ const Results = () => {
 
   const yourLevel = getCEFRLevel(yourScore);
   const explained = getLevelText(yourScore);
-  const catiaExplained = catiaText(yourScore);
-  const productExplained = productText(yourScore);
-  const [level, description] = yourLevel.split(" ");
-
+  const catiaExplained = catiaText(catia);
+  const yourLevel1 = getCEFRLevel(catia);
+  const productExplained = productText(product);
+  const yourLevel2 = getCEFRLevel(product);
+  const [level, description] = yourLevel1.split(" ");
+  const [level2, description2] = yourLevel2.split(" ");
+ 
   console.log("Sharing post with score:", yourScore);
   const [accessToken, setAccessToken] = useState("");
   const [userUrn, setUserUrn] = useState("");
@@ -665,10 +669,10 @@ Take up the mock GPDX exam here: ${link}
                     </div>
                     <div className="flex text-center">
                       <span className="font-bold text-md font-poppins  mt-3">
-                        {level}
+                        {level2}
                       </span>
                       <span className="font-bold text-md font-poppins">
-                        {description}
+                        {description2}
                       </span>
                     </div>
                   </div>

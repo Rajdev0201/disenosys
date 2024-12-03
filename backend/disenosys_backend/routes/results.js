@@ -400,10 +400,10 @@ router.get('/result', async (req, res) => {
         const total = (Number(student.catiaScore) + Number(student.productScore)) / 2;
       
         // Convert to Date objects and validate
-        // const createdAtDate = new Date(student.createdAt);
-        // const createdAtFormatted = isValid(createdAtDate)
-        //   ? format(createdAtDate, 'dd/MM/yyyy, hh:mm a')
-        //   : 'Invalid Date';
+        const createdAtDate = new Date(student.createdAt);
+        const createdAtFormatted = isValid(createdAtDate)
+          ? format(createdAtDate, 'dd/MM/yyyy, hh:mm a')
+          : 'Invalid Date';
       
         // const quizFinishTimeDate = new Date(student.quizFinishTime);
         // const quizFinishTimeFormatted = isValid(quizFinishTimeDate)
@@ -418,7 +418,7 @@ router.get('/result', async (req, res) => {
           catiaScore: student.catiaScore,
           productScore: student.productScore,
           totalPercentage: total,
-        //   startTime: createdAtFormatted,
+          startTime: createdAtFormatted,
         //   finisheTime: quizFinishTimeFormatted,
         };
       });
