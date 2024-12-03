@@ -2,45 +2,26 @@
 import axios from "axios";
 import Head from "next/head";
 import { useRouter } from "next/navigation";
-// import { useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from "react";
 import { FaFacebook, FaLinkedin, FaWhatsappSquare } from "react-icons/fa";
 import { IoLinkSharp } from "react-icons/io5";
 
 
 const Results = () => {
-  // const search = useSearchParams();
-  // const catia = Number(search.get("catia")) || 0;
-  // const product = Number(search.get("product")) || 0;
-  // const catia = clamp(Number(search.get("catia")) || 0, 0, 100);
-  // const product = clamp(Number(search.get("product")) || 0, 0, 100);
   const router = useRouter();
-
   const catiaPercentage = localStorage.getItem("catiaPercentage") || 0;
   const productPercentage = localStorage.getItem("productPercentage") || 0;
   const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
   const catia = clamp(parseInt(catiaPercentage, 10), 0, 100);
   const product = clamp(parseInt(productPercentage, 10), 0, 100);
-
   const calculateYourScore = (catia, product) => (catia + product) / 2;
-
   const radius = 50;
   const stroke = 8;
   const normalizedRadius = radius - stroke / 2;
   const circumference = 2 * Math.PI * normalizedRadius;
-
   const createStrokeDashoffset = (score) =>
     circumference - (score / 100) * circumference;
-
   const yourScore = calculateYourScore(catia, product);
-
-// A1 - Foundation: 0–10
-// A2 - Trainee: 11–30
-// B1 - Practitioner: 31–50
-// B2 - Specialist: 51–75
-// C1 - Expert: 76–90
-// C2 - Master: 91–100 
-
   const getCEFRLevel = (score) => {
     if (score < 10) return "A1-Foundation";
     if (score < 30) return "A2-Trainee";
@@ -49,6 +30,14 @@ const Results = () => {
     if(score < 90) return "C1-Expert";
     if(score < 100) return "C2-Master";
   };
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const getLevelText = (score) => {
     if (score < 10) {
@@ -186,6 +175,10 @@ const Results = () => {
       }
     };
     
+    const handleCancel = () => {
+      setShowPopup(false);
+      alert("You canceled sharing your score.");
+    };
 
   const yourLevel = getCEFRLevel(yourScore);
   const explained = getLevelText(yourScore);
@@ -256,7 +249,6 @@ const Results = () => {
     }
   };
 
-  // const sharePost = async () => {
   //   if (!accessToken || !userUrn) {
   //     alert("Please fetch your profile first!");
   //     return;
@@ -452,6 +444,33 @@ const Results = () => {
               </div>
             </div>
           </div>
+
+          {showPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              Share Your Score
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Do you want to share your score with your linkedin page?
+            </p>
+            <div className="flex justify-between">
+              <button
+                className="bg-[#182073] text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+                onClick={startLinkedInAuth}
+              >
+                Continue
+              </button>
+              <button
+                className="bg-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-400 transition"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
           {/* Column 2 */}
           <div className="space-y-6 mt-1 lg:mt-0 lg:w-[500px]">

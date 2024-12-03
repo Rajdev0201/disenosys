@@ -1,117 +1,66 @@
 "use client"
-import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
 
+import React, { useState, useEffect } from "react";
 
-const LinkedInAuth = () => {
-    const [accessToken, setAccessToken] = useState("");
-    const [userUrn, setUserUrn] = useState("");
-    const yourScore = 85;
+const ResultPage = () => {
+  const [showPopup, setShowPopup] = useState(false);
 
-    const startLinkedInAuth = async () => {
-        try {
-          const { data } = await axios.get(
-            "https://disenosys-1.onrender.com/exam/auth"
-          );
-          window.location.href = data.url;
-        } catch (error) {
-          console.error("Error starting LinkedIn auth:", error);
-        }
-      };
-    
-      // Exchange authorization code for an access token
-      const exchangeCodeForToken = async (code) => {
-        try {
-          const { data } = await axios.post(
-            "https://disenosys-1.onrender.com/exam/get-access-token",
-            {
-              code,
-            }
-          );
-    
-          if (data && data.accessToken) {
-            setAccessToken(data.accessToken);
-            alert("Access token obtained successfully!");
-;
-          } else {
-            console.error("Access token not obtained");
-          }
-        } catch (error) {
-          console.error(
-            "Error exchanging code for token:",
-            error.response?.data || error.message
-          );
-        }
-      };
-    
-      const getProfile = async () => {
-        if (!accessToken) return;
-    
-        try {
-          const { data } = await axios.get(
-            "https://disenosys-1.onrender.com/exam/profile",
-            {
-              headers: { Authorization: `Bearer ${accessToken}` },
-            }
-          );
-    
-          setUserUrn(data.profile.sub);
-          console.log("Profile data:", data.profile.sub);
-  
-        } catch (error) {
-          console.error("Error fetching profile:", error);
-        }
-      };
-      
-      
-      const sharePost = async () => {
-        const imageUrl = "https://via.placeholder.com/800x400.png?text=Dummy+Image"; 
-    
-        const postBody = {
-            imageUrl: imageUrl,  // Image URL to be sent to the backend
-            commentary: `I scored ${yourScore}% in my recent quiz! #quiz #Learning`,
-            userUrn: userUrn,
-            yourScore: yourScore,
-        };
-    
-        try {
-            // Send the post data to your backend
-            await axios.post("http://localhost:8000/exam/share", postBody, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            });
-            alert("Post shared successfully with image!");
-        } catch (error) {
-            console.error("Error sharing post with image:", error);
-        }
-    };
-    
-      
-    // Automatically detect authorization code from URL and exchange for token
-    useEffect(() => {
-        const queryParams = new URLSearchParams(window.location.search);
-        const code = queryParams.get("code");
-        if (code) {
-            exchangeCodeForToken(code);
-        }
-    }, []);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowPopup(true);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
 
-    return (
-        <div>
-            <div className="score-card">
-                {/* Design the score card */}
-                <div className="p-4 border rounded shadow-md">
-                    <h2 className="text-lg font-semibold">Your Score:</h2>
-                    <p className="text-xl font-bold text-green-600">{yourScore}%</p>
-                </div>
+  const handleContinue = () => {
+    setShowPopup(false);
+    alert("You chose to share your score!");
+    // Additional logic for "Continue"
+  };
+
+  const handleCancel = () => {
+    setShowPopup(false);
+    alert("You canceled sharing your score.");
+    // Additional logic for "Cancel"
+  };
+
+  return (
+    <div className="relative min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-800 mb-6">Result Page</h1>
+        <p className="text-gray-600 text-lg">
+          Your results are being displayed here.
+        </p>
+      </div>
+
+      {showPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              Share Your Score
+            </h2>
+            <p className="text-gray-600 mb-6">
+              Do you want to share your score with your peers?
+            </p>
+            <div className="flex justify-between">
+              <button
+                className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+                onClick={handleContinue}
+              >
+                Continue
+              </button>
+              <button
+                className="bg-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-400 transition"
+                onClick={handleCancel}
+              >
+                Cancel
+              </button>
             </div>
-
-            <button onClick={startLinkedInAuth} className="bg-blue-500">Login with LinkedIn</button>
-            <button onClick={getProfile} className="bg-blue-500 ml-2" disabled={!accessToken}>Fetch Profile</button>
-            <button onClick={sharePost} className="bg-blue-500 ml-2" disabled={!userUrn}>Share Post</button>
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
-export default LinkedInAuth;
+export default ResultPage;
