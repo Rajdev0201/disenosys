@@ -459,7 +459,7 @@ const Results = () => {
             Show Off Your Achievement
             </h2>
             <p className="text-gray-600 mb-6">
-            Share your GPDX score on LinkedIn now and let the world know you're advancing in the automotive industry!
+            Share your GPDX score on LinkedIn now and let the world know you&apos;re advancing in the automotive industry!
             </p>
             <div className="flex justify-center">
               <button
