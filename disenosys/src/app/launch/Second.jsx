@@ -63,7 +63,7 @@ import das from "../assests/profile/PD_Logo.png";
               You are about to start the <b> Product Devlopement</b> section
             </h4>
             <div className="bg-[#E7E8F1] flex flex-col w-full text-center p-6 space-y-2 flex justify-center items-center">
-               <Image src={das} className="w-64 h-16 "/>
+               <Image src={das} className="w-40 h-20 "/>
               <h5 className="text-lg font-poppins"> Product Devlopement</h5>
               <h5 className="font-bold text-lg font-poppins">7.5 mins</h5>
             </div>
