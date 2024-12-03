@@ -302,7 +302,7 @@ router.post("/share", async (req, res) => {
                             },
                             media: imageUrn,
                             title: {
-                                text: "CEFR Quiz Image",
+                                text: "GPDX Results",
                             },
                         },
                     ],
