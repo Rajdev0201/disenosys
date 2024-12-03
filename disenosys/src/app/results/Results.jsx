@@ -418,7 +418,7 @@ const Results = () => {
                       </div>
                     )}
 
-                    {showSharePostPopup && (
+                    {showSharePostPopup &&   (
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
                         <div className="bg-white p-5 rounded-md shadow-md w-64 h-36 text-center">
                           <h2 className="text-lg font-bold mb-4">
@@ -445,28 +445,28 @@ const Results = () => {
             </div>
           </div>
 
-          {showPopup && (
+          {showPopup && !accessToken && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-              Share Your Score
+            Show Off Your Achievement
             </h2>
             <p className="text-gray-600 mb-6">
-              Do you want to share your score with your linkedin page?
+            Share your GPDX score on LinkedIn now and let the world know you're advancing in the automotive industry!
             </p>
-            <div className="flex justify-between">
+            <div className="flex justify-center">
               <button
                 className="bg-[#182073] text-white px-6 py-2 rounded hover:bg-blue-700 transition"
                 onClick={startLinkedInAuth}
               >
                 Continue
               </button>
-              <button
+              {/* <button
                 className="bg-gray-300 text-gray-700 px-6 py-2 rounded hover:bg-gray-400 transition"
                 onClick={handleCancel}
               >
                 Cancel
-              </button>
+              </button> */}
             </div>
           </div>
         </div>
