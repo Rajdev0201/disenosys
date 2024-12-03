@@ -306,6 +306,7 @@ const Results = () => {
     }
   };
 
+
   //   if (!accessToken || !userUrn) {
   //     alert("Please fetch your profile first!");
   //     return;
@@ -352,7 +353,10 @@ const Results = () => {
   //     console.error("Error sharing post:", error);
   //   }
   // };
-
+ 
+  const name = localStorage.getItem("name");
+  const email = localStorage.getItem("email");
+  const phone = localStorage.getItem("phone");
   const sharePost = async () => {
     const imageUrl = "https://via.placeholder.com/800x400.png?text=Dummy+Image";
 
@@ -373,6 +377,9 @@ Take up the mock GPDX exam here: ${link}
       userUrn: userUrn,
       yourScore: yourScore,
       yourlevel: yourLevel,
+      name:name,
+      email:email,
+      phone:phone,
     };
 
     try {

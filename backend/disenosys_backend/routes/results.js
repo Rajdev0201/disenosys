@@ -232,10 +232,11 @@ router.get("/profile", async (req, res) => {
 const { createCanvas } = require('canvas');
 
 const fs = require('fs');
+const SharedScore = require('../models/sharePost.js');
 
 router.post("/share", async (req, res) => {
     const { authorization } = req.headers;
-    const { commentary, userUrn, yourScore,yourlevel } = req.body;
+    const { commentary, userUrn, yourScore,yourlevel,name,email,phone} = req.body;
       console.log(yourScore)
     try {
         
@@ -324,6 +325,17 @@ router.post("/share", async (req, res) => {
         );
 
         console.log("Post Response:", postResponse.data);
+        const sharedScore = new SharedScore({
+            userUrn,
+            name,
+            email,
+            phone,  
+            commentary,
+            yourScore,
+            yourlevel,
+        });
+        await sharedScore.save();
+
         res.status(201).json({ message: "Post shared successfully!" });
     } catch (error) {
         console.error("Error sharing post:", error.response?.data || error.message);

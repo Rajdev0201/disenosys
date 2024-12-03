@@ -10,6 +10,9 @@ const Main = () => {
       localStorage.removeItem("startTime0");
       localStorage.removeItem("catiaPercentage");
       localStorage.removeItem("productPercentage");
+      const name = localStorage.removeItem("name");
+      const email = localStorage.removeItem("email");
+      const phone = localStorage.removeItem("phone");
       router.push('/launch')
   }
   return (

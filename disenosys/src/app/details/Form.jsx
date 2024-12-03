@@ -86,7 +86,10 @@ const Form = () => {
             productPercentage,
           }
         );
-
+        const name = localStorage.setItem("name",formData.name);
+        const email = localStorage.setItem("name",formData.email);
+        const phone = localStorage.setItem("name",formData.phone);
+        
         localStorage.removeItem("totalScoreCatia");
         // localStorage.removeItem("catiaPercentage");
         localStorage.removeItem("totalScoreProduct");
