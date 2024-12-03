@@ -33,12 +33,166 @@ const Results = () => {
     circumference - (score / 100) * circumference;
 
   const yourScore = calculateYourScore(catia, product);
+
+// A1 - Foundation: 0–10
+// A2 - Trainee: 11–30
+// B1 - Practitioner: 31–50
+// B2 - Specialist: 51–75
+// C1 - Expert: 76–90
+// C2 - Master: 91–100 
+
   const getCEFRLevel = (score) => {
-    if (score < 40) return "A1/A2 Beginner";
-    if (score < 70) return "B1/B2 Intermediate";
-    return "C1/C2 Advanced";
+    if (score < 10) return "A1-Foundation";
+    if (score < 30) return "A2-Trainee";
+    if(score < 50) return "B1-Practitioner";
+    if(score < 75) return "B2-Specialist";
+    if(score < 90) return "C1-Expert";
+    if(score < 100) return "C2-Master";
   };
+
+  const getLevelText = (score) => {
+    if (score < 10) {
+      return (
+        <>
+          Your score indicates that your level is in the range of <strong>A1 Foundation</strong>, demonstrating a basic understanding of <strong>Automotive Product Development</strong> concepts and entry-level skills. You are just starting your journey in this field and can further build your knowledge and expertise.
+        </>
+      );
+    }
+    if (score < 30) {
+      return (
+        <>
+          Your score indicates that your level is in the range of <strong>A2 Trainee</strong>, showing a fundamental grasp of <strong>Automotive Product Development</strong> with emerging skills in design and development. You are progressing but still have room for growth to reach higher proficiency levels.
+        </>
+      );
+    }
+    if (score < 50) {
+      return (
+        <>
+          Your score indicates that your level is in the range of <strong>B1 Practitioner</strong>, reflecting intermediate proficiency in <strong>Automotive Product Development</strong>. You have practical skills and a reasonable understanding of software tools and industry concepts, but there’s potential for refinement.
+        </>
+      );
+    }
+    if (score < 75) {
+      return (
+        <>
+          Your score indicates that your level is in the range of <strong>B2 Specialist</strong>, showcasing solid proficiency in <strong>Automotive Product Development</strong>. You have strong domain knowledge and are capable of handling more complex tasks independently.
+        </>
+      );
+    }
+    if (score < 90) {
+      return (
+        <>
+          Your score indicates that your level is in the range of <strong>C1 Expert</strong>, representing advanced proficiency in <strong>Automotive Product Development</strong>. You exhibit exceptional skills, a deep understanding of tools, and expertise that allows you to contribute significantly to projects and teams.
+        </>
+      );
+    }
+    if (score < 100) {
+      return (
+        <>
+          Your score indicates that your level is in the range of <strong>C2 Master</strong>, denoting unparalleled expertise in <strong>Automotive Product Development</strong>. You possess mastery of domain concepts and tools, enabling you to lead projects and innovate in the automotive industry.
+        </>
+      );
+    }
+  };
+  
+ 
+  const catiaText = (score) => {
+      if (score < 10) {
+        return (
+          <>
+            Your score indicates a basic understanding of <strong>CATIA</strong>. You can navigate the interface and create simple sketches but lack proficiency in advanced tools and workflows.
+          </>
+        );
+      }
+      if (score < 30) {
+        return (
+          <>
+            Your score reflects limited practical experience in <strong>CATIA</strong>. You can perform basic 3D modeling and execute guided design tasks with assistance.
+          </>
+        );
+      }
+      if (score < 50) {
+        return (
+          <>
+            Your score demonstrates proficiency in executing standard design tasks independently in <strong>CATIA</strong>. You are skilled in part design, assemblies, and basic surface modeling.
+          </>
+        );
+      }
+      if (score < 75) {
+        return (
+          <>
+            Your score indicates strong problem-solving skills in <strong>CATIA</strong>. You can efficiently handle complex designs, including advanced surfacing and large assemblies.
+          </>
+        );
+      }
+      if (score < 90) {
+        return (
+          <>
+            Your score shows expertise in specialized <strong>CATIA</strong> domains. You can innovate, optimize workflows, and solve intricate design challenges independently.
+          </>
+        );
+      }
+      if (score < 100) {
+        return (
+          <>
+            Your score represents mastery of <strong>CATIA</strong>. You demonstrate visionary skills, lead projects, develop advanced solutions, and mentor others to achieve excellence.
+          </>
+        );
+      }
+    };
+    
+    const productText = (score) => {
+      if (score < 10) {
+        return (
+          <>
+            Your score indicates a basic understanding of <strong>Product Development</strong>. You are familiar with fundamental concepts but have limited application in real-world scenarios.
+          </>
+        );
+      }
+      if (score < 30) {
+        return (
+          <>
+            Your score reflects limited practical experience in <strong>Product Development</strong>. You can assist with guided tasks like creating simple BOMs or preliminary designs.
+          </>
+        );
+      }
+      if (score < 50) {
+        return (
+          <>
+            Your score demonstrates proficiency in executing standard <strong>Product Development</strong> tasks independently. You can create production-ready designs following industry guidelines.
+          </>
+        );
+      }
+      if (score < 75) {
+        return (
+          <>
+            Your score indicates strong problem-solving skills in <strong>Product Development</strong>. You are adept at complex tasks such as DFMEA, GD&T, and integration within development cycles.
+          </>
+        );
+      }
+      if (score < 90) {
+        return (
+          <>
+            Your score shows expertise in specialized <strong>Product Development</strong> areas such as BIW, trims, or powertrain. You can deliver innovative solutions and improve processes effectively.
+          </>
+        );
+      }
+      if (score < 100) {
+        return (
+          <>
+            Your score represents mastery in <strong>Product Development</strong>. You exhibit visionary skills, lead global projects, set industry benchmarks, and mentor teams toward success.
+          </>
+        );
+      }
+    };
+    
+
   const yourLevel = getCEFRLevel(yourScore);
+  const explained = getLevelText(yourScore);
+  const catiaExplained = catiaText(yourScore);
+  const productExplained = productText(yourScore);
+  const [level, description] = yourLevel.split(" ");
+  
   console.log("Sharing post with score:", yourScore);
   const [accessToken, setAccessToken] = useState("");
   const [userUrn, setUserUrn] = useState("");
@@ -202,13 +356,13 @@ const Results = () => {
         <meta property="og:type" content="website" />
       </Head>
 
-      <div className="min-h-screen bg-blue-100 flex justify-center items-center font-poppins p-4">
-        <div className="grid sm:grid-cols-2  w-full max-w-4xl">
-          <div className="flex flex-col items-center bg-white rounded-md shadow-md ml-24 w-80 h-96">
+      <div className="min-h-screen bg-blue-100 flex justify-center items-center font-poppins lg:p-4">
+        <div className="grid lg:grid-cols-2 w-full max-w-4xl">
+          <div className="flex flex-col items-center bg-white rounded-md shadow-md lg:ml-24  lg:w-80 lg:h-96">
             <div className="bg-[#182073] w-full p-6 text-center flex flex-col items-center">
               <p className="text-lg font-semibold text-white">Your Score:</p>
               <p className="text-xl font-bold text-white">{yourLevel}</p>
-              <div className="flex items-center justify-center w-28 h-28  mt-5">
+              <div className="flex items-center justify-center w-28 h-28 mt-5">
                 <svg
                   height={radius * 2}
                   width={radius * 2}
@@ -243,7 +397,7 @@ const Results = () => {
               <p className="text-md mb-2 font-bold font-poppins">
                 Share your score
               </p>
-              <div className="flex space-x-2 justify-center">
+              <div className="flex space-x-2 justify-center mb-4 lg:mb-0">
                 <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110">
                   <FaFacebook className="w-6 h-6" />
                 </button>
@@ -300,14 +454,12 @@ const Results = () => {
           </div>
 
           {/* Column 2 */}
-          <div className="space-y-6 w-[500px]">
+          <div className="space-y-6 mt-1 lg:mt-0 lg:w-[500px]">
             {/* Your Score Explained */}
             <div className="bg-white p-6 rounded-md shadow-md">
               <h3 className="text-lg font-semibold">Your score explained</h3>
               <p className="text-sm text-gray-600 mt-2">
-                Your score indicates that your level is in the range of A1
-                BEGINNER to A2 ELEMENTARY, according to the guidelines set by
-                the Common European Framework of Reference (CEFR).
+                {explained}
               </p>
             </div>
 
@@ -346,21 +498,21 @@ const Results = () => {
                         {catia}%
                       </span>
                     </div>
+                    <div className="flex text-center">
                     <span className="font-bold text-md font-poppins mt-3">
-                      A1/A2
+                      {level}
                     </span>
                     <span className="font-bold text-md font-poppins">
-                      Beginner
+                      {description}
                     </span>
+                  </div>
                   </div>
                   <div>
                     <p className="text-lg font-bold text-orange-600">
-                      Reading Score
+                    CATIA Score
                     </p>
                     <p className="text-sm text-gray-600 mt-2">
-                      You understand short texts with familiar words and
-                      frequently used phrases related to topics from your daily
-                      life.
+                      {catiaExplained}
                     </p>
                   </div>
                 </div>
@@ -398,21 +550,21 @@ const Results = () => {
                         {product}%
                       </span>
                     </div>
-                    <span className="font-bold text-md font-poppins mt-3">
-                      A1/A2
+                    <div className="flex text-center">
+                    <span className="font-bold text-md font-poppins  mt-3">
+                      {level}
                     </span>
                     <span className="font-bold text-md font-poppins">
-                      Beginner
+                      {description}
                     </span>
+                    </div>
                   </div>
                   <div>
                     <p className="text-lg font-bold text-orange-600">
-                      Reading Score
+                    Product Development Score
                     </p>
                     <p className="text-sm text-gray-600 mt-2">
-                      You understand short texts with familiar words and
-                      frequently used phrases related to topics from your daily
-                      life.
+                      {productExplained}
                     </p>
                   </div>
                 </div>
@@ -427,19 +579,19 @@ const Results = () => {
               <div className="grid grid-cols-4 text-center">
                 <div>
                   <p className="font-bold text-gray-600">Level</p>
-                  <p className="text-orange-600">BF SET</p>
+                  <p className="text-gray-600">BF SET</p>
                 </div>
                 <div>
                   <p className="font-bold text-gray-600">Level</p>
-                  <p className="text-orange-600">Beginner</p>
+                  <p className="text-gray-600">0-30%</p>
                 </div>
                 <div>
                   <p className="font-bold text-gray-600">Intermediate</p>
-                  <p className="text-gray-600">61-85%</p>
+                  <p className="text-gray-600">31-75%</p>
                 </div>
                 <div>
                   <p className="font-bold text-gray-600">Advanced</p>
-                  <p className="text-gray-600">86-100%</p>
+                  <p className="text-gray-600">76-100%</p>
                 </div>
               </div>
             </div>
