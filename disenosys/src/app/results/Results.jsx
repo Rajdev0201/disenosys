@@ -474,13 +474,13 @@ Take up the mock GPDX exam here: ${link}
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
                         <div className="bg-white p-5 rounded-md shadow-md w-64 h-36 text-center">
                           <h2 className="text-lg font-bold mb-4">
-                            Ready to post
+                          Just One More Step Ahead to Show the World You Are an Improved Design Engineer!
                           </h2>
                           <button
                             onClick={getProfile}
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 mt-4 rounded-md"
+                            className="bg-[#182073] hover:bg-blue-700 text-white font-medium py-2 px-4 mt-4 rounded-md"
                           >
-                            Next
+                            Continue 
                           </button>
                         </div>
                       </div>
@@ -490,13 +490,14 @@ Take up the mock GPDX exam here: ${link}
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
                         <div className="bg-white p-5 rounded-md shadow-md w-64 h-36 text-center">
                           <h2 className="text-lg font-bold mb-4">
-                            Share to post
+                          <span className="font-bold">Confirmation</span>
+                          Nicely done! The post is ready to reach your network.
                           </h2>
                           <button
                             onClick={sharePost}
-                            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 mt-4 px-4 rounded-md"
+                            className="bg-[#182073]flex hover:bg-blue-700 text-white font-medium py-2 mt-4 px-4 rounded-md"
                           >
-                            Share
+                            Share Post<FaLinkedin className="w-6 h-6" />
                           </button>
                         </div>
                       </div>
