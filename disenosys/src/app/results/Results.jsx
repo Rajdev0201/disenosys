@@ -493,12 +493,14 @@ Take up the mock GPDX exam here: ${link}
                           <span className="font-bold">Confirmation</span>
                           Nicely done! The post is ready to reach your network.
                           </h2>
+                          <div className="flex justify-center">
                           <button
                             onClick={sharePost}
-                            className="bg-[#182073]flex hover:bg-blue-700 text-white font-medium py-2 mt-4 px-4 rounded-md"
+                            className="bg-[#182073] gap-2 flex items-center hover:bg-blue-700 text-white font-medium py-2 mt-4 px-4 rounded-md"
                           >
-                            Share Post<FaLinkedin className="w-6 h-6" />
+                            Share Post<FaLinkedin className="w-5 h-5" />
                           </button>
+                          </div>
                         </div>
                       </div>
                     )}
