@@ -471,9 +471,9 @@ Take up the mock GPDX exam here: ${link}
                 ) : (
                   <>
                     {showFetchProfilePopup && (
-                      <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                        <div className="bg-white p-5 rounded-md shadow-md max-w-sm w-full">
-                          <h2 className="text-lg font-bold mb-4">
+                      <div className="fixed top-0 left-0 right-0 font-poppins bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+                        <div className="bg-white p-5 rounded-md text-gray-800 shadow-md max-w-sm w-full">
+                          <h2 className="text-lg font-bold text-gray-600 mb-4">
                           Just One More Step Ahead to Show the World You Are an Improved Design Engineer!
                           </h2>
                           <button
@@ -487,11 +487,11 @@ Take up the mock GPDX exam here: ${link}
                     )}
 
                     {showSharePostPopup && (
-                      <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+                      <div className="fixed top-0 left-0 right-0 font-poppins bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
                         <div className="bg-white p-5 rounded-md shadow-md max-w-sm w-full">
-                          <h2 className="text-lg font-bold mb-4">
-                          <span className="font-bold">Confirmation</span>
-                          Nicely done! The post is ready to reach your network.
+                        <span className="font-bold text-lg text-gray-800">Confirmation</span>
+                          <h2 className="text-lg text-gray-600 font-bold mb-4">
+                           Nicely done! The post is ready to reach your network.
                           </h2>
                           <div className="flex justify-center">
                           <button
@@ -517,7 +517,7 @@ Take up the mock GPDX exam here: ${link}
           </div>
 
           {showPopup && !accessToken && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="fixed inset-0 bg-black bg-opacity-50 font-poppins flex items-center justify-center z-50">
               <div className="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                   Show Off Your Achievement
