@@ -86,7 +86,7 @@ const Form = () => {
             productPercentage,
           }
         );
-        localStorage.setItem("name",formData.name);
+        localStorage.setItem("name",formData.firstName);
         localStorage.setItem("email",formData.email);
         localStorage.setItem("phone",formData.phone);
 

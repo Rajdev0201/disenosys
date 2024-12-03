@@ -385,7 +385,7 @@ Take up the mock GPDX exam here: ${link}
     try {
       // Send the post data to your backend
       await axios.post(
-        "http://localhost:8000/exam/share",
+        "https://disenosys-1.onrender.com/exam/share",
         postBody,
         {
           headers: {
