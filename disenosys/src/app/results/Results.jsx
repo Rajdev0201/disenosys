@@ -400,6 +400,9 @@ Take up the mock GPDX exam here: ${link}
     }
   }, []);
 
+  const handleBack = () => {
+    router.push('/')
+  }
   return (
     <>
       <Head>
@@ -508,6 +511,18 @@ Take up the mock GPDX exam here: ${link}
                     )}
                   </>
                 )}
+
+                {/* {accessToken ? (
+                  <button
+                    className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"
+                    onClick={startLinkedInAuth}
+                  >
+                    <FaLinkedin className="w-6 h-6" />
+                  </button>
+                ) : (
+                  ""
+                )} */}
+
                 <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110">
                   <FaWhatsappSquare className="w-6 h-6" />
                 </button>
@@ -516,8 +531,15 @@ Take up the mock GPDX exam here: ${link}
                 </button>
               </div>
             </div>
-          </div>
+            
+              {accessToken ? (
+              <button className="bg-[#182073] rounded text-white text-lg font-semibold ring-2 ring-white px-4 py-1 mt-12" onClick={handleBack}>Back Home</button>
+                ) : (
+                  ""
+                )} 
 
+          </div>
+          
           {showPopup && !accessToken && (
             <div className="fixed inset-0 bg-black bg-opacity-50 font-poppins flex items-center justify-center z-50">
               <div className="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full">
