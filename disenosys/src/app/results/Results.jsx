@@ -216,10 +216,10 @@ const Results = () => {
     }
   };
 
-  const handleCancel = () => {
-    setShowPopup(false);
-    alert("You canceled sharing your score.");
-  };
+  // const handleCancel = () => {
+  //   setShowPopup(false);
+  //   alert("You canceled sharing your score.");
+  // };
 
   const yourLevel = getCEFRLevel(yourScore);
   const explained = getLevelText(yourScore);
@@ -358,15 +358,13 @@ const Results = () => {
 
 I am thrilled to share that I have successfully completed the Global Product Development Excellence (GPDX) exam with a score of ${yourScore}%!
 
-This exam provided a thorough assessment of my skills in Automotive Product Development, covering both CATIA proficiency and the Product Development process. It offered a fantastic opportunity to benchmark my knowledge and enhance my expertise in this critical field.
-
 The GPDX exam serves as a powerful tool for evaluating CATIA proficiency and product development knowledge. It's an excellent way for students and professionals to showcase their abilities to potential employers, particularly in an industry that increasingly values skilled automotive designers.
 
-A special thank you to @Disenosys for providing this opportunity. Their dedication to bridging the skills gap in automotive design has been instrumental in advancing careers and developing industry-ready professionals.
+A special thank you to #Disenosys for providing this opportunity. Their dedication to bridging the skills gap in automotive design has been instrumental in advancing careers and developing industry-ready professionals.
 
 Take up the mock GPDX exam here: ${link}
 
-#disenosys #GPDX #automotive #design #exam #CATIA`,
+#GPDX #automotive #design #exam #CATIA`,
       userUrn: userUrn,
       yourScore: yourScore,
       yourlevel: yourLevel,
@@ -384,7 +382,8 @@ Take up the mock GPDX exam here: ${link}
         }
       );
       alert("Post shared successfully with image!");
-      router.push("/quicktest");
+      router.push("/results");
+     setAccessToken("")
     } catch (error) {
       console.error("Error sharing post with image:", error);
     }
@@ -489,7 +488,7 @@ Take up the mock GPDX exam here: ${link}
                     {showSharePostPopup && (
                       <div className="fixed top-0 left-0 right-0 font-poppins bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
                         <div className="bg-white p-5 rounded-md shadow-md max-w-sm w-full">
-                        <span className="font-bold text-lg text-gray-800">Confirmation</span>
+                        <span className="font-bold text-xl text-green-400">Confirmation</span>
                           <h2 className="text-lg text-gray-600 font-bold mb-4">
                            Nicely done! The post is ready to reach your network.
                           </h2>

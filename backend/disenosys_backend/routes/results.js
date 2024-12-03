@@ -4,7 +4,8 @@ const catia = require("../models/catia");
 const Result = require('../models/results');
 const nodemailer = require('nodemailer');
 const axios = require('axios');
-
+const XLSX = require('xlsx');
+const { format,isValid } = require('date-fns');
 
 
 router.get('/getcatia', async (req, res) => {
@@ -381,5 +382,60 @@ const createImageWithScore = (score,level) => {
         resolve(imagePath); 
     });
 };
+
+router.get('/result', async (req, res) => {
+    try {
+      const result = await Result.find();
+  
+      if (!result || result.length === 0) {
+        console.log('No data available for download');
+        return res.status(400).json({ error: 'No Data is available' });
+      }
+  
+      const workbook = XLSX.utils.book_new();
+      const worksheetData = result.map((student) => {
+        console.log(student)
+        const total = (Number(student.catiaScore) + Number(student.productScore)) / 2;
+        const createdAtFormatted = isValid(new Date(student.createdAt))
+          ? format(new Date(student.createdAt), 'dd/MM/yyyy, hh:mm a')
+          : 'Invalid Date'; 
+  
+        const quizFinishTimeFormatted = isValid(new Date(student.updatedAt))
+          ? format(new Date(student.quizFinishTime), 'dd/MM/yyyy, hh:mm a')
+          : 'Invalid Date';
+        return {
+          name: student.firstName,
+          email: student.email,
+          mobile: student.phone,
+          country:student.country,
+          catiaScore:student.catiaScore,   
+          productScore:student.productScore,
+          totalPercentage:total,
+          startTime: createdAtFormatted,
+          finisheTime:quizFinishTimeFormatted,
+        };
+      });
+  
+  
+      const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+  
+     
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Results');
+  
+      const excelBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+  
+      
+      res.setHeader('Content-Disposition', 'attachment; filename="results.xlsx"');
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  
+  
+      res.send(excelBuffer);
+  
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: "Failed to generate Excel file" });
+    }
+  });
+  
 
 module.exports = router;

@@ -7,6 +7,7 @@ import { SiAuthentik } from "react-icons/si";
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { PiCertificateBold } from "react-icons/pi";
+import { GrScorecard } from "react-icons/gr";
 
 const Sidebar = () => {
   const path = usePathname();
@@ -17,6 +18,7 @@ const Sidebar = () => {
   const links = [
     { href: '/courselist', label: 'Paid Courses', icon: <SiAuthentik /> },
     { href: '/certificate', label: 'Post certificate', icon: <PiCertificateBold /> },
+    { href: '/gpdx', label: 'GPDX', icon: <GrScorecard />    },
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];
