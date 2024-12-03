@@ -232,11 +232,12 @@ const Results = () => {
   const [userUrn, setUserUrn] = useState("");
   const [showFetchProfilePopup, setShowFetchProfilePopup] = useState(false);
   const [showSharePostPopup, setShowSharePostPopup] = useState(false);
+  const [share,setShare] = useState(false)
   const link = "https://www.disenosys.com/quicktest";
   // Start the LinkedIn OAuth flow
 
   useEffect(() => {
-    if (!accessToken) {
+    if (!accessToken && !share) {
       const timer = setTimeout(() => {
         setShowPopup(true);
       }, 5000);
@@ -382,8 +383,10 @@ Take up the mock GPDX exam here: ${link}
         }
       );
       alert("Post shared successfully with image!");
-      router.push("/results");
-     setAccessToken("")
+      // router.push("/results");
+      // setAccessToken("")
+      setShowSharePostPopup(false);
+      setShare(true);
     } catch (error) {
       console.error("Error sharing post with image:", error);
     }
@@ -460,7 +463,7 @@ Take up the mock GPDX exam here: ${link}
                 <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110">
                   <FaFacebook className="w-6 h-6" />
                 </button>
-                {!accessToken ? (
+                {!accessToken || accessToken ? (
                   <button
                     className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"
                     onClick={startLinkedInAuth}
