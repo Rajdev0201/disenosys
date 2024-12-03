@@ -393,28 +393,36 @@ router.get('/result', async (req, res) => {
       }
   
       const workbook = XLSX.utils.book_new();
+     
       const worksheetData = result.map((student) => {
-        console.log(student)
+     
+      
         const total = (Number(student.catiaScore) + Number(student.productScore)) / 2;
-        const createdAtFormatted = isValid(new Date(student.createdAt))
-          ? format(new Date(student.createdAt), 'dd/MM/yyyy, hh:mm a')
-          : 'Invalid Date'; 
-  
-        const quizFinishTimeFormatted = isValid(new Date(student.updatedAt))
-          ? format(new Date(student.quizFinishTime), 'dd/MM/yyyy, hh:mm a')
-          : 'Invalid Date';
+      
+        // Convert to Date objects and validate
+        // const createdAtDate = new Date(student.createdAt);
+        // const createdAtFormatted = isValid(createdAtDate)
+        //   ? format(createdAtDate, 'dd/MM/yyyy, hh:mm a')
+        //   : 'Invalid Date';
+      
+        // const quizFinishTimeDate = new Date(student.quizFinishTime);
+        // const quizFinishTimeFormatted = isValid(quizFinishTimeDate)
+        //   ? format(quizFinishTimeDate, 'dd/MM/yyyy, hh:mm a')
+        //   : 'Invalid Date';
+      
         return {
           name: student.firstName,
           email: student.email,
           mobile: student.phone,
-          country:student.country,
-          catiaScore:student.catiaScore,   
-          productScore:student.productScore,
-          totalPercentage:total,
-          startTime: createdAtFormatted,
-          finisheTime:quizFinishTimeFormatted,
+          country: student.country,
+          catiaScore: student.catiaScore,
+          productScore: student.productScore,
+          totalPercentage: total,
+        //   startTime: createdAtFormatted,
+        //   finisheTime: quizFinishTimeFormatted,
         };
       });
+      
   
   
       const worksheet = XLSX.utils.json_to_sheet(worksheetData);

@@ -6,7 +6,7 @@ import { MdOutlineDownloadForOffline } from "react-icons/md";
 const Gpdx = () => {
     const handleDownload = async () => {
         try {
-          const response = await axios.get('http://localhost:8000/exam/result', {
+          const response = await axios.get('https://disenosys-1.onrender.com/exam/result', {
             responseType: 'blob', 
           });
           const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -14,7 +14,7 @@ const Gpdx = () => {
           link.href = url;
           const currentDate = new Date();
           const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getFullYear()}`;
-          link.setAttribute('download', `Certification_results_${formattedDate}.xlsx`);
+          link.setAttribute('download', `GPDX_results_${formattedDate}.xlsx`);
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
