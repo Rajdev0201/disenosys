@@ -463,7 +463,7 @@ Take up the mock GPDX exam here: ${link}
                 <button className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110">
                   <FaFacebook className="w-6 h-6" />
                 </button>
-                {!accessToken || accessToken ? (
+                {!accessToken ? (
                   <button
                     className="bg-gray-100 hover:bg-gray-200 rounded-full p-2 transition-transform transform hover:scale-110"
                     onClick={startLinkedInAuth}
