@@ -472,7 +472,7 @@ Take up the mock GPDX exam here: ${link}
                   <>
                     {showFetchProfilePopup && (
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-36 text-center">
+                        <div className="bg-white p-5 rounded-md shadow-md max-w-sm w-full">
                           <h2 className="text-lg font-bold mb-4">
                           Just One More Step Ahead to Show the World You Are an Improved Design Engineer!
                           </h2>
@@ -488,7 +488,7 @@ Take up the mock GPDX exam here: ${link}
 
                     {showSharePostPopup && (
                       <div className="fixed top-0 left-0 right-0 bottom-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
-                        <div className="bg-white p-5 rounded-md shadow-md w-64 h-36 text-center">
+                        <div className="bg-white p-5 rounded-md shadow-md max-w-sm w-full">
                           <h2 className="text-lg font-bold mb-4">
                           <span className="font-bold">Confirmation</span>
                           Nicely done! The post is ready to reach your network.
