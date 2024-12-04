@@ -8,7 +8,7 @@ import {setUpdateResume} from "../features/resumeSlice.js";
 
 export const getPortfolioOne = () => async (dispatch) => {
     try {
-      const res = await axios.get(`http://localhost:8000/update/portfolio/single`);
+      const res = await axios.get(`https://disenosys-dkhj.onrender.com/update/portfolio/single`);
       console.log(res)
       const portfolio = res.data;
       dispatch(setUpdate(portfolio));
@@ -20,7 +20,7 @@ export const getPortfolioOne = () => async (dispatch) => {
 
   export const getPortfolioAll = () => async (dispatch) => {
     try {
-      const res = await axios.get(`http://localhost:8000/update/portfolio`);
+      const res = await axios.get(`https://disenosys-dkhj.onrender.com/update/portfolio`);
       const portfolioAll = res.data;
       dispatch(setUpdateAll(portfolioAll));
     } catch (error) {
@@ -31,7 +31,7 @@ export const getPortfolioOne = () => async (dispatch) => {
 //resume
   export const getResume = () => async (dispatch) => {
     try {
-      const res = await axios.get(`http://localhost:8000/resume/profile`);
+      const res = await axios.get(`https://disenosys-dkhj.onrender.com/resume/profile`);
       const portfolioAll = res.data;
       dispatch(setUpdateResume(portfolioAll));
     } catch (error) {

@@ -19,7 +19,7 @@ const loadRazorpayScript = () => {
 export const CheckOut = (Data, nav) => async (dispatch) => {
     try {
         console.log("Data sent to backend:", Data);
-        const res = await axios.post("https://disenosys-1.onrender.com/consult/checkout-order", {
+        const res = await axios.post("https://disenosys-dkhj.onrender.com/consult/checkout-order", {
             userData: Data.userData,
             cartItems: Data.cartItems,
         });
@@ -39,7 +39,7 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
             handler: async (response) => {
                 try {
                     // Send payment details to callback endpoint
-                    const captureResponse = await axios.post("https://disenosys-1.onrender.com/consult/handle-razorpay-callback", {
+                    const captureResponse = await axios.post("https://disenosys-dkhj.onrender.com/consult/handle-razorpay-callback", {
                         razorpayPaymentId: response.razorpay_payment_id,
                         razorpayOrderId: response.razorpay_order_id,
                         razorpaySignature: response.razorpay_signature,
@@ -89,7 +89,7 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
 
 export const payment = () => async (dispatch) => {
     try {
-        const res = await axios.get("https://disenosys-1.onrender.com/consult/getPlaceOrder");
+        const res = await axios.get("https://disenosys-dkhj.onrender.com/consult/getPlaceOrder");
         const getData = res.data;
         dispatch(setPayment(getData));
     } catch (error) {
@@ -99,7 +99,7 @@ export const payment = () => async (dispatch) => {
   
   export const block = () => async (dispatch) => {
     try {
-        const res = await axios.get("https://disenosys-1.onrender.com/consult/getBlockTime");
+        const res = await axios.get("https://disenosys-dkhj.onrender.com/consult/getBlockTime");
         const getData = res.data;
         dispatch(setBlock(getData));
     } catch (error) {

@@ -37,7 +37,7 @@ import das from "../assests/profile/PD_Logo.png";
  
   
   useEffect(() => {
-    axios.get('https://disenosys-1.onrender.com/api/questions/product')
+    axios.get('https://disenosys-dkhj.onrender.com/api/questions/product')
       .then(response => {
         const totalQuestions = response.data;
         const shuffledQuestions = totalQuestions.sort(() => Math.random() - 0.5); 

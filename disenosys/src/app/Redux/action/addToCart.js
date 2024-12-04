@@ -8,7 +8,7 @@ import { payment } from './Payment';
 
 export const addProductToCart = (cart) => async (dispatch) => {
     try {
-        const response = await axios.post('https://disenosys-1.onrender.com/api/v1/addCart', cart);
+        const response = await axios.post('https://disenosys-dkhj.onrender.com/api/v1/addCart', cart);
         const { cartItem } = response.data;
         dispatch(addCart(cartItem));
         dispatch(getAllCarts());
@@ -29,7 +29,7 @@ export const addProductToCart = (cart) => async (dispatch) => {
 
 export const removeProductFromCart = (cartId) => async (dispatch) => {
     try {
-        await axios.delete(`https://disenosys-1.onrender.com/api/v1/cart/${cartId}`);
+        await axios.delete(`https://disenosys-dkhj.onrender.com/api/v1/cart/${cartId}`);
         dispatch(removeFromCart(cartId));
         dispatch(getAllCarts())
     } catch (error) {
@@ -39,7 +39,7 @@ export const removeProductFromCart = (cartId) => async (dispatch) => {
 
 export const increaseQuantity = (cartId) => async (dispatch) => {
     try {
-        const response = await axios.put(`https://disenosys-1.onrender.com/api/v1/cart/${cartId}/increament`);
+        const response = await axios.put(`https://disenosys-dkhj.onrender.com/api/v1/cart/${cartId}/increament`);
         const updatedItem = response.data;
         dispatch(incrementQuantity(updatedItem));
         dispatch(getAllCarts());
@@ -51,7 +51,7 @@ export const increaseQuantity = (cartId) => async (dispatch) => {
 
 export const decreaseQuantity = (cartId) => async (dispatch) => {
     try {
-        const response = await axios.put(`https://disenosys-1.onrender.com/api/v1/cart/${cartId}/decreament`);
+        const response = await axios.put(`https://disenosys-dkhj.onrender.com/api/v1/cart/${cartId}/decreament`);
         const updatedItem = response.data;
         dispatch(decrementQuantity(updatedItem));
         dispatch(getAllCarts());
@@ -63,7 +63,7 @@ export const decreaseQuantity = (cartId) => async (dispatch) => {
 
 export const getAllCarts = () => async (dispatch) => {
     try {
-        const res = await axios.get("https://disenosys-1.onrender.com/api/v1/getCart");
+        const res = await axios.get("https://disenosys-dkhj.onrender.com/api/v1/getCart");
         const getCart = res.data;
         dispatch(setCart(getCart));
     } catch (error) {

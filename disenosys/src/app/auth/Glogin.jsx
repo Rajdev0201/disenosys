@@ -14,7 +14,7 @@ const Login = () => {
         console.log("Login Success:", decoded);
     
         try {
-            const response = await axios.post('https://disenosys-1.onrender.com/api/v1/user/google', {
+            const response = await axios.post('https://disenosys-dkhj.onrender.com/api/v1/user/google', {
                 userEmail: decoded.email,
                 userName: decoded.name, 
             });

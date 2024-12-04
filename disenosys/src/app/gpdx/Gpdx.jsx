@@ -6,7 +6,7 @@ import { MdOutlineDownloadForOffline } from "react-icons/md";
 const Gpdx = () => {
     const handleDownload = async () => {
         try {
-          const response = await axios.get('https://disenosys-1.onrender.com/exam/result', {
+          const response = await axios.get('https://disenosys-dkhj.onrender.com/exam/result', {
             responseType: 'blob', 
           });
           const url = window.URL.createObjectURL(new Blob([response.data]));

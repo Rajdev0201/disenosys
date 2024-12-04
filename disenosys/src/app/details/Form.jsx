@@ -72,7 +72,7 @@ const Form = () => {
           localStorage.getItem("productPercentage") || 0;
 
         const response = await axios.post(
-          "https://disenosys-1.onrender.com/exam/details",
+          "https://disenosys-dkhj.onrender.com/exam/details",
           {
             firstName: formData.firstName,
             lastName: formData.lastName,

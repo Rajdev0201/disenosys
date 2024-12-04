@@ -18,7 +18,7 @@ const LinkedInSocialLogin = ({ text, err }) => {
   const startLinkedInAuth = async () => {
     try {
       const { data } = await axios.get(
-        "https://disenosys-1.onrender.com/auth"
+        "https://disenosys-dkhj.onrender.com/auth"
       );
       window.location.href = data.url;
     } catch (error) {
@@ -32,7 +32,7 @@ const LinkedInSocialLogin = ({ text, err }) => {
     try {
       // Exchange code for access token
       const { data } = await axios.post(
-        "https://disenosys-1.onrender.com/get-access-token",
+        "https://disenosys-dkhj.onrender.com/get-access-token",
         { code },
         {
           headers: { "Content-Type": "application/json" },
@@ -48,7 +48,7 @@ const LinkedInSocialLogin = ({ text, err }) => {
   
       // Fetch user profile using the access token
       const { data: profileData } = await axios.get(
-        "https://disenosys-1.onrender.com/profile",
+        "https://disenosys-dkhj.onrender.com/profile",
         {
           headers: { Authorization: `Bearer ${data.accessToken}` },
         }

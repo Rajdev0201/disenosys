@@ -24,7 +24,7 @@ const First = () => {
 
   useEffect(() => {
     // setIsLoading(true);
-    axios.get('https://disenosys-1.onrender.com/api/questions/catia')
+    axios.get('https://disenosys-dkhj.onrender.com/api/questions/catia')
       .then(response => {
         const totalQuestions = response.data;
         const shuffledQuestions = totalQuestions.sort(() => Math.random() - 0.5); 

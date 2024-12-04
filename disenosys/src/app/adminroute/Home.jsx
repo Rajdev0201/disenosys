@@ -25,7 +25,7 @@ const AdminPanel = () => {
   
 
     const res = await fetch(
-      "http://localhost:8000/api/admin/generate-code",
+      "https://disenosys-dkhj.onrender.com/api/admin/generate-code",
       {
         method: "POST",
         headers: {

@@ -253,7 +253,7 @@ const Results = () => {
   const startLinkedInAuth = async () => {
     try {
       const { data } = await axios.get(
-        "https://disenosys-1.onrender.com/exam/auth"
+        "https://disenosys-dkhj.onrender.com/exam/auth"
       );
       window.location.href = data.url;
     } catch (error) {
@@ -265,7 +265,7 @@ const Results = () => {
   const exchangeCodeForToken = async (code) => {
     try {
       const { data } = await axios.post(
-        "https://disenosys-1.onrender.com/exam/get-access-token",
+        "https://disenosys-dkhj.onrender.com/exam/get-access-token",
         {
           code,
         }
@@ -291,7 +291,7 @@ const Results = () => {
 
     try {
       const { data } = await axios.get(
-        "https://disenosys-1.onrender.com/exam/profile",
+        "https://disenosys-dkhj.onrender.com/exam/profile",
         {
           headers: { Authorization: `Bearer ${accessToken}` },
         }
@@ -385,7 +385,7 @@ Take up the mock GPDX exam here: ${link}
     try {
       // Send the post data to your backend
       await axios.post(
-        "https://disenosys-1.onrender.com/exam/share",
+        "https://disenosys-dkhj.onrender.com/exam/share",
         postBody,
         {
           headers: {

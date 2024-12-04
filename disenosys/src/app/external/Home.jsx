@@ -19,7 +19,7 @@ const ExternalCodeGenerator = () => {
             return;
         }
     
-        const res = await fetch('https://disenosys-1.onrender.com/api/admin/generate-external-code', {
+        const res = await fetch('https://disenosys-dkhj.onrender.com/api/admin/generate-external-code', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

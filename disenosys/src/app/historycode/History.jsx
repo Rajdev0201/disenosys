@@ -77,7 +77,7 @@ const History = () => {
   };
 
   const handleToggle = (id, isActive) => {
-    fetch(`https://disenosys-1.onrender.com/api/admin/toggleCode/${id}`, {
+    fetch(`https://disenosys-dkhj.onrender.com/api/admin/toggleCode/${id}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ isActive: !isActive }),
@@ -94,7 +94,7 @@ const History = () => {
   const handleDownload = async () => {
     try {
 
-      const response = await axios.get('http://localhost:8000/api/student/result', {
+      const response = await axios.get('https://disenosys-dkhj.onrender.com/api/student/result', {
         responseType: 'blob', // Important to set the response type to blob
       });
 
