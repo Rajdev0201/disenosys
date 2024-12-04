@@ -287,7 +287,6 @@ router.post("/share", async (req, res) => {
             throw new Error("Failed to upload image to LinkedIn");
         }
 
-        // Step 4: Share the post with the uploaded image
         const postBody = {
             author: `urn:li:person:${userUrn}`,
             lifecycleState: "PUBLISHED",
@@ -399,29 +398,29 @@ const createImageWithScore = (score,level) => {
 router.get('/result', async (req, res) => {
     try {
       const result = await Result.find();
-  
+      const sharedData = await SharedScore.find();
+
       if (!result || result.length === 0) {
         console.log('No data available for download');
         return res.status(400).json({ error: 'No Data is available' });
       }
   
+     
       const workbook = XLSX.utils.book_new();
-     
       const worksheetData = result.map((student) => {
-     
-      
         const total = (Number(student.catiaScore) + Number(student.productScore)) / 2;
-      
-        // Convert to Date objects and validate
+        const shared = sharedData.find(
+            (s) => s.email === student.email && Number(s.yourScore) === total
+          );
+          const sharedAtFormatted = shared
+          ? isValid(new Date(shared.sharedAt))
+            ? format(new Date(shared.sharedAt), 'dd/MM/yyyy, hh:mm a')
+            : 'Invalid Date'
+          : 'Not shared into LinkedIn';
         const createdAtDate = new Date(student.createdAt);
         const createdAtFormatted = isValid(createdAtDate)
           ? format(createdAtDate, 'dd/MM/yyyy, hh:mm a')
           : 'Invalid Date';
-      
-        // const quizFinishTimeDate = new Date(student.quizFinishTime);
-        // const quizFinishTimeFormatted = isValid(quizFinishTimeDate)
-        //   ? format(quizFinishTimeDate, 'dd/MM/yyyy, hh:mm a')
-        //   : 'Invalid Date';
       
         return {
           name: student.firstName,
@@ -432,14 +431,13 @@ router.get('/result', async (req, res) => {
           productScore: student.productScore,
           totalPercentage: total,
           startTime: createdAtFormatted,
-        //   finisheTime: quizFinishTimeFormatted,
+          sharedAt : sharedAtFormatted
         };
       });
       
   
   
       const worksheet = XLSX.utils.json_to_sheet(worksheetData);
-  
      
       XLSX.utils.book_append_sheet(workbook, worksheet, 'Results');
   
@@ -457,6 +455,7 @@ router.get('/result', async (req, res) => {
       return res.status(500).json({ error: "Failed to generate Excel file" });
     }
   });
-  
 
+
+  
 module.exports = router;
