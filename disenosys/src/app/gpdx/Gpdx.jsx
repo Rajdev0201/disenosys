@@ -11,7 +11,7 @@ const Gpdx = () => {
           });
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
-          link.href = url;
+          link.href = url;//add
           const currentDate = new Date();
           const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getFullYear()}`;
           link.setAttribute('download', `GPDX_results_${formattedDate}.xlsx`);
