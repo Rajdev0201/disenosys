@@ -449,6 +449,125 @@ app.post("/upload-xl", uploadxl.single("file"), (req, res) => {
 });
 
 
+const uploadxlExam = multer({ storage: multer.memoryStorage() });
+app.post("/upload-xl-exam", uploadxlExam.single("file"), (req, res) => {
+  try {
+    const workbook = XLSX.read(req.file.buffer, { type: "buffer" });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const students = XLSX.utils.sheet_to_json(sheet).map(student => student);
+
+    res.json(students); 
+  } catch (error) {
+    console.error("Error processing file:", error);
+    res.status(500).send("Error processing file");
+  }
+});
+
+
+
+
+const uploadcertificateExam = multer({ storage: multer.memoryStorage() });
+app.post("/send-certificate-exam", uploadcertificateExam.none(), (req, res) => {
+  const { email, pdfDataUrl,score,name,course} = req.body;
+  console.log(email)
+  if (!email || !pdfDataUrl) {
+    return res.status(400).send("Missing email or PDF data");
+  }
+
+
+  const base64Data = pdfDataUrl.split(";base64,").pop();
+  const pdfBuffer = Buffer.from(base64Data, "base64");
+
+  const transporter = nodemailer.createTransport({
+
+ host: 'smtp.office365.com', 
+port: 587,                 
+secure: false,   
+auth: {
+  user: 'classes@disenosys.com',
+  pass: 'xnccsypkfhfpymwg',
+}
+});
+
+
+  const mailOptions = {
+    from: "classes@disenosys.com",
+    to: email,
+    subject: `Certificate for ${course}`,
+    text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,
+    attachments: [
+      {
+        filename:`${name}_certificate.pdf`,
+        content: pdfBuffer,
+      },
+    ],
+  };
+
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+      return res.status(500).send("Error sending email");
+    }
+    res.status(200).send("Certificate sent successfully");
+  });
+});
+
+
+const uploadsingleExam = multer({ storage: multer.memoryStorage() });
+
+app.post("/send-single-certificate-exam", uploadsingleExam.none(),async (req, res) => {
+  try {
+    const { email, pdfDataUrl,name,course} = req.body;
+    console.log(email)
+    if (!email || !pdfDataUrl) {
+      return res.status(400).send("Missing email or PDF data");
+    }
+  
+    const base64Data = pdfDataUrl.split(";base64,").pop();
+    const pdfBuffer = Buffer.from(base64Data, "base64");
+
+    const transporter = nodemailer.createTransport({
+
+      host: 'smtp.office365.com', 
+     port: 587,                 
+     secure: false,   
+     auth: {
+      user: 'classes@disenosys.com',
+      pass: 'xnccsypkfhfpymwg',
+    }
+     });
+     
+  
+
+    const mailOptions = {
+      from: "classes@disenosys.com"  ,
+      to: email,
+      subject: `Certificate for ${course}`,
+      text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,
+      attachments: [
+        {
+          filename:`${name}_certificate.pdf`,
+          content: pdfBuffer,
+        },
+      ],
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error("Error sending email:", err);
+        return res.status(500).send("Error sending email");
+      }
+      console.log("Email sent: " + info.response);
+      res.send("Certificate sent successfully");
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error processing the certificate request");
+  }
+});
+
+
 
 const uploadcertificate = multer({ dest: 'uploadcertificate/' });
 app.post("/send-certificate", uploadcertificate.none(), (req, res) => {

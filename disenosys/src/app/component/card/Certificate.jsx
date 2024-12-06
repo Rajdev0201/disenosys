@@ -39,7 +39,7 @@ const CertificateComponent = () => {
     formData.append("file", file);
   
     try {
-      const response = await axios.post("https://disenosys-1.onrender.com/upload-xl", formData, {
+      const response = await axios.post("https://disenosys-dkhj.onrender.com/upload-xl", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
   
@@ -127,7 +127,7 @@ const CertificateComponent = () => {
       formData.append("name", name);
       formData.append("course", course);
   
-      await axios.post("https://disenosys-1.onrender.com/send-certificate", formData, {
+      await axios.post("https://disenosys-dkhj.onrender.com/send-certificate", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
   

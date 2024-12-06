@@ -238,7 +238,7 @@ export const deleteStudentCode = (id) => async (dispatch) => {
 
 export const deleteExternalCode = (id) => async (dispatch) => {
   try {
-    await axios.delete(`https://disenosys-dkhj.onrender.com/api/admin/externalCode/${id}`);
+    await axios.delete(`https://disenosys-dkhj.onrender.com/api/admin/externalCode/${id}`); //https://disenosys-dkhj.onrender.com
     dispatch(removeCode(id));
     dispatch(externalCode());
     toast.dark('The code has Deleted!', {
