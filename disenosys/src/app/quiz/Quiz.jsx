@@ -228,6 +228,7 @@ const Quiz = ({ questions }) => {
           }
         );
         console.log(response);
+        localStorage.removeItem("startTime");
         // if (response.status === 200) {
         //   alert("Quiz submitted successfully!");
         // }
@@ -256,6 +257,7 @@ const Quiz = ({ questions }) => {
     localStorage.removeItem("currentQuestionIndex");
     localStorage.removeItem("answers");
     localStorage.removeItem("quizFinished");
+    localStorage.removeItem("startTime");
     dispatch(LogOut());
     router.push("/");
   };

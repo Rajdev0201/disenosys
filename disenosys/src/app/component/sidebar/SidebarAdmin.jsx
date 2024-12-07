@@ -81,9 +81,9 @@ const Sidebar = () => {
           </div>
           <div>
             <button
-              onClick={() => setCertificate(!isUniversityDropdownOpen)}
+              onClick={() => setCertificate(!certificate)}
               className={`flex items-center w-full py-3 px-4  mt-12 lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
-                path.startsWith('/historycode') || path.startsWith('/externalcode') ? 'bg-blue-700' : ''
+                path.startsWith('/examcertficate') || path.startsWith('/certificate') ? 'bg-blue-700' : ''
               }`}
             >
               <SiAuthentik className="mr-3" />

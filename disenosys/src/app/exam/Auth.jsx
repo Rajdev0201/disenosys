@@ -27,7 +27,7 @@ const Auth = () => {
   };
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center z-50 bg-gray-200">
+    <div className="lg:fixed inset-0 flex justify-center items-center z-50 bg-gray-200">
       <Transition
         show={showAlert}
         enter="transform transition duration-300 ease-out"

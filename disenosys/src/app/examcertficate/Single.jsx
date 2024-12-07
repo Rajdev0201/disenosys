@@ -141,7 +141,7 @@ const [showCertificate, setShowCertificate] = useState(false);
   </div>
 
 
-  <button type="submit" className="bg-[#182073] w-36 p-2 text-white mt-4 rounded">
+  <button type="submit" className="bg-[#182073] w-36 p-2 font-semibold text-white mt-4 rounded">
     
     {showCertificate ? "Loading..." : "Send Certificate"}
   </button>

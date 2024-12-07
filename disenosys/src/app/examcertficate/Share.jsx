@@ -157,7 +157,9 @@ const CertificateComponent = () => {
             <input type="file" onChange={handleFileChange} className="p-2" />
             <button
               type="submit"
-              className="bg-[#182073] text-white p-2 rounded"
+              className="bg-[#182073] text-white font-semibold 
+              
+              p-2 rounded"
             >
               Upload Excel
             </button>
