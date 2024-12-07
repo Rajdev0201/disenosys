@@ -229,6 +229,10 @@ const Quiz = ({ questions }) => {
         );
         console.log(response);
         localStorage.removeItem("startTime");
+        localStorage.removeItem("globalTimeRemaining");
+        localStorage.removeItem("currentQuestionIndex");
+        localStorage.removeItem("answers");
+        localStorage.removeItem("quizFinished")
         // if (response.status === 200) {
         //   alert("Quiz submitted successfully!");
         // }

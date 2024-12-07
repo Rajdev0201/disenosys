@@ -10,7 +10,7 @@ export default function course () {
          <Blink/>
          <Navbar />
         <Course />
-        <div className='mt-20 container mx-auto'>
+        <div className='mt-20'>
         <HomeCourse/>
         </div>
         <Footer/>

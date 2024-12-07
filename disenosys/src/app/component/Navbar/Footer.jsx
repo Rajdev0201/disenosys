@@ -126,16 +126,16 @@ const Footer = () => {
         </div>
 
         <div className="relative flex items-center justify-center mt-4 md:mt-0 mb-6">
-          <div className="bg-violet-800 rounded-full w-16 h-16 text-center flex items-center justify-center z-40  ring-white ring-2 shadow-xl bg-gradient-to-r from-[#fffff] to-viloet-500 hover:from-indigo-200 hover:to-blue-800 ">
+          <div className="bg-[#182073] rounded-full w-16 h-16 text-center flex items-center justify-center z-40  ring-white ring-2 shadow-xl bg-gradient-to-r from-[#fffff] to-viloet-500 hover:from-indigo-200 hover:to-blue-800 ">
             <FaFacebookF className="text-lg text-purple-700" color="white" size={25}/>
           </div>
-          <div className="bg-violet-800 rounded-full w-16 h-16 text-center flex items-center justify-center z-30  ring-white ring-2 -ml-4 shadow-xl  bg-gradient-to-r from-[#fffff] to-viloet-500 hover:from-indigo-200 hover:to-blue-800 ">
+          <div className="bg-[#182073] rounded-full w-16 h-16 text-center flex items-center justify-center z-30  ring-white ring-2 -ml-4 shadow-xl  bg-gradient-to-r from-[#fffff] to-viloet-500 hover:from-indigo-200 hover:to-blue-800 ">
             <AiFillInstagram className="text-lg text-purple-700" color="white" size={25} />
           </div>
-          <div className="bg-violet-800 rounded-full w-16 h-16 text-center flex items-center justify-center z-10  ring-white ring-2 -ml-4 shadow-xl  bg-gradient-to-r from-[#fffff] to-viloet-500 hover:from-indigo-200 hover:to-blue-800 ">
+          <div className="bg-[#182073]  rounded-full w-16 h-16 text-center flex items-center justify-center z-10  ring-white ring-2 -ml-4 shadow-xl  bg-gradient-to-r from-[#fffff] to-viloet-500 hover:from-indigo-200 hover:to-blue-800 ">
             <BsTwitterX className="text-lg text-purple-700"  color="white" size={25}/>
           </div>
-          <div className="bg-violet-800 rounded-full w-16 h-16 text-center flex items-center justify-center z-0  ring-white ring-2 -ml-4 shadow-xl  bg-gradient-to-r from-[#fffff] to-viloet-500 hover:from-indigo-200 hover:to-blue-800 ">
+          <div className="bg-[#182073]  rounded-full w-16 h-16 text-center flex items-center justify-center z-0  ring-white ring-2 -ml-4 shadow-xl  bg-gradient-to-r from-[#fffff] to-viloet-500 hover:from-indigo-200 hover:to-blue-800 ">
             <FaWhatsapp className="text-lg text-purple-700"  color="white" size={25}/>
           </div>
         </div>

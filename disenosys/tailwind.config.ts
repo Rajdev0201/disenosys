@@ -14,6 +14,7 @@ const config: Config = {
         'poppins': ['Poppins', 'sans-serif'],        
         'brush': ['"Brush Script MT"', 'cursive', 'Arial'],
         'berlin': ['"Berlin Sans FB"', 'sans-serif'], 
+        "montster":['Montserrat', 'sans-serif']
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
