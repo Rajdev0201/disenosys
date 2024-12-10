@@ -47,7 +47,7 @@ export const getPortfolioOne = () => async (dispatch) => {
 
   export const getBlog = () => async (dispatch) => {
     try {
-        const res = await axios.get("http://localhost:8000/api/blog/data");
+        const res = await axios.get("https://disenosys-dkhj.onrender.com/api/blog/data");
         const getData = res.data;
         dispatch(getBlogData(getData));
     } catch (error) {

@@ -33,7 +33,7 @@ const CreateBlog = () => {
     form.append("file", formData.file);
 
     try {
-        await axios.post("http://localhost:8000/blog", form, {
+        await axios.post("https://disenosys-dkhj.onrender.com/blog", form, {
             headers: {
               "Content-Type": "multipart/form-data",
             },
