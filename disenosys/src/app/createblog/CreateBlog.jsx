@@ -111,12 +111,12 @@ const CreateBlog = () => {
               onChange={handleChange}
             ></textarea>
             <p className="text-sm text-gray-500 mt-2">
-              To include hyperlinks in the description, use the format:
-              <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-700">
-                &lt;a href="your-url" target="_blank"
-                class="text-blue-500"&gt;Your Link Text&lt;/a&gt;
-              </code>
-              . Example:{" "}
+  To include hyperlinks in the description, use the format:
+  <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-700">
+    &lt;a href=&quot;your-url&quot; target=&quot;_blank&quot;
+    class=&quot;text-blue-500&quot;&gt;Your Link Text&lt;/a&gt;
+  </code>
+  . Example:{" "}
               <a
                 href="https://www.disenosys.com/"
                 className="text-blue-500 underline"
