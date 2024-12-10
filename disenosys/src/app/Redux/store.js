@@ -15,6 +15,7 @@ import studentCode from './features/codeSlice.js';
 import externalCode from "./features/externalSlice.js";
 import bootcamp from "./features/bootcampSlice.js";
 import consult from "./features/consultSlice.js";
+import blog from "./features/blogSlice.js";
 
 export default configureStore({
   reducer: {
@@ -32,6 +33,7 @@ export default configureStore({
     code : studentCode,
     external : externalCode,
     bootcamp:bootcamp,
-    consult:consult
+    consult:consult,
+    blog:blog,
   },
 });

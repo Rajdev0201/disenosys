@@ -11,6 +11,8 @@ const fs = require("fs");
 const multer = require('multer');
 const XLSX = require('xlsx');
 const nodemailer = require('nodemailer');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
 // const fileUpload = require('express-fileupload');
 
 
@@ -28,7 +30,11 @@ dotenv.config({ path: path.join(__dirname, "./.env") })
 
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGO_URI,{
+  useNewUrlParser: true,       
+  useUnifiedTopology: true,    
+  serverSelectionTimeoutMS: 30000,
+})
     .then(() => {
         console.log("MongoDB Connected");
     })
@@ -91,6 +97,9 @@ const code  = require("./routes/code.js");
 const student = require("./routes/student.js");
 const Student = require("./models/certificate.js")
 const consult = require("./routes/consult.js")
+const Blog = require("./models/blog.js")
+const blog = require("./routes/blog.js")
+
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
@@ -106,6 +115,7 @@ app.use('/exam',catiaExam)
 app.use('/admin',adminRoute);
 app.use('/api/admin',code);
 app.use('/api/student',student);
+app.use('/api/blog',blog)
 
 app.get("/",(req,res) => {
  res.send("hi")
@@ -125,7 +135,7 @@ if (!fs.existsSync(uploadDir)) {
 // }));
 
 
-const storage = multer.diskStorage({
+const storageResume = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, uploadDir);
     },
@@ -134,7 +144,7 @@ const storage = multer.diskStorage({
     }
 });
 
-const uploadResume = multer({ storage: storage});
+const uploadResume = multer({ storage: storageResume});
 
 app.post('/upload-resume', uploadResume.single('file'), async (req, res) => {
   const { userId } = req.body;
@@ -159,6 +169,52 @@ app.post('/upload-resume', uploadResume.single('file'), async (req, res) => {
 });
 
 
+cloudinary.config({
+  cloud_name: 'dapilmiei',
+  api_key: '247445749891881',
+  api_secret: 'aGTYn8CLmtagTL45f2SKdjiX3A8',
+});
+
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'blog_images', // Cloudinary folder
+    format: async (req, file) => 'png', // Format to save the file
+    public_id: (req, file) => `${Date.now()}-${file.originalname}`, // File name
+  },
+});
+
+const uploadBlog = multer({ storage });
+
+app.post('/blog', uploadBlog.single('file'), async (req, res) => {
+  const { name, designation, title, description } = req.body;
+
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+  console.log('Uploaded file details:', req.file);
+
+  try {
+    const newBlog = new Blog({
+      filePath: req.file.path, 
+      name,
+      designation,
+      title,
+      description,
+    });
+
+    await newBlog.save();
+
+    return res.status(201).json({
+      message: 'Blog uploaded successfully',
+      filePath: req.file.path,
+    });
+  } catch (error) {
+    console.error('Error saving blog:', error);
+    return res.status(500).send('Internal server error');
+  }
+});
 
 
 

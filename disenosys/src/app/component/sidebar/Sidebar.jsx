@@ -6,6 +6,7 @@ import { FaCog, FaChartBar, FaSignOutAlt, FaBars, FaHome, FaUser } from 'react-i
 import {  SiSololearn } from "react-icons/si";
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { IoCreate } from 'react-icons/io5';
 
 const Sidebar = () => {
   const path = usePathname();
@@ -17,6 +18,7 @@ const Sidebar = () => {
     { href: '/profile', label: 'Profile', icon: <FaUser /> },
     {href:'/portfolioDashboard',label:'Portfolio',icon:<SiSololearn />},
     {href:'/mycourse',label:'Mycourse',icon:<SiSololearn />},
+    {href:'/createblog',label:'Create Blog',icon:<IoCreate />},
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];

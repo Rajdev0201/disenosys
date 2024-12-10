@@ -3,6 +3,7 @@ import axios from 'axios'
 import { setUpdate } from '../features/portfolioSlice.js';
 import { setUpdateAll } from '../features/portAllSlice.js';
 import {setUpdateResume} from "../features/resumeSlice.js";
+import { getBlogData } from '../features/blogSlice.js';
 
 
 
@@ -38,3 +39,18 @@ export const getPortfolioOne = () => async (dispatch) => {
       console.error('Error getProfile:', error);
     }
   };
+
+
+  //blog
+
+  //http://localhost:8000/blog
+
+  export const getBlog = () => async (dispatch) => {
+    try {
+        const res = await axios.get("http://localhost:8000/api/blog/data");
+        const getData = res.data;
+        dispatch(getBlogData(getData));
+    } catch (error) {
+        console.error('Error fetch code:', error);
+    }
+  }

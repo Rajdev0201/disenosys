@@ -28,7 +28,7 @@ const MyModal = () => {
 <div
   class="max-w-44 bg-transparent items-center justify-center flex border-2 border-white shadow-lg hover:bg-[#182073] text-white hover:text-white duration-300 cursor-pointer active:scale-[0.98]"
 >
-  <button class="px-5 py-2 flex items-center"onClick={openModal}>
+  <button class="px-5 py-2 flex items-center justify-center"onClick={openModal}>
   <LuUser2 size={20} className=" mx-1" />
   <span className="text-center">Login</span>
   </button>
@@ -38,7 +38,7 @@ const MyModal = () => {
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         contentLabel="Example Modal"
-        className="fixed top-20 left-1/2 right-44 transform -translate-x-1/2 -translate-y-1/2  p-6 rounded-lg shadow-lg w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-4/12 animate-slideIn"
+        className="fixed top-20 left-2/4 right-0 transform -translate-x-1/2 -translate-y-1/2  p-6 rounded-lg shadow-lg w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-4/12" // animate-slideIn
         overlayClassName="fixed inset-0 z-50 bg-black bg-opacity-50"
       >
         <button
