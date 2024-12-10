@@ -25,6 +25,12 @@ const CreateBlog = () => {
     setLoad(true);
     e.preventDefault();
 
+    if (!formData.name || !formData.designation || !formData.title || !formData.description || !formData.file) {
+      alert("All fields are required. Please fill in all fields.");
+      setLoad(false); 
+      return;
+    }
+
     const form = new FormData();
     form.append("name", formData.name);
     form.append("designation", formData.designation);
