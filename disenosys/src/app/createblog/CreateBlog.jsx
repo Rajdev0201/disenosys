@@ -11,8 +11,8 @@ const CreateBlog = () => {
     description: "",
     file: null,
   });
- const [load,setLoad] = useState(false);
- const router = useRouter();
+  const [load, setLoad] = useState(false);
+  const router = useRouter();
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData((prevData) => ({
@@ -25,9 +25,15 @@ const CreateBlog = () => {
     setLoad(true);
     e.preventDefault();
 
-    if (!formData.name || !formData.designation || !formData.title || !formData.description || !formData.file) {
+    if (
+      !formData.name ||
+      !formData.designation ||
+      !formData.title ||
+      !formData.description ||
+      !formData.file
+    ) {
       alert("All fields are required. Please fill in all fields.");
-      setLoad(false); 
+      setLoad(false);
       return;
     }
 
@@ -39,25 +45,25 @@ const CreateBlog = () => {
     form.append("file", formData.file);
 
     try {
-        await axios.post("https://disenosys-dkhj.onrender.com/blog", form, {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          });
-        alert("Blog created successfully!");
-        router.push("/createblog")
+      await axios.post("https://disenosys-dkhj.onrender.com/blog", form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("Blog created successfully!");
+      router.push("/createblog");
     } catch (error) {
       console.error("Error submitting blog:", error);
       alert("An error occurred. Please try again later.");
     }
-    setLoad(false)
+    setLoad(false);
     setFormData({
-        name: "",
-        designation: "",
-        title: "",
-        description: "",
-        file: null,
-      });
+      name: "",
+      designation: "",
+      title: "",
+      description: "",
+      file: null,
+    });
   };
 
   return (
@@ -116,22 +122,20 @@ const CreateBlog = () => {
               placeholder="Write your blog here..."
               onChange={handleChange}
             ></textarea>
-            <p className="text-sm text-gray-500 mt-2">
-  To include hyperlinks in the description, use the format:
-  <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-700">
-    &lt;a href=&quot;your-url&quot; target=&quot;_blank&quot;
-    class=&quot;text-blue-500&quot;&gt;Your Link Text&lt;/a&gt;
-  </code>
-  . Example:{" "}
-              <a
-                href="https://www.disenosys.com/"
-                className="text-blue-500 underline"
-                target="_blank"
-              >
-                Visit Example
-              </a>
-              .
+            <p className="text-sm text-red-500 mt-2">
+              To include hyperlinks in the description, use the format:
+              <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-700">
+                &lt;a href=&quot;your-url&quot; target=&quot;_blank&quot;
+                class=&quot;text-blue-500&quot;&gt;Your Link Text&lt;/a&gt;
+              </code>
             </p>
+            <p className="text-sm text-red-500 mt-2">
+  To include a list in the description, use the format:
+  <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-700">
+    &lt;ul&gt;&lt;li&gt;Item 1&lt;/li&gt;&lt;li&gt;Item 2&lt;/li&gt;&lt;/ul&gt;
+  </code>
+</p>
+
           </div>
 
           <div>
@@ -151,7 +155,7 @@ const CreateBlog = () => {
               type="submit"
               className="w-full text-lg font-semibold bg-indigo-600 text-white py-2 px-4 rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              {load ? "Loading..." : "Create Blog" }
+              {load ? "Loading..." : "Create Blog"}
             </button>
           </div>
         </form>
