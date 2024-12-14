@@ -58,7 +58,7 @@ export const getPortfolioOne = () => async (dispatch) => {
 
   export const getCareer = () => async (dispatch) => {
     try{
-      const res = await axios.get("http://localhost:8000/careerdata");
+      const res = await axios.get("https://disenosys-dkhj.onrender.com/careerdata");
       const getData = res.data;
       dispatch(getCareerData(getData));
     }catch(error){
