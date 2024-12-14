@@ -99,6 +99,7 @@ const Student = require("./models/certificate.js")
 const consult = require("./routes/consult.js")
 const Blog = require("./models/blog.js")
 const blog = require("./routes/blog.js")
+const career = require("./models/career.js")
 
 
 app.use("/api/v1", UserRoute);
@@ -216,6 +217,81 @@ app.post('/blog', uploadBlog.single('file'), async (req, res) => {
   }
 });
 
+
+
+
+const storageC = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'Upload_resume',
+    format: async (req, file) => 'pdf', 
+    public_id: (req, file) => `${Date.now()}-${file.originalname.replace(/\s+/g, '_')}`, 
+  },
+});
+
+const uploadCareer = multer({ storage: storageC });
+
+app.post('/career', uploadCareer.single('file'), async (req, res) => {
+  const { name, email, phone, dob, gender, experience, employee,current,
+    expected,
+    notice,
+    city,
+    relocate,
+    location,
+    skills,} = req.body;
+ 
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+  console.log(req.file)
+  try {
+    const newCareer = new career({
+      filePath: req.file.path,
+      name,
+      email,
+      phone,
+      dob: new Date(dob),
+      gender,
+      experience,
+      employee,
+      current,
+      expected,
+      notice,
+      city,
+      relocate,
+      location,
+      skills,
+    });
+
+    await newCareer.save();
+
+    return res.status(201).json({
+      message: 'Career data uploaded successfully',
+      filePath: req.file.path,
+    });
+  } catch (error) {
+    console.error('Error saving career:', error);
+    return res.status(500).send('Internal server error');
+  }
+});
+
+app.get('/careerdata', async (req, res) => {
+  try {
+    const data = await career.find();
+
+    if (!data) {
+      return res.status(400).json({ error: 'No Data is available' });
+    }
+
+    res.status(200).json({
+      message: 'Career data retrieved successfully',
+      data: data,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Data could not be fetched' });
+  }
+});
 
 
 app.use('/uploadsPortfolio', express.static(path.join(__dirname, 'uploadsPortfolio')));

@@ -61,7 +61,7 @@ const Banner = ({ selectedBlog }) => {
         </span>
      
         <p
-  className="mt-4 text-gray-800 text-medium text-sm sm:text-base md:text-lg"
+  className="mt-4 text-gray-800 font-medium text-sm sm:text-base md:text-md"
   dangerouslySetInnerHTML={{
     __html: selectedBlog?.description
       ? selectedBlog.description

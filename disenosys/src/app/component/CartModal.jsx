@@ -177,9 +177,9 @@ const handleDecrementQuantityChange = (cartId) => {
                 )}
               </div>
               <FiX
-                size={24}
+                size={28}
                 onClick={handleClose}
-                className="absolute top-4 right-4 cursor-pointer text-white"
+                className="absolute -top-5 ring-2 font-bold text-xl p-1 ring-white rounded-full -right-5 cursor-pointer text-[#fffff]"
               />
             </div>
           </motion.div>

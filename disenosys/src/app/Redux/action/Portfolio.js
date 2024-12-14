@@ -4,6 +4,7 @@ import { setUpdate } from '../features/portfolioSlice.js';
 import { setUpdateAll } from '../features/portAllSlice.js';
 import {setUpdateResume} from "../features/resumeSlice.js";
 import { getBlogData } from '../features/blogSlice.js';
+import { getCareerData } from '../features/careerSlice.js';
 
 
 
@@ -52,5 +53,15 @@ export const getPortfolioOne = () => async (dispatch) => {
         dispatch(getBlogData(getData));
     } catch (error) {
         console.error('Error fetch code:', error);
+    }
+  }
+
+  export const getCareer = () => async (dispatch) => {
+    try{
+      const res = await axios.get("http://localhost:8000/careerdata");
+      const getData = res.data;
+      dispatch(getCareerData(getData));
+    }catch(error){
+      console.error('Error fetch code:', error);
     }
   }

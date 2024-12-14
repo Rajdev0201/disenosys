@@ -20,6 +20,7 @@ const Sidebar = () => {
     { href: '/courselist', label: 'Paid Courses', icon: <SiAuthentik /> },
     // { href: '/certificate', label: 'Post certificate', icon: <PiCertificateBold /> },
     { href: '/gpdx', label: 'GPDX', icon: <GrScorecard />    },
+    { href: '/applicants', label: 'Applicants', icon: <GrScorecard />},
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];
@@ -47,9 +48,9 @@ const Sidebar = () => {
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 md:w-64 z-40`}
       >
-        <div className="flex flex-col mt-20 px-4 flex-grow space-y-6">
+        <div className="flex flex-col  px-4 flex-grow space-y-6">
   
-          <div className="text-center text-2xl font-semibold py-4 md:block hidden">
+          <div className="text-center mt-20 text-2xl font-semibold  md:block hidden">
             Admin Panel
           </div>
 
@@ -57,7 +58,7 @@ const Sidebar = () => {
           <div>
             <button
               onClick={() => setUniversityDropdownOpen(!isUniversityDropdownOpen)}
-              className={`flex items-center w-full py-3 px-4  mt-12 lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
+              className={`flex items-center w-full py-2 px-4  lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
                 path.startsWith('/historycode') || path.startsWith('/externalcode') ? 'bg-blue-700' : ''
               }`}
             >
@@ -82,7 +83,7 @@ const Sidebar = () => {
           <div>
             <button
               onClick={() => setCertificate(!certificate)}
-              className={`flex items-center w-full py-3 px-4  mt-12 lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
+              className={`flex items-center w-full px-4 py-2  mt-12 lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
                 path.startsWith('/examcertficate') || path.startsWith('/certificate') ? 'bg-blue-700' : ''
               }`}
             >
@@ -106,7 +107,7 @@ const Sidebar = () => {
           </div>
        
           {links.map((link) => (
-            <Link href={link.href} key={link.label} className={`flex items-center py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === link.href ? 'bg-blue-700' : ''}`}>
+            <Link href={link.href} key={link.label} className={`flex items-center py-2  px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === link.href ? 'bg-blue-700' : ''}`}>
               <span className="mr-3">{link.icon}</span>
               <span>{link.label}</span>
             </Link>
