@@ -251,7 +251,7 @@ const CareerForm = () => {
     }
 
     try {
-      await axios.post("http://localhost:8000/career", form, {
+      await axios.post("https://disenosys-dkhj.onrender.com/career", form, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
