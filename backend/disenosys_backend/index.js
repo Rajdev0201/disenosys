@@ -13,6 +13,9 @@ const XLSX = require('xlsx');
 const nodemailer = require('nodemailer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary')
+const { OpenAI } = require('openai'); 
+const pdfParse = require('pdf-parse');
+
 // const fileUpload = require('express-fileupload');
 
 
@@ -121,7 +124,6 @@ app.use('/api/blog',blog)
 app.get("/",(req,res) => {
  res.send("hi")
 })
-
 
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -238,7 +240,10 @@ app.post('/career', uploadCareer.single('file'), async (req, res) => {
     city,
     relocate,
     location,
-    skills,} = req.body;
+    } = req.body;
+     
+  const companies = req.body.companies ? JSON.parse(req.body.companies) : [];
+  console.log(companies)
  
   if (!req.file) {
     return res.status(400).send('No file uploaded.');
@@ -260,7 +265,7 @@ app.post('/career', uploadCareer.single('file'), async (req, res) => {
       city,
       relocate,
       location,
-      skills,
+      companies,
     });
 
     await newCareer.save();

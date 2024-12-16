@@ -10,12 +10,18 @@ const Applicants = () => {
   const data = useSelector((state) => state.career);
    
   const [filteredData, setFilteredData] = useState([]);
+ 
   const [filters, setFilters] = useState({
     experience: "",
     notice: "",
     location: "",
-    skills: "",
+    companyName: "",
+    industry: "",
+    domain: "",
+    software: ""
   });
+
+  
  const router = useRouter();
   useEffect(() => {
     if (data?.data) {
@@ -28,23 +34,18 @@ const Applicants = () => {
     setFilters({ ...filters, [name]: value });
   };
 
+  
   const applyFilters = () => {
-    const { experience, notice, location, skills } = filters;
+    const { experience, notice, location, companyName, industry, domain, software } = filters;
   
     const filtered = data?.data?.filter((profile) => {
-      const profileSkills = profile.skills || []; 
       const profileExperience = profile.experience || "";
       const profileNotice = profile.notice || "";
       const profileLocation = profile.location || "";
-  
-      const skillsArray = Array.isArray(profileSkills)
-        ? profileSkills.flatMap((skill) => skill.split(",").map((s) => s.trim().toLowerCase()))
-        : [];
+      const profileCompanies = profile.companies || [];
   
       // Match experience
-      const matchesExperience = experience
-        ? profileExperience.includes(experience)
-        : true;
+      const matchesExperience = experience ? profileExperience.includes(experience) : true;
   
       // Match notice period
       const matchesNotice = notice ? profileNotice.includes(notice) : true;
@@ -54,21 +55,31 @@ const Applicants = () => {
         ? profileLocation.toLowerCase().includes(location.toLowerCase())
         : true;
   
-      // Match skills
-      const matchesSkills = skills
-        ? skillsArray.some((skill) => skill.includes(skills.toLowerCase()))
-        : true;
+      // Match company details (companyName, industry, domain, software)
+      const matchesCompany = profileCompanies.some((company) => {
+        const matchesCompanyName = companyName
+          ? company.companyName.toLowerCase().includes(companyName.toLowerCase())
+          : true;
+        const matchesIndustry = industry
+          ? company.rows?.[0]?.industry.toLowerCase().includes(industry.toLowerCase())
+          : true;
+        const matchesDomain = domain
+          ? company.rows?.[0]?.domain.toLowerCase().includes(domain.toLowerCase())
+          : true;
+        const matchesSoftware = software
+          ? company.rows?.[0]?.software.toLowerCase().includes(software.toLowerCase())
+          : true;
   
-      return (
-        matchesExperience &&
-        matchesNotice &&
-        matchesLocation &&
-        matchesSkills
-      );
+        return matchesCompanyName && matchesIndustry && matchesDomain && matchesSoftware;
+      });
+  
+      return matchesExperience && matchesNotice && matchesLocation && matchesCompany;
     });
   
     setFilteredData(filtered);
   };
+  
+  
   
   
  const goTo = (id) => {
@@ -236,15 +247,49 @@ const Applicants = () => {
           </div>
 
           <div>
-            <input
-              type="text"
-              name="skills"
-              onChange={handleFilterChange}
-              placeholder="Search Skills"
-              className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500 placeholder:text-gray-800"
-              required
-            />
-          </div>
+  <input
+    type="text"
+    name="companyName"
+    value={filters.companyName}
+    onChange={handleFilterChange}
+    placeholder="Search by Company Name"
+    className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500 placeholder:text-gray-800"
+  />
+</div>
+
+<div>
+  <input
+    type="text"
+    name="industry"
+    value={filters.industry}
+    onChange={handleFilterChange}
+    placeholder="Search by Industry"
+    className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500 placeholder:text-gray-800"
+  />
+</div>
+
+<div>
+  <input
+    type="text"
+    name="domain"
+    value={filters.domain}
+    onChange={handleFilterChange}
+    placeholder="Search by Domain"
+    className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500 placeholder:text-gray-800"
+  />
+</div>
+
+<div>
+  <input
+    type="text"
+    name="software"
+    value={filters.software}
+    onChange={handleFilterChange}
+    placeholder="Search by Software"
+    className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500 placeholder:text-gray-800"
+  />
+</div>
+
         </div>
 
         <div className="grid grid-cols-4 gap-4">

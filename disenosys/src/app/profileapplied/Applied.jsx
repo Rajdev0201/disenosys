@@ -63,7 +63,7 @@ const Applied = () => {
                     </tr>
                     <tr className="bg-gray-100">
                       <td className="p-3 font-semibold text-blue-600 border border-gray-200">
-                       Current City:
+                        Current City:
                       </td>
                       <td className="p-3 text-gray-800 border font-semibold border-gray-200">
                         {data.city}
@@ -71,7 +71,7 @@ const Applied = () => {
                     </tr>
                     <tr>
                       <td className="p-3 font-semibold text-blue-600 border border-gray-200">
-                       Preferred Location:
+                        Preferred Location:
                       </td>
                       <td className="p-3 text-gray-800 border font-semibold border-gray-200">
                         {data.location}
@@ -98,15 +98,45 @@ const Applied = () => {
               </div>
 
               <div className="mt-6 w-full max-w-lg">
-                <h2 className="text-lg font-semibold text-blue-800">Skills</h2>
-                <div className="flex gap-2 mt-3 flex-wrap">
-                  {data?.skills?.map((skill, index) => (
-                    <span
+                <h2 className="text-lg font-semibold text-blue-800">
+                  Companies Experience
+                </h2>
+                <div className="flex flex-col gap-4 mt-3">
+                  {data?.companies?.map((company, index) => (
+                    <div
                       key={index}
-                      className="bg-blue-100 text-blue-600 text-sm font-bold px-3 py-1  border-2 border-blue-600 shadow-sm"
+                      className="bg-white shadow-lg rounded-lg p-4 border-2 border-gray-200"
                     >
-                      {skill}
-                    </span>
+                      <h3 className="text-xl font-semibold text-blue-600">
+                        {company.companyName}
+                      </h3>
+                      <p className="text-gray-700 text-sm">
+                        <strong>From:</strong> {company.from}{" "}
+                        <strong>To:</strong> {company.to}
+                      </p>
+                      <div className="mt-3">
+                        <h4 className="font-semibold text-gray-800">
+                          Industry
+                        </h4>
+                        <p className="text-gray-600 text-sm">
+                          {company.rows?.[0]?.industry}
+                        </p>
+                      </div>
+                      <div className="mt-3">
+                        <h4 className="font-semibold text-gray-800">Domain</h4>
+                        <p className="text-gray-600 text-sm">
+                          {company.rows?.[0]?.domain}
+                        </p>
+                      </div>
+                      <div className="mt-3">
+                        <h4 className="font-semibold text-gray-800">
+                          Software/Technologies
+                        </h4>
+                        <p className="text-gray-600 text-sm">
+                          {company.rows?.[0]?.software}
+                        </p>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -120,13 +150,13 @@ const Applied = () => {
                 </div>
                 <div className="group rounded-lg bg-gradient-to-r from-blue-700 to-blue-500 p-5 text-center transition duration-300 hover:shadow-lg cursor-pointer">
                   <p className="text-white text-2xl font-bold">
-                    {data.current} LPA
+                    {data.current}
                   </p>
                   <p className="text-white text-sm">Current Salary</p>
                 </div>
                 <div className="group rounded-lg bg-gradient-to-r from-blue-700 to-blue-500 p-5 text-center transition duration-300 hover:shadow-lg cursor-pointer">
                   <p className="text-white text-2xl font-bold">
-                    {data.expected} LPA
+                    {data.expected}
                   </p>
                   <p className="text-white text-sm">Expected Salary</p>
                 </div>

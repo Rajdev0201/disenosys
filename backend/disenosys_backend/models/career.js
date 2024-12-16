@@ -14,7 +14,22 @@ const careerSchema = new mongoose.Schema({
   city:{type:String},
   relocate:{type:String},
   location:{type:String},
-  skills: { type: [String], default: [] },
+  // skills: { type: [String], default: [] },
+  companies: [
+    {
+      companyName: { type: String },
+      from: { type: String }, // Start date of employment
+      to: { type: String }, // End date of employment
+      rows: [
+        {
+          industry: { type: String },
+          domain: { type: String },
+          software: { type: String },
+          month: { type: String }, // Add month of experience
+        },
+      ],
+    },
+  ],
   filePath: { type: String,required:true},
 }, { timestamps: true }); 
 
