@@ -98,48 +98,41 @@ const Applied = () => {
               </div>
 
               <div className="mt-6 w-full max-w-lg">
-                <h2 className="text-lg font-semibold text-blue-800">
-                  Companies Experience
-                </h2>
-                <div className="flex flex-col gap-4 mt-3">
-                  {data?.companies?.map((company, index) => (
-                    <div
-                      key={index}
-                      className="bg-white shadow-lg rounded-lg p-4 border-2 border-gray-200"
-                    >
-                      <h3 className="text-xl font-semibold text-blue-600">
-                        {company.companyName}
-                      </h3>
-                      <p className="text-gray-700 text-sm">
-                        <strong>From:</strong> {company.from}{" "}
-                        <strong>To:</strong> {company.to}
-                      </p>
-                      <div className="mt-3">
-                        <h4 className="font-semibold text-gray-800">
-                          Industry
-                        </h4>
-                        <p className="text-gray-600 text-sm">
-                          {company.rows?.[0]?.industry}
-                        </p>
-                      </div>
-                      <div className="mt-3">
-                        <h4 className="font-semibold text-gray-800">Domain</h4>
-                        <p className="text-gray-600 text-sm">
-                          {company.rows?.[0]?.domain}
-                        </p>
-                      </div>
-                      <div className="mt-3">
-                        <h4 className="font-semibold text-gray-800">
-                          Software/Technologies
-                        </h4>
-                        <p className="text-gray-600 text-sm">
-                          {company.rows?.[0]?.software}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+  <h2 className="text-lg font-semibold text-blue-800">Companies Experience</h2>
+  <div className="flex flex-col gap-4 mt-3">
+    {data?.companies?.map((company, index) => (
+      <div
+        key={index}
+        className="bg-white shadow-lg rounded-lg p-4 border-2 border-gray-200"
+      >
+        <h3 className="text-xl font-semibold text-blue-600">
+          {company.companyName}
+        </h3>
+        <p className="text-gray-700 text-sm">
+          <strong>From:</strong> {company.from} <strong>To:</strong>{" "}
+          {company.to}
+        </p>
+        <div className="mt-3">
+          <h4 className="font-semibold text-gray-800 underline">Details:</h4>
+          {company.rows?.map((row, rowIndex) => (
+            <div key={row._id} className="mt-1">
+              <p className="text-gray-600 text-sm">
+                <strong>Industry:</strong> {row.industry}
+              </p>
+              <p className="text-gray-600 text-sm">
+                <strong>Domain:</strong> {row.domain}
+              </p>
+              <p className="text-gray-600 text-sm">
+                <strong>Software:</strong> {row.software}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
 
               <div className="grid grid-cols-1 sm:grid-cols-3 w-full max-w-lg gap-4 mt-6">
                 <div className="group rounded-lg bg-gradient-to-r from-blue-700 to-blue-500 p-5 text-center transition duration-300 hover:shadow-lg cursor-pointer">
