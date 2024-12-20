@@ -8,18 +8,25 @@ import axios from "axios";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import * as pdfjsLib from "pdfjs-dist/webpack";
+import "../home/Home.css";
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from "react-multi-date-picker";
 
 const CareerForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
-    dob: "",
+    dob: new Date(),
     gender: "",
     experience: "",
+    expmonths:"",
     employee: "",
     current: "",
+    cinr:"",
     expected: "",
+    einr:"",
     notice: "Immediate",
     city: "",
     relocate: "",
@@ -147,11 +154,18 @@ const CareerForm = () => {
   // const [skillInput, setSkillInput] = useState("");
   const [load, setLoad] = useState(false);
   const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: files ? files[0] : value,
-    });
+    if (e.target) {
+      const { name, value, files } = e.target;
+      setFormData({
+        ...formData,
+        [name]: files ? files[0] : value,
+      });
+    } else {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        dob: e,
+      }));
+    }
   };
 
   // const handleSkillChange = (e) => {
@@ -236,10 +250,13 @@ const CareerForm = () => {
     form.append("phone", formData.phone);
     form.append("dob", formData.dob);
     form.append("gender", formData.gender);
-    form.append("experience", formData.experience);
+    form.append("experience", formData.experience); 
+    form.append("expmonths", formData.expmonths); 
     form.append("employee", formData.employee);
     form.append("current", formData.current);
+    form.append("cinr", formData.cinr);
     form.append("expected", formData.expected);
+    form.append("einr", formData.einr);
     form.append("notice", formData.notice);
     form.append("city", formData.city);
     form.append("relocate", formData.relocate);
@@ -264,13 +281,7 @@ const CareerForm = () => {
     setLoad(false);
   };
 
-  const calculateINR = (lpa) => {
-    const conversionRate = 100000;
-    if (lpa !== "-None-" && lpa !== "Not Applicable") {
-      return parseInt(lpa) * conversionRate;
-    }
-    return 0;
-  };
+
 
   const addRow = (companyIndex) => {
     const updatedCompanies = [...formData.companies];
@@ -310,14 +321,39 @@ const CareerForm = () => {
     });
   };
 
+  const [errors, setErrors] = useState({
+    from: "",
+    to: "",
+  }); 
+
   const handleInputChange = (companyIndex, field, value) => {
     const updatedCompanies = [...formData.companies];
     updatedCompanies[companyIndex][field] = value;
+
+    if (field === "from" || field === "to") {
+      validateField(field, value);
+      return;
+    }
 
     setFormData({
       ...formData,
       companies: updatedCompanies,
     });
+  };
+
+  const validateField = (field, value) => {
+    const regex = /^\d{4}\/\d{2}$/;
+    if (value && !regex.test(value)) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [field]: `Invalid format for ${field}. Please enter in YYYY/MM format.`,
+      }));
+    } else {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [field]: "",
+      }));
+    }
   };
 
   const handleRowInputChange = (companyIndex, rowIndex, field, value) => {
@@ -434,14 +470,26 @@ const CareerForm = () => {
                 <label className="block text-gray-700 font-bold mb-2 text-sm">
                   Date of Birth
                 </label>
-                <input
+                <div className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus-within:border-none focus-within:outline-purple-500">
+                  <DatePicker
+                    selected={formData.dob}
+                    onChange={handleChange}
+                    dateFormat="MM/dd/yyyy"
+                    placeholder="yyyy/MM/dd"
+                    className="w-full border-none focus:outline-none text-base px-4 py-2 rounded-lg"
+                    showYearDropdown
+                    showMonthDropdown
+                    dropdownMode="select"
+                  />
+                  {/* <input
                   type="date"
                   name="dob"
                   value={formData.dob}
                   onChange={handleChange}
                   className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
                   required
-                />
+                /> */}
+                </div>
               </div>
 
               <div>
@@ -476,10 +524,10 @@ const CareerForm = () => {
                   </option>
                 </select>
               </div>
-
+              <div className="grid grid-cols-2 gap-2">
               <div>
                 <label className="block text-gray-700 font-bold mb-2 text-sm">
-                  Experience
+                  Experience in Years
                 </label>
                 <select
                   name="experience"
@@ -496,70 +544,64 @@ const CareerForm = () => {
                     Fresher
                   </option>
                   <option
-                    value="0-1"
+                    value="1years"
                     className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                   >
-                    0-1 Years
+                    1 Year
                   </option>
                   <option
-                    value="1-2"
+                    value="2"
                     className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                   >
-                    1-2 Years
+                    2 Years
                   </option>
                   <option
-                    value="2-3"
+                    value="3"
                     className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                   >
-                    2-3 Years
+                    3 Years
                   </option>
                   <option
-                    value="3-4"
+                    value="4"
                     className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                   >
-                    3-4 Years
+                    4 Years
                   </option>
                   <option
-                    value="4-5"
+                    value="5"
                     className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                   >
-                    4-5 Years
+                    5 Years
                   </option>
                   <option
-                    value="5-6"
+                    value="6"
                     className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                   >
-                    5-6 Years
+                    6 Years
                   </option>
                   <option
-                    value="6-7"
+                    value="7"
                     className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                   >
-                    6-7 Years
+                    7 Years
                   </option>
                   <option
-                    value="7-8"
+                    value="8"
                     className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                   >
-                    7-8 Years
+                    8 Years
                   </option>
                   <option
-                    value="8-9"
+                    value="9"
                     className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                   >
-                    8-9 Years
+                    9 Years
                   </option>
                   <option
-                    value="9-10"
+                    value="10"
                     className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                   >
-                    9-10 Years
-                  </option>
-                  <option
-                    value="10+"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    10+ Years
+                    10 Years
                   </option>
                   <option
                     value="11+"
@@ -567,6 +609,7 @@ const CareerForm = () => {
                   >
                     11+ Years
                   </option>
+
                   <option
                     value="12+"
                     className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
@@ -581,7 +624,101 @@ const CareerForm = () => {
                   </option>
                 </select>
               </div>
+               
+              <div>
+                <label className="block text-gray-700 font-bold mb-2 text-sm">
+                Experience in Months
+                </label>
+                <select
+                  name="expmonths"
+                  value={formData.expmonths}
+                  onChange={handleChange}
+                  className="w-full  rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
+                  required
+                >
+                  <option
+                      value="Not Applicable"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      Not Applicable
+                    </option>
+                  <option
+                    value="1 month"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    1 month
+                  </option>
+                  <option
+                    value="2 months"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    2 months
+                  </option>
+                  <option
+                    value="3 months"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    3 months
+                  </option>
+                  <option
+                    value="4 months"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    4 months
+                  </option>
+                  <option
+                    value="5 months"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    5 months
+                  </option>
+                  <option
+                    value="6 months"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    6 months
+                  </option>
+                  <option
+                    value="7 months"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    7 months
+                  </option>
+                  <option
+                    value="8 months"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    8 months
+                  </option>
+                  <option
+                    value="9 months"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    9 months
+                  </option>
+                  <option
+                    value="10 months"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    10 months
+                  </option>
+                  <option
+                    value="11 months"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    11 months
+                  </option>
 
+                  <option
+                    value="12 months"
+                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                  >
+                    12 months
+                  </option>
+        
+                </select>
+              </div>
+               </div>
               <div>
                 <label className="block text-gray-700 font-bold mb-2 text-sm">
                   Current Employer
@@ -680,14 +817,78 @@ const CareerForm = () => {
                 </div>
                 <div>
                   <label className="block text-gray-700 font-bold mb-2 text-sm">
-                    INR Equivalent
+                    INR
                   </label>
-                  <input
-                    type="text"
-                    readOnly
-                    value={calculateINR(formData.current.split(" ")[0])}
+                  <select
+                    name="cinr"
+                    value={formData.cinr}
+                    onChange={handleChange}
                     className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
-                  />
+                    required
+                  >
+                    
+                    <option
+                      value="Not Applicable"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      Not Applicable
+                    </option>
+                    <option
+                      value="10,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      10,000
+                    </option>
+                    <option
+                      value="20,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      20,000
+                    </option>
+                    <option
+                      value="30,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      30,000
+                    </option>
+                    <option
+                      value="40,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      40,000
+                    </option>
+                    <option
+                      value="50,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                     50,0000
+                    </option>
+                    <option
+                      value="60,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      60,0000
+                    </option>
+                    <option
+                      value="70,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      70,000
+                    </option>
+                    <option
+                      value="80,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      80,000
+                    </option>
+                    <option
+                      value="90,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      90,000
+                    </option>
+                   
+                  </select>
                 </div>
               </div>
 
@@ -774,14 +975,77 @@ const CareerForm = () => {
                 </div>
                 <div>
                   <label className="block text-gray-700 font-bold mb-2 text-sm">
-                    INR Equivalent
+                    INR
                   </label>
-                  <input
-                    type="text"
-                    readOnly
-                    value={calculateINR(formData.expected.split(" ")[0])}
+                  <select
+                    name="einr"
+                    value={formData.einr}
+                    onChange={handleChange}
                     className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
-                  />
+                    required
+                  >
+                    <option
+                      value="Not Applicable"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      Not Applicable
+                    </option>
+                    <option
+                      value="10,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      10,000
+                    </option>
+                    <option
+                      value="20,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      20,000
+                    </option>
+                    <option
+                      value="30,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      30,000
+                    </option>
+                    <option
+                      value="40,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      40,000
+                    </option>
+                    <option
+                      value="50,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                     50,0000
+                    </option>
+                    <option
+                      value="60,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      60,0000
+                    </option>
+                    <option
+                      value="70,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      70,000
+                    </option>
+                    <option
+                      value="80,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      80,000
+                    </option>
+                    <option
+                      value="90,000"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      90,000
+                    </option>
+                   
+                  </select>
                 </div>
               </div>
 
@@ -847,39 +1111,6 @@ const CareerForm = () => {
                 </select>
               </div>
 
-              {/* <div>
-                <label className="block text-gray-700 font-bold mb-2 text-sm">
-                  Skills
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    type="text"
-                    value={skillInput}
-                    onChange={handleSkillChange}
-                    placeholder="Type a skill and Enter add icon"
-                    className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
-                  />
-                  <button onClick={handleSkillAdd} className="">
-                    <IoIosAddCircleOutline className="w-12 h-12 text-blue-800 ring-2 ring-blue-100 rounded-full" />
-                  </button>
-                </div>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {skills.map((skill, index) => (
-                    <div
-                      key={index}
-                      className="bg-gray-200 text-gray-700 font-bold font-poppins text-md px-4 py-2 rounded-lg flex items-center gap-2"
-                    >
-                      {skill}
-                      <button
-                        onClick={() => handleSkillRemove(skill)}
-                        className=""
-                      >
-                        <MdCancel className="w-6 h-6 text-white bg-red-500 ring-2 ring-blue-100 rounded-full" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div> */}
               <label className="block text-gray-700 font-bold text-sm">
                 Experience Details
               </label>
@@ -906,10 +1137,12 @@ const CareerForm = () => {
                           )
                         }
                         className="w-full rounded-lg p-3 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
+                        required
                       />
+                      <div>
                       <input
                         type="text"
-                        placeholder="From"
+                        placeholder="From ex:2024/05"
                         value={company.from}
                         onChange={(e) =>
                           handleInputChange(
@@ -919,16 +1152,26 @@ const CareerForm = () => {
                           )
                         }
                         className="w-full rounded-lg p-3 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
+                        required
                       />
+                      </div>
+                      {errors.from && (
+              <p className="text-red-500 text-sm mt-1">{errors.from}</p>
+            )}
+            
                       <input
                         type="text"
-                        placeholder="To"
+                        placeholder="To ex:2025/08"
                         value={company.to}
                         onChange={(e) =>
                           handleInputChange(companyIndex, "to", e.target.value)
                         }
                         className="w-full rounded-lg p-3 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
-                      />
+                        required
+                     />
+                          {errors.to && (
+              <p className="text-red-500 text-sm mt-1">{errors.to}</p>
+            )}
                     </div>
 
                     {/* 2nd Row */}
@@ -1059,6 +1302,32 @@ const CareerForm = () => {
 
               <div>
                 <label className="block text-gray-700 font-bold mb-2 text-sm">
+                  Preferred Location
+                </label>
+                <select
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  id="dropdownHover"
+                  className="w-full rounded-lg p-3 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
+                  required
+                >
+                  <option value="">-None-</option>
+                  {sortedCities?.map((city, index) => (
+                    <option
+                      key={index}
+                      value={city}
+                      aria-labelledby="dropdownHoverButton"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      {city}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-gray-700 font-bold mb-2 text-sm">
                   Willing to reloacte
                 </label>
                 <select
@@ -1081,32 +1350,6 @@ const CareerForm = () => {
                   >
                     No
                   </option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-gray-700 font-bold mb-2 text-sm">
-                  Preferred Location
-                </label>
-                <select
-                  name="location"
-                  value={formData.location}
-                  onChange={handleChange}
-                  id="dropdownHover"
-                  className="w-full rounded-lg p-3 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
-                  required
-                >
-                  <option value="">-None-</option>
-                  {sortedCities?.map((city, index) => (
-                    <option
-                      key={index}
-                      value={city}
-                      aria-labelledby="dropdownHoverButton"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      {city}
-                    </option>
-                  ))}
                 </select>
               </div>
 

@@ -63,6 +63,14 @@
   
 }
 
+.react-datepicker-wrapper,
+.react-datepicker__input-container input {
+  border: none !important; /* Remove the border */
+  outline: none !important; /* Remove the focus outline */
+  box-shadow: none; /* Remove any shadows */
+  background: transparent; /* Make the background transparent if needed */
+}
+
 @keyframes spin {
 
   0% { transform: rotate(0deg); }

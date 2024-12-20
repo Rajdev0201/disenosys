@@ -12,7 +12,7 @@ import { setUpdate } from '../features/currentProfile.js';
 export const editProfile = (Data) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-         "http://localhost:8000/upload-profile",        
+         "https://disenosys-dkhj.onrender.com/upload-profile",        
           Data
       );
       dispatch(setprofile(data));
@@ -26,7 +26,7 @@ export const editProfile = (Data) => async (dispatch) => {
 
   export const getProfile = () => async (dispatch) => {
     try {
-      const res = await axios.get(`http://localhost:8000/update/profile`);
+      const res = await axios.get(`https://disenosys-dkhj.onrender.com/update/profile`);
       const profileData = res.data.profile; // Access the profile directly
       dispatch(setUpdate(profileData)); // Dispatch the profile object
     } catch (error) {

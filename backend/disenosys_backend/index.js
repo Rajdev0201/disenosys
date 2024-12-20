@@ -234,8 +234,9 @@ const storageC = new CloudinaryStorage({
 const uploadCareer = multer({ storage: storageC });
 
 app.post('/career', uploadCareer.single('file'), async (req, res) => {
-  const { name, email, phone, dob, gender, experience, employee,current,
+  const { name, email, phone, dob, gender, experience,expmonths, employee,current,cinr,
     expected,
+    einr,
     notice,
     city,
     relocate,
@@ -258,9 +259,12 @@ app.post('/career', uploadCareer.single('file'), async (req, res) => {
       dob: new Date(dob),
       gender,
       experience,
+      expmonths,
       employee,
       current,
+      cinr,
       expected,
+      einr,
       notice,
       city,
       relocate,

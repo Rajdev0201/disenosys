@@ -15,8 +15,8 @@ const Sidebar = () => {
 
   const links = [
     { href: '/dashboard', label: 'Dashboard', icon: <FaHome /> },
-    { href: '/profile', label: 'Profile', icon: <FaUser /> },
-    {href:'/portfolioDashboard',label:'Portfolio',icon:<SiSololearn />},
+    // { href: '/profile', label: 'Profile', icon: <FaUser /> },
+    // {href:'/portfolioDashboard',label:'Portfolio',icon:<SiSololearn />},
     {href:'/mycourse',label:'Mycourse',icon:<SiSololearn />},
     {href:'/createblog',label:'Create Blog',icon:<IoCreate />},
     { href: '/settings', label: 'Settings', icon: <FaCog /> },

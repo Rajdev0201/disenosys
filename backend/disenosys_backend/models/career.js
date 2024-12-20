@@ -7,9 +7,12 @@ const careerSchema = new mongoose.Schema({
   dob: { type: String },
   gender: { type: String },
   experience: { type: String },
+  expmonths:{type:String},
   employee:{type:String},
   current:{type:String},
+  cinr:{type:String},
   expected:{type:String},
+  einr:{type:String},
   notice:{type:String},
   city:{type:String},
   relocate:{type:String},
@@ -25,7 +28,7 @@ const careerSchema = new mongoose.Schema({
           industry: { type: String },
           domain: { type: String },
           software: { type: String },
-          month: { type: String }, // Add month of experience
+          months: { type: String }, // Add month of experience
         },
       ],
     },
