@@ -51,18 +51,15 @@ const Applicants = () => {
       const profileExpmonths = profile.expmonths || "";
       const profileCompanies = profile.companies || [];
 
-  
       const matchesExperience = experience
         ? profileExperience.includes(experience)
         : true;
 
       const matchesNotice = notice ? profileNotice.includes(notice) : true;
 
- 
       const matchesExpmonths = expmonths
         ? profileExpmonths.toLowerCase().includes(expmonths.toLowerCase())
         : true;
-
 
       const matchesCompany = profileCompanies.some((company) => {
         const matchesCompanyName = companyName
@@ -98,7 +95,7 @@ const Applicants = () => {
         matchesExperience && matchesNotice && matchesExpmonths && matchesCompany
       );
     });
-     
+
     // const extractedData = filtered.map((profile) => ({
     //   name: profile.name || "N/A",
     //   email: profile.email || "N/A",
@@ -116,7 +113,7 @@ const Applicants = () => {
     //   relocate: profile.relocate || "N/A",
     //   companies: profile.companies || [],
     // }));
-  
+
     // setFilteredData(filteredData);
     setFilteredData(filtered);
   };
@@ -128,20 +125,17 @@ const Applicants = () => {
     dispatch(getCareer());
   }, [dispatch]);
 
-
   const handleDownload = () => {
     try {
       if (!filteredData || filteredData.length === 0) {
         alert("No filtered data available to download!");
         return;
       }
-  
-      // Find the maximum number of companies in filtered data
+
       const maxCompanies = Math.max(
-        ...filteredData.map((profile) => profile.companies?.length || 0)
+        ...filteredData?.map((profile) => profile.companies?.length || 0)
       );
-  
-      // Base headers
+
       const headers = [
         { name: "Name", key: "name" },
         { name: "Email", key: "email" },
@@ -149,7 +143,7 @@ const Applicants = () => {
         { name: "DOB", key: "dob" },
         { name: "Gender", key: "gender" },
         { name: "Experience", key: "experience" },
-        { name: "Exp in Months", key: "expmonths" },
+        // { name: "Exp in Months", key: "expmonths" },
         { name: "Current Employee", key: "employee" },
         { name: "Current CTC", key: "currentCtc" },
         { name: "Expected CTC", key: "expectedCtc" },
@@ -158,88 +152,109 @@ const Applicants = () => {
         { name: "Preferred Location", key: "location" },
         { name: "Relocate", key: "relocate" },
       ];
-  
-      // Add dynamic headers for companies and their rows
-for (let i = 1; i <= maxCompanies; i++) {
-  headers.push({ name: `Company ${i} Name`, key: `c${i}Name` });
-  headers.push({ name: `Company ${i} From`, key: `c${i}From` });
-  headers.push({ name: `Company ${i} To`, key: `c${i}To` });
 
-  const company = filteredData[i - 1]; // Assuming filteredData has the profiles, and we are getting the correct company data
+      for (let i = 1; i <= maxCompanies; i++) {
+        headers.push({ name: `Company ${i} Name`, key: `c${i}Name` });
+        headers.push({ name: `Company ${i} From`, key: `c${i}From` });
+        headers.push({ name: `Company ${i} To`, key: `c${i}To` });
 
-  company.companies?.forEach((companyItem, companyIndex) => {
-    // Loop through the rows for the current company
-    companyItem.rows?.forEach((row, rowIndex) => {
-      headers.push({ name: `Company ${i} Industry ${rowIndex + 1}`, key: `c${i}Industry_${rowIndex + 1}` });
-      headers.push({ name: `Company ${i} Domain ${rowIndex + 1}`, key: `c${i}Domain_${rowIndex + 1}` });
-      headers.push({ name: `Company ${i} Software ${rowIndex + 1}`, key: `c${i}Software_${rowIndex + 1}` });
-      headers.push({ name: `Company ${i} months of exp ${rowIndex + 1}`, key: `c${i}months_${rowIndex + 1}` });
-    });
-  });
-}
-
+        const company = filteredData[i - 1];
+        company?.companies?.forEach((companyItem, companyIndex) => {
+          // Loop through the rows for the current company
+          companyItem.rows?.forEach((row, rowIndex) => {
+            headers.push({
+              name: `Company ${i} Industry ${rowIndex + 1}`,
+              key: `c${i}Industry_${rowIndex + 1}`,
+            });
+            headers.push({
+              name: `Company ${i} Domain ${rowIndex + 1}`,
+              key: `c${i}Domain_${rowIndex + 1}`,
+            });
+            headers.push({
+              name: `Company ${i} Software ${rowIndex + 1}`,
+              key: `c${i}Software_${rowIndex + 1}`,
+            });
+            // headers.push({ name: `Company ${i} months of exp ${rowIndex + 1}`, key: `c${i}months_${rowIndex + 1}` });
+          });
+        });
+      }
 
       // Map filteredData to include dynamic company data
-      const excelData = filteredData.map((profile) => {
+      const excelData = filteredData?.map((profile) => {
         const row = {
           name: profile.name || "N/A",
           email: profile.email || "N/A",
           phone: profile.phone || "N/A",
           dob: profile.dob || "N/A",
           gender: profile.gender || "N/A",
-          experience: profile.experience || "N/A",
-          expmonths: profile.expmonths || "N/A",
+          // experience: profile.experience || "N/A",
+          // expmonths: profile.expmonths || "N/A",
+          experience: profile.experience
+            ? `${parseInt(data?.expmonths || 0)} Years`
+            : "N/A",
           employee: profile.employee || "N/A",
           currentCtc: profile.current
-  ? `${(parseFloat(profile.current.split(" ")[0]) + parseFloat(profile.cinr.replace(",", "") / 100000)).toFixed(1)} LPA`
-  : "N/A",
-expectedCtc: profile.expected
-  ? `${(parseFloat(profile.expected.split(" ")[0]) + parseFloat(profile.einr.replace(",", "") / 100000)).toFixed(1)} LPA`
-  : "N/A",
+            ? `${(
+                parseFloat(profile?.current.split(" ")[0]) +
+                parseFloat(profile?.cinr?.replace(",", "") / 100000)
+              ).toFixed(1)} LPA`
+            : "N/A",
+          expectedCtc: profile?.expected
+            ? `${(
+                parseFloat(profile.expected.split(" ")[0]) +
+                parseFloat(profile?.einr?.replace(",", "") / 100000)
+              ).toFixed(1)} LPA`
+            : "N/A",
           notice: profile.notice || "N/A",
           city: profile.city || "N/A",
           location: profile.location || "N/A",
           relocate: profile.relocate || "N/A",
         };
-  
-        // Add company details dynamically
-        profile.companies?.forEach((company, index) => {
+
+        profile?.companies?.forEach((company, index) => {
           row[`c${index + 1}Name`] = company.companyName || "N/A";
           row[`c${index + 1}From`] = company.from || "N/A";
           row[`c${index + 1}To`] = company.to || "N/A";
-        
-          // Loop through each row in company.rows
-          company.rows?.forEach((rowData, rowIndex) => {
-            row[`c${index + 1}Industry_${rowIndex + 1}`] = rowData.industry || "N/A";
-            row[`c${index + 1}Domain_${rowIndex + 1}`] = rowData.domain || "N/A";
-            row[`c${index + 1}Software_${rowIndex + 1}`] = rowData.software || "N/A";
-            row[`c${index + 1}months_${rowIndex + 1}`] = rowData.months || "N/A";
+
+          company?.rows?.forEach((rowData, rowIndex) => {
+            row[`c${index + 1}Industry_${rowIndex + 1}`] =
+              rowData.industry || "N/A";
+            row[`c${index + 1}Domain_${rowIndex + 1}`] =
+              rowData.domain || "N/A";
+            row[`c${index + 1}Software_${rowIndex + 1}`] =
+              rowData.software || "N/A";
+            // row[`c${index + 1}months_${rowIndex + 1}`] = rowData.months || "N/A";
           });
         });
-        
+
         return row;
-        
       });
-  
-      // Create Excel sheet
+
       const worksheet = XLSX.utils.json_to_sheet(excelData);
-  
-      // Add headers explicitly
-      XLSX.utils.sheet_add_aoa(worksheet, [headers.map((header) => header.name)], {
-        origin: "A1",
-      });
-  
-      // Create workbook and download
+
+      XLSX.utils.sheet_add_aoa(
+        worksheet,
+        [headers.map((header) => header.name)],
+        {
+          origin: "A1",
+        }
+      );
+
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "Filtered Data");
-  
-      const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-      const blob = new Blob([excelBuffer], { type: "application/octet-stream" });
-  
+
+      const excelBuffer = XLSX.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+      const blob = new Blob([excelBuffer], {
+        type: "application/octet-stream",
+      });
+
       const link = document.createElement("a");
       const url = window.URL.createObjectURL(blob);
       link.href = url;
-  
+
       const currentDate = new Date();
       const formattedDate = `${currentDate
         .getDate()
@@ -248,10 +263,10 @@ expectedCtc: profile.expected
         .toString()
         .padStart(2, "0")}${currentDate.getFullYear()}`;
       link.setAttribute("download", `Filtered_Data_${formattedDate}.xlsx`);
-  
+
       document.body.appendChild(link);
       link.click();
-  
+
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
     } catch (error) {
@@ -259,8 +274,6 @@ expectedCtc: profile.expected
       alert("Failed to export data. Please try again.");
     }
   };
-  
-  
 
   return (
     <div className="bg-blue-50 h-screen">
@@ -553,9 +566,12 @@ expectedCtc: profile.expected
             />
           </div>
           <div className="">
-             <button className="flex ring-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold font-poppins bg-red-600 text-white items-center justify-center px-6 py-1"  onClick={handleDownload}>
-              Download <BsFiletypeXlsx className="px-2 w-10 h-10"/>
-              </button>
+            <button
+              className="flex ring-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold font-poppins bg-red-600 text-white items-center justify-center px-6 py-1"
+              onClick={handleDownload}
+            >
+              Download <BsFiletypeXlsx className="px-2 w-10 h-10" />
+            </button>
           </div>
         </div>
 
