@@ -154,24 +154,24 @@ const Applicants = () => {
       ];
 
       for (let i = 1; i <= maxCompanies; i++) {
-        headers.push({ name: `Company ${i} Name`, key: `c${i}Name` });
-        headers.push({ name: `Company ${i} From`, key: `c${i}From` });
-        headers.push({ name: `Company ${i} To`, key: `c${i}To` });
+        headers.push({ name: `C ${i} Name`, key: `c${i}Name` });
+        headers.push({ name: `C ${i} From`, key: `c${i}From` });
+        headers.push({ name: `C ${i} To`, key: `c${i}To` });
 
         const company = filteredData[i - 1];
         company?.companies?.forEach((companyItem, companyIndex) => {
           // Loop through the rows for the current company
           companyItem.rows?.forEach((row, rowIndex) => {
             headers.push({
-              name: `Company ${i} Industry ${rowIndex + 1}`,
+              name: `C ${i} Industry ${rowIndex + 1}`,
               key: `c${i}Industry_${rowIndex + 1}`,
             });
             headers.push({
-              name: `Company ${i} Domain ${rowIndex + 1}`,
+              name: `C ${i} Domain ${rowIndex + 1}`,
               key: `c${i}Domain_${rowIndex + 1}`,
             });
             headers.push({
-              name: `Company ${i} Software ${rowIndex + 1}`,
+              name: `C ${i} Software ${rowIndex + 1}`,
               key: `c${i}Software_${rowIndex + 1}`,
             });
             // headers.push({ name: `Company ${i} months of exp ${rowIndex + 1}`, key: `c${i}months_${rowIndex + 1}` });
@@ -190,7 +190,10 @@ const Applicants = () => {
           // experience: profile.experience || "N/A",
           // expmonths: profile.expmonths || "N/A",
           experience: profile.experience
-            ? `${parseInt(data?.expmonths || 0)} Years`
+            ? `${
+                parseInt(profile.experience) +
+                parseInt(profile.expmonths || 0) / 12
+              } Years`
             : "N/A",
           employee: profile.employee || "N/A",
           currentCtc: profile.current
