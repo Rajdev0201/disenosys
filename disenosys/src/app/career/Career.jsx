@@ -67,7 +67,6 @@ const CareerForm = () => {
     "Kanpur",
     "Patna",
     "Agra",
-    "Vijayawada",
     "Bhopal",
     "Gurugram",
     "Noida",
@@ -97,18 +96,14 @@ const CareerForm = () => {
     "Bareilly",
     "Patiala",
     "Haridwar",
-    "Chandrapur",
-    "Navi Mumbai",
     "Raipur",
     "Ranchi",
     "Gwalior",
     "Agartala",
     "Varanasi",
     "Bikaner",
-    "Jammu",
     "Aligarh",
     "Ajmer",
-    "Bhubaneshwar",
     "Haldwani",
     "Dhanbad",
     "Srinagar",
@@ -119,19 +114,15 @@ const CareerForm = () => {
     "Chandrapur",
     "Jodhpur",
     "Kochi",
-    "Patiala",
     "Nanded",
     "Sonipat",
     "Nellore",
     "Chennai",
-    "Bhubaneswar",
     "Ludhiana",
     "Ambala",
-    "Kolkata",
     "Udaipur",
     "Navi Mumbai",
     "Bareilly",
-    "Rajkot",
     "Panaji",
     "Kozhikode",
     "Karnal",
@@ -141,13 +132,97 @@ const CareerForm = () => {
     "Mysore",
     "Rishikesh",
     "Kollam",
-    "Thane",
     "Siliguri",
     "Jalgaon",
     "Jalandhar",
-    "Bhopal",
     "Kurnool",
-    "Nanded",
+  ];
+  
+  const exp = [
+    { label: "Fresher", value: 0 },
+    { label: "1 Year", value: 1 },
+    { label: "2 Years", value: 2 },
+    { label: "3 Years", value: 3 },
+    { label: "4 Years", value: 4 },
+    { label: "5 Years", value: 5 },
+    { label: "6 Years", value: 6 },
+    { label: "7 Years", value: 7 },
+    { label: "8 Years", value: 8 },
+    { label: "9 Years", value: 9 },
+    { label: "10 Years", value: 10 },
+    { label: "11 Years", value: 11 },
+    { label: "12 Years", value: 12 },
+    { label: "13 Years", value: 13 },
+    { label: "14 Years", value: 14 },
+    { label: "15 Years", value: 15 },
+    { label: "16 Years", value: 16 },
+    { label: "17 Years", value: 17 },
+    { label: "18 Years", value: 18 },
+    { label: "19 Years", value: 19 },
+    { label: "20 Years", value: 20 },
+    { label: "21 Years", value: 21 },
+    { label: "22 Years", value: 22 },
+    { label: "23 Years", value: 23 },
+    { label: "24 Years", value: 24 },
+    { label: "25 Years", value: 25 },
+    { label: "26 Years", value: 26 },
+    { label: "27 Years", value: 27 },
+    { label: "28 Years", value: 28 },
+    { label: "29 Years", value: 29 },
+    { label: "30 Years", value: 30 },
+  ];
+   
+  const lpa = [
+    "1 Lakh",
+    "2 Lakh",
+    "3 Lakh",
+    "4 Lakh",
+    "5 Lakh",
+    "6 Lakh",
+    "7 Lakh",
+    "8 Lakh",
+    "9 Lakh",
+    "10 Lakh",
+    "11 Lakh",
+    "12 Lakh",
+    "13 Lakh",
+    "14 Lakh",
+    "15 Lakh",
+    "16 Lakh",
+    "17 Lakh",
+    "18 Lakh",
+    "19 Lakh",
+    "20 Lakh",
+    "21 Lakh",
+    "22 Lakh",
+    "23 Lakh",
+    "24 Lakh",
+    "25 Lakh",
+    "26 Lakh",
+    "27 Lakh",
+    "28 Lakh",
+    "29 Lakh",
+    "30 Lakh",
+    "31 Lakh",
+    "32 Lakh",
+    "33 Lakh",
+    "34 Lakh",
+    "35 Lakh",
+    "36 Lakh",
+    "37 Lakh",
+    "38 Lakh",
+    "39 Lakh",
+    "40 Lakh",
+    "41 Lakh",
+    "42 Lakh",
+    "43 Lakh",
+    "44 Lakh",
+    "45 Lakh",
+    "46 Lakh",
+    "47 Lakh",
+    "48 Lakh",
+    "49 Lakh",
+    "50 Lakh",
   ];
   const sortedCities = importantCities.sort();
 
@@ -193,9 +268,6 @@ const CareerForm = () => {
     }
   };
 
-  const handleSkillRemove = (skillToRemove) => {
-    setSkills(skills.filter((skill) => skill !== skillToRemove));
-  };
 
   const parsePdf = async (file) => {
     const reader = new FileReader();
@@ -221,8 +293,8 @@ const CareerForm = () => {
   };
 
   const extractDetails = (text) => {
-    const name =
-      text.match(/(?:Name|Full Name)[\s:]*([^\n]+)/i)?.[1]?.trim() || "";
+    const name = "";
+      // text.match(/(?:Name|Full Name)[\s:]*([^\n]+)/i)?.[1]?.trim() || "";
     const email =
       text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/)?.[0] ||
       "N/A";
@@ -342,11 +414,11 @@ const CareerForm = () => {
   };
 
   const validateField = (field, value) => {
-    const regex = /^\d{4}\/\d{2}$/;
+    const regex = /^\d{4}\/(0[1-9]|1[0-2])$/;
     if (value && !regex.test(value)) {
       setErrors((prevErrors) => ({
         ...prevErrors,
-        [field]: `Invalid format for ${field}. Please enter in YYYY/MM format.`,
+        [field]: `Invalid format for ${field}. Please enter in YYYY/MM format with a valid month (01-12).`,
       }));
     } else {
       setErrors((prevErrors) => ({
@@ -356,15 +428,40 @@ const CareerForm = () => {
     }
   };
 
+ 
+
   const handleRowInputChange = (companyIndex, rowIndex, field, value) => {
     const updatedCompanies = [...formData.companies];
     updatedCompanies[companyIndex].rows[rowIndex][field] = value;
-
+    // validateRowField(updatedCompanies, companyIndex, rowIndex, field, value);
     setFormData({
       ...formData,
       companies: updatedCompanies,
     });
   };
+
+  // const validateRowField = (companies,companyIndex, rowIndex, field, value) => {
+  //   const from = companies[companyIndex].from;
+  //   const to = companies[companyIndex].to;
+  
+  //   if (from && to) {
+  //     const fromDate = new Date(from.split("/")[0], from.split("/")[1] - 1);
+  //     const toDate = new Date(to.split("/")[0], to.split("/")[1] - 1);
+  //     const totalMonths = (toDate.getFullYear() - fromDate.getFullYear()) * 12 + (toDate.getMonth() - fromDate.getMonth());
+  
+  //     if (parseInt(value) > totalMonths) {
+  //       setErrors((prevErrors) => ({
+  //         ...prevErrors,
+  //         [`row-${companyIndex}-${rowIndex}`]: `Your month experience should not exceed ${totalMonths} months.`,
+  //       }));
+  //     } else {
+  //       setErrors((prevErrors) => ({
+  //         ...prevErrors,
+  //         [`row-${companyIndex}-${rowIndex}`]: "",
+  //       }));
+  //     }
+  //   }
+  // };
 
   return (
     <div className="bg-[182073] font-poopins">
@@ -537,91 +634,16 @@ const CareerForm = () => {
                   required
                 >
                   <option value="">Total Experience</option>
-                  <option
-                    value="fresher"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    Fresher
-                  </option>
-                  <option
-                    value="1years"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    1 Year
-                  </option>
-                  <option
-                    value="2"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    2 Years
-                  </option>
-                  <option
-                    value="3"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    3 Years
-                  </option>
-                  <option
-                    value="4"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    4 Years
-                  </option>
-                  <option
-                    value="5"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    5 Years
-                  </option>
-                  <option
-                    value="6"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    6 Years
-                  </option>
-                  <option
-                    value="7"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    7 Years
-                  </option>
-                  <option
-                    value="8"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    8 Years
-                  </option>
-                  <option
-                    value="9"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    9 Years
-                  </option>
-                  <option
-                    value="10"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    10 Years
-                  </option>
-                  <option
-                    value="11+"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    11+ Years
-                  </option>
-
-                  <option
-                    value="12+"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    12+ Years
-                  </option>
-                  <option
-                    value="13+"
-                    className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                  >
-                    13+ Years
-                  </option>
+                  {exp?.map((experience, index) => (
+                    <option
+                      key={index}
+                      value={experience.value}
+                      aria-labelledby="dropdownHoverButton"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      {experience.label}
+                    </option>
+                  ))}
                 </select>
               </div>
                
@@ -637,10 +659,10 @@ const CareerForm = () => {
                   required
                 >
                   <option
-                      value="Not Applicable"
+                      value="0 months"
                       className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                     >
-                      Not Applicable
+                      0 months
                     </option>
                   <option
                     value="1 month"
@@ -753,77 +775,25 @@ const CareerForm = () => {
                     >
                       Not Applicable
                     </option>
-                    <option
-                      value="1 LPA"
+                    {lpa?.map((lpa, index) => (
+                      <option
+                      key={index}
+                      value={lpa}
+                      aria-labelledby="dropdownHoverButton"
                       className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                     >
-                      1 LPA
+                      {lpa}
                     </option>
-                    <option
-                      value="2 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      2 LPA
-                    </option>
-                    <option
-                      value="3 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      3 LPA
-                    </option>
-                    <option
-                      value="4 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      4 LPA
-                    </option>
-                    <option
-                      value="5 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      5 LPA
-                    </option>
-                    <option
-                      value="6 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      6 LPA
-                    </option>
-                    <option
-                      value="7 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      7 LPA
-                    </option>
-                    <option
-                      value="8 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      8 LPA
-                    </option>
-                    <option
-                      value="9 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      9 LPA
-                    </option>
-                    <option
-                      value="10 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      10 LPA
-                    </option>
+                  ))}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-gray-700 font-bold mb-2 text-sm">
-                    INR
-                  </label>
+                 
                   <select
                     name="cinr"
                     value={formData.cinr}
                     onChange={handleChange}
-                    className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
+                    className="w-full rounded-lg p-3 text-gray-700 mt-7 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
                     required
                   >
                     
@@ -861,13 +831,13 @@ const CareerForm = () => {
                       value="50,000"
                       className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                     >
-                     50,0000
+                     50,000
                     </option>
                     <option
                       value="60,000"
                       className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                     >
-                      60,0000
+                      60,000
                     </option>
                     <option
                       value="70,000"
@@ -911,77 +881,27 @@ const CareerForm = () => {
                     >
                       Not Applicable
                     </option>
-                    <option
-                      value="1 LPA"
+                    {lpa?.map((lpa, index) => (
+                      <option
+                      key={index}
+                      value={lpa}
+                      aria-labelledby="dropdownHoverButton"
                       className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
                     >
-                      1 LPA
+                      {lpa}
                     </option>
-                    <option
-                      value="2 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      2 LPA
-                    </option>
-                    <option
-                      value="3 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      3 LPA
-                    </option>
-                    <option
-                      value="4 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      4 LPA
-                    </option>
-                    <option
-                      value="5 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      5 LPA
-                    </option>
-                    <option
-                      value="6 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      6 LPA
-                    </option>
-                    <option
-                      value="7 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      7 LPA
-                    </option>
-                    <option
-                      value="8 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      8 LPA
-                    </option>
-                    <option
-                      value="9 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      9 LPA
-                    </option>
-                    <option
-                      value="10 LPA"
-                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-                    >
-                      10 LPA
-                    </option>
+                  ))}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-gray-700 font-bold mb-2 text-sm">
+                  {/* <label className="block text-gray-700 font-bold mb-2 text-sm">
                     INR
-                  </label>
+                  </label> */}
                   <select
                     name="einr"
                     value={formData.einr}
                     onChange={handleChange}
-                    className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
+                    className="w-full rounded-lg p-3 text-gray-700 mt-7 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
                     required
                   >
                     <option
@@ -1194,6 +1114,7 @@ const CareerForm = () => {
                           }
                           className="w-full rounded-lg p-3 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
                         />
+                            
                         <input
                           type="text"
                           placeholder="Domain"
@@ -1236,6 +1157,7 @@ const CareerForm = () => {
                           }
                           className="w-full rounded-lg p-3 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
                         />
+                        
                         <div className="flex gap-2">
                           {/* Add Row Icon */}
                           <button
@@ -1270,6 +1192,12 @@ const CareerForm = () => {
                             />
                           </button>
                         </div>
+
+                  {/* {errors[`row-${companyIndex}-${rowIndex}`] && (
+                <p className="text-red-500 text-sm -mt-0 w-full">
+                  {errors[`row-${companyIndex}-${rowIndex}`]}
+                </p>
+              )}  */}
                       </div>
                     ))}
                   </div>
@@ -1289,15 +1217,26 @@ const CareerForm = () => {
                 <label className="block text-gray-700 font-bold mb-2 text-sm">
                   Current Location
                 </label>
-                <input
-                  type="text"
+                <select
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  placeholder="Enter your current city"
-                  className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
+                  id="dropdownHover"
+                  className="w-full rounded-lg p-3 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
                   required
-                />
+                >
+                  <option value="">-None-</option>
+                  {sortedCities?.map((city, index) => (
+                    <option
+                      key={index}
+                      value={city}
+                      aria-labelledby="dropdownHoverButton"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      {city}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>

@@ -5,13 +5,46 @@ import { getCareer } from "../Redux/action/Portfolio";
 import { useRouter } from "next/navigation";
 import { BsFiletypeXlsx } from "react-icons/bs";
 import * as XLSX from "xlsx";
+import { MdCancel } from "react-icons/md";
 
 const Applicants = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.career);
 
   const [filteredData, setFilteredData] = useState([]);
-
+  const exp = [
+    { label: "Fresher", value: 0 },
+    { label: "1 Year", value: 1 },
+    { label: "2 Years", value: 2 },
+    { label: "3 Years", value: 3 },
+    { label: "4 Years", value: 4 },
+    { label: "5 Years", value: 5 },
+    { label: "6 Years", value: 6 },
+    { label: "7 Years", value: 7 },
+    { label: "8 Years", value: 8 },
+    { label: "9 Years", value: 9 },
+    { label: "10 Years", value: 10 },
+    { label: "11 Years", value: 11 },
+    { label: "12 Years", value: 12 },
+    { label: "13 Years", value: 13 },
+    { label: "14 Years", value: 14 },
+    { label: "15 Years", value: 15 },
+    { label: "16 Years", value: 16 },
+    { label: "17 Years", value: 17 },
+    { label: "18 Years", value: 18 },
+    { label: "19 Years", value: 19 },
+    { label: "20 Years", value: 20 },
+    { label: "21 Years", value: 21 },
+    { label: "22 Years", value: 22 },
+    { label: "23 Years", value: 23 },
+    { label: "24 Years", value: 24 },
+    { label: "25 Years", value: 25 },
+    { label: "26 Years", value: 26 },
+    { label: "27 Years", value: 27 },
+    { label: "28 Years", value: 28 },
+    { label: "29 Years", value: 29 },
+    { label: "30 Years", value: 30 }
+  ];
   const [filters, setFilters] = useState({
     experience: "",
     notice: "",
@@ -23,11 +56,7 @@ const Applicants = () => {
   });
 
   const router = useRouter();
-  useEffect(() => {
-    if (data?.data) {
-      applyFilters();
-    }
-  }, [filters, data]);
+
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -118,6 +147,23 @@ const Applicants = () => {
     setFilteredData(filtered);
   };
 
+  const handleReset = () => {
+    setFilters({
+      experience: "",
+      notice: "",
+      expmonths: "",
+      companyName: "",
+      industry: "",
+      domain: "",
+      software: "",
+    });
+    setFilteredData(data?.data || []);
+  };
+
+  useEffect(() => {
+    applyFilters();
+  }, [filters, data]);
+
   const goTo = (id) => {
     router.push(`/profileapplied?profileId=${id}`);
   };
@@ -185,28 +231,39 @@ const Applicants = () => {
           name: profile.name || "N/A",
           email: profile.email || "N/A",
           phone: profile.phone || "N/A",
-          dob: profile.dob || "N/A",
+          dob: profile.dob
+            ? new Date(profile.dob)
+                .toLocaleDateString("en-US", {
+                  month: "short",
+                  day: "2-digit",
+                  year: "numeric",
+                })
+                .replace(",", "")
+                .replace(" ", " /") // Adjusts formatting
+            : "N/A",
+
           gender: profile.gender || "N/A",
           // experience: profile.experience || "N/A",
           // expmonths: profile.expmonths || "N/A",
           experience: profile.experience
-            ? `${
+            ? `${(
                 parseInt(profile.experience) +
                 parseInt(profile.expmonths || 0) / 12
-              } Years`
+              ).toFixed(1)}`
             : "N/A",
+
           employee: profile.employee || "N/A",
           currentCtc: profile.current
             ? `${(
                 parseFloat(profile?.current.split(" ")[0]) +
                 parseFloat(profile?.cinr?.replace(",", "") / 100000)
-              ).toFixed(1)} LPA`
+              ).toFixed(1)}`
             : "N/A",
           expectedCtc: profile?.expected
             ? `${(
                 parseFloat(profile.expected.split(" ")[0]) +
                 parseFloat(profile?.einr?.replace(",", "") / 100000)
-              ).toFixed(1)} LPA`
+              ).toFixed(1)}`
             : "N/A",
           notice: profile.notice || "N/A",
           city: profile.city || "N/A",
@@ -282,194 +339,34 @@ const Applicants = () => {
     <div className="bg-blue-50 h-screen">
       <div className="px-24 py-12">
         <div className="grid grid-cols-4 gap-4">
+  
           <div>
-            <select
-              name="experience"
-              onChange={handleFilterChange}
-              className="w-full  rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
-              required
-            >
-              <option value="">Total Experience</option>
-              <option
-                value="fresher"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                Fresher
-              </option>
-              <option
-                value="1years"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                1 Year
-              </option>
-              <option
-                value="2"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                2 Years
-              </option>
-              <option
-                value="3"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                3 Years
-              </option>
-              <option
-                value="4"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                4 Years
-              </option>
-              <option
-                value="5"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                5 Years
-              </option>
-              <option
-                value="6"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                6 Years
-              </option>
-              <option
-                value="7"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                7 Years
-              </option>
-              <option
-                value="8"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                8 Years
-              </option>
-              <option
-                value="9"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                9 Years
-              </option>
-              <option
-                value="10"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                10 Years
-              </option>
-              <option
-                value="11+"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                11+ Years
-              </option>
-
-              <option
-                value="12+"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                12+ Years
-              </option>
-              <option
-                value="13+"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                13+ Years
-              </option>
-            </select>
+                <select
+                  name="experience"
+                  value={filters.experience}
+                  onChange={handleFilterChange}
+                  className="w-full  rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
+                  required
+                >
+                  <option value="">Total Experience</option>
+                  {exp?.map((experience, index) => (
+                    <option
+                      key={index}
+                      value={experience.value}
+                      aria-labelledby="dropdownHoverButton"
+                      className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
+                    >
+                      {experience.label}
+                    </option>
+                  ))}
+                </select>
           </div>
-
-          <div>
-            <select
-              name="expmonths"
-              onChange={handleFilterChange}
-              className="w-full  rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
-              required
-            >
-              <option
-                value="Not Applicable"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                Experience in months
-              </option>
-              <option
-                value="1 month"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                1 month
-              </option>
-              <option
-                value="2 months"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                2 months
-              </option>
-              <option
-                value="3 months"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                3 months
-              </option>
-              <option
-                value="4 months"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                4 months
-              </option>
-              <option
-                value="5 months"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                5 months
-              </option>
-              <option
-                value="6 months"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                6 months
-              </option>
-              <option
-                value="7 months"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                7 months
-              </option>
-              <option
-                value="8 months"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                8 months
-              </option>
-              <option
-                value="9 months"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                9 months
-              </option>
-              <option
-                value="10 months"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                10 months
-              </option>
-              <option
-                value="11 months"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                11 months
-              </option>
-
-              <option
-                value="12 months"
-                className="bg-white text-gray-500 hover:bg-[#182073] active:bg-blue-100 cursor-pointer rounded-md"
-              >
-                12 months
-              </option>
-            </select>
-          </div>
-
+               
+          
           <div>
             <select
               name="notice"
+              value={filters.notice}
               onChange={handleFilterChange}
               className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
               required
@@ -568,14 +465,23 @@ const Applicants = () => {
               className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500 placeholder:text-gray-800"
             />
           </div>
-          <div className="">
+          <div className="flex gap-4">
             <button
               className="flex ring-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold font-poppins bg-red-600 text-white items-center justify-center px-6 py-1"
               onClick={handleDownload}
             >
               Download <BsFiletypeXlsx className="px-2 w-10 h-10" />
             </button>
+            
+          <button
+              className="flex ring-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold font-poppins bg-stone-600 text-white items-center justify-center px-4 py-1"
+              onClick={handleReset}
+           >
+             Reset <MdCancel className="px-2 w-10 h-10" />
+            </button>
           </div>
+      
+       
         </div>
 
         <div className="grid grid-cols-4 gap-4">
