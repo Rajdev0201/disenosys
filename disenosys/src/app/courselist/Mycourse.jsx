@@ -36,12 +36,12 @@ const MyCourse = () => {
   const handlePageChange = (page) => setCurrentPage(page);
 
   const handleToggle = (id, isActive) => {
-    const confirmMessage = isActive
-      ? "Do you want to deactivate this course?"
-      : "Do you want to activate this course?";
+    // const confirmMessage = isActive
+    //   ? "Do you want to deactivate this course?"
+    //   : "Do you want to activate this course?";
     
-    const confirmSubmit = window.confirm(confirmMessage);
-    if (confirmSubmit) {
+    // const confirmSubmit = window.confirm(confirmMessage);
+    // if (confirmSubmit) {
       fetch(`https://disenosys-1.onrender.com/course/toggleCode/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -58,7 +58,7 @@ const MyCourse = () => {
           }
         })
         .catch((err) => console.log(err));
-    }
+    
   };
   
 

@@ -12,6 +12,8 @@ const Recorded = () => {
   const [selectedOptions, setSelectedOptions] = useState({});
   const [feedback, setFeedback] = useState({});
   const [selectedSubtopic, setSelectedSubtopic] = useState(null);
+  const [subLink,setSubLink] = useState(null);
+  console.log("sublink",subLink)
   const [showQuiz, setShowQuiz] = useState(false);
   const [unlockedModules, setUnlockedModules] = useState(
     JSON.parse(localStorage.getItem("unlockedModules")) || { 0: true }
@@ -21,7 +23,6 @@ const Recorded = () => {
   const courseRefs = useRef([]);
   const search = useSearchParams();
   const courseId = search.get("courseName");
-  console.log(courseId)
   const pay = useSelector((state) => state.payment);
   const id = search.get("id");
   const courseState = useSelector((state) => state?.course);
@@ -44,8 +45,11 @@ const Recorded = () => {
   useEffect(() => {
     if (courses && courses[0]?.Curriculum[0]?.subTopics && !selectedSubtopic) {
       setSelectedSubtopic(courses[0].Curriculum[0].subTopics[0]);
+      setSubLink(courses[0].Curriculum[0].subLinks[0]);
     }
   }, [courses, selectedSubtopic]);
+  
+
   
 
   const toggleAccordion = (index) => {
@@ -80,9 +84,11 @@ const Recorded = () => {
     }
   };
   
-
-  const handleSubtopicSelect = (subTopic) => {
+  const handleSubtopicSelect = (subTopic, subLink) => {
+    console.log("Selected subTopic:", subTopic);
+    console.log("Selected subLink:", subLink);
     setSelectedSubtopic(subTopic);
+    setSubLink(subLink);
     setShowQuiz(false);
   };
 
@@ -136,6 +142,7 @@ const Recorded = () => {
             setTimeout(() => {
                 setOpenAccordionIndex(nextModuleIndex);
                 setSelectedSubtopic(null);
+                setSubLink(null)
                 setShowQuiz(false);
                 setFeedback({});
                 setSelectedOptions({});
@@ -289,7 +296,7 @@ const Recorded = () => {
               <iframe
                 width="100%"
                 height="600"
-                src="https://player.cloudinary.com/embed/?public_id=samples%2Fcld-sample-video&cloud_name=dapilmiei&player[showLogo]=false"
+                src={subLink}
                 title={selectedSubtopic}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -324,21 +331,32 @@ const Recorded = () => {
                     </span>
                   </button>
                   {openAccordionIndex === idx && (
-                    <ul className="list-disc space-y-2 px-4">
-                      {(Array.isArray(item.subTopics)
-                        ? item.subTopics
-                        : item.subTopics.split(",")
-                      ).map((subTopic, subIdx) => (
-                        <li key={subIdx} className="flex items-center">
-                          <input
-                            type="checkbox"
-                            className="mr-2 mr-2 w-4 h-4 hover:cursor-pointer"
-                            onChange={() => handleSubtopicSelect(subTopic)}
-                            checked={selectedSubtopic === subTopic}
-                          />
-                          <span className="hover:cursor-pointer"  onClick={() => handleSubtopicSelect(subTopic)}>{subTopic.trim()}</span>
-                        </li>
-                      ))}
+                    <ul className="list-disc space-y-2 px-4 w-full">
+                    {(Array.isArray(item.subTopics)
+  ? item.subTopics
+  : item.subTopics.split(",")
+).map((subTopic, subIdx) => {
+  const subLink = Array.isArray(item.subLinks) ? item.subLinks[subIdx] : item?.subLinks?.split(",")[subIdx];
+  console.log("subTopic:", subTopic, "subLink:", subLink);
+  return (
+    <li key={subIdx} className="flex items-center">
+      <div className="flex items-center w-full h-12">
+        <input
+          type="checkbox"
+          className="mr-2 w-4 h-4 hover:cursor-pointer"
+          onChange={() => handleSubtopicSelect(subTopic, subLink)}
+          checked={selectedSubtopic === subTopic}
+        />
+        <span
+          className="hover:cursor-pointer flex-1"
+          onClick={() => handleSubtopicSelect(subTopic, subLink)}
+        >
+          {subTopic.trim()}
+        </span>
+      </div>
+    </li>
+  );
+})}
                       <button
                         onClick={showQuizSection}
                         className="text-blue-600 mt-4 underline"
