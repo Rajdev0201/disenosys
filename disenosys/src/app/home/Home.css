@@ -135,12 +135,22 @@
 }
 
 
-
+ .custom-video-player video::-webkit-media-controls-download {   display: none !important; }
+ 
 
 /* whychoose */
 
 .bg-ch {
   background-image: url("../assests/bg-ch.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+
+.bg-world {
+  background-image: url("../assests/profile/Google_Map_Pins.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

@@ -116,7 +116,7 @@ const length = filteredCartItems.length;
             href="/"
             passHref
             // onClick={() => handleLinkClick('/')}
-            className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${
+            className={`py-2 px-2 font-semibold  hover:text-[#057FE3] font-poppins text-base ${
               path === "/" ? "text-[#057FE3]" : "text-white"
             }`}
           >

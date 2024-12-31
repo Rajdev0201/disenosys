@@ -13,7 +13,7 @@ import "./Navbar/Navbar.css";
 import { FaMicroblog } from "react-icons/fa";
 
 export const ShiftingDropDown = () => (
-  <div className="py-2 px-4 font-semibold text-base hover:text-[#057FE3] font-poppins">
+  <div className="py-2 px-0 font-semibold text-base hover:text-[#057FE3] font-poppins">
     <Tabs />
   </div>
 );
@@ -58,7 +58,7 @@ const Tab = ({ children, tab, handleSetSelected, selected }) => (
     id={`shift-tab-${tab}`}
     onMouseEnter={() => handleSetSelected(tab)}
     onClick={() => handleSetSelected(tab)}
-    className={`py-2 px-4 flex items-center font-semibold transition-colors ${
+    className={`py-2 px-2 flex items-center font-semibold transition-colors ${
       selected === tab ? "text-[#057FE3]" : "text-white"
     }`}
     aria-expanded={selected === tab}

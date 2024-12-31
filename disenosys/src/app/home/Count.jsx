@@ -13,7 +13,7 @@ export default function Count() {
             {/* <div className='border  mt-4'></div> */}
            </div>
 
-                <div className="grid grid-cols-1 gap-8 text-center lg:mt-24 sm:gap-x-8 gap-y-12 md:grid-cols-3">
+                <div className="grid grid-cols-1 gap-8 text-center lg:mt-12 sm:gap-x-8 gap-y-12 md:grid-cols-3">
                     {[
                         { end: 5000, label: "Trained" },
                         { end: 3800, label: "Reviews with 5 star rating" },

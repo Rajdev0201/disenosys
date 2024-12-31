@@ -51,9 +51,9 @@ const Course = () => {
                 return (
                   <div
                     key={`${item._id}-${i}`}
-                    className="w-64 h-80 flex flex-col rounded-lg shadow-md"
+                    className="w-64 h-80 flex flex-col"
                   >
-                    <div className="bg-[#182073] flex justify-between items-center px-4 py-2">
+                    <div className="bg-[#182073] flex rounded-t-md shadow-lg justify-between items-center px-4 py-2">
                       <Image
                         src={brand}
                         alt="Brand logo"
@@ -77,7 +77,7 @@ const Course = () => {
                       </div>
                     </div>
 
-                    <div className="bg-[#182073] flex justify-between items-center px-4 py-2">
+                    <div className="bg-[#182073] flex justify-between rounded-b-md shadow-lg items-center px-4 py-2">
                       <button className="px-4 text-base font-poppins font-semibold text-white">
                         Info
                       </button>
@@ -93,7 +93,7 @@ const Course = () => {
                 );
               })
             ) : (
-              <div key={item._id} className="text-center mt-6">
+              <div key={item._id} className="text-center  mt-6">
                 <p className="text-red-600 font-poppins border rounded bg-white shadow-xl p-2">
                   Please wait, you still don&apos;t have admin access.
                 </p>
