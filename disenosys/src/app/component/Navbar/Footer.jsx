@@ -121,7 +121,7 @@ const Footer = () => {
       <div className="lg:px-16 flex flex-col justify-between md:flex-row">
         <div>
         <h1 className="text-white font-medium text-sm md:text-md lg:text-2xl text-center sm:text-left flex justify-center items-center">
-          <MdOutlineCopyright size={20} className="pr-1" /> 2024 Disenosys | All rights reserved
+          <MdOutlineCopyright size={20} className="pr-1" /> 2025 Disenosys | All rights reserved
         </h1>
         </div>
 

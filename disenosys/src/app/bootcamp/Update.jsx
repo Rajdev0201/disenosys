@@ -1,5 +1,4 @@
 "use client"
-
 import Image from "next/image";
 import React from "react";
 import { BsClockHistory } from "react-icons/bs";
@@ -13,6 +12,10 @@ import { MdStars } from "react-icons/md";
 import MarqueeView from "../home/Marquee";
 import Partner from "../home/Partner";
 import Testi from "./Testi";
+import Learn from "./Learn";
+import Box from "./Box";
+import Cards from "./Cards";
+import Enroll from "./Enroll";
 
 const Update = () => {
   return (
@@ -135,7 +138,36 @@ const Update = () => {
         <iframe width="980" height="560" src="https://www.youtube.com/embed/P30aMdOimG8?si=-97Ww_cvRg9PlkxI" className=" mb-12 rounded-lg shadow-inner" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
 
+        <div className="mt-28 bg-[#F4F9FF]">
+          <div className="p-10">
+        <h1 className="font-bold font-poppins text-[#182073] text-xl lg:text-5xl text-center">What will you learn</h1>
+        <h2 className="font-bold font-poppins text-black text-xl lg:text-5xl text-center mt-5">in 5 days?</h2>
+           <Learn/>
+        </div>
+       </div>
+       <div className="mt-0 rounded-xl bg-gradient-to-r from-white to-blue-600  shadow-xl">
+          <div className="p-10">
+        <h1 className="font-bold font-poppins text-xl text-white  lg:text-5xl text-center">That was just the beginning,</h1>
+        <h2 className="font-bold font-poppins text-black text-xl lg:text-3xl text-center mt-5">you will also learn</h2>
+          <div className="mb-6">
+           <Box/>
+           </div>
+        </div>
+       </div>
+        
+        <div className="mt-0  bg-gradient-to-r from-blue-600 to-white rounded-xl shadow-xl">
+          <div className="p-10">
+          <h1 className="font-bold font-poppins text-xl text-white  lg:text-5xl text-center">You will master AI tools like</h1>
+          <div>
+            <Cards/>
+            </div>
+          </div>
+       </div>
 
+       <div className="mt-0 bg-blue-50 p-20 rounded-xl shadow-xl">
+       <h1 className="font-bold font-poppins text-xl text-[#182073] lg:text-5xl text-center mb-10">Pricing</h1>
+        <Enroll/>
+        </div>
     </div>
   );
 };
