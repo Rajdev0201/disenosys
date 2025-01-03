@@ -6,7 +6,7 @@ const Learn = () => {
   return (
     <div className="flex justify-center items-center min-h-screen  mt-12">
       <div className="relative flex flex-col items-center">
-        <div className="absolute h-full w-1 bg-[#182073] rounded-full flex flex-col items-center">
+        <div className="absolute right-0 lg:left-[450px] h-full w-1 bg-[#182073] rounded-full flex flex-col items-center">
           {/* Top Rounded Shape */}
           <div className="w-4 h-4 bg-[#057FE3] rounded-full -mt-2"></div>
           {/* Middle Rounded Shape */}
@@ -16,7 +16,7 @@ const Learn = () => {
         </div>
 
 
-        <div className="grid grid-cols-2 gap-28 items-center mb-10">
+        <div className="grid lg:grid-cols-2 gap-28 items-center mb-10">
           <div className="bg-white p-6 shadow-lg rounded-lg w-[400px] h-[200px]">
             <h2 className="text-lg font-bold">The Powerful Client Sniper Technique</h2>
             <p>
@@ -26,7 +26,7 @@ const Learn = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-28 items-center mb-10">
+        <div className="grid lg:grid-cols-2 lg:gap-28 items-center mb-10">
           <div className="bg-white p-6 shadow-lg rounded-lg col-start-2  w-[400px] h-[200px]">
             <h2 className="text-lg font-bold">The 100M Content Formula</h2>
             <p>
@@ -37,7 +37,7 @@ const Learn = () => {
 
         </div>
 
-        <div className="grid grid-cols-2 gap-28 items-center mb-10">
+        <div className="grid lg:grid-cols-2 gap-28 items-center mb-10">
           <div className="bg-white p-6 shadow-lg rounded-lg  w-[400px] h-[200px]">
             <h2 className="text-lg font-bold">The Powerful Client Sniper Technique</h2>
             <p>
@@ -47,7 +47,7 @@ const Learn = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-28 items-center mb-10">
+        <div className="grid lg:grid-cols-2 lg:gap-28 items-center mb-10">
           <div className="bg-white p-6 shadow-lg rounded-lg col-start-2  w-[400px] h-[200px]">
             <h2 className="text-lg font-bold">The 100M Content Formula</h2>
             <p>
@@ -58,7 +58,7 @@ const Learn = () => {
 
         </div>
           
-        <div className="grid grid-cols-2 gap-28 items-center mb-10">
+        <div className="grid lg:grid-cols-2 lg:gap-28 items-center mb-10">
           <div className="bg-white p-6 shadow-lg rounded-lg  w-[400px] h-[200px]">
             <h2 className="text-lg font-bold">The Powerful Client Sniper Technique</h2>
             <p>
@@ -68,7 +68,7 @@ const Learn = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-28 items-center mb-10">
+        <div className="grid lg:grid-cols-2 lg:gap-28 items-center mb-10">
           <div className="bg-white p-6 shadow-lg rounded-lg col-start-2  w-[400px] h-[200px]">
             <h2 className="text-lg font-bold">The 100M Content Formula</h2>
             <p>
