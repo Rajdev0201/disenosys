@@ -20,11 +20,10 @@ const Workshop = () => {
             <h3 className="text-lg font-semibold mb-2">Course Notes</h3>
             <p className="text-gray-700 text-sm">
               Stressed about balancing learning and taking notes? No worries,
-              I've got your back.
+              I&apos;ve got your back.
             </p>
           </div>
 
-          {/* Course Notes */}
           <div className="bg-white shadow-lg rounded-lg p-6">
           <div className="bg-blue-100 p-6 rounded-md mb-4 flex justify-center items-center">
             <MdCastForEducation className="object-cover w-28 h-28 text-[#182073]" />
@@ -32,11 +31,10 @@ const Workshop = () => {
             <h3 className="text-lg font-semibold mb-2">Course Notes</h3>
             <p className="text-gray-700 text-sm">
               Stressed about balancing learning and taking notes? No worries,
-              I've got your back.
+              I&apos;ve got your back.
             </p>
           </div>
 
-          {/* Certificate */}
           <div className="bg-white shadow-lg rounded-lg p-6">
        
             <div className="bg-blue-100 p-6 rounded-md mb-4 flex justify-center items-center">

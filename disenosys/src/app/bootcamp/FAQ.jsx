@@ -37,7 +37,7 @@ const FAQ = () => {
             {isOpen && (
               <div className="p-4 border-t">
                 <p className="text-gray-700 text-sm">
-                  Ranking on Google's first page depends. If homework is less competitive, then one should rank within weeks. Otherwise, for more competitive keywords, it will take months or more.
+                  Ranking on Google&apos;s first page depends. If homework is less competitive, then one should rank within weeks. Otherwise, for more competitive keywords, it will take months or more.
                 </p>
               </div>
             )}
@@ -111,7 +111,7 @@ const FAQ = () => {
           <div className="border rounded-md bg-white shadow-md">
             <div className="flex justify-between items-center p-4">
               <h3 className="text-lg font-medium">
-                How can I improve my website's visibility in a local search result?
+                How can I improve my websites visibility in a local search result?
               </h3>
               <button
                 className="text-blue-600"
