@@ -5,17 +5,27 @@ const testimonials = [
   {
     id: 1,
     icon: "📊",
-    text: "Generate leads for your business but don’t know ‘how’",
+    text: "Turn their passion for design into a career but don’t know where to start.",
   },
   {
     id: 2,
-    icon: "🔖",
-    text: "Want to build a personal brand but don’t know where to start",
+    icon: "👩‍💼",
+    text: "Build a portfolio that gets noticed and unlocks exciting opportunities.",
   },
   {
     id: 3,
-    icon: "👩‍💼",
-    text: "Get inbound offers from recruiters and clients",
+    icon: "🛠️",
+    text: "Master tools and techniques but feel lost on how to begin.",
+  },
+  {
+    id: 4,
+    icon: "🚗",
+    text: "Create innovative automotive concepts but lack the right guidance.",
+  },
+  {
+    id: 5,
+    icon: "🔄",
+    text: "Transition into automotive design but don’t know the skills to focus on.",
   },
 ];
 

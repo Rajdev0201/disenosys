@@ -25,10 +25,10 @@ const Update = () => {
     <div className="bg-white">
       <div className="px-4 py-28 sm:px-8 sm:py-28 md:px-12 md:py-28 lg:px-32 lg:py-36 xl:px-44 xl:py-40">
   <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center">
-    Skyrocket Your <span className="text-[#182073]">LinkedIn Growth</span> in 5 Days
+  Transform Into an <span className="text-[#182073]">Automotive Designer</span> in 5 Days
   </h1>
   <h4 className="text-base sm:text-lg md:text-xl mt-4 sm:mt-5 md:mt-6 font-medium text-center">
-    Build a personal brand, generate high-ticket leads & get inbound job offers
+  Build industry-relevant skills, design future mobility & grow your career.
   </h4>
 </div>
 
@@ -51,8 +51,7 @@ const Update = () => {
 
           <div className="px-12 mb-6">
             <p className="text-lg px-6 py-2 mb-4font-medium border-4 border-[#182073] rounded-2xl shadow-inner">
-              Learn the exact strategies that won me <b>400K+ followers</b> and
-              monthly <b>leads worth thousands of dollars</b> for free!
+              Learn industry-leading methods to <b>craft innovative designs</b> and boost your career.
             </p>
           </div>
 
@@ -87,7 +86,7 @@ const Update = () => {
 
         <div className="px-6 lg:px-2">
            <Image src={CEO} className="object-cover rounded-full ring-4 ring-blue-300 w-68 h-68"/>
-           <div className="flex flex-col justify-center -mt-10 absolute px-2 py-1 ml-20 lg:ml-10 items-center w-44 bg-blue-100 rounded-lg shadow-inner">
+           <div className="flex flex-col justify-center -mt-10 absolute px-2 py-1 ml-20 lg:ml-20 items-center w-44 bg-blue-100 rounded-lg shadow-inner">
                <h1 className="text-xl font-poppins font-bold text-[#182073]">Praveen Kumar</h1>
                <span className="text-sm">Founder, Disenosys</span>
            </div>
@@ -163,7 +162,8 @@ const Update = () => {
        <div className="mt-0 rounded-xl bg-gradient-to-r from-white to-blue-600  shadow-xl">
           <div className="p-10">
         <h1 className="font-bold font-poppins text-xl text-white  lg:text-5xl text-center">That was just the beginning,</h1>
-        <h2 className="font-bold font-poppins text-black text-xl lg:text-3xl text-center mt-5">you will also learn</h2>
+        <h2 className="font-bold font-poppins text-black text-2xl lg:text-xl text-center flex justify-center items-center mt-5">You Will Also Learn
+        This section breaks down Day-wise learning with specific, impactful modules.</h2>
           <div className="mb-6">
            <Box/>
            </div>
