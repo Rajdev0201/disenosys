@@ -70,7 +70,7 @@ const Enroll = () => {
                <FiX
                               size={28}
                               onClick={toggleModal}
-                              className="absolute -top-5 right-3 ring-2 bg-red-500 font-bold text-xl p-1 ring-white rounded-full -right-3 cursor-pointer text-white"
+                              className="absolute -top-5  ring-2 bg-red-500 font-bold text-xl p-1 ring-white rounded-full -right-3 cursor-pointer text-white"
                             />
             </button>
             

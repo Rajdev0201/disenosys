@@ -18,6 +18,7 @@ import Cards from "./Cards";
 import Enroll from "./Enroll";
 import Workshop from "./Workshop";
 import FAQ from "./FAQ";
+import CountUp from "react-countup";
 
 
 const Update = () => {
@@ -103,18 +104,24 @@ const Update = () => {
         <div className="bg-world py-80 rounded-2xl shadow-xl text-center">
             <h1 className=" font-bold text-3xl font-poppins shadow-sm rounded-lg -mt-60 text-[#182073]">I&apos;ll let the numbers talk</h1>
             <div className="flex flex-col lg:flex-row  justify-center items-center gap-5 mt-44">
-               <div className="flex justify-center w-60 items-center gap-2 px-2 py-1 bg-white rounded-md shadow-md">
+               <div className="flex justify-center w-40 lg:w-60 items-center gap-2 px-2 py-1 bg-white rounded-md shadow-md">
                <FaGraduationCap className="w-10 h-10 text-[#182073]" />
-                 <h4> <span className="text-xl lg:text-2xl font-bold font-poppins text-[#182073]">150K+</span> Learners</h4>
+               <h4>
+              <span className="text-xl lg:text-2xl font-bold font-poppins text-[#182073]">
+                <CountUp end={450} separator="," duration={10} />
+                +
+              </span>{" "}
+              Learners
+            </h4>
                </div>
-               <div className="flex justify-center w-60 items-center gap-2 px-2 py-1 bg-white rounded-md shadow-md">
+               <div className="flex justify-center w-40 lg:w-60 items-center gap-2 px-2 py-1 bg-white rounded-md shadow-md">
                <TbWorld 
                className="w-10 h-10 text-[#182073]" />
-                 <h4> <span className="text-xl lg:text-2xl font-bold font-poppins text-[#182073]">30K+</span> Countries</h4>
+                 <h4> <span className="text-xl lg:text-2xl font-bold font-poppins text-[#182073]"> <CountUp end={30} separator="," duration={10} />+</span> Countries</h4>
                </div>
-               <div className="flex justify-center w-60 items-center gap-2 px-2 py-1 bg-white rounded-md shadow-md">
+               <div className="flex justify-center w-40 lg:w-60 items-center gap-2 px-2 py-1 bg-white rounded-md shadow-md">
                <MdStars className="w-10 h-10 text-[#182073]" />
-                 <h4> <span className="text-xl lg:text-2xl font-bold font-poppins text-[#182073]">4.76/5</span> Ratings </h4>
+                 <h4> <span className="text-xl lg:text-2xl font-bold font-poppins text-[#182073]"><CountUp end={4.76} decimals={2} duration={10} />/5</span> Ratings </h4>
                </div>
             </div>
         </div>
@@ -162,7 +169,7 @@ const Update = () => {
        <div className="mt-0 rounded-xl bg-gradient-to-r from-white to-blue-600  shadow-xl">
           <div className="p-10">
         <h1 className="font-bold font-poppins text-xl text-white  lg:text-5xl text-center">That was just the beginning,</h1>
-        <h2 className="font-bold font-poppins text-black text-2xl lg:text-xl text-center flex justify-center items-center mt-5">You Will Also Learn
+        <h2 className="font-bold font-poppins text-black text-xl lg:text-xl text-center flex justify-center items-center mt-5">You Will Also Learn
         This section breaks down Day-wise learning with specific, impactful modules.</h2>
           <div className="mb-6">
            <Box/>

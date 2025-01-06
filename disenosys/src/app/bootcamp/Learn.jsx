@@ -27,8 +27,8 @@ const Learn = () => {
           variants={revealVariants}
         >
           <div className="grid lg:grid-cols-2 gap-28 items-center mb-10">
-            <div className="bg-white p-6 shadow-lg rounded-lg w-[400px] h-[150px]">
-              <h2 className="text-lg font-bold">
+            <div className="bg-white p-6 shadow-lg rounded-lg w-[250px] h-[200px] lg:w-[400px] lg:h-[150px]">
+              <h2 className="lg:lg:text-lg font-bold">
               Introduction to Automotive Design Workflow
               </h2>
               <p>
@@ -45,8 +45,8 @@ const Learn = () => {
           variants={revealVariants}
         >
           <div className="grid lg:grid-cols-2 lg:gap-28 items-center mb-10">
-            <div className="bg-white p-6 shadow-lg rounded-lg col-start-2  w-[400px] h-[150px]">
-              <h2 className="text-lg font-bold">Tools of the Trade: Industry Software Overview</h2>
+            <div className="bg-white p-6 shadow-lg rounded-lg col-start-2  w-[250px] h-[200px] lg:w-[400px] lg:h-[150px]">
+              <h2 className="lg:text-lg font-bold">Tools of the Trade: Industry Software Overview</h2>
               <p>
               Get a quick introduction to essential software like Alias, CATIA, and SolidWorks.
               </p>
@@ -61,8 +61,8 @@ const Learn = () => {
           variants={revealVariants}
         >
           <div className="grid lg:grid-cols-2 gap-28 items-center mb-10">
-            <div className="bg-white p-6 shadow-lg rounded-lg  w-[400px] h-[150px]">
-              <h2 className="text-lg font-bold">
+            <div className="bg-white p-6 shadow-lg rounded-lg w-[250px] h-[200px] lg:w-[400px] lg:h-[150px]">
+              <h2 className="lg:text-lg font-bold">
               Sketching Basics for Automotive Design
               </h2>
               <p>
@@ -79,8 +79,8 @@ const Learn = () => {
           variants={revealVariants}
         >
           <div className="grid lg:grid-cols-2 lg:gap-28 items-center mb-10">
-            <div className="bg-white p-6 shadow-lg rounded-lg col-start-2  w-[400px] h-[150px]">
-              <h2 className="text-lg font-bold">Design Thinking and Ideation</h2>
+            <div className="bg-white p-6 shadow-lg rounded-lg col-start-2 w-[250px] h-[200px] lg:w-[400px] lg:h-[150px]">
+              <h2 className="lg:text-lg font-bold">Design Thinking and Ideation</h2>
               <p>
               Explore creative problem-solving techniques for innovative automotive concepts.
               </p>
@@ -95,8 +95,8 @@ const Learn = () => {
           variants={revealVariants}
         >
           <div className="grid lg:grid-cols-2 lg:gap-28 items-center mb-10">
-            <div className="bg-white p-6 shadow-lg rounded-lg  w-[400px] h-[150px]">
-              <h2 className="text-lg font-bold">
+            <div className="bg-white p-6 shadow-lg rounded-lg w-[250px] h-[200px] lg:w-[400px] lg:h-[150px]">
+              <h2 className="lg:text-lg font-bold">
               Emerging Trends in Automotive Design
               </h2>
               <p>
@@ -113,8 +113,8 @@ const Learn = () => {
           variants={revealVariants}
         >
           <div className="grid lg:grid-cols-2 lg:gap-28 items-center mb-10">
-            <div className="bg-white p-6 shadow-lg rounded-lg col-start-2  w-[400px] h-[150px]">
-              <h2 className="text-lg font-bold">Materials and Manufacturing Overview</h2>
+            <div className="bg-white p-6 shadow-lg rounded-lg col-start-2 w-[250px] h-[200px] lg:w-[400px] lg:h-[150px]">
+              <h2 className="lg:text-lg font-bold">Materials and Manufacturing Overview</h2>
               <p>
               Gain insights into automotive materials and how they influence design and production.
               </p>
@@ -129,8 +129,8 @@ const Learn = () => {
           variants={revealVariants}
         >
           <div className="grid lg:grid-cols-2 gap-28 items-center mb-10">
-            <div className="bg-white p-6 shadow-lg rounded-lg w-[400px] h-[150px]">
-              <h2 className="text-lg font-bold">
+            <div className="bg-white p-6 shadow-lg rounded-lg w-[250px] h-[200px] lg:w-[400px] lg:h-[150px]">
+              <h2 className="lg:text-lg font-bold">
               Career Pathways in Automotive Design
               </h2>
               <p>
@@ -147,8 +147,8 @@ const Learn = () => {
           variants={revealVariants}
         >
           <div className="grid lg:grid-cols-2 lg:gap-28 items-center mb-10">
-            <div className="bg-white p-6 shadow-lg rounded-lg col-start-2  w-[400px] h-[150px]">
-              <h2 className="text-lg font-bold">Insider Tips for Building a Portfolio</h2>
+            <div className="bg-white p-6 shadow-lg rounded-lg col-start-2  w-[250px] h-[200px] lg:w-[400px] lg:h-[150px]">
+              <h2 className="lg:text-lg font-bold">Insider Tips for Building a Portfolio</h2>
               <p>
               Learn what makes a design portfolio stand out and impress top employers.
               </p>

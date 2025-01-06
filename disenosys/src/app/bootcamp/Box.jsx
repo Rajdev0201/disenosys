@@ -41,7 +41,7 @@ const DayCards = () => {
           <button
             key={day}
             onClick={() => setActiveDay(day)}
-            className={`px-4 py-2 border-2 rounded-full ${
+            className={`px-2 py-1 lg:px-4 lg:py-2 border-2 rounded lg:rounded-full ${
               activeDay === day
                 ? "bg-blue-500 text-white border-blue-500"
                 : "bg-white text-blue-500 border-blue-500"
@@ -55,7 +55,7 @@ const DayCards = () => {
       {/* Content Card */}
       <div
   key={activeDay} // Ensures the animation restarts on state change
-  className={`w-96 p-6 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-lg shadow-lg transform transition-all duration-500 ease-out ${
+  className={`w-64 lg:w-96 p-3 lg:p-6 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-lg shadow-lg transform transition-all duration-500 ease-out ${
     activeDay ? "animate-fade-in" : "opacity-0"
   }`}
 >
@@ -63,7 +63,7 @@ const DayCards = () => {
   <p className="mt-2">{dayContent[activeDay].description}</p>
   <div className="mt-4 bg-white text-blue-600 p-4 rounded-lg shadow-md flex flex-col items-center justify-center">
     <p>{dayContent[activeDay].extra}</p>
-    <IoMdCheckmarkCircleOutline className="w-12 h-12"/>
+    <IoMdCheckmarkCircleOutline className="w-12 h-12 text-green-600"/>
   </div>
 </div>
 
