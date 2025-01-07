@@ -218,6 +218,39 @@ router.get('/result', async (req, res) => {
   }
 });
 
+router.get('/demo', (req, res) => {
+  try {
+    const dummyData = [
+      {
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        course: 'Catia v5',
+        udin: 'UD123456',
+        date: '01/01/2025',
+      },
+      {
+        name: 'Jane Smith',
+        email: 'jane.smith@example.com',
+        course: 'Advanced Catia',
+        udin: 'UD654321',
+        date: '02/01/2025',
+      }
+    ];
+
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(dummyData);
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Template');
+
+    const dummyBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+    res.setHeader('Content-Disposition', 'attachment; filename="template.xlsx"');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    return res.send(dummyBuffer);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Failed to generate Excel file' });
+  }
+});
 module.exports = router;
 
 

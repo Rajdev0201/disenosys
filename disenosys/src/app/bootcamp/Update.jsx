@@ -39,7 +39,7 @@ const Update = () => {
             <div className="text-[#182073] border-r-2 border-gray-700 sm:px-2 py-2 lg:px-2 flex items-center gap-2">
               <CiCalendarDate size={30} className="" />
               <h2 className="text-[#182073]  text-md md:text-xl lg:text-xl xl:text-xl font-bold">
-                starts at january 7,2024
+                Starts at January 7,2024
               </h2>
             </div>
             <div className=" text-[#182073] px-2 sm:px-2 lg:px-2 py-2 flex items-center gap-2 rounded">
@@ -51,8 +51,8 @@ const Update = () => {
           </div>
 
           <div className="px-12 mb-6">
-            <p className="text-lg px-6 py-2 mb-4font-medium border-4 border-[#182073] rounded-2xl shadow-inner">
-              Learn industry-leading methods to <b>craft innovative designs</b> and boost your career.
+            <p className="text-lg px-6 py-2 mb-4 font-normal border-4 border-[#182073] rounded-2xl shadow-inner">
+              Learn industry-leading methods to <b className="text-[#182073]">craft innovative designs</b> and boost your career.
             </p>
           </div>
 

@@ -102,6 +102,10 @@ const Sidebar = () => {
                   <PiCertificateBold className="mr-3" />
                   Exam
                 </Link>
+                <Link href="/coursecerificate" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/coursecerificate' ? 'bg-blue-700' : ''}`}>
+                  <PiCertificateBold className="mr-3" />
+                  Course
+                </Link>
               </div>
             )}
           </div>

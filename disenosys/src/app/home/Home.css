@@ -19,6 +19,13 @@
   background-size: cover;
 }
 
+.certificate-bg{
+  background-image: url("../assests/profile/Certificate_course.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .career{
   background-image: url("../assests/profile/fast.jpg");
   background-position: center;
