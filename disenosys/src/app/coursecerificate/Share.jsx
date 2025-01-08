@@ -245,7 +245,7 @@ const CertificateComponent = () => {
           <div className="flex flex-col space-y-2">
           <button
               type="submit"
-              className="bg-[#182073] text-white font-semibold 
+              className="bg-[#182073] w-44 h-12 text-white font-semibold 
               p-2 rounded"
               onClick={handleDownload}
             >
