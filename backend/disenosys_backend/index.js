@@ -695,19 +695,78 @@ auth: {
 }
 });
 
+const mailOptions = {
+  from: "classes@disenosys.com",
+  to: email,
+  subject: `Certificate of Completion for ${course}`,
+  html: `
+    <html>
+      <head>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            color: #333333;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+          }
+          .email-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+          }
+          h1 {
+            color: #004aad;
+            font-size: 24px;
+            margin-bottom: 10px;
+          }
+          p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555555;
+          }
+          .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: start;
+            color: #888888;
+          }
+          .highlight {
+            color: #004aad;
+            font-weight: bold;
+          }
+          .cta {
+            color: #ffffff;
+            background-color: #004aad;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 5px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="email-container">
+          <h1>Certificate of Completion</h1>
+          <p>Dear <span class="highlight">${name}</span>,</p>
+          <p>We are pleased to inform you that you have successfully completed the <span class="highlight">${course}</span>. Please find attached your Certificate of Completion for the course.</p>
+          <p>We congratulate you on your achievement and wish you continued success in your future endeavors.</p>
+          <p>If you have any questions or need further assistance, feel free to reach out to us.</p>
+          
+          <p class="footer">Best regards, <br />The Disenosys Team</p>
+        </div>
+      </body>
+    </html>
+  `,
+  attachments: [
+    {
+      filename: `${name}_Certificate_of_Completion.pdf`,
+      content: pdfBuffer,
+    },
+  ],
+};
 
-  const mailOptions = {
-    from: "classes@disenosys.com",
-    to: email,
-    subject: `Certificate for ${course}`,
-    text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,
-    attachments: [
-      {
-        filename:`${name}_certificate.pdf`,
-        content: pdfBuffer,
-      },
-    ],
-  };
 
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -797,20 +856,78 @@ app.post("/send-single-certificate-course", uploadsingleCourse.none(),async (req
     }
      });
      
-  
-
-    const mailOptions = {
-      from: "classes@disenosys.com"  ,
+     const mailOptions = {
+      from: "classes@disenosys.com",
       to: email,
-      subject: `Certificate for ${course}`,
-      text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,
+      subject: `Certificate of Completion for ${course}`,
+      html: `
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                color: #333333;
+                background-color: #f4f4f9;
+                margin: 0;
+                padding: 0;
+              }
+              .email-container {
+                background-color: #ffffff;
+                border-radius: 8px;
+                padding: 20px;
+                margin: 20px;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+              }
+              h1 {
+                color: #004aad;
+                font-size: 24px;
+                margin-bottom: 10px;
+              }
+              p {
+                font-size: 16px;
+                line-height: 1.6;
+                color: #555555;
+              }
+              .footer {
+                margin-top: 20px;
+                font-size: 14px;
+                text-align: start;
+                color: #888888;
+              }
+              .highlight {
+                color: #004aad;
+                font-weight: bold;
+              }
+              .cta {
+                color: #ffffff;
+                background-color: #004aad;
+                padding: 10px 15px;
+                text-decoration: none;
+                border-radius: 5px;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="email-container">
+              <h1>Certificate of Completion</h1>
+              <p>Dear <span class="highlight">${name}</span>,</p>
+              <p>We are pleased to inform you that you have successfully completed the <span class="highlight">${course}</span>. Please find attached your Certificate of Completion for the course.</p>
+              <p>We congratulate you on your achievement and wish you continued success in your future endeavors.</p>
+              <p>If you have any questions or need further assistance, feel free to reach out to us.</p>
+              
+              <p class="footer">Best regards, <br />The Disenosys Team</p>
+            </div>
+          </body>
+        </html>
+      `,
       attachments: [
         {
-          filename:`${name}_certificate.pdf`,
+          filename: `${name}_Certificate_of_Completion.pdf`,
           content: pdfBuffer,
         },
       ],
     };
+    
 
     transporter.sendMail(mailOptions, (err, info) => {
       if (err) {

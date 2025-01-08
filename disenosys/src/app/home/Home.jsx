@@ -257,7 +257,7 @@ const Home = () => {
                     />
 
                     <button
-                      className="w-full p-2 bg-white border-none outline-none text-[#182073] rounded-md font-bold text-gray-900 border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
+                      className="w-full p-2 text-lg bg-white border-none outline-none text-[#182073] rounded-md font-semibold text-gray-900 border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
                       type="submit"
                       disabled={loading}
                     >
