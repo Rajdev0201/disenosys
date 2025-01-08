@@ -51,7 +51,7 @@ const [showCertificate, setShowCertificate] = useState(false);
         html2canvas: { scale: 2.5,useCORS: true  }, 
         jsPDF: { 
             unit: 'px', 
-            format: [1080, 770], 
+            format: [1080, 776], 
             orientation: 'landscape' 
         }
     };
@@ -190,29 +190,29 @@ const [showCertificate, setShowCertificate] = useState(false);
        className={`certificate-bg w-[1100px] h-full p-10 relative ${showCertificate ? "" : "hidden"}`}
        >
   <div className="text-center mt-32">
-    <h2 className="text-5xl space-x-2 text-[#182073] font-berlin font-semibold">C E R T I F I C A T E</h2>
-    <p className="text-3xl font-medium ">OF ACHIEVEMENT</p>
+    <h2 className="text-5xl space-x-2 text-[#182073] font-semibold  font-josefin ">CERTIFICATE</h2>
+    <p className="text-3xl font-light font-josefin mt-2">OF ACHIEVEMENT</p>
   </div>
 
   <div className=" flex flex-col items-center justify-center">
-    <p className="text-xl mt-10 font-medium font-poppins ">THIS CERTIFICATE IS PROUDLY PRESENTED TO</p>
-    <h2 className="text-5xl font-bold mt-4 text-[#182073] font-poppins">{singleStudent.name}</h2>
-    <div className="w-[600px] border-2 border-gray-800 mb-0 mt-6"></div>
+    <p className="text-xl mt-10 font-light font-nunito">THIS CERTIFICATE IS PROUDLY PRESENTED TO</p>
+    <h2 className="text-5xl font-bold mt-4 text-[#182073] font-montheavy">{singleStudent.name}</h2>
+    <div className="w-[600px] border-2 border-gray-800 mb-0 mt-7"></div>
   </div>
 
   <div className="text-center mt-5">
-    <p className="text-xl font-medium">
+    <p className="text-xl font-light font-nunito">
       for successfully completing the course on
     </p>
-    <p className="text-4xl font-bold text-blue-500 mt-2">
-      “ {singleStudent.course} ”
+    <p className="text-3xl font-light font-lexend text-blue-500 mt-2">
+      {singleStudent.course.toUpperCase()}
     </p>
   </div>
 
   <div className="flex justify-between items-center mt-16">
     <div className="flex items-center justify-center">
       <div className="mt-4">
-      <p className="text-sm font-medium text-center text-gray-800">Accredited by</p>
+      <p className="text-sm font-light text-center text-gray-800 font-sans">Accredited by</p>
         <Image
           src={Nsdca}
           alt="Accreditation Logo"
@@ -221,8 +221,8 @@ const [showCertificate, setShowCertificate] = useState(false);
       </div>
 
     <div className="mt-12 px-16">
-      <p className="text-sm font-medium">Certificate UDIN : <span className="font-bold">{singleStudent.udin}</span></p>
-      <p className="text-sm font-medium">Completion Date : <span className="font-bold">{formattedDate}</span></p>
+      <p className="text-sm font-light font-sans">Certificate UDIN : <span className="font-light">{singleStudent.udin}</span></p>
+      <p className="text-sm font-light font-sans">Completion Date : <span className="font-light">{formattedDate}</span></p>
     </div>
     </div>
 

@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LoadingWrapper from "./component/LoadingWrapper";
 // import Script from 'next/script';
 import { Analytics } from "@vercel/analytics/react"
+import Head from "next/head";
 // import { usePathname } from "next/navigation";
 // import DynamicMetadata from "./DynamicMetadata";
 
@@ -34,6 +35,10 @@ export default function RootLayout({
 {
   return (
     <html lang="en">
+      <Head>
+      <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Josefin+Sans:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+
+      </Head>
       <body className={inter.className}>
       {/* <DynamicMetadata />  */}
         <Providers>

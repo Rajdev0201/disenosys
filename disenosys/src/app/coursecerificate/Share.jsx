@@ -84,7 +84,7 @@ const CertificateComponent = () => {
         html2canvas: { scale: 2.5, useCORS: true },
         jsPDF: {
           unit: "px",
-          format: [1080, 770],
+          format: [1080, 776],
           orientation: "landscape",
         },
       };
@@ -258,59 +258,7 @@ const CertificateComponent = () => {
         <Single />
       </div>
 
-      {/* {studentsData.length > 0 &&
-        studentsData.map((student, index) => (
-          <div
-            key={index}
-            id={`certificate-${index}`}
-            className={`flex justify-center items-center min-h-screen w-[1080px] h-[798px] rounded c2 ${showCertificate ? "" : "hidden"}`}
-          >
-            <div className="w-[1080px] h-[798px]">
-            <div className="relative flex flex-col w-full h-full">
-              <div className="absolute top-12 w-full text-center">
-                <h1 className="text-8xl font-normal text-blue-900">
-                  CERTIFICATE
-                </h1>
-                <p className="text-3xl font-bold text-gray-700 mt-6">
-                  OF PARTICIPATION
-                </p>
-              </div>
-              <div className="flex flex-col justify-center items-center h-full mt-20 text-center px-8">
-                <p className="text-3xl font-normal text-gray-800">
-                  This certificate is presented to:
-                </p>
-                <div className="flex flex-col items-center justify-center">
-                  <h2 className="text-8xl font-medium text-blue-900 mt-0 mb-6">
-                    {student.name}
-                  </h2>
-                  <div className="w-full border-2 border-gray-800 mb-0 mt-5"></div>
-                  <p className="text-xl font-semibold text-gray-800 mt-8 max-w-[800px]">
-                    got for participating in CATIA exam and has scored{" "}
-                    <span className="font-bold text-gray-800 underline">
-                      {student.score}
-                    </span>
-                    %
-                  </p>
-                  <p className="text-xl font-semibold text-gray-800 max-w-[800px]">
-                    {" "}
-                    We wish them the best for future endeavors.
-                  </p>
-                </div>
-              </div>
-              <div className="absolute bottom-20 w-full flex justify-center items-center px-20">
-                <div className="text-center">
-                  <p className="text-2xl font-medium text-gray-800">
-                    Praveen Kumar
-                  </p>
-                  <p className="text-xl text-blue-800 font-medium">
-                    CEO & Founder
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          </div>
-         ))}  */}
+ 
 
       {studentsData.length > 0 &&
         studentsData.map((student, index) => (
@@ -318,39 +266,36 @@ const CertificateComponent = () => {
             key={index}
             id={`certificate-${index}`}
             className={`certificate-bg w-[1100px] h-full p-10 relative ${
-              showCertificate ? "" : "hidden"
+              showCertificate ? "" : "hidden" //hidden
             }`}
           >
             <div className="text-center mt-32">
-              <h2 className="text-5xl space-x-2 text-[#182073] font-berlin font-semibold">
-                C E R T I F I C A T E
-              </h2>
-              <p className="text-3xl font-medium ">OF ACHIEVEMENT</p>
-            </div>
+    <h2 className="text-5xl space-x-2 text-[#182073] font-semibold  font-josefin ">CERTIFICATE</h2>
+    <p className="text-3xl font-light font-josefin mt-2">OF ACHIEVEMENT</p>
+  </div>
+
 
             <div className=" flex flex-col items-center justify-center">
-              <p className="text-xl mt-10 font-medium font-poppins ">
-                THIS CERTIFICATE IS PROUDLY PRESENTED TO
-              </p>
-              <h2 className="text-5xl font-bold mt-4 text-[#182073] font-poppins">
+            <p className="text-xl mt-10 font-light font-nunito">THIS CERTIFICATE IS PROUDLY PRESENTED TO</p>
+              <h2 className="text-5xl font-bold mt-4 text-[#182073] font-montheavy">
                 {student.name}
               </h2>
-              <div className="w-[600px] border-2 border-gray-800 mb-0 mt-6"></div>
+              <div className="w-[600px] border-2 border-gray-800 mb-0 mt-7"></div>
             </div>
 
             <div className="text-center mt-5">
-              <p className="text-xl font-medium">
+              <p className="text-xl font-light font-nunito">
                 for successfully completing the course on
               </p>
-              <p className="text-4xl font-bold text-blue-500 mt-2">
-                “ {student.course} ”
+              <p className="text-3xl font-light font-lexend text-blue-500 mt-2">
+                {student.course.toUpperCase()}
               </p>
             </div>
 
             <div className="flex justify-between items-center mt-16">
               <div className="flex items-center justify-center">
                 <div className="mt-4">
-                  <p className="text-sm font-medium text-center text-gray-800">
+                  <p className="text-sm font-light font-sans text-center text-gray-800">
                     Accredited by
                   </p>
                   <Image
@@ -361,13 +306,13 @@ const CertificateComponent = () => {
                 </div>
 
                 <div className="mt-12 px-16">
-                  <p className="text-sm font-medium">
+                  <p className="text-sm font-light font-sans">
                     Certificate UDIN :{" "}
-                    <span className="font-bold">{student.udin}</span>
+                    <span className="font-light">{student.udin}</span>
                   </p>
-                  <p className="text-sm font-medium">
+                  <p className="text-sm font-light font-sans">
                     Completion Date :{" "}
-                    <span className="font-bold">{student.date}</span>
+                    <span className="font-light">{student.date}</span>
                   </p>
                 </div>
               </div>

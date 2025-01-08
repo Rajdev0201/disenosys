@@ -1,6 +1,7 @@
 // tailwind.config.js
 import type { Config } from "tailwindcss";
 
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -10,11 +11,16 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        'josefin': ['"Josefin Sans"', 'sans-serif'], 
         'poppins': ['Poppins', 'sans-serif'],        
         'brush': ['"Brush Script MT"', 'cursive', 'Arial'],
         'berlin': ['"Berlin Sans FB"', 'sans-serif'], 
-        "montster":['Montserrat', 'sans-serif']
+        "montster":['Montserrat', 'sans-serif'],
+        sans: ['Open Sans', 'sans-serif'],
+        montheavy: ['"Montheavy"', 'sans-serif'],
+        lexend:['Lexend','sans-serif'],
+        nunito: ["Nunito Sans", 'sans-serif'],
+
+        josefin: ["Josefin Sans", 'sans-serif'],
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
