@@ -2,6 +2,8 @@
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const CreateBlog = () => {
   const [formData, setFormData] = useState({
@@ -115,14 +117,18 @@ const CreateBlog = () => {
             <label className="block text-sm font-medium text-gray-700">
               Blog Description
             </label>
-            <textarea
+            <ReactQuill
               name="description"
-              rows="6"
-              className="mt-1 block w-full rounded-md p-2 border-gray-300 shadow-md border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500 sm:text-sm"
+              value={formData.description}
+              onChange={(value) =>
+                setFormData((prevData) => ({ ...prevData, description: value }))
+              }
+              theme="snow"
               placeholder="Write your blog here..."
-              onChange={handleChange}
-            ></textarea>
-            <p className="text-sm text-red-500 mt-2">
+              className="mt-1 block w-full rounded-md shadow-md border-2 border-blue-500"
+            />
+
+            {/* <p className="text-sm text-red-500 mt-2">
               To include hyperlinks in the description, use the format:
               <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-700">
                 &lt;a href=&quot;your-url&quot; target=&quot;_blank&quot;
@@ -130,12 +136,12 @@ const CreateBlog = () => {
               </code>
             </p>
             <p className="text-sm text-red-500 mt-2">
-  To include a list in the description, use the format:
-  <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-700">
-    &lt;ul&gt;&lt;li&gt;Item 1&lt;/li&gt;&lt;li&gt;Item 2&lt;/li&gt;&lt;/ul&gt;
-  </code>
-</p>
-
+              To include a list in the description, use the format:
+              <code className="bg-gray-100 px-1 py-0.5 rounded text-gray-700">
+                &lt;ul&gt;&lt;li&gt;Item 1&lt;/li&gt;&lt;li&gt;Item
+                2&lt;/li&gt;&lt;/ul&gt;
+              </code>
+            </p> */}
           </div>
 
           <div>

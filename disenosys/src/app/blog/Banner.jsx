@@ -65,12 +65,21 @@ const Banner = ({ selectedBlog }) => {
   dangerouslySetInnerHTML={{
     __html: selectedBlog?.description
       ? selectedBlog.description
-          .replace(/\n+/g, "<br/>")
-          .replace(/<ul>/g, '<ul class="list-disc text-gray-800 pl-5">')
-          .replace(/<li>/g, '<li class="mt-1">')
+          .replace(/\n+/g, "<br/>") // Line breaks
+          .replace(/<a\b(.*?)>/g, '<a$1 class="underline text-xl text-blue-500">') //link
+          .replace(/<ul>/g, '<ul class="list-disc text-gray-800 pl-5">') // Bullet lists
+          .replace(/<ol>/g, '<ol class="list-decimal text-gray-800 pl-5">') // Ordered lists
+          .replace(/<li>/g, '<li class="mt-1">') // List items
+          .replace(/<h1>/g, '<h1 class="text-3xl font-bold mt-4 mb-2">') // Heading 1
+          .replace(/<h2>/g, '<h2 class="text-2xl font-semibold mt-4 mb-2">') // Heading 2
+          .replace(/<h3>/g, '<h3 class="text-xl font-medium mt-3 mb-2">') // Heading 3
+          .replace(/<strong>/g, '<strong class="font-bold">') // Bold
+          .replace(/<em>/g, '<em class="italic">') // Italic
+          .replace(/<u>/g, '<u class="underline">') // Underline
       : "",
   }}
-/>
+></p>
+
 
 
       </div>

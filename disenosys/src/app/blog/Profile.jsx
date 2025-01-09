@@ -12,8 +12,8 @@ const Profile = ({name,designation}) => {
 
   <section class="block border-l border-gray-300 m-3">
     <div class="pl-3">
-      <h3 class="text-gray-600 font-semibold text-sm">{name}</h3>
-      <h3 class="bg-clip-text text-transparent bg-gradient-to-l from-[#005BC4] w-44 to-[#27272A] text-lg font-bold">{designation}
+      <h3 class="bg-clip-text text-transparent bg-gradient-to-l from-[#005BC4] w-44 to-[#27272A] text-lg font-bold">{name}</h3>
+      <h3 class="text-gray-600 font-semibold text-sm ">{designation}
       </h3>
     </div>
     <div class="flex gap-3 pt-2 pl-3">
