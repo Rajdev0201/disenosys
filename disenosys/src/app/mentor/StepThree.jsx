@@ -34,7 +34,7 @@ const StepThree = ({ formData, setFormData, prevStep, handleSubmit }) => {
         <li className='list-decimal'>
         <b>Years of Experience:</b> Indicate how many years you have worked on this component. A minimum of <b>3 years</b> of experience is required for each proposed course.  
         </li>
-        <li className='list-decimal'><b>Project Description:</b> Provide a brief but detailed overview of the projects you've worked on involving this component. Mention key tasks, deliverables, and technical challenges handled (e.g., Class A surface remastering, mounting features, GD&T application).</li>
+        <li className='list-decimal'><b>Project Description:</b> Provide a brief but detailed overview of the projects you&apos;ve worked on involving this component. Mention key tasks, deliverables, and technical challenges handled (e.g., Class A surface remastering, mounting features, GD&T application).</li>
         <li className='list-decimal'><b>Supporting Documents:</b> Upload documents (if available) like your resume, portfolio, certifications, or project references to validate your expertise.</li>
       </ul>
         
