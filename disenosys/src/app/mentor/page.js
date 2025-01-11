@@ -5,17 +5,19 @@ import MultiStepForm from "./Multistep";
 // import Blink from "../component/Blink/BlinkingPopup";
 import Image from "next/image";
 import mentor from "../assests/profile/update-mentor.jpg"
+import brand from "../assests/profile/brand-white.png";
 
 
 
 export default function FormPage() {
   return(
-    <div className="grid lg:grid-cols-2 h-screen bg-[#D0D2E3] overflow-hidden h-full">
+    <div className="grid lg:grid-cols-2 h-screen bg-white overflow-hidden h-full">
     {/* Left Side with Sticky Image */}
     <div className="lg:shadow-xl lg:rounded-xl lg:h-full lg:sticky lg:top-0">
       <Image src={mentor} className="object-cover h-full w-full" alt="" />
-      <span className="fixed   bottom-96 lg:bottom-40 text-white mx-10 lg:mx-20 font-bold text-sm lg:text-2xl">Mentor</span>
-      <span className="fixed   bottom-96 lg:bottom-32 text-white mx-24 lg:mx-20 font-bold text-sm lg:text-2xl">Application Form</span>
+      <Image src={brand} className="w-52 h-12 mb-10 mx-10 lg:mx-20 fixed  bottom-96 lg:bottom-40 text-white " alt="logo-brand"/>
+      <span className="fixed   bottom-96 lg:bottom-40 text-white mx-10 lg:mx-20 font-bold text-sm lg:text-3xl">Mentor</span>
+      <span className="fixed   bottom-96 lg:bottom-32 text-white mx-24 lg:mx-20 font-bold text-sm lg:text-3xl">Application Form</span>
     </div>
   
     {/* Right Side with Scrollable Form */}
