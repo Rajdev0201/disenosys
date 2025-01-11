@@ -249,7 +249,7 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
                   Experience in Years
                 </label>
                 <select
-                  name="experience"
+                  name="exp"
                   value={formData.exp}
                   onChange={(e) => setFormData({ ...formData, exp: e.target.value })}
                   className="w-full  rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
@@ -275,9 +275,9 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
         </label>
         <textarea
           type="text"
-          value={formData.exp}
+          value={formData.bio}
           placeholder="Brief Introduction about yourself"
-          onChange={(e) => setFormData({ ...formData, exp: e.target.value })}
+          onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
           className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
           required
         />
@@ -285,7 +285,7 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
       <label className="block text-sm font-medium mb-2">
         Select the skills in which you are an expert
       </label>
-      <div className="p-4 grid grid-cols-2 gap-3">
+      <div className="p-4 grid lg:grid-cols-2 gap-3">
         <MultiSelectDropdown
           options={A1}
           label="Exterior Components"
@@ -299,21 +299,31 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A2}
           label="Interior Components"
           selectedOptions={selectedA2}
-          setSelectedOptions={setSelectedA2}
+          setSelectedOptions={(newSelectedOptions) => {
+            setSelectedA2(newSelectedOptions);
+            setFormData((prev) => ({ ...prev, a2: newSelectedOptions }));
+          }}
         />
 
         <MultiSelectDropdown
           options={A3}
           label="Lighting Systems"
           selectedOptions={selectedA3}
-          setSelectedOptions={setSelectedA3}
+          setSelectedOptions={(newSelectedOptions) => {
+            setSelectedA3(newSelectedOptions);
+            setFormData((prev) => ({ ...prev, a3: newSelectedOptions }));
+          }}
+
         />
 
      <MultiSelectDropdown
           options={A4}
           label="Chassis and Suspension"
           selectedOptions={selectedA4}
-          setSelectedOptions={setSelectedA4}
+          setSelectedOptions={(newSelectedOptions) => {
+            setSelectedA4(newSelectedOptions);
+            setFormData((prev) => ({ ...prev, a4: newSelectedOptions }));
+          }}
         />
 
 
@@ -321,35 +331,50 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A5}
           label="Powertrain Components"
           selectedOptions={selectedA5}
-          setSelectedOptions={setSelectedA5}
+          setSelectedOptions={(newSelectedOptions) => {
+            setSelectedA5(newSelectedOptions);
+            setFormData((prev) => ({ ...prev, a5: newSelectedOptions }));
+          }}
         />
 
 <MultiSelectDropdown
           options={A6}
           label="Electrical and Electronics:"
           selectedOptions={selectedA6}
-          setSelectedOptions={setSelectedA6}
+          setSelectedOptions={(newSelectedOptions) => {
+            setSelectedA6(newSelectedOptions);
+            setFormData((prev) => ({ ...prev, a6: newSelectedOptions }));
+          }}
         />
 
 <MultiSelectDropdown
           options={A7}
           label="Body-in-White (BIW):"
           selectedOptions={selectedA7}
-          setSelectedOptions={setSelectedA7}
+          setSelectedOptions={(newSelectedOptions) => {
+            setSelectedA7(newSelectedOptions);
+            setFormData((prev) => ({ ...prev, a7: newSelectedOptions }));
+          }}
         />
 
 <MultiSelectDropdown
           options={A8}
           label="Plastics and Trims:"
           selectedOptions={selectedA8}
-          setSelectedOptions={setSelectedA8}
+          setSelectedOptions={(newSelectedOptions) => {
+            setSelectedA8(newSelectedOptions);
+            setFormData((prev) => ({ ...prev, a8: newSelectedOptions }));
+          }}
         />
 
 <MultiSelectDropdown
           options={A9}
           label="HVAC and Thermal Systems"
           selectedOptions={selectedA9}
-          setSelectedOptions={setSelectedA9}
+          setSelectedOptions={(newSelectedOptions) => {
+            setSelectedA9(newSelectedOptions);
+            setFormData((prev) => ({ ...prev, a9: newSelectedOptions }));
+          }}
         />
 
 
@@ -357,7 +382,10 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A10}
           label="Safety Systems:"
           selectedOptions={selectedA10}
-          setSelectedOptions={setSelectedA10}
+          setSelectedOptions={(newSelectedOptions) => {
+            setSelectedA10(newSelectedOptions);
+            setFormData((prev) => ({ ...prev, a10: newSelectedOptions }));
+          }}
         />
 
 
@@ -365,7 +393,10 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A11}
           label="Electric Vehicle (EV) Specific"
           selectedOptions={selectedA11}
-          setSelectedOptions={setSelectedA11}
+          setSelectedOptions={(newSelectedOptions) => {
+            setSelectedA11(newSelectedOptions);
+            setFormData((prev) => ({ ...prev, a11: newSelectedOptions }));
+          }}
         />
       </div>
       
