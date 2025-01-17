@@ -13,8 +13,8 @@ const MentorProfile = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 via-white to-blue-100 p-6">
-        {data?.filter((data) => data._id === courseId)?.map((data) => (
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
+        {data?.filter((data) => data._id === courseId)?.map((data,i) => (
+      <div key={i} className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
         {/* Header Section */}
         <div className="flex items-center border-b pb-4 mb-6">
           <div className="w-16 h-16 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-2xl">
