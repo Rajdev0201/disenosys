@@ -1,8 +1,8 @@
 "use client"
 
-import React from 'react';
+import React, { useState } from 'react';
 
-const StepThree = ({ formData, setFormData, prevStep, handleSubmit }) => {
+const StepThree = ({ formData, setFormData, prevStep, handleSubmit,load }) => {
     const auto = [
         "Exterior Components",
         "Interior Components",
@@ -16,6 +16,23 @@ const StepThree = ({ formData, setFormData, prevStep, handleSubmit }) => {
         "Safety Systems",
         "Electric Vehicle (EV) Specific Components"
     ]
+    const [isChecked, setIsChecked] = useState(false);
+  
+    const handleCheckboxChange = () => {
+      setIsChecked(!isChecked);
+    };
+  
+    const handleFileUpload = (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+  
+      const fileType = file.type;
+      if (fileType === "application/pdf") {
+        setFormData((prev) => ({ ...prev, file }));
+      } else {
+        setError("Unsupported file type. Please upload a PDF file.");
+      }
+    };
 
  
   return (
@@ -79,6 +96,7 @@ const StepThree = ({ formData, setFormData, prevStep, handleSubmit }) => {
                     className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
                     required
                   >
+                     <option value="">-None-</option>
                     {auto?.map((lpa, index) => (
                       <option
                       key={index}
@@ -127,11 +145,26 @@ const StepThree = ({ formData, setFormData, prevStep, handleSubmit }) => {
                   type="file"
                   name="file"
                   accept=".pdf,.doc,.docx"
-                  onChange={(e) => setFormData({ ...formData, file: e.target.value })}
+                  onChange={handleFileUpload}
                   className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
                   required
                 />
               </div>
+              <div className="flex items-center mb-4">
+          <input
+            id="acceptTerms"
+            type="checkbox"
+            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+            checked={isChecked}
+            onChange={handleCheckboxChange}
+          />
+          <label
+            htmlFor="acceptTerms"
+            className="ml-2 text-gray-700 text-sm cursor-pointer"
+          >
+            I agree to the Terms and Conditions
+          </label>
+        </div>
       <div className="flex justify-between">
         <button
           onClick={prevStep}
@@ -143,7 +176,7 @@ const StepThree = ({ formData, setFormData, prevStep, handleSubmit }) => {
           onClick={handleSubmit}
           className="px-6 py-2 bg-[#182073] text-white rounded-md hover:bg-blue-400"
         >
-          Submit
+          {load ? "Loading..." : "Submit"}   
         </button>
       </div>
     </div>

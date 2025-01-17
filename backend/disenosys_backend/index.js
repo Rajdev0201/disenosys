@@ -103,7 +103,7 @@ const consult = require("./routes/consult.js")
 const Blog = require("./models/blog.js")
 const blog = require("./routes/blog.js")
 const career = require("./models/career.js")
-
+const mentor = require('./models/mentor.js');
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
@@ -233,6 +233,17 @@ const storageC = new CloudinaryStorage({
 
 const uploadCareer = multer({ storage: storageC });
 
+const storageM = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'Upload_mentor',
+    format: async (req, file) => 'pdf', 
+    public_id: (req, file) => `${Date.now()}-${file.originalname.replace(/\s+/g, '_')}`, 
+  },
+});
+
+const uploadMentor = multer({ storage: storageM });
+
 app.post('/career', uploadCareer.single('file'), async (req, res) => {
   const { name, email, phone, dob, gender, experience,expmonths, employee,current,cinr,
     expected,
@@ -281,6 +292,71 @@ app.post('/career', uploadCareer.single('file'), async (req, res) => {
   } catch (error) {
     console.error('Error saving career:', error);
     return res.status(500).send('Internal server error');
+  }
+});
+
+app.post('/mentor', uploadMentor.single('file'), async (req, res) => {
+  const { name, email, phone,link,exp,bio,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,course,automotive,totalHour,component,yearexp,brief 
+    } = req.body;
+     console.log(req.body)
+  const topics = req.body.topics ? JSON.parse(req.body.topics) : [];
+  const A1 = a1 ? JSON.parse(a1) : [];
+  const A2 = a2 ? JSON.parse(a2) : [];
+  const A3 = a1 ? JSON.parse(a3) : [];
+  const A4 = a1 ? JSON.parse(a4) : [];
+  const A5 = a1 ? JSON.parse(a5) : [];
+  const A6 = a1 ? JSON.parse(a6) : [];
+  const A7 = a1 ? JSON.parse(a7) : [];
+  const A8 = a1 ? JSON.parse(a8) : [];
+  const A9 = a1 ? JSON.parse(a9) : [];
+  const A10 = a1 ? JSON.parse(a10) : [];
+  const A11 = a1 ? JSON.parse(a11) : [];
+ 
+
+ 
+  if (!req.file) {
+    return res.status(400).send('No file uploaded.');
+  }
+  console.log(req.file)
+  try {
+    const newCareer = new mentor({
+      filePath: req.file.path,
+      name,
+      email,
+      phone,
+      link,exp,bio,
+      a1:A1,a2:A2,a3:A3,a4:A4,a5:A5,a6:A6,a7:A7,a8:A8,a9:A9,a10:A10,a11:A11,
+      course,automotive,totalHour,component,yearexp,brief,topics
+    });
+
+    await newCareer.save();
+
+    return res.status(201).json({
+      message: 'Career data uploaded successfully',
+      filePath: req.file.path,
+    });
+  } catch (error) {
+    console.error('Error saving career:', error);
+    return res.status(500).send('Internal server error');
+  }
+});
+
+
+app.get('/mentordata', async (req, res) => {
+  try {
+    const data = await mentor.find();
+
+    if (!data) {
+      return res.status(400).json({ error: 'No Data is available' });
+    }
+
+    res.status(200).json({
+      message: 'Career data retrieved successfully',
+      data: data,
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Data could not be fetched' });
   }
 });
 

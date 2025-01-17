@@ -21,6 +21,7 @@ const Sidebar = () => {
     // { href: '/certificate', label: 'Post certificate', icon: <PiCertificateBold /> },
     { href: '/gpdx', label: 'GPDX', icon: <GrScorecard />    },
     { href: '/applicants', label: 'Applicants', icon: <GrScorecard />},
+    { href: '/mentors', label: 'Mentors-Profile', icon: <GrScorecard />},
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];

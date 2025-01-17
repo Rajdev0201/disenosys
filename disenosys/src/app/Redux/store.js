@@ -17,6 +17,7 @@ import bootcamp from "./features/bootcampSlice.js";
 import consult from "./features/consultSlice.js";
 import blog from "./features/blogSlice.js";
 import career from "./features/careerSlice.js";
+import mentor from "./features/mentorSlice.js";
 
 export default configureStore({
   reducer: {
@@ -37,5 +38,6 @@ export default configureStore({
     consult:consult,
     blog:blog,
     career:career,
+    mentor:mentor,
   },
 });

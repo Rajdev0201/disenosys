@@ -174,6 +174,7 @@ const StepTwo = ({ formData, setFormData, nextStep,prevStep}) => {
                     className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
                     required
                   >
+                     <option value="">-None-</option>
                     {auto?.map((lpa, index) => (
                       <option
                       key={index}

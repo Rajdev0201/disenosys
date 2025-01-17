@@ -5,13 +5,18 @@ const MultiSelectDropdown = ({ label, options, selectedOptions, setSelectedOptio
   const [isOpen, setIsOpen] = useState(false); // State to toggle dropdown
 
   const handleSelectionChange = (option) => {
-    setSelectedOptions((prevSelected) =>
-      prevSelected.includes(option)
-        ? prevSelected.filter((item) => item !== option) // Remove if already selected
-        : [...prevSelected, option] // Add if not selected
-    );
+    setSelectedOptions((prevSelected) => {
+      if (!Array.isArray(prevSelected)) {
+        console.error("prevSelected is not an array:", prevSelected);
+        return [];
+      }
+      return prevSelected.includes(option)
+        ? prevSelected.filter((item) => item !== option) // Remove option
+        : [...prevSelected, option]; // Add option
+    });
   };
-
+  
+  
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev); // Toggle dropdown open/close
   };

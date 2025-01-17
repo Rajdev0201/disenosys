@@ -180,7 +180,7 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
     { label: "30 Years", value: 30 },
   ];
    
-  const [selectedA1, setSelectedA1] = useState([]);
+  const [selectedA1, setSelectedA1] = useState([]); 
   const [selectedA2, setSelectedA2] = useState([]);
   const [selectedA3, setSelectedA3] = useState([]);
   const [selectedA4, setSelectedA4] = useState([]);
@@ -286,22 +286,41 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
         Select the skills in which you are an expert
       </label>
       <div className="p-4 grid lg:grid-cols-2 gap-3">
-        <MultiSelectDropdown
-          options={A1}
-          label="Exterior Components"
-          selectedOptions={selectedA1}
-          setSelectedOptions={(newSelectedOptions) => {
-            setSelectedA1(newSelectedOptions);
-            setFormData((prev) => ({ ...prev, a1: newSelectedOptions }));
-          }}
-        />
+       
+      <MultiSelectDropdown
+  options={A1} // Array of options
+  label="Exterior Components"
+  selectedOptions={selectedA1} // Array of selected options
+  setSelectedOptions={(updatedSelectedOptions) => {
+    const resolvedOptions =
+      typeof updatedSelectedOptions === "function"
+        ? updatedSelectedOptions(selectedA1)
+        : updatedSelectedOptions;
+
+    setSelectedA1(resolvedOptions); 
+    setFormData((prev) => ({
+      ...prev,
+      a1: resolvedOptions, 
+    }));
+  }}
+/>
+
+
         <MultiSelectDropdown
           options={A2}
           label="Interior Components"
           selectedOptions={selectedA2}
-          setSelectedOptions={(newSelectedOptions) => {
-            setSelectedA2(newSelectedOptions);
-            setFormData((prev) => ({ ...prev, a2: newSelectedOptions }));
+          setSelectedOptions={(updatedSelectedOptions) => {
+            const resolvedOptions =
+              typeof updatedSelectedOptions === "function"
+                ? updatedSelectedOptions(selectedA2)
+                : updatedSelectedOptions;
+        
+            setSelectedA2(resolvedOptions); 
+            setFormData((prev) => ({
+              ...prev,
+              a2: resolvedOptions, 
+            }));
           }}
         />
 
@@ -309,9 +328,17 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A3}
           label="Lighting Systems"
           selectedOptions={selectedA3}
-          setSelectedOptions={(newSelectedOptions) => {
-            setSelectedA3(newSelectedOptions);
-            setFormData((prev) => ({ ...prev, a3: newSelectedOptions }));
+          setSelectedOptions={(updatedSelectedOptions) => {
+            const resolvedOptions =
+              typeof updatedSelectedOptions === "function"
+                ? updatedSelectedOptions(selectedA3)
+                : updatedSelectedOptions;
+        
+            setSelectedA3(resolvedOptions); 
+            setFormData((prev) => ({
+              ...prev,
+              a3: resolvedOptions, 
+            }));
           }}
 
         />
@@ -320,9 +347,17 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A4}
           label="Chassis and Suspension"
           selectedOptions={selectedA4}
-          setSelectedOptions={(newSelectedOptions) => {
-            setSelectedA4(newSelectedOptions);
-            setFormData((prev) => ({ ...prev, a4: newSelectedOptions }));
+          setSelectedOptions={(updatedSelectedOptions) => {
+            const resolvedOptions =
+              typeof updatedSelectedOptions === "function"
+                ? updatedSelectedOptions(selectedA4)
+                : updatedSelectedOptions;
+        
+            setSelectedA4(resolvedOptions); 
+            setFormData((prev) => ({
+              ...prev,
+              a4: resolvedOptions, 
+            }));
           }}
         />
 
@@ -331,9 +366,17 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A5}
           label="Powertrain Components"
           selectedOptions={selectedA5}
-          setSelectedOptions={(newSelectedOptions) => {
-            setSelectedA5(newSelectedOptions);
-            setFormData((prev) => ({ ...prev, a5: newSelectedOptions }));
+          setSelectedOptions={(updatedSelectedOptions) => {
+            const resolvedOptions =
+              typeof updatedSelectedOptions === "function"
+                ? updatedSelectedOptions(selectedA5)
+                : updatedSelectedOptions;
+        
+            setSelectedA5(resolvedOptions); 
+            setFormData((prev) => ({
+              ...prev,
+              a5: resolvedOptions, 
+            }));
           }}
         />
 
@@ -341,9 +384,17 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A6}
           label="Electrical and Electronics:"
           selectedOptions={selectedA6}
-          setSelectedOptions={(newSelectedOptions) => {
-            setSelectedA6(newSelectedOptions);
-            setFormData((prev) => ({ ...prev, a6: newSelectedOptions }));
+          setSelectedOptions={(updatedSelectedOptions) => {
+            const resolvedOptions =
+              typeof updatedSelectedOptions === "function"
+                ? updatedSelectedOptions(selectedA6)
+                : updatedSelectedOptions;
+        
+            setSelectedA6(resolvedOptions); 
+            setFormData((prev) => ({
+              ...prev,
+              a6: resolvedOptions, 
+            }));
           }}
         />
 
@@ -351,9 +402,17 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A7}
           label="Body-in-White (BIW):"
           selectedOptions={selectedA7}
-          setSelectedOptions={(newSelectedOptions) => {
-            setSelectedA7(newSelectedOptions);
-            setFormData((prev) => ({ ...prev, a7: newSelectedOptions }));
+          setSelectedOptions={(updatedSelectedOptions) => {
+            const resolvedOptions =
+              typeof updatedSelectedOptions === "function"
+                ? updatedSelectedOptions(selectedA7)
+                : updatedSelectedOptions;
+        
+            setSelectedA7(resolvedOptions); 
+            setFormData((prev) => ({
+              ...prev,
+              a7: resolvedOptions, 
+            }));
           }}
         />
 
@@ -361,9 +420,17 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A8}
           label="Plastics and Trims:"
           selectedOptions={selectedA8}
-          setSelectedOptions={(newSelectedOptions) => {
-            setSelectedA8(newSelectedOptions);
-            setFormData((prev) => ({ ...prev, a8: newSelectedOptions }));
+          setSelectedOptions={(updatedSelectedOptions) => {
+            const resolvedOptions =
+              typeof updatedSelectedOptions === "function"
+                ? updatedSelectedOptions(selectedA8)
+                : updatedSelectedOptions;
+        
+            setSelectedA8(resolvedOptions); 
+            setFormData((prev) => ({
+              ...prev,
+              a8: resolvedOptions, 
+            }));
           }}
         />
 
@@ -371,9 +438,17 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A9}
           label="HVAC and Thermal Systems"
           selectedOptions={selectedA9}
-          setSelectedOptions={(newSelectedOptions) => {
-            setSelectedA9(newSelectedOptions);
-            setFormData((prev) => ({ ...prev, a9: newSelectedOptions }));
+          setSelectedOptions={(updatedSelectedOptions) => {
+            const resolvedOptions =
+              typeof updatedSelectedOptions === "function"
+                ? updatedSelectedOptions(selectedA9)
+                : updatedSelectedOptions;
+        
+            setSelectedA9(resolvedOptions); 
+            setFormData((prev) => ({
+              ...prev,
+              a9: resolvedOptions, 
+            }));
           }}
         />
 
@@ -382,9 +457,17 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A10}
           label="Safety Systems:"
           selectedOptions={selectedA10}
-          setSelectedOptions={(newSelectedOptions) => {
-            setSelectedA10(newSelectedOptions);
-            setFormData((prev) => ({ ...prev, a10: newSelectedOptions }));
+          setSelectedOptions={(updatedSelectedOptions) => {
+            const resolvedOptions =
+              typeof updatedSelectedOptions === "function"
+                ? updatedSelectedOptions(selectedA10)
+                : updatedSelectedOptions;
+        
+            setSelectedA10(resolvedOptions); 
+            setFormData((prev) => ({
+              ...prev,
+              a10: resolvedOptions, 
+            }));
           }}
         />
 
@@ -393,9 +476,17 @@ const StepOne = ({ formData, setFormData, nextStep }) => {
           options={A11}
           label="Electric Vehicle (EV) Specific"
           selectedOptions={selectedA11}
-          setSelectedOptions={(newSelectedOptions) => {
-            setSelectedA11(newSelectedOptions);
-            setFormData((prev) => ({ ...prev, a11: newSelectedOptions }));
+          setSelectedOptions={(updatedSelectedOptions) => {
+            const resolvedOptions =
+              typeof updatedSelectedOptions === "function"
+                ? updatedSelectedOptions(selectedA11)
+                : updatedSelectedOptions;
+        
+            setSelectedA11(resolvedOptions); 
+            setFormData((prev) => ({
+              ...prev,
+              a11: resolvedOptions, 
+            }));
           }}
         />
       </div>

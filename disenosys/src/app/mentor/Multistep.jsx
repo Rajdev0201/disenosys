@@ -4,9 +4,11 @@ import React, { useState } from "react";
 import StepOne from "./Stepone";
 import StepTwo from "./Steptwo";
 import StepThree from "./StepThree"; 
+import axios from "axios";
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const[load,setLoad] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -47,7 +49,9 @@ const MultiStepForm = () => {
   }
   const prevStep = () => setCurrentStep((prev) => prev - 1);
 
-  const handleSubmit = () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoad(true);
     const {
       name,
       email,
@@ -136,9 +140,70 @@ const MultiStepForm = () => {
       return;
     }
   
-    // If all validations pass
-    console.log("Form Submitted:", formData);
-    alert("Form Submitted Successfully!");
+
+    const form = new FormData();
+    form.append("name", formData.name);
+    form.append("email", formData.email);
+    form.append("phone", formData.phone);     
+    form.append("link",formData.link);
+    form.append("exp",formData.exp);
+    form.append("bio",formData.bio); 
+    if (Array.isArray(formData.topics)) {  
+    form.append("a1", JSON.stringify(formData.a1));  
+    } 
+    if (Array.isArray(formData.topics)) {   
+    form.append("a2", JSON.stringify(formData.a2));  
+    }
+    if (Array.isArray(formData.topics)) {     
+form.append("a3", JSON.stringify(formData.a3));     
+    }
+    if (Array.isArray(formData.topics)) { 
+form.append("a4", JSON.stringify(formData.a4));  
+    }
+    if (Array.isArray(formData.topics)) {    
+form.append("a5", JSON.stringify(formData.a5));   
+    }
+    if (Array.isArray(formData.topics)) {   
+form.append("a6", JSON.stringify(formData.a6));  
+    }
+    if (Array.isArray(formData.topics)) {    
+form.append("a7", JSON.stringify(formData.a7));  
+    }
+    if (Array.isArray(formData.topics)) {    
+form.append("a8", JSON.stringify(formData.a8));    
+    }
+    if (Array.isArray(formData.topics)) {  
+form.append("a9", JSON.stringify(formData.a9));   
+    }  
+    if (Array.isArray(formData.topics)) { 
+form.append("a10", JSON.stringify(formData.a10));     
+    }
+    if (Array.isArray(formData.topics)) { 
+form.append("a11", JSON.stringify(formData.a11));  
+    }
+   
+    form.append("course",formData.course);       
+    form.append("automotive",formData.automotive);  
+    form.append("totalHour",formData.totalHour);                     
+    if (Array.isArray(formData.topics)) {
+      form.append("topics", JSON.stringify(formData.topics));
+    }
+    form.append("component", formData.component);
+    form.append("yearexp", formData.yearexp);
+    form.append("brief", formData.brief);
+    form.append("file", formData.file);
+    try {
+      await axios.post("https://disenosys-dkhj.onrender.com/mentor", form, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      alert("Form submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting career:", error);
+      alert("An error occurred. Please try again later.");
+    }
+    setLoad(false);
   };
   
 
@@ -211,6 +276,7 @@ const MultiStepForm = () => {
             setFormData={setFormData}
             prevStep={prevStep}
             handleSubmit={handleSubmit}
+            load={load}
           />
         )}
       </div>
