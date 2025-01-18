@@ -23,7 +23,7 @@ const mentorSchema = new mongoose.Schema({
   automotive:{type:String},
   totalHour:{type:String},
   yearexp:{type:String},
-  component:{type:String},
+  // component:{type:String},
   brief:{type:String},
  topics: [
     {

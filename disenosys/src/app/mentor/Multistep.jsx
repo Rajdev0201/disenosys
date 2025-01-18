@@ -9,7 +9,8 @@ import axios from "axios";
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const[load,setLoad] = useState(false);
-  const [formData, setFormData] = useState({
+  const [isChecked, setIsChecked] = useState(false);
+  const initialFormData = {
     name: "",
     email: "",
     phone: "",
@@ -37,12 +38,19 @@ const MultiStepForm = () => {
         }],
         },
       ],
-      component:"",
+      // component:"",
       yearexp:'',
       brief:'',
       file: null,
-  });
+  };
 
+  const [formData, setFormData] = useState(initialFormData);
+  const resetStepThree = () => {
+    setFormData(initialFormData); // Reset formData
+    setIsChecked(false); // Reset the checkbox
+  };
+  
+   
   const nextStep = () => {
 
     setCurrentStep((prev) => prev + 1);
@@ -120,10 +128,10 @@ const MultiStepForm = () => {
       return;
     }
   
-    if (!component.trim()) {
-      alert("Error: Component field is required.");
-      return;
-    }
+    // if (!component.trim()) {
+    //   alert("Error: Component field is required.");
+    //   return;
+    // }
   
     if (!yearexp.trim()) {
       alert("Error: Year of experience is required.");
@@ -188,7 +196,7 @@ form.append("a11", JSON.stringify(formData.a11));
     if (Array.isArray(formData.topics)) {
       form.append("topics", JSON.stringify(formData.topics));
     }
-    form.append("component", formData.component);
+    // form.append("component", formData.component);
     form.append("yearexp", formData.yearexp);
     form.append("brief", formData.brief);
     form.append("file", formData.file);
@@ -199,6 +207,8 @@ form.append("a11", JSON.stringify(formData.a11));
         },
       });
       alert("Form submitted successfully!");
+      setFormData(initialFormData);
+      resetStepThree();
     } catch (error) {
       console.error("Error submitting career:", error);
       alert("An error occurred. Please try again later.");
@@ -276,6 +286,9 @@ form.append("a11", JSON.stringify(formData.a11));
             setFormData={setFormData}
             prevStep={prevStep}
             handleSubmit={handleSubmit}
+            initialFormData={initialFormData} 
+            isChecked={isChecked}
+            setIsChecked={setIsChecked} 
             load={load}
           />
         )}

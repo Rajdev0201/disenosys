@@ -1,22 +1,10 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 
-const StepThree = ({ formData, setFormData, prevStep, handleSubmit,load }) => {
-    const auto = [
-        "Exterior Components",
-        "Interior Components",
-        "Lighting Systems",
-        "Chassis and Suspension Components",
-        "Powertrain Components",
-        "Electrical and Electronics",
-        "Body-in-White (BIW)",
-        "Plastics and Trims",
-        "HVAC and Thermal Systems",
-        "Safety Systems",
-        "Electric Vehicle (EV) Specific Components"
-    ]
-    const [isChecked, setIsChecked] = useState(false);
+const StepThree = ({ formData, setFormData, prevStep, handleSubmit,load, isChecked,
+  setIsChecked}) => {
+
   
     const handleCheckboxChange = () => {
       setIsChecked(!isChecked);
@@ -34,7 +22,6 @@ const StepThree = ({ formData, setFormData, prevStep, handleSubmit,load }) => {
       }
     };
 
- 
   return (
     <div className="p-6">
       <h2 className="text-2xl font-semibold mb-4 text-[#182073] font-poppins">Section 3: Experience Validation</h2>
@@ -85,7 +72,7 @@ const StepThree = ({ formData, setFormData, prevStep, handleSubmit,load }) => {
 
 
 
-      <div className='mb-4'>
+      {/* <div className='mb-4'>
                   <label className="block text-sm font-medium mb-2">
                   Select Component Name
                   </label>
@@ -108,7 +95,7 @@ const StepThree = ({ formData, setFormData, prevStep, handleSubmit,load }) => {
                     </option>
                   ))}
                   </select>
-     </div>
+     </div> */}
 
      <div className="mb-4">
         <label className="block text-sm font-medium mb-2">

@@ -236,9 +236,9 @@ const uploadCareer = multer({ storage: storageC });
 const storageM = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'Upload_mentor',
-    format: async (req, file) => 'pdf', 
-    public_id: (req, file) => `${Date.now()}-${file.originalname.replace(/\s+/g, '_')}`, 
+    folder: 'mentor_images', 
+    format: async (req, file) => 'png', 
+    public_id: (req, file) => `${Date.now()}-${file.originalname}`,
   },
 });
 
