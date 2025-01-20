@@ -184,6 +184,43 @@ export const SignupData = (userData) => async (dispatch) => {
         });
     }
   };
+
+
+  export const studentLogin1 = (userData, router) => async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        "https://disenosys-dkhj.onrender.com/api/student/login",
+        userData
+      );
+      console.log(data); 
+      dispatch(setStudent(data));
+      toast.dark('Login successful!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      localStorage.setItem("student", JSON.stringify(data));
+      router.push('/quizone')
+    } catch (err) {
+      const errorMessage = err.response?.data?.error || 'An unexpected error occurred';
+      toast.dark(errorMessage || 'An unexpected error occurred', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+  };
+  
   
 
 
