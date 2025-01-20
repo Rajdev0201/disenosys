@@ -189,6 +189,12 @@ const Quiz = ({ questions }) => {
     }
   };
 
+
+  const handleClick = (index) => {
+    setCurrentQuestionIndex(index); // Update the current index
+    handleRevisitSkippedQuestion(index); // Call the provided function
+  };
+  
   const handlePrevious = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
@@ -355,16 +361,18 @@ const Quiz = ({ questions }) => {
               <div className="bg-white p-6 shadow-sm rounded">
                 <h3 className="text-lg font-semibold">Answer Status</h3>
                 <div className="flex flex-wrap mt-4">
-                  {answers.map((answer, index) => (
-                    <button
-                      key={index}
-                      className='w-10 h-10 rounded-full text-white font-bold m-1 bg-[#182073]'
-                      onClick={() => handleRevisitSkippedQuestion(index)}
-                    >
-                      {index + 1}
-                    </button>
-                  ))}
-                </div>
+        {answers.map((answer, index) => (
+          <button
+            key={index}
+            className={`w-10 h-10 rounded-full text-white font-bold m-1 ${
+              currentQuestionIndex === index ? 'bg-blue-500' : 'bg-[#182073]'
+            }`}
+            onClick={() => handleClick(index)}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
 
                 {/* <div className="flex flex-wrap mt-4">
   {answers.map((answer, index) => (
