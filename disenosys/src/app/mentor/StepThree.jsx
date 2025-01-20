@@ -113,7 +113,7 @@ const StepThree = ({ formData, setFormData, prevStep, handleSubmit,load, isCheck
 
      <div className="mb-4">
         <label className="block text-sm font-medium mb-2">
-          Brief Introduction/Bio
+        Project Description
         </label>
         <textarea
           type="text"
@@ -163,7 +163,9 @@ const StepThree = ({ formData, setFormData, prevStep, handleSubmit,load, isCheck
           onClick={handleSubmit}
           className="px-6 py-2 bg-[#182073] text-white rounded-md hover:bg-blue-400"
         >
-          {load ? "Loading..." : "Submit"}   
+          
+        Submit
+            
         </button>
       </div>
     </div>
