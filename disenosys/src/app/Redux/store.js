@@ -13,6 +13,7 @@ import resume from './features/resumeSlice.js';
 import student  from './features/studentSlice.js';
 import studentCode from './features/codeSlice.js';
 import externalCode from "./features/externalSlice.js";
+import companyCode from "./features/companyCodeSlice.js"
 import bootcamp from "./features/bootcampSlice.js";
 import consult from "./features/consultSlice.js";
 import blog from "./features/blogSlice.js";
@@ -39,5 +40,6 @@ export default configureStore({
     blog:blog,
     career:career,
     mentor:mentor,
+    companyCode:companyCode
   },
 });

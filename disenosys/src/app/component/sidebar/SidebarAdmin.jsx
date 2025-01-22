@@ -78,6 +78,10 @@ const Sidebar = () => {
                   <SiAuthentik className="mr-3" />
                   External-List
                 </Link>
+                <Link href="/companycode" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/companycode' ? 'bg-blue-700' : ''}`}>
+                  <SiAuthentik className="mr-3" />
+                  Company-List
+                </Link>
               </div>
             )}
           </div>

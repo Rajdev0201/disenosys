@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Admin, FacebookLog, Login, Signup } from '../features/authSlice.js';
 import { setStudent, student } from "../features/studentSlice.js"
 import {remove, setCode} from "../features/codeSlice.js";
+import {removeCodeC, setCompanyCode} from "../features/companyCodeSlice.js";
 import {setExternal,removeCode} from "../features/externalSlice.js";
 
 
@@ -221,7 +222,40 @@ export const SignupData = (userData) => async (dispatch) => {
     }
   };
   
-  
+  export const studentLoginBIW = (userData, router) => async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        "https://disenosys-dkhj.onrender.com/api/student/BIW-login",
+        userData
+      );
+      console.log(data); 
+      dispatch(setStudent(data));
+      toast.dark('Login successful!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      localStorage.setItem("student", JSON.stringify(data));
+      router.push('/quizbiw')
+    } catch (err) {
+      const errorMessage = err.response?.data?.error || 'An unexpected error occurred';
+      toast.dark(errorMessage || 'An unexpected error occurred', {
+            position: "top-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+        });
+    }
+  };
 
 
 
@@ -234,6 +268,18 @@ export const SignupData = (userData) => async (dispatch) => {
     } catch (error) {
         console.error('Error fetch code:', error);
     }
+}
+
+//company code
+
+export const companyCode = () => async (dispatch) => {
+  try {
+      const res = await axios.get("https://disenosys-dkhj.onrender.com/api/admin/companycode");
+      const getData = res.data;
+      dispatch(setCompanyCode(getData));
+  } catch (error) {
+      console.error('Error fetch code:', error);
+  }
 }
 
 //external code 
@@ -293,3 +339,24 @@ export const deleteExternalCode = (id) => async (dispatch) => {
   }
 }
 
+//company code delete
+
+export const deleteCompanyCode = (id) => async (dispatch) => {
+  try {
+    await axios.delete(`http://localhost:8000/api/admin/compnyCode/${id}`); //https://disenosys-dkhj.onrender.com
+    dispatch(removeCodeC(id));
+    dispatch(companyCode());
+    toast.dark('The code has Deleted!', {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  } catch(error){
+    console.error('Error fetch code:', error);
+  }
+}

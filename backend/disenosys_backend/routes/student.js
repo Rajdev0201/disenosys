@@ -62,6 +62,66 @@ router.post('/login', async (req, res) => {
     }
 });
 
+router.post('/BIW-login', async (req, res) => {
+  const { name, email, code,mobile } = req.body;
+  
+  try {
+      const foundCode = await Code.findOne({ code });
+      if (!foundCode) {
+          return res.status(400).json({ error: 'Invalid code' });
+      }
+      
+  if (!foundCode.isActive) {
+    return res.status(400).json({ error: 'The code is inactive.' });
+  }
+      if (foundCode.userType === 'companycode') {
+          const currentDate = new Date();
+          if (foundCode.expiresAt && foundCode.expiresAt <= currentDate) {
+              return res.status(400).json({ error: 'The code has expired.' });
+          }
+      }
+
+      if (foundCode.cname !== 'BIW') {
+        return res.status(400).json({ error: 'Invalid code for this exam.' });
+    }
+
+      let existingStudent = await Student.findOne({ email });
+
+      if (existingStudent) {
+
+
+          if (existingStudent.attendedQuiz === true) {
+              return res.status(400).json({ error: 'You have already attended the quiz.' });
+          }
+
+          return res.json({
+              message: 'Welcome back! You can attend the quiz.',
+              user: existingStudent,
+          });
+      }
+
+      const student = new Student({
+          name,
+          email,
+          college: foundCode.college,
+          userType: foundCode.userType,
+          codeUsed: code,
+          courseName:foundCode.cname,
+          mobile
+      });
+
+      const savedStudent = await student.save();
+
+      res.json({ 
+          message: 'Login successful, you can attend the quiz.', 
+          user: savedStudent 
+      });
+
+  } catch (error) {
+      res.status(400).json({ error: 'Login failed' });
+      console.log(error);
+  }
+});
 
 
 

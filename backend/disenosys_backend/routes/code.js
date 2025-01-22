@@ -44,70 +44,15 @@ router.post('/generate-code', async (req, res) => {
 
 
 
-// router.post('/generate-external-code', async (req, res) => {
-
-
-//     const { month, year } = req.body;
-
-
-//     const expirationDate = new Date(year, month, 1);
-//     expirationDate.setDate(1);
-//     expirationDate.setHours(0, 0, 0, 0);
-
-  
-//     expirationDate.setMonth(expirationDate.getMonth() + 1);
-
-    
-
-//     try {
-//         let existingCode = await Code.findOne({ month });
-        
-//     if (existingCode) {
-//         return res.json({ 
-//             message: `A code already exists for ${existingCode.college}.`,
-//             code: existingCode 
-//         });
-//     }
-
-//     const code = Math.random().toString(36).substr(2, 8).toUpperCase();
-
-//     const newCode = new Code({
-//         code,
-//         userType: 'external',
-//         expiresAt: expirationDate, 
-//         college: null
-//     });
-
- 
-//         await newCode.save();
-//         res.status(201).json({ code: newCode });
-//     } catch (error) {
-//         res.status(500).json({ message: 'Error generating code', error });
-//     }
-// });
-
-
-
-//backend 
-
-
-
-//backend 
-
-
 router.post('/generate-external-code', async (req, res) => {
     const { month, year } = req.body;
-
-    // Ensure the month and year are valid
     if (month < 0 || month > 11 || year < 1900) {
         return res.status(400).json({ message: 'Invalid month or year provided.' });
     }
 
-    // Set expiration date to the end of the current month
-    const expirationDate = new Date(year, month + 1, 0, 23, 59, 59); // Set to the last moment of the current month
+    const expirationDate = new Date(year, month + 1, 0, 23, 59, 59); 
 
     try {
-        // Check for existing code in the specified month
         let existingCode = await Code.findOne({
             userType: 'external',
             expiresAt: {
@@ -115,8 +60,6 @@ router.post('/generate-external-code', async (req, res) => {
                 $lte: expirationDate // Last day of the month
             }
         });
-
-        // If an existing code is found, return it
         if (existingCode) {
             return res.json({
                 message: `A code already exists for ${month + 1}/${year}.`,
@@ -124,7 +67,6 @@ router.post('/generate-external-code', async (req, res) => {
             });
         }
 
-        // Generate new code
         const code = Math.random().toString(36).substr(2, 8).toUpperCase();
 
         const newCode = new Code({
@@ -144,6 +86,48 @@ router.post('/generate-external-code', async (req, res) => {
     }
 });
 
+router.post('/generate-company-code', async (req, res) => {
+    const { cname,month, year } = req.body;
+    if (month < 0 || month > 11 || year < 1900) {
+        return res.status(400).json({ message: 'Invalid month or year provided.' });
+    }
+
+    const expirationDate = new Date(year, month + 1, 0, 23, 59, 59); 
+
+    try {
+        let existingCode = await Code.findOne({
+            userType: 'companycode',
+            expiresAt: {
+                $gte: new Date(year, month, 1), // First day of the month
+                $lte: expirationDate // Last day of the month
+            }
+        });
+        if (existingCode) {
+            return res.json({
+                message: `A code already exists for ${month + 1}/${year}.`,
+                code: existingCode
+            });
+        }
+
+        const code = Math.random().toString(36).substr(2, 8).toUpperCase();
+
+        const newCode = new Code({
+            code,
+            cname,
+            userType: 'companycode',
+            expiresAt: expirationDate,
+            college: null
+        });
+
+        await newCode.save();
+        res.status(201).json({
+            message: `A new code has been generated for ${month + 1}/${year}.`,
+            code: newCode
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Failed generating code', error });
+    }
+});
 
 
 router.get('/studentCode', async (req,res) => {
@@ -219,15 +203,33 @@ router.get('/externalCode', async (req,res) => {
         }
    
         res.status(200).json({
-            message: 'External code has deleted',
+            message: 'External code has created',
             data: student,
           });
         }catch(err){
             console.log(err);
-            return res.status(500).json({err : "data is not deleted"})
+            return res.status(500).json({err : "data is not created"})
         }
 })
 
+router.get('/companyCode', async (req,res) => {
+    
+    try{
+        const student = await Code.find({userType:"companycode"});
+    
+        if(!student){
+              return res.status(400).json({ error: 'No Data is available' });
+        }
+   
+        res.status(200).json({
+            message: ' companycode has created',
+            data: student,
+          });
+        }catch(err){
+            console.log(err);
+            return res.status(500).json({err : "data is not created"})
+        }
+})
 
 
 router.delete('/externalCode/:id', async (req,res) => {
@@ -249,6 +251,23 @@ router.delete('/externalCode/:id', async (req,res) => {
         }
 })
 
-
+router.delete('/compnyCode/:id', async (req,res) => {
+    const { id } = req.params;
+    try{
+        const student = await Code.find({userType:"companycode"});
+    
+        if(!student){
+              return res.status(400).json({ error: 'No Data is available' });
+        }
+        const fixed = await Code.findByIdAndDelete(id);
+        res.status(200).json({
+            message: 'External code has deleted',
+            data: fixed,
+          });
+        }catch(err){
+            console.log(err);
+            return res.status(500).json({err : "data is not deleted"})
+        }
+})
 
 module.exports = router;
