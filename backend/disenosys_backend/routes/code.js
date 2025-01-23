@@ -98,16 +98,16 @@ router.post('/generate-company-code', async (req, res) => {
         let existingCode = await Code.findOne({
             userType: 'companycode',
             expiresAt: {
-                $gte: new Date(year, month, 1), // First day of the month
-                $lte: expirationDate // Last day of the month
+                $gte: new Date(year, month, 1),
+                $lte: expirationDate
             }
         });
-        if (existingCode) {
-            return res.json({
-                message: `A code already exists for ${month + 1}/${year}.`,
-                code: existingCode
-            });
-        }
+        // if (existingCode) {
+        //     return res.json({
+        //         message: `A code already exists for ${month + 1}/${year}.`,
+        //         code: existingCode
+        //     });
+        // }
 
         const code = Math.random().toString(36).substr(2, 8).toUpperCase();
 

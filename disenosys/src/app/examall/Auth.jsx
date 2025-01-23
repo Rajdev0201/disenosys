@@ -20,6 +20,7 @@ const Auth = () => {
   const handleSignin = async (e) => {
     e.preventDefault();
     dispatch(studentLoginBIW({ name, email, code,mobile }, router));
+    router.push(`/quizall?code=${code}`)
     setName("");
     setEmail("");
     setCode("");

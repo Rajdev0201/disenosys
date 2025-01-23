@@ -1125,7 +1125,6 @@ app.post("/send-single-certificate", uploadsingle.none(),async (req, res) => {
 
 
 
-
 const upload = multer({ dest: 'uploadsquiz/' });
 
 
@@ -1178,55 +1177,79 @@ app.post('/quiz', upload.single('file'), async (req, res) => {
   }
 });
 
-
 app.post('/biw', upload.single('file'), async (req, res) => {
   try {
-      const workbook = XLSX.readFile(req.file.path);
-      const sheetName = workbook.SheetNames[0];
-      const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
+    const { examname, createdBy } = req.body;
 
-      for (const row of sheetData) {
-          console.log("Processing row:", row);
+    if (!req.file || !examname || !createdBy) {
+      return res.status(400).json({ error: 'Missing required fields or file' });
+    }
 
-          const normalizedRow = Object.fromEntries(
-              Object.entries(row).map(([key, value]) => [key.trim(), String(value).trim()])
-          );
+    // Read Excel File
+    const workbook = XLSX.readFile(req.file.path);
+    const sheetName = workbook.SheetNames[0];
+    const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-          const options = [
-              { text: normalizedRow['Option1'] || '', isCorrect: normalizedRow['Option1_isCorrect'].toUpperCase() === 'TRUE' },
-              { text: normalizedRow['Option2'] || '', isCorrect: normalizedRow['Option2_isCorrect'].toUpperCase() === 'TRUE' },
-              { text: normalizedRow['Option3'] || '', isCorrect: normalizedRow['Option3_isCorrect'].toUpperCase() === 'TRUE' },
-              { text: normalizedRow['Option4'] || '', isCorrect: normalizedRow['Option4_isCorrect'].toUpperCase() === 'TRUE' }
-          ];
+    for (const row of sheetData) {
+      console.log("Processing row:", row);
 
-          console.log("Constructed options:", options);
+      // Normalize row keys and values
+      const normalizedRow = Object.fromEntries(
+        Object.entries(row).map(([key, value]) => [key.trim(), String(value).trim()])
+      );
 
-          // Check if the question and options are valid
-          if (normalizedRow['Question'] && options.every(option => option.text)) {
-              const question = new BIW({
-                  question: normalizedRow['Question'],
-                  options
-              });
+      const options = [
+        {
+          text: normalizedRow['Option1'] || '',
+          isCorrect: normalizedRow['Option1_isCorrect']?.toUpperCase() === 'TRUE'
+        },
+        {
+          text: normalizedRow['Option2'] || '',
+          isCorrect: normalizedRow['Option2_isCorrect']?.toUpperCase() === 'TRUE'
+        },
+        {
+          text: normalizedRow['Option3'] || '',
+          isCorrect: normalizedRow['Option3_isCorrect']?.toUpperCase() === 'TRUE'
+        },
+        {
+          text: normalizedRow['Option4'] || '',
+          isCorrect: normalizedRow['Option4_isCorrect']?.toUpperCase() === 'TRUE'
+        }
+      ];
 
-              // console.log("Question object to save:", JSON.stringify(question, null, 2));
+      console.log("Constructed options:", options);
 
-              try {
-                  const savedQuestion = await question.save();
-                  console.log(`Saved question: ${savedQuestion.question}`);
-              } catch (saveError) {
-                  console.error(`Error saving question: ${saveError.message}`, saveError);
-              }
-          } else {
-              console.warn(`Skipping question due to missing fields: ${JSON.stringify(normalizedRow)}`);
-          }
+      // Validate fields before saving
+      if (
+        normalizedRow['Question'] &&
+        options.every(option => option.text) &&
+        options.some(option => option.isCorrect) // Ensure at least one correct answer
+      ) {
+        const question = new BIW({
+          question: normalizedRow['Question'],
+          options,
+          examname, // From req.body
+          createdBy // From req.body
+        });
+
+        try {
+          const savedQuestion = await question.save();
+          console.log(`Saved question: ${savedQuestion.question}`);
+        } catch (saveError) {
+          console.error(`Error saving question: ${saveError.message}`, saveError);
+        }
+      } else {
+        console.warn(`Skipping invalid row: ${JSON.stringify(normalizedRow)}`);
       }
+    }
 
-      res.status(200).json({ message: 'Questions uploaded and saved successfully!' });
+    res.status(200).json({ message: 'Questions uploaded and saved successfully!' });
   } catch (err) {
-      console.error('Error details:', err);
-      res.status(500).json({ error: 'Failed to upload questions', details: err });
+    console.error('Error details:', err);
+    res.status(500).json({ error: 'Failed to upload questions', details: err });
   }
 });
+
 
 const catia = multer({ dest: 'uploadsquiz/' });
 app.post('/catia', catia.single('file'), async (req, res) => {

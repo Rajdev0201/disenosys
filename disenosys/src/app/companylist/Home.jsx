@@ -1,12 +1,31 @@
 "use client";
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const ExternalCodeGenerator = () => {
-  const [cname, setCname] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
   const [generatedCode, setGeneratedCode] = useState("");
   const [message, setMessage] = useState("");
+
+  const [examNames, setExamNames] = useState([]);
+  const [cname, setCname] = useState("");
+
+  useEffect(() => {
+    axios
+      .get("https://disenosys-dkhj.onrender.com/api/questions/examnames")
+      .then((response) => {
+        setExamNames(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching exam names:", error);
+      });
+  }, []);
+
+  const handleSelectChange = (e) => {
+    setCname(e.target.value);
+    console.log("Selected Exam:", e.target.value); 
+  };
 
   const handleGenerateExternalCode = async () => {
     setMessage("");
@@ -49,19 +68,26 @@ const ExternalCodeGenerator = () => {
           Generate-Comapany Code
         </h4>
         <div className="flex flex-col space-y-4 mt-4">
-          <input
-            type="text"
-            value={cname}
-            onChange={(e) => setCname(e.target.value.toUpperCase())}
-            placeholder="Enter course name"
-            className="p-2 border border-gray-100 rounded focus:border-[#182073]"
-            required
-          />
+          
+        <select
+        value={cname}
+        onChange={handleSelectChange}
+        className="p-2 border border-gray-100  rounded focus:outline-none focus:ring-2 focus:ring-[#182073]"
+      >
+        <option value="" disabled>
+          Select Exam
+        </option>
+        {examNames.map((name, index) => (
+          <option key={index} value={name}>
+            {name}
+          </option>
+        ))}
+      </select>
 
           <select
             value={month}
             onChange={(e) => setMonth(e.target.value)}
-            className="p-2 border border-gray-100 rounded focus:border-[#182073]"
+            className="p-2 border border-gray-100  rounded focus:outline-none focus:ring-2 focus:ring-[#182073]"
           >
             <option value="">Select Month</option>
             {Array.from({ length: 12 }, (_, index) => (
@@ -76,7 +102,7 @@ const ExternalCodeGenerator = () => {
           <select
             value={year}
             onChange={(e) => setYear(e.target.value)}
-            className="p-2 border border-gray-100 rounded focus:border-[#182073]"
+            className="p-2 border border-gray-100  rounded focus:outline-none focus:ring-2 focus:ring-[#182073]"
           >
             <option value="">Select Year</option>
             {Array.from({ length: 5 }, (_, index) => (

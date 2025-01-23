@@ -19,7 +19,7 @@ const Sidebar = () => {
   const links = [
     { href: '/courselist', label: 'Paid Courses', icon: <SiAuthentik /> },
     // { href: '/certificate', label: 'Post certificate', icon: <PiCertificateBold /> },
-    { href: '/gpdx', label: 'GPDX', icon: <GrScorecard />    },
+    { href: '/gpdx', label: 'DEMO', icon: <GrScorecard />    },
     { href: '/applicants', label: 'Applicants', icon: <GrScorecard />},
     { href: '/mentors', label: 'Mentors-Profile', icon: <GrScorecard />},
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
@@ -64,12 +64,16 @@ const Sidebar = () => {
               }`}
             >
               <SiAuthentik className="mr-3" />
-              <span>University Code</span>
+              <span>GPDX</span>
               <FaChevronDown className={`ml-auto transition-transform ${isUniversityDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {isUniversityDropdownOpen && (
               <div className="ml-8 mt-2 space-y-2">
+                  <Link href="/uploadquestion" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/uploadquestion' ? 'bg-blue-700' : ''}`}>
+                  <SiAuthentik className="mr-3" />
+                  Upload-Question
+                </Link>
                 <Link href="/historycode" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/historycode' ? 'bg-blue-700' : ''}`}>
                   <SiAuthentik className="mr-3" />
                   University-List

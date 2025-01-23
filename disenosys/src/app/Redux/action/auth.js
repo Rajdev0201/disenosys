@@ -225,7 +225,7 @@ export const SignupData = (userData) => async (dispatch) => {
   export const studentLoginBIW = (userData, router) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://disenosys-dkhj.onrender.com/api/student/BIW-login",
+        "https://disenosys-dkhj.onrender.com/api/student/examAll-login",
         userData
       );
       console.log(data); 
@@ -241,7 +241,7 @@ export const SignupData = (userData) => async (dispatch) => {
         theme: "dark",
       });
       localStorage.setItem("student", JSON.stringify(data));
-      router.push('/quizbiw')
+
     } catch (err) {
       const errorMessage = err.response?.data?.error || 'An unexpected error occurred';
       toast.dark(errorMessage || 'An unexpected error occurred', {
@@ -343,7 +343,7 @@ export const deleteExternalCode = (id) => async (dispatch) => {
 
 export const deleteCompanyCode = (id) => async (dispatch) => {
   try {
-    await axios.delete(`http://localhost:8000/api/admin/compnyCode/${id}`); //https://disenosys-dkhj.onrender.com
+    await axios.delete(`https://disenosys-dkhj.onrender.com/api/admin/compnyCode/${id}`); //https://disenosys-dkhj.onrender.com
     dispatch(removeCodeC(id));
     dispatch(companyCode());
     toast.dark('The code has Deleted!', {

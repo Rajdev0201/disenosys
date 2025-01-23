@@ -4,6 +4,7 @@ const Code = require('../models/code.js');
 const Student = require('../models/students.js');
 const nodemailer = require('nodemailer');
 const XLSX = require('xlsx');
+const QuestionBIW = require('../models/biw.js');
 const { format,isValid } = require('date-fns');
 
 router.post('/login', async (req, res) => {
@@ -62,66 +63,68 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/BIW-login', async (req, res) => {
-  const { name, email, code,mobile } = req.body;
-  
-  try {
-      const foundCode = await Code.findOne({ code });
-      if (!foundCode) {
-          return res.status(400).json({ error: 'Invalid code' });
-      }
-      
-  if (!foundCode.isActive) {
-    return res.status(400).json({ error: 'The code is inactive.' });
-  }
-      if (foundCode.userType === 'companycode') {
-          const currentDate = new Date();
-          if (foundCode.expiresAt && foundCode.expiresAt <= currentDate) {
-              return res.status(400).json({ error: 'The code has expired.' });
-          }
-      }
 
-      if (foundCode.cname !== 'BIW') {
-        return res.status(400).json({ error: 'Invalid code for this exam.' });
+router.post('/examAll-login', async (req, res) => {
+  const { name, email, code, mobile } = req.body;
+
+  try {
+    const foundCode = await Code.findOne({ code });
+
+    if (!foundCode) {
+      return res.status(400).json({ error: 'Invalid code' });
     }
 
-      let existingStudent = await Student.findOne({ email });
+    if (!foundCode.isActive) {
+      return res.status(400).json({ error: 'The code is inactive.' });
+    }
 
-      if (existingStudent) {
+    if (foundCode.userType === 'companycode') {
+      const currentDate = new Date();
+      if (foundCode.expiresAt && foundCode.expiresAt <= currentDate) {
+        return res.status(400).json({ error: 'The code has expired.' });
+      }
+    }
+    const examNames = await QuestionBIW.distinct('examname');
+    if (!examNames.includes(foundCode.cname)) {
+      return res.status(400).json({
+        error: `Invalid code. This code is for the "${foundCode.cname}" exam, not the selected exam.`,
+      });
+    }
 
+    let existingStudent = await Student.findOne({ email });
 
-          if (existingStudent.attendedQuiz === true) {
-              return res.status(400).json({ error: 'You have already attended the quiz.' });
-          }
-
-          return res.json({
-              message: 'Welcome back! You can attend the quiz.',
-              user: existingStudent,
-          });
+    if (existingStudent) {
+      if (existingStudent.attendedQuiz === true) {
+        return res.status(400).json({ error: 'You have already attended the quiz.' });
       }
 
-      const student = new Student({
-          name,
-          email,
-          college: foundCode.college,
-          userType: foundCode.userType,
-          codeUsed: code,
-          courseName:foundCode.cname,
-          mobile
+      return res.json({
+        message: 'Welcome back! You can attend the quiz.',
+        user: existingStudent,
       });
+    }
+    const student = new Student({
+      name,
+      email,
+      college: foundCode.college,
+      userType: foundCode.userType,
+      codeUsed: code,
+      courseName: foundCode.cname,
+      mobile,
+    });
 
-      const savedStudent = await student.save();
+    const savedStudent = await student.save();
 
-      res.json({ 
-          message: 'Login successful, you can attend the quiz.', 
-          user: savedStudent 
-      });
-
+    res.json({
+      message: 'Login successful, you can attend the quiz.',
+      user: savedStudent,
+    });
   } catch (error) {
-      res.status(400).json({ error: 'Login failed' });
-      console.log(error);
+    res.status(400).json({ error: 'Login failed' });
+    console.log(error);
   }
 });
+
 
 
 
@@ -296,6 +299,50 @@ router.get('/demo', (req, res) => {
         date: '02/01/2025',
       }
     ];
+
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(dummyData);
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Template');
+
+    const dummyBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+    res.setHeader('Content-Disposition', 'attachment; filename="template.xlsx"');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    return res.send(dummyBuffer);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Failed to generate Excel file' });
+  }
+});
+
+router.get('/demo-exam', (req, res) => {
+  try {
+  
+    const dummyData = [
+      {
+        Question: "Which Plastic Molding Process is used to manufacture Plastic Pipes?",
+        Option1: "Injection Molding",
+        Option1_isCorrect: false,
+        Option2: "Blow Molding",
+        Option2_isCorrect: true,
+        Option3: "Compression Molding",
+        Option3_isCorrect: false,
+        Option4: "Rotational Molding",
+        Option4_isCorrect: false,
+      },
+      {
+        Question: "What is the primary material used in BIW manufacturing?",
+        Option1: "Aluminum",
+        Option1_isCorrect: false,
+        Option2: "Steel",
+        Option2_isCorrect: true,
+        Option3: "Plastic",
+        Option3_isCorrect: false,
+        Option4: "Carbon Fiber",
+        Option4_isCorrect: false,
+      },
+    ];
+    
 
     const workbook = XLSX.utils.book_new();
     const worksheet = XLSX.utils.json_to_sheet(dummyData);

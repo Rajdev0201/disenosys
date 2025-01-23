@@ -1,15 +1,18 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import Quiz from './Quiz';
+import Quiz from './Quiz.jsx';
 import axios from 'axios';
 import { setStudent } from '../Redux/features/studentSlice.js';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSearchParams } from 'next/navigation.js';
 
 const Main = () => {
     const [questions, setQuestions] = useState([]);
 
     const student = useSelector((state) => state?.student?.student?.user);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    const search = useSearchParams();
+    const code = search.get("code"); 
 
   useEffect(() => {
     const storedUser = localStorage.getItem("student");
@@ -25,10 +28,13 @@ const Main = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    axios.get('https://disenosys-dkhj.onrender.com/api/questions')
-      .then(response => setQuestions(response.data))
-      .catch(error => console.error('Error fetching questions:', error));
-  }, []);
+    if (code) { 
+      axios
+        .get(`https://disenosys-dkhj.onrender.com/api/questions/questions-all?code=${code}`)
+        .then((response) => setQuestions(response.data))
+        .catch((error) => console.error("Error fetching questions:", error));
+    }
+  }, [code]);
 
 
 
