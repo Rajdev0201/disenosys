@@ -29,7 +29,7 @@ const MentorProfile = () => {
         {/* Header Section */}
         <div className="flex items-center border-b pb-4 mb-6">
           <div className="w-16 h-16 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-2xl">
-            {data.name?.charAt(0).toUpperCase()}
+            {data.name?.charAt(0).toUpperCase()} 
           </div>
           <div className="ml-4">
             <h1 className="text-3xl font-bold text-gray-800">{data.name}</h1>
@@ -123,6 +123,14 @@ const MentorProfile = () => {
             </ul>
           </div>
         )}
+{/* 
+               <Image
+                  src={data?.filePic}
+                  alt="Resume"
+                  className="object-contain max-h-full max-w-full"
+                  width={200}
+                  height={200}
+                /> */}
 
         {/* Additional Links */}
         <div className="mt-6">

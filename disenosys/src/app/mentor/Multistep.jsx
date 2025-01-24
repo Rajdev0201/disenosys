@@ -5,6 +5,7 @@ import StepOne from "./Stepone";
 import StepTwo from "./Steptwo";
 import StepThree from "./StepThree"; 
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -42,6 +43,7 @@ const MultiStepForm = () => {
       yearexp:'',
       brief:'',
       file: null,
+      filePic:null,
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -59,7 +61,6 @@ const MultiStepForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoad(true);
     const {
       name,
       email,
@@ -75,6 +76,7 @@ const MultiStepForm = () => {
       yearexp,
       brief,
       file,
+      filePic
     } = formData;
   
     // Validation checks
@@ -147,6 +149,10 @@ const MultiStepForm = () => {
       alert("Error: Please upload a file.");
       return;
     }
+    if (!filePic) {
+      alert("Error: Please upload a file.");
+      return;
+    }
   
 
     const form = new FormData();
@@ -200,7 +206,9 @@ form.append("a11", JSON.stringify(formData.a11));
     form.append("yearexp", formData.yearexp);
     form.append("brief", formData.brief);
     form.append("file", formData.file);
+    form.append("filePic", formData.filePic);
     try {
+      setLoad(true);
       await axios.post("https://disenosys-dkhj.onrender.com/mentor", form, {
         headers: {
           "Content-Type": "multipart/form-data",

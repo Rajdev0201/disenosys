@@ -36,6 +36,7 @@ const mentorSchema = new mongoose.Schema({
     },
   ],
   filePath: { type: String,required:true},
+  filePic: { type: String,required:true},
 }, { timestamps: true }); 
 
 const mentor = mongoose.model("mentor", mentorSchema);

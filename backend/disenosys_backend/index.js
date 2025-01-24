@@ -243,7 +243,8 @@ const storageM = new CloudinaryStorage({
   },
 });
 
-const uploadMentor = multer({ storage: storageM });
+
+
 
 app.post('/career', uploadCareer.single('file'), async (req, res) => {
   const { name, email, phone, dob, gender, experience,expmonths, employee,current,cinr,
@@ -296,51 +297,105 @@ app.post('/career', uploadCareer.single('file'), async (req, res) => {
   }
 });
 
-app.post('/mentor', uploadMentor.single('file'), async (req, res) => {
-  const { name, email, phone,link,exp,bio,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,course,automotive,totalHour,component,yearexp,brief 
-    } = req.body;
-     console.log(req.body)
+
+const uploadMentor = multer({
+  storage: storageM,
+}).fields([
+  { name: 'file', maxCount: 1 }, // For the PDF
+  { name: 'filePic', maxCount: 1 }, // For the image
+]);
+
+app.post('/mentor', uploadMentor, async (req, res) => {
+  const {
+    name,
+    email,
+    phone,
+    link,
+    exp,
+    bio,
+    a1,
+    a2,
+    a3,
+    a4,
+    a5,
+    a6,
+    a7,
+    a8,
+    a9,
+    a10,
+    a11,
+    course,
+    automotive,
+    totalHour,
+    component,
+    yearexp,
+    brief,
+  } = req.body;
+
   const topics = req.body.topics ? JSON.parse(req.body.topics) : [];
   const A1 = a1 ? JSON.parse(a1) : [];
   const A2 = a2 ? JSON.parse(a2) : [];
-  const A3 = a1 ? JSON.parse(a3) : [];
-  const A4 = a1 ? JSON.parse(a4) : [];
-  const A5 = a1 ? JSON.parse(a5) : [];
-  const A6 = a1 ? JSON.parse(a6) : [];
-  const A7 = a1 ? JSON.parse(a7) : [];
-  const A8 = a1 ? JSON.parse(a8) : [];
-  const A9 = a1 ? JSON.parse(a9) : [];
-  const A10 = a1 ? JSON.parse(a10) : [];
-  const A11 = a1 ? JSON.parse(a11) : [];
- 
+  const A3 = a3 ? JSON.parse(a3) : [];
+  const A4 = a4 ? JSON.parse(a4) : [];
+  const A5 = a5 ? JSON.parse(a5) : [];
+  const A6 = a6 ? JSON.parse(a6) : [];
+  const A7 = a7 ? JSON.parse(a7) : [];
+  const A8 = a8 ? JSON.parse(a8) : [];
+  const A9 = a9 ? JSON.parse(a9) : [];
+  const A10 = a10 ? JSON.parse(a10) : [];
+  const A11 = a11 ? JSON.parse(a11) : [];
 
- 
-  if (!req.file) {
-    return res.status(400).send('No file uploaded.');
+  // Validate if both files are uploaded
+  if (!req.files || !req.files['file'] || !req.files['filePic']) {
+    return res.status(400).send('Both files must be uploaded.');
   }
-  console.log(req.file)
+
+  const file = req.files['file'][0];
+  const filePic = req.files['filePic'][0];
+
   try {
     const newCareer = new mentor({
-      filePath: req.file.path,
+      filePath: file.path,
+      filePic: filePic.path,
       name,
       email,
       phone,
-      link,exp,bio,
-      a1:A1,a2:A2,a3:A3,a4:A4,a5:A5,a6:A6,a7:A7,a8:A8,a9:A9,a10:A10,a11:A11,
-      course,automotive,totalHour,component,yearexp,brief,topics
+      link,
+      exp,
+      bio,
+      a1: A1,
+      a2: A2,
+      a3: A3,
+      a4: A4,
+      a5: A5,
+      a6: A6,
+      a7: A7,
+      a8: A8,
+      a9: A9,
+      a10: A10,
+      a11: A11,
+      course,
+      automotive,
+      totalHour,
+      component,
+      yearexp,
+      brief,
+      topics,
     });
 
     await newCareer.save();
 
     return res.status(201).json({
-      message: 'Career data uploaded successfully',
-      filePath: req.file.path,
+      message: 'Mentor data uploaded successfully',
+      filePath: file.path,
+      imageFilePath: filePic.path,
     });
   } catch (error) {
-    console.error('Error saving career:', error);
+    console.error('Error saving mentor data:', error);
     return res.status(500).send('Internal server error');
   }
 });
+
 
 
 app.get('/mentordata', async (req, res) => {
