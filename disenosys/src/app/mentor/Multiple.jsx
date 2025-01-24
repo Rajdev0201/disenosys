@@ -31,7 +31,7 @@ const MultiSelectDropdown = ({ label, options, selectedOptions, setSelectedOptio
       </button>
       {isOpen && ( // Only show dropdown if `isOpen` is true
         <div className="absolute z-10 bg-white border-2 border-gray-300 rounded-md shadow-md mt-1 w-full max-h-60 overflow-y-auto">
-          {options.map((option, index) => (
+          {options?.map((option, index) => (
             <label
               key={index}
               className="flex items-center gap-2 p-2 hover:bg-gray-100 cursor-pointer"

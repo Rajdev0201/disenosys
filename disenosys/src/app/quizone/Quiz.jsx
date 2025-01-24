@@ -7,16 +7,16 @@ import axios from "axios";
 
 const Quiz = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(
-    parseInt(localStorage.getItem("currentQuestionIndex")) || 0
+    parseInt(localStorage.getItem("currentQuestionIndex0")) || 0
   );
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answers, setAnswers] = useState(
-    JSON.parse(localStorage.getItem("answers")) ||
+    JSON.parse(localStorage.getItem("answers0")) ||
       Array(questions.length).fill({ status: "unanswered" })
   );
 
   const [globalTimeRemaining, setGlobalTimeRemaining] = useState(() => {
-    const startTime = localStorage.getItem("startTime");
+    const startTime = localStorage.getItem("startTime0");
     if (startTime) {
       const now = new Date();
       const elapsedTime = now - new Date(startTime);
@@ -28,7 +28,7 @@ const Quiz = ({ questions }) => {
   
   const [showResultPopup, setShowResultPopup] = useState(false);
   const [quizFinished, setQuizFinished] = useState(() => {
-    return localStorage.getItem("quizFinished") === "true";
+    return localStorage.getItem("quizFinished0") === "true";
   });
   const dispatch = useDispatch();
   const router = useRouter();
@@ -69,7 +69,7 @@ const Quiz = ({ questions }) => {
         handleFinish();
       } else {
         setGlobalTimeRemaining(timeRemaining);
-        localStorage.setItem("globalTimeRemaining", timeRemaining);
+        localStorage.setItem("globalTimeRemaining0", timeRemaining);
   
         if (timeRemaining <= 300 && !alertShown) {
           alert("You have only 5 minutes left!");
@@ -115,7 +115,7 @@ const Quiz = ({ questions }) => {
     }
 
     setAnswers(updatedAnswers);
-    localStorage.setItem("answers", JSON.stringify(updatedAnswers));
+    localStorage.setItem("answers0", JSON.stringify(updatedAnswers));
     setSelectedAnswer(null);
 
     if (currentQuestionIndex < questions.length - 1) {
@@ -153,7 +153,7 @@ const Quiz = ({ questions }) => {
       const nextIndex = prevIndex + 1;
 
       if (nextIndex < questions.length) {
-        localStorage.setItem("currentQuestionIndex", nextIndex);
+        localStorage.setItem("currentQuestionIndex0", nextIndex);
         return nextIndex;
       } else {
         return prevIndex;
@@ -168,7 +168,7 @@ const Quiz = ({ questions }) => {
       status: "skipped",
     };
     setAnswers(updatedAnswers);
-    localStorage.setItem("answers", JSON.stringify(updatedAnswers));
+    localStorage.setItem("answers0", JSON.stringify(updatedAnswers));
     setSelectedAnswer(null);
     handleNext();
   };
@@ -198,7 +198,7 @@ const Quiz = ({ questions }) => {
   const handlePrevious = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
-      localStorage.setItem("currentQuestionIndex", currentQuestionIndex - 1);
+      localStorage.setItem("currentQuestionIndex0", currentQuestionIndex - 1);
     }
   };
 
@@ -219,7 +219,7 @@ const Quiz = ({ questions }) => {
     const confirmSubmit = window.confirm("Do you want to submit the exam?");
     if (confirmSubmit) {
       setShowResultPopup(true);
-      localStorage.setItem("quizFinished", "true");
+      localStorage.setItem("quizFinished0", "true");
       setQuizFinished(true);
       const result = calculateResult();
 
@@ -234,11 +234,11 @@ const Quiz = ({ questions }) => {
           }
         );
         console.log(response);
-        localStorage.removeItem("startTime");
-        localStorage.removeItem("globalTimeRemaining");
-        localStorage.removeItem("currentQuestionIndex");
-        localStorage.removeItem("answers");
-        localStorage.removeItem("quizFinished")
+        localStorage.removeItem("startTime0");
+        localStorage.removeItem("globalTimeRemaining0");
+        localStorage.removeItem("currentQuestionIndex0");
+        localStorage.removeItem("answers0");
+        localStorage.removeItem("quizFinished0")
         // if (response.status === 200) {
         //   alert("Quiz submitted successfully!");
         // }
@@ -263,11 +263,11 @@ const Quiz = ({ questions }) => {
 
   const closePopupAndRedirect = () => {
     setShowResultPopup(false);
-    localStorage.removeItem("globalTimeRemaining");
-    localStorage.removeItem("currentQuestionIndex");
-    localStorage.removeItem("answers");
-    localStorage.removeItem("quizFinished");
-    localStorage.removeItem("startTime");
+    localStorage.removeItem("globalTimeRemaining0");
+    localStorage.removeItem("currentQuestionIndex0");
+    localStorage.removeItem("answers0");
+    localStorage.removeItem("quizFinished0");
+    localStorage.removeItem("startTime0");
     dispatch(LogOut());
     router.push("/");
   };
@@ -390,10 +390,10 @@ const Quiz = ({ questions }) => {
   ))}
 </div> */}
 
-                <div className="mt-6 flex justify-between">
+                <div className="mt-6 flex flex-col lg:flex-row lg:justify-between">
                   <button
                     onClick={handleFinish}
-                    className="bg-blue-500 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded"
+                    className="bg-blue-500 hover:bg-blue-300 mb-2 lg:mb-0 text-white font-semibold p-1 lg:py-2 lg:px-4 rounded"
                   >
                     Finish
                   </button>

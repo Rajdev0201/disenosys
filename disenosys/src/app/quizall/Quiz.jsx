@@ -7,16 +7,16 @@ import axios from "axios";
 
 const Quiz = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(
-    parseInt(localStorage.getItem("currentQuestionIndex")) || 0
+    parseInt(localStorage.getItem("currentQuestionIndex1")) || 0
   );
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answers, setAnswers] = useState(
-    JSON.parse(localStorage.getItem("answers")) ||
+    JSON.parse(localStorage.getItem("answers1")) ||
       Array(questions.length).fill({ status: "unanswered" })
   );
 
   const [globalTimeRemaining, setGlobalTimeRemaining] = useState(() => {
-    const startTime = localStorage.getItem("startTime");
+    const startTime = localStorage.getItem("startTime1");
     if (startTime) {
       const now = new Date();
       const elapsedTime = now - new Date(startTime);
@@ -28,7 +28,7 @@ const Quiz = ({ questions }) => {
   
   const [showResultPopup, setShowResultPopup] = useState(false);
   const [quizFinished, setQuizFinished] = useState(() => {
-    return localStorage.getItem("quizFinished") === "true";
+    return localStorage.getItem("quizFinished1") === "true";
   });
   const dispatch = useDispatch();
   const router = useRouter();
@@ -38,15 +38,15 @@ const Quiz = ({ questions }) => {
     const storedUser = localStorage.getItem("student");
     if (!storedUser || storedUser === "undefined") {
       alert("You must be logged in to access this quiz.");
-      router.push("/exam");
+      router.push("/examall");
     } else {
       try {
         dispatch(setStudent(JSON.parse(storedUser)));
   
         // Set startTime only if it's not already set
-        if (!localStorage.getItem("startTime")) {
+        if (!localStorage.getItem("startTime1")) {
           const now = new Date();
-          localStorage.setItem("startTime", now.toISOString());
+          localStorage.setItem("startTime1", now.toISOString());
         }
       } catch (error) {
         console.error("Error parsing stored student:", error);
@@ -55,7 +55,7 @@ const Quiz = ({ questions }) => {
   }, [dispatch, router]);
   
   useEffect(() => {
-    const startTime = new Date(localStorage.getItem("startTime"));
+    const startTime = new Date(localStorage.getItem("startTime1"));
     const examDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
     let alertShown = false;
   
@@ -69,7 +69,7 @@ const Quiz = ({ questions }) => {
         handleFinish();
       } else {
         setGlobalTimeRemaining(timeRemaining);
-        localStorage.setItem("globalTimeRemaining", timeRemaining);
+        localStorage.setItem("globalTimeRemaining1", timeRemaining);
   
         if (timeRemaining <= 300 && !alertShown) {
           alert("You have only 5 minutes left!");
@@ -115,7 +115,7 @@ const Quiz = ({ questions }) => {
     }
 
     setAnswers(updatedAnswers);
-    localStorage.setItem("answers", JSON.stringify(updatedAnswers));
+    localStorage.setItem("answers1", JSON.stringify(updatedAnswers));
     setSelectedAnswer(null);
 
     if (currentQuestionIndex < questions.length - 1) {
@@ -153,7 +153,7 @@ const Quiz = ({ questions }) => {
       const nextIndex = prevIndex + 1;
 
       if (nextIndex < questions.length) {
-        localStorage.setItem("currentQuestionIndex", nextIndex);
+        localStorage.setItem("currentQuestionIndex1", nextIndex);
         return nextIndex;
       } else {
         return prevIndex;
@@ -168,7 +168,7 @@ const Quiz = ({ questions }) => {
       status: "skipped",
     };
     setAnswers(updatedAnswers);
-    localStorage.setItem("answers", JSON.stringify(updatedAnswers));
+    localStorage.setItem("answers1", JSON.stringify(updatedAnswers));
     setSelectedAnswer(null);
     handleNext();
   };
@@ -192,7 +192,7 @@ const Quiz = ({ questions }) => {
   const handlePrevious = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
-      localStorage.setItem("currentQuestionIndex", currentQuestionIndex - 1);
+      localStorage.setItem("currentQuestionIndex1", currentQuestionIndex - 1);
     }
   };
 
@@ -213,7 +213,7 @@ const Quiz = ({ questions }) => {
     const confirmSubmit = window.confirm("Do you want to submit the exam?");
     if (confirmSubmit) {
       setShowResultPopup(true);
-      localStorage.setItem("quizFinished", "true");
+      localStorage.setItem("quizFinished1", "true");
       setQuizFinished(true);
       const result = calculateResult();
 
@@ -228,11 +228,11 @@ const Quiz = ({ questions }) => {
           }
         );
         console.log(response);
-        localStorage.removeItem("startTime");
-        localStorage.removeItem("globalTimeRemaining");
-        localStorage.removeItem("currentQuestionIndex");
-        localStorage.removeItem("answers");
-        localStorage.removeItem("quizFinished")
+        localStorage.removeItem("startTime1");
+        localStorage.removeItem("globalTimeRemaining1");
+        localStorage.removeItem("currentQuestionIndex1");
+        localStorage.removeItem("answers1");
+        localStorage.removeItem("quizFinished1")
         // if (response.status === 200) {
         //   alert("Quiz submitted successfully!");
         // }
@@ -257,11 +257,11 @@ const Quiz = ({ questions }) => {
 
   const closePopupAndRedirect = () => {
     setShowResultPopup(false);
-    localStorage.removeItem("globalTimeRemaining");
-    localStorage.removeItem("currentQuestionIndex");
-    localStorage.removeItem("answers");
-    localStorage.removeItem("quizFinished");
-    localStorage.removeItem("startTime");
+    localStorage.removeItem("globalTimeRemaining1");
+    localStorage.removeItem("currentQuestionIndex1");
+    localStorage.removeItem("answers1");
+    localStorage.removeItem("quizFinished1");
+    localStorage.removeItem("startTime1");
     dispatch(LogOut());
     router.push("/");
   };
@@ -373,17 +373,17 @@ const Quiz = ({ questions }) => {
                     </button>
                   ))}
                 </div>
-                <div className="mt-6 flex justify-between">
+                <div className="mt-6 flex flex-col lg:flex-row lg:justify-between">
                   <button
                     onClick={handleFinish}
-                    className="bg-blue-500 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded"
+                    className="bg-blue-500 hover:bg-blue-300 mb-2 lg:mb-0 text-white font-semibold p-1 lg:py-2 lg:px-4 rounded"
                   >
                     Finish
                   </button>
                   <div>
                     <button
                       onClick={handlePrevious}
-                      className="bg-[#182073] hover:bg-white text-white hover:text-[#182073] font-semibold py-2 px-4 rounded mr-4"
+                      className="bg-[#182073] hover:bg-white text-white hover:text-[#182073] font-semibold mb-2 lg:mb-0 py-2 px-4 rounded mr-4"
                       disabled={currentQuestionIndex === 0}
                     >
                       Previous

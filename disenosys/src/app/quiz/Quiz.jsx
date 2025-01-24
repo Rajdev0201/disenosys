@@ -373,10 +373,10 @@ const Quiz = ({ questions }) => {
                     </button>
                   ))}
                 </div>
-                <div className="mt-6 flex justify-between">
+                <div className="mt-6 flex flex-col lg:flex-row lg:justify-between">
                   <button
                     onClick={handleFinish}
-                    className="bg-blue-500 hover:bg-blue-300 text-white font-semibold py-2 px-4 rounded"
+                    className="bg-blue-500 hover:bg-blue-300 mb-2 lg:mb-0 text-white font-semibold p-1 lg:py-2 lg:px-4 rounded"
                   >
                     Finish
                   </button>

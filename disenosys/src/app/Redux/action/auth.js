@@ -241,7 +241,7 @@ export const SignupData = (userData) => async (dispatch) => {
         theme: "dark",
       });
       localStorage.setItem("student", JSON.stringify(data));
-
+      router.push(`/quizall?code=${userData.code}`)
     } catch (err) {
       const errorMessage = err.response?.data?.error || 'An unexpected error occurred';
       toast.dark(errorMessage || 'An unexpected error occurred', {

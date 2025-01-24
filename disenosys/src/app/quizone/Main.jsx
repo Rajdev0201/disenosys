@@ -35,8 +35,8 @@ const Main = () => {
   return (
     <>
     {student ? (
-    <div className="container mx-auto p-12 mt-20 bg-gray-200">
-    <h1 className="text-xl font-bold font-poppins mb-6 text-center">AUTOMOTIVE PRODUCT DESIGN ENGINEER TEST</h1>
+    <div className="container mx-auto p-12 lg:mt-20 bg-gray-200">
+    <h1 className="text-md lg:text-xl font-bold font-poppins mb-6 text-center">AUTOMOTIVE PRODUCT DESIGN ENGINEER TEST</h1>
     {questions.length > 0 ? (
       <Quiz questions={questions} />
     ) : (
