@@ -91,8 +91,8 @@ const addCart = (course) => {
 
   const getButtonClass = (category) => {
     return selectedCategory === category
-      ? 'text-white font-josefin font-bold text-xl px-8 rounded shadow-lg py-2 bg-[#182073] hover:bg-blue-800'
-      : ' font-josefin font-bold text-xl px-8 rounded shadow-lg text-[#182073] border border-gray-200 py-2 bg-white hover:bg-blue-100';
+      ? 'text-[#0d1039] font-josefin font-bold text-xl px-8 rounded shadow-lg py-2 bg-gray-300 hover:bg-blue-800'
+      : ' font-josefin font-bold text-xl px-8 rounded shadow-lg text-white border border-gray-200 py-2 bg-[#0d1039] hover:bg-blue-800';
   };
 
   const goToDescriptionPage = (courseId) => {
@@ -103,12 +103,74 @@ const addCart = (course) => {
   return (
     <div className='mt-6 hover:cursor-pointer'>
       <div className='text-center mb-12'>
-        <h1 className='font-bold font-poppins text-[#182073] text-xl lg:text-5xl'>
-          All <span className='text-[#182073]'>Online</span> Course
+        <h1 className='text-3xl md:text-4xl lg:text-5xl font-medium px-4 md:px-12 font-garet lg:px-3 text-[#0d1039] text-center'>
+        Other Online Courses
         </h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 p-6 bg-white">
-        <div className='col-span-1 md:col-span-2 lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-8'>
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 px-12 py-6">
+  {/* First row of buttons */}
+  <button
+    className={getButtonClass("All")}
+    onClick={() => handleCategoryChange("All")}
+  >
+    All Courses
+  </button>
+  <button
+    className={getButtonClass("Plastic Trims")}
+    onClick={() => handleCategoryChange("Plastic Trims")}
+  >
+    Plastic Trims
+  </button>
+  <button
+    className={getButtonClass("Mechatronics Engineering")}
+    onClick={() => handleCategoryChange("Mechatronics Engineering")}
+  >
+    Mechatronics Engineering
+  </button>
+  <button
+    className={getButtonClass("Mechanical Engineering")}
+    onClick={() => handleCategoryChange("Mechanical Engineering")}
+  >
+    Mechanical Engineering
+  </button>
+
+  {/* Second row of buttons */}
+  <div className="md:col-span-3 lg:col-span-4 flex justify-center">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <button
+        className={getButtonClass("BIW")}
+        onClick={() => handleCategoryChange("BIW")}
+      >
+        BIW
+      </button>
+      <button
+        className={getButtonClass("Automobile Engineering")}
+        onClick={() => handleCategoryChange("Automobile Engineering")}
+      >
+        Automobile Engineering
+      </button>
+      <button
+        className="font-josefin flex justify-center items-center gap-2 font-bold text-xl px-8 rounded shadow-lg text-white border border-gray-200 py-2 bg-black hover:bg-blue-800"
+        disabled
+      >
+       Launching Soon
+<div
+  class="w-8 aspect-square rounded-full relative flex justify-center items-center animate-[spin_3s_linear_infinite] z-40 bg-[conic-gradient(white_0deg,white_300deg,transparent_270deg,transparent_360deg)] before:animate-[spin_2s_linear_infinite] before:absolute before:w-[60%] before:aspect-square before:rounded-full before:z-[80] before:bg-[conic-gradient(white_0deg,white_270deg,transparent_180deg,transparent_360deg)] after:absolute after:w-3/4 after:aspect-square after:rounded-full after:z-[60] after:animate-[spin_3s_linear_infinite] after:bg-[conic-gradient(#065f46_0deg,#065f46_180deg,transparent_180deg,transparent_360deg)]"
+>
+  <span
+    class="absolute w-[85%] aspect-square rounded-full z-[60] animate-[spin_5s_linear_infinite] bg-[conic-gradient(#34d399_0deg,#34d399_180deg,transparent_180deg,transparent_360deg)]"
+  >
+  </span>
+</div>
+
+      </button>
+    </div>
+  </div>
+</div>
+
+
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 p-12 bg-white">
+        <div className='col-span-1 md:col-span-2 lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8'>
           {filteredCourses?.map((course) => (
             
             <div key={course?._id} className="flex flex-col justify-between bg-white rounded-lg shadow-lg overflow-hidden p-4 border border-gray-200" >
@@ -125,7 +187,7 @@ const addCart = (course) => {
                 <div className="font-bold text-xl mb-2 text-center" onClick={() => goToDescriptionPage(course?._id)}>{course?.courseName}</div>
                 <p className="text-gray-500 font-medium text-md text-base mb-4 mt-2">{course?.description}</p>
                 <div className="flex justify-between items-center mt-auto">
-                  <button className='bg-[#182073] text-white px-1 py-1 lg:px-4 lg:py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
+                  <button className='bg-[#0d1039] text-white px-1 py-1 lg:px-4 lg:py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
                     Add to Cart
                   </button>
                   <span className="text-base font-semibold text-[#182073] flex items-center" onClick={() => goToDescriptionPage(course?._id)}>More Info</span>
@@ -135,47 +197,7 @@ const addCart = (course) => {
             </div>
           ))}
         </div>
-        <div className='col-span-1 md:col-span-1 lg:col-span-1'>
-          <div className='flex flex-col space-y-6 sticky top-32'>
-            <button
-              className={getButtonClass("All")}
-              onClick={() => handleCategoryChange("All")}
-            >
-              All Courses
-            </button>
-            <button
-              className={getButtonClass("Plastic Trims")}
-              onClick={() => handleCategoryChange("Plastic Trims")}
-            >
-              Plastic Trims
-            </button>
-            <button
-              className={getButtonClass("Mechatronics Engineering")}
-              onClick={() => handleCategoryChange("Mechatronics Engineering")}
-            >
-              Mechatronics Engineering
-            </button>
-            <button
-              className={getButtonClass("Mechanical Engineering")}
-              onClick={() => handleCategoryChange("Mechanical Engineering")}
-            >
-              Mechanical Engineering
-            </button>
-            <button
-              className={getButtonClass("BIW")}
-              onClick={() => handleCategoryChange("BIW")}
-            >
-              BIW
-            </button>
-            <button
-              className={getButtonClass("Automobile Engineering")}
-              onClick={() => handleCategoryChange("Automobile Engineering")}
-            >
-              Automobile Engineering
-            </button>
-          </div>
-        </div>
-        
+
       </div>
     </div>
   );

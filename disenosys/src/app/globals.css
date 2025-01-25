@@ -12,6 +12,14 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Garet';
+  src: url('/fonts/Garet-Regular.woff2') format('woff2'),
+       url('/fonts/Garet-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 /* Mont Heavy Demo - Custom Font */
 @font-face {

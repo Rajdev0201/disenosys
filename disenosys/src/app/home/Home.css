@@ -1,5 +1,12 @@
 .bg {
-  background-image: url("../assests/disenosys-bg.jpg");
+  background-image: url("../assests/profile/car.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-edu {
+  background-image: url("../assests/profile/edu.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -44,22 +51,23 @@
   font-family: 'Berlin Sans FB demi';
 }
 .bg-1 {
-  background-image: url("../assests/profile/PGD.png");
+  background-image: url("../assests/profile/plastic.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+
 }
 
 .bg-2 {
-  background-image: url("../assests/profile/BIW.PNG");
+  background-image: url("../assests/profile/BIW.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  
+
 }
 
 .bg-3 {
-  background-image: url("../assests/profile/master.PNG");
+  background-image: url("../assests/profile/master.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

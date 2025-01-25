@@ -7,12 +7,12 @@ import line from "../assests/line.png";
 
 const WhyChoose = () => {
     return (
-        <div className='bg-[#182073] w-full h-auto'>
+        <div className='bg-[#0d1039] w-full h-auto'>
             <div className='container mx-auto p-12 text-center'>
-                <h1 className='text-2xl font-semibold font-poppins text-white md:text-3xl lg:text-4xl'>
+                <h1 className='text-2xl font-bold font-geret text-white md:text-3xl lg:text-4xl'>
                     Our <span className='text-white'>Placement</span> Process
                 </h1>
-                <p className='text-sm text-gray-300 font-josefin mt-4 md:text-base lg:text-lg'>
+                <p className='text-sm text-gray-300 font-garet mt-4 md:text-base lg:text-lg'>
                 Our courses offer expert-led training and hands-on practice. Equip yourself with the skills and knowledge needed to excel in your field
                 </p>
             </div>
@@ -23,7 +23,7 @@ const WhyChoose = () => {
                         <h3 className='text-lg font-semibold font-poppins text-white md:text-xl lg:text-2xl'>
                             01. Learn
                         </h3>
-                        <p className='text-sm text-gray-300 font-medium font-josefin mt-3 md:text-base lg:text-md'>
+                        <p className='text-sm text-white font-medium font-garet mt-3 md:text-base lg:text-md'>
                         Gain in-depth knowledge through our interactive lessons. Our expert instructors will guide you through each topic with real-world examples
                         </p>
                     </div>
@@ -39,7 +39,7 @@ const WhyChoose = () => {
                         <h3 className='text-lg font-semibold font-poppins text-white md:text-xl lg:text-2xl'>
                             02. Graduate
                         </h3>
-                        <p className='text-sm text-gray-300 font-medium font-josefin mt-3 md:text-base lg:text-md'>
+                        <p className='text-sm text-white font-medium font-garet mt-3 md:text-base lg:text-md'>
                         Earn a recognized certificate upon course completion. Join our network of successful alumni who have advanced their careers
                         </p>
                     </div>
@@ -54,7 +54,7 @@ const WhyChoose = () => {
                         <h3 className='text-lg font-semibold font-poppins text-white md:text-xl lg:text-2xl'>
                             03. Work
                         </h3>
-                        <p className='text-sm text-gray-300 font-medium font-josefin mt-3 md:text-base lg:text-md'>
+                        <p className='text-sm text-white font-medium font-garet mt-3 md:text-base lg:text-md'>
                         Apply your skills in practical, industry-based projects. Our job assistance ensures you are prepared for the professional world.
                         </p>
                     </div>

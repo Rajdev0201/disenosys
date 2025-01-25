@@ -150,7 +150,7 @@ const Testimonials = ({ setTestimonialsInView }) => {
         </div>
       )} */}
       <div ref={boxRef} className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <h2 className="text-center font-bold font-poppins text-[#182073] text-xl lg:text-5xl mb-8">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium px-4 md:px-12 font-garet lg:px-3 text-[#0d1039] mb-8  text-center">
           Read trusted reviews from our Students
         </h2>
         <Slider {...settings}>
@@ -174,7 +174,7 @@ const Testimonials = ({ setTestimonialsInView }) => {
                     />
                   )}
                   <div>
-                    <div className="flex justify-start gap-0.5 text-[#182073]">
+                    <div className="flex justify-start gap-0.5 text-[#0d1039]">
                       {[...Array(5)].map((_, starIndex) => (
                         <svg
                           key={starIndex}

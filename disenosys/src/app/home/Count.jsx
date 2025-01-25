@@ -6,14 +6,14 @@ import "../component/Navbar/Navbar.css";
 
 export default function Count() {
     return (
-        <section className="box-shadow bg-white p-10">
-            <div className="max-w-7xl px-4 mx-auto sm:px-6 lg:px-8">
-            <div class="max-w-2xl mx-auto text-center">
-            <h2 class="text-3xl font-bold leading-tight font-poppins sm:text-4xl lg:text-5xl text-[#182073] p-2">Numbers tell Our story</h2>
+        <section className="box-shadow bg-[#0d1039]">
+            <div className="max-w-7xl  mx-auto px-3 py-9">
+            <div class="max-w-md mt-3 text-start">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-medium px-4 md:px-12 font-garet lg:px-3 text-white mb-8  ">NUMBERS TELL OUR STORY</h2>
             {/* <div className='border  mt-4'></div> */}
            </div>
 
-                <div className="grid grid-cols-1 gap-8 text-center lg:mt-12 sm:gap-x-8 gap-y-12 md:grid-cols-3">
+                <div className="grid grid-cols-1 gap-8 text-center lg:mt-12 sm:gap-x-28 gap-y-12 md:grid-cols-3">
                     {[
                         { end: 5000, label: "Trained" },
                         { end: 3800, label: "Reviews with 5 star rating" },
@@ -22,8 +22,9 @@ export default function Count() {
                         { end: 210, label: "College Partners" },
                         { end: 87, label: "Reported Career Benefits", isPercentage: true },
                     ].map((item, index) => (
-                        <div key={index} className="p-6 border-2 border-[#F1F1F5] bg-[#182073] rounded-lg hover:border-[#182073] transition duration-300 ease-in-out">
-                            <h3 className="font-bold text-3xl sm:text-6xl lg:text-5xl">
+                        <div key={index} className="p-6 rounded-lg flex flex-col items-start justify-start space-y-3 transition duration-300 ease-in-out">
+                            <div className='w-6 h-1 bg-white'></div>
+                            <h3 className="font-medium text-3xl sm:text-6xl font-garet lg:text-6xl">
                                 <span className=" bg-clip-text text-white">
                                     <CountUp
                                         start={0}

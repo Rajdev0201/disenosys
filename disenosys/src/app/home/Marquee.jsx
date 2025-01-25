@@ -48,21 +48,7 @@ const MarqueeView = () => {
           </div>
         ))}
       </Marquee>
-        
 
-      
-      <Marquee speed={80} pauseOnHover={true} direction="right" gradient={false} className="flex items-center">
-        {companies.map((company) => (
-          <div
-            key={company.id}
-            className="flex w-44 h-48 p-3 flex-col items-center justify-center px-6" //52 48
-          >
-            <div className="border-2 border-[#182073] shadow-lg rounded-md ">
-              <Image src={company.image} alt={company.name} className="object-cover w-full h-full" />
-            </div>
-          </div>
-        ))}
-      </Marquee>
     
     </div>
   );

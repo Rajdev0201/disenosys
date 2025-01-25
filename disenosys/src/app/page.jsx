@@ -15,6 +15,10 @@ import Footer from "./component/Navbar/Footer";
 import Blink from "./component/Blink/BlinkingPopup";
 import Marquee from "./home/Marquee";
 import Placement from "./home/Placement"
+import Education from "./home/Education"
+import Who from './home/Who'
+import Announce from './home/Announce';
+
 // import Marquee from "./home/Marquee.jsx";
 
 export default function Page() {
@@ -56,11 +60,15 @@ export default function Page() {
       <div>
       <Blink/>
       <Navbar />
-
+       <Announce/>
       <Home />
+      <Education/>
+      <Who/>
+      <div className='bg-[#0d1039] h-10 w-full'>
+      </div>
+      <Box />
       <Count />
       <Marquee/>
-      <Box />
       {/* <Testimonials setTestimonialsInView={setTestimonialsInView} /> */}
       <Testimonials/>
       <WhyChoose />
