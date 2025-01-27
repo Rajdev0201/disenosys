@@ -288,7 +288,7 @@ const CertificateComponent = () => {
                 for successfully completing the course on
               </p>
               <p className="text-3xl font-light font-lexend text-blue-500 mt-2">
-                {student.course.toUpperCase()}
+                {student?.course?.toUpperCase()}
               </p>
             </div>
 
@@ -308,11 +308,11 @@ const CertificateComponent = () => {
                 <div className="mt-12 px-16">
                   <p className="text-sm font-light font-sans">
                     Certificate UDIN :{" "}
-                    <span className="font-light">{student.udin}</span>
+                    <span className="font-light">{student?.udin}</span>
                   </p>
                   <p className="text-sm font-light font-sans">
                     Completion Date :{" "}
-                    <span className="font-light">{student.date}</span>
+                    <span className="font-light">{student?.date}</span>
                   </p>
                 </div>
               </div>

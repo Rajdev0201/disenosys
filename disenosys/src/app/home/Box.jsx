@@ -14,7 +14,7 @@ const WhyChooseUs = () => {
         WHY CHOOSE US?
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-        <div className="flex flex-col items-start justify-start h-full  rounded-xl shadow-inner">
+        <div className="flex flex-col items-start justify-start h-full shadow-md rounded-xl shadow-inner">
           <Image
             src={cls}
             alt="100% LIVE INTERACTIVE CLASSES"
@@ -31,7 +31,7 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        <div className="flex flex-col items-start justify-start h-full bg-gray-100 rounded-xl shadow-inner">
+        <div className="flex flex-col items-start justify-start h-full shadow-md  rounded-xl shadow-inner">
           <Image
             src={job}
             alt="100% JOB ASSISTANCE"
@@ -48,7 +48,7 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        <div className="flex flex-col  items-start justify-start  h-full rounded-xl shadow-inner">
+        <div className="flex flex-col  items-start justify-start shadow-md h-full rounded-xl shadow-inner">
           <Image
             src={hands}
             alt="HANDS-ON EXPERIENCE WITH 50+ PROJECTS"
@@ -65,7 +65,7 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        <div className="flex flex-col items-start justify-start h-full bg-gray-100 rounded-xl shadow-inner mb-4">
+        <div className="flex flex-col items-start justify-start h-full shadow-md rounded-xl shadow-inner mb-4">
           <Image
             src={week}
             alt="WEEKEND CLASSES FOR WORKING PROFESSIONALS"

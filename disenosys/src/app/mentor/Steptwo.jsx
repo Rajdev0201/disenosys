@@ -290,7 +290,7 @@ const StepTwo = ({ formData, setFormData, nextStep,prevStep}) => {
           onClick={prevStep}
           className="px-6 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
         >
-          Previous
+         Back
         </button>
         <button
           onClick={nextStep} 

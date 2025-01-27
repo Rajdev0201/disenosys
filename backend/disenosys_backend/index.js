@@ -736,6 +736,23 @@ app.post("/upload-xl-exam", uploadxlExam.single("file"), (req, res) => {
   }
 });
 
+const uploadxlGpdx = multer({ storage: multer.memoryStorage() });
+app.post("/upload-xl-gpdx", uploadxlGpdx.single("file"), (req, res) => {
+  try {
+    const workbook = XLSX.read(req.file.buffer, { type: "buffer" });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const students = XLSX.utils.sheet_to_json(sheet).map(student => {
+      if (student.awardedDate) student.awardedDate = excelDateToJSDate(student.awardedDate);
+      return student;
+    });
+    
+    res.json(students);
+  } catch (error) {
+    console.error("Error processing file:", error);
+    res.status(500).send("Error processing file");
+  }
+});
+
 
 const uploadxlCourse = multer({ storage: multer.memoryStorage() });
 app.post("/upload-xl-course", uploadxlCourse.single("file"), (req, res) => {
@@ -804,9 +821,11 @@ auth: {
   });
 });
 
-const uploadcertificateCourse= multer({ storage: multer.memoryStorage() });
-app.post("/send-certificate-course", uploadcertificateCourse.none(), (req, res) => {
-  const { email, pdfDataUrl,name,course} = req.body;
+
+const uploadgpdxCourse= multer({ storage: multer.memoryStorage() });
+
+app.post("/send-gpdxcourse", uploadgpdxCourse.none(), (req, res) => {
+  const { email, pdfDataUrl,name } = req.body;
   console.log(email)
   if (!email || !pdfDataUrl) {
     return res.status(400).send("Missing email or PDF data");
@@ -827,78 +846,19 @@ auth: {
 }
 });
 
-const mailOptions = {
-  from: "classes@disenosys.com",
-  to: email,
-  subject: `Certificate of Completion for ${course}`,
-  html: `
-    <html>
-      <head>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            color: #333333;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-          }
-          .email-container {
-            background-color: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-          }
-          h1 {
-            color: #004aad;
-            font-size: 24px;
-            margin-bottom: 10px;
-          }
-          p {
-            font-size: 16px;
-            line-height: 1.6;
-            color: #555555;
-          }
-          .footer {
-            margin-top: 20px;
-            font-size: 14px;
-            text-align: start;
-            color: #888888;
-          }
-          .highlight {
-            color: #004aad;
-            font-weight: bold;
-          }
-          .cta {
-            color: #ffffff;
-            background-color: #004aad;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="email-container">
-          <h1>Certificate of Completion</h1>
-          <p>Dear <span class="highlight">${name}</span>,</p>
-          <p>We are pleased to inform you that you have successfully completed the <span class="highlight">${course}</span>. Please find attached your Certificate of Completion for the course.</p>
-          <p>We congratulate you on your achievement and wish you continued success in your future endeavors.</p>
-          <p>If you have any questions or need further assistance, feel free to reach out to us.</p>
-          
-          <p class="footer">Best regards, <br />The Disenosys Team</p>
-        </div>
-      </body>
-    </html>
-  `,
-  attachments: [
-    {
-      filename: `${name}_Certificate_of_Completion.pdf`,
-      content: pdfBuffer,
-    },
-  ],
-};
 
+  const mailOptions = {
+    from: "classes@disenosys.com",
+    to: email,
+    subject: `Certificate for GPDX Exam`,
+    text: `Dear ${name},\n\nPlease find attached your certificate for completing the gpdx exam.\n\nBest Regards,\nYour Company`,
+    attachments: [
+      {
+        filename:`${name}_certificate.pdf`,
+        content: pdfBuffer,
+      },
+    ],
+  };
 
 
   transporter.sendMail(mailOptions, (error, info) => {
@@ -1075,7 +1035,116 @@ app.post("/send-single-certificate-course", uploadsingleCourse.none(),async (req
   }
 });
 
+const uploadsingleGpdx= multer({ storage: multer.memoryStorage() });
 
+app.post("/send-single-gpdx", uploadsingleGpdx.none(),async (req, res) => {
+  try {
+    const { email, pdfDataUrl,name} = req.body;
+    console.log(email)
+    if (!email || !pdfDataUrl) {
+      return res.status(400).send("Missing email or PDF data");
+    }
+  
+    const base64Data = pdfDataUrl.split(";base64,").pop();
+    const pdfBuffer = Buffer.from(base64Data, "base64");
+
+    const transporter = nodemailer.createTransport({
+
+      host: 'smtp.office365.com', 
+     port: 587,                 
+     secure: false,   
+     auth: {
+      user: 'classes@disenosys.com',
+      pass: 'xnccsypkfhfpymwg',
+    }
+     });
+     
+     const mailOptions = {
+      from: "classes@disenosys.com",
+      to: email,
+      subject: `Certificate of Completion for GPDX exam`,
+      html: `
+        <html>
+          <head>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                color: #333333;
+                background-color: #f4f4f9;
+                margin: 0;
+                padding: 0;
+              }
+              .email-container {
+                background-color: #ffffff;
+                border-radius: 8px;
+                padding: 20px;
+                margin: 20px;
+                box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+              }
+              h1 {
+                color: #004aad;
+                font-size: 24px;
+                margin-bottom: 10px;
+              }
+              p {
+                font-size: 16px;
+                line-height: 1.6;
+                color: #555555;
+              }
+              .footer {
+                margin-top: 20px;
+                font-size: 14px;
+                text-align: start;
+                color: #888888;
+              }
+              .highlight {
+                color: #004aad;
+                font-weight: bold;
+              }
+              .cta {
+                color: #ffffff;
+                background-color: #004aad;
+                padding: 10px 15px;
+                text-decoration: none;
+                border-radius: 5px;
+              }
+            </style>
+          </head>
+          <body>
+            <div class="email-container">
+              <h1>Certificate of Completion</h1>
+              <p>Dear <span class="highlight">${name}</span>,</p>
+              <p>We are pleased to inform you that you have successfully completed the <span class="highlight">gpdx exam</span>. Please find attached your Certificate of Completion for the course.</p>
+              <p>We congratulate you on your achievement and wish you continued success in your future endeavors.</p>
+              <p>If you have any questions or need further assistance, feel free to reach out to us.</p>
+              
+              <p class="footer">Best regards, <br />The Disenosys Team</p>
+            </div>
+          </body>
+        </html>
+      `,
+      attachments: [
+        {
+          filename: `${name}_Certificate_of_Completion.pdf`,
+          content: pdfBuffer,
+        },
+      ],
+    };
+    
+
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.error("Error sending email:", err);
+        return res.status(500).send("Error sending email");
+      }
+      console.log("Email sent: " + info.response);
+      res.send("Certificate sent successfully");
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).send("Error processing the certificate request");
+  }
+});
 const uploadcertificate = multer({ dest: 'uploadcertificate/' });
 app.post("/send-certificate", uploadcertificate.none(), (req, res) => {
   const { email, pdfDataUrl,name,course } = req.body;

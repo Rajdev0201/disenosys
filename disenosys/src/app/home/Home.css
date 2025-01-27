@@ -33,6 +33,13 @@
   background-size: cover;
 }
 
+.gpdx-bg{
+  background-image: url("../assests/profile/gpdx.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .career{
   background-image: url("../assests/profile/fast.jpg");
   background-position: center;
@@ -91,6 +98,24 @@
   0% { transform: rotate(0deg); }
 
   100% { transform: rotate(360deg); }
+}
+
+html, body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+nav {
+  position: relative;
+  z-index: 50; /* Ensure the navbar has a higher stacking context */
+}
+
+.dropdown {
+  z-index: 1050; /* Ensure dropdown is on top */
+  position: absolute;
+  background: white;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 

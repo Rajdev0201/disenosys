@@ -92,9 +92,9 @@ const length = filteredCartItems.length;
   };
 
   return (
-    <nav className="shadow-lg bg-[#182073] fixed w-full top-0 left-0 right-0 z-50 mt-10">
-      <div className=" flex flex-col md:flex-row items-center justify-between px-4 lg:px-32 py-3">
-        <div className="flex items-center w-full md:w-auto justify-between md:justify-start">
+    <nav className="shadow-lg bg-[#0d1039] fixed w-full top-0 left-0 right-0 z-50 mt-2 lg:mt-16">
+      <div className=" flex flex-col md:flex-row items-center justify-center px-4 lg:px-32 py-3">
+        <div className="flex lg:hidden items-center w-full md:w-auto justify-between md:justify-start">
            <Link
             href="/"
             >
@@ -110,13 +110,13 @@ const length = filteredCartItems.length;
         </div>
 
         <div
-          className={`hidden md:flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4`}
+          className={`hidden md:flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 `}
         >
           <Link
             href="/"
             passHref
             // onClick={() => handleLinkClick('/')}
-            className={`py-2 px-2 font-semibold  hover:text-[#057FE3] font-poppins text-base ${
+            className={`py-2 px-2 font-semibold  hover:text-[#057FE3] font-garet text-base ${
               path === "/" ? "text-[#057FE3]" : "text-white"
             }`}
           >
@@ -124,16 +124,16 @@ const length = filteredCartItems.length;
           </Link>
           {/* <h1>Welcome, {session?.user?.name}</h1>
       <button onClick={handleApiCall}>Fetch LinkedIn Profile</button> */}
+{/* 
+          <ShiftingDropDown /> */}
 
-          <ShiftingDropDown />
-
-          {["Course","Portfolio", "Gallery"].map((item) => (
+          {["About","Course","Portfolio", "Gallery","Admissions","Blog","Contact"].map((item) => (
             <Link
               key={item}
               href={`/${item.toLowerCase()}`}
               passHref
               // onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
-              className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${
+              className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-garet text-base ${
                 path === `/${item.toLowerCase()}`
                   ? "text-[#057FE3]"
                   : "text-white"
@@ -142,9 +142,9 @@ const length = filteredCartItems.length;
               {item}
             </Link>
           ))}
-          <div className="hidden md:flex space-x-6  justify-center items-center">
-            <CiSearch size={30} className="text-white hover:text-[#057FE3]" />
-            <div className="relative flex items-center gap-4 hover:cursor-pointer">
+          <div className="hidden md:flex space-x-6 justify-center items-center">
+            {/* <CiSearch size={30} className="text-white hover:text-[#057FE3]" /> */}
+            <div className="relative flex items-center gap-4 hover:cursor-pointer mx-4">
               <IoCartSharp
                 size={40}
                 className="text-white hover:text-[#057FE3]"
@@ -153,7 +153,7 @@ const length = filteredCartItems.length;
               {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
                 <>
                   <span
-                    className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#057FE3] rounded-full ring-2 ring-white z-50"
+                    className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold  bg-[#0d1039] rounded-full ring-2 ring-white z-50"
                     onClick={() => setCartModalOpen(true)}
                   >
                     {length}
@@ -173,33 +173,33 @@ const length = filteredCartItems.length;
           </div>
         </div>
 
-        <div className="hidden md:flex justify-end">
+        <div className="hidden md:flex justify-end mx-2">
   {user?.user?.user?.userName || user?.user?.name ? (
-    <div className="relative flex items-center gap-4 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
-      {/* User Avatar - Displaying Initials */}
-      <span className="bg-[#057FE3] shadow-lg px-4 py-2 rounded-full text-white font-poppins font-bold text-lg">
+    <div className="relative  flex items-center gap-4 ring-4 mx-6 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
+
+      <span className="bg-[#0d1039] shadow-lg px-4 py-2 rounded-full text-white font-garet font-bold text-lg">
         {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)} 
         {user?.user?.name?.toLocaleUpperCase()?.charAt(0)}
       </span>
       
-      {/* Dropdown Menu */}
+
       <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="relative w-44">
           <div className="bg-[#057FE3] text-white flex flex-col rounded-md px-5 py-3">
-            <div className="text-center text-base font-bold font-poppins mt-1">
+            <div className="text-center text-base font-bold font-garet mt-1">
               {user?.user?.user?.userName?.toLocaleUpperCase()} {user?.user?.name?.toLocaleUpperCase()}
             </div>
-            <div className="text-center text-base font-bold font-poppins mt-1">
+            <div className="text-center text-base font-bold font-garet mt-1">
               <Link href="/dashboard">My Profile</Link>
             </div>
-            <div className="max-w-44 flex items-center justify-center text-white text-base font-poppins font-bold duration-300 cursor-pointer active:scale-[0.98]">
+            <div className="max-w-44 flex items-center justify-center text-white text-base font-garet font-bold duration-300 cursor-pointer active:scale-[0.98]">
               <button className="px-0 py-2 flex items-center" onClick={handleLogout}>
                 <IoMdLogOut size={20} className="mx-0" />
                 <span className="text-center">LOGOUT</span>
               </button>
             </div>
           </div>
-          {/* Dropdown arrow - Positioned under the center */}
+
           <div className="absolute left-1/2 transform -translate-x-1/2 -top-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-white"></div>
         </div>
       </div>
@@ -207,7 +207,7 @@ const length = filteredCartItems.length;
   ) : (
     <Modal />
   )}
-</div>
+         </div>
 
 
 
@@ -218,7 +218,7 @@ const length = filteredCartItems.length;
                 href="/"
                 passHref
                 // onClick={() => handleLinkClick('/')}
-                className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-poppins text-base ${
+                className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-garet text-base ${
                   path === "/" ? "text-[#057FE3]" : "text-white"
                 }`}
               >
@@ -233,7 +233,7 @@ const length = filteredCartItems.length;
                   href={`/${item.toLowerCase()}`}
                   passHref
                   // onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
-                  className={`py-2 px-0 font-semibold hover:text-[#057FE3] font-poppins text-base ${
+                  className={`py-2 px-0 font-semibold hover:text-[#057FE3] font-garet text-base ${
                     path === `/${item.toLowerCase()}`
                       ? "text-[#057FE3]"
                       : "text-white"
@@ -280,7 +280,7 @@ const length = filteredCartItems.length;
     <>
       <div className="relative ring-2  ring-white rounded-sm p-2 shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
         {/* User avatar initials */}
-        <span className="bg-[#057FE3] shadow-lg px-2 py-1 rounded-sm text-white font-poppins font-bold text-lg">
+        <span className="bg-[#057FE3] shadow-lg px-2 py-1 rounded-sm text-white font-garet font-bold text-lg">
           {/* Display first initials of the userName or name */}
           {user?.user?.user?.userName?.charAt(0).toLocaleUpperCase()} 
           {user?.user?.name?.charAt(0).toLocaleUpperCase()}
@@ -291,16 +291,16 @@ const length = filteredCartItems.length;
           <div className="relative">
             <div className="bg-[#057FE3] text-white flex flex-col rounded-md px-5 py-3">
               {/* User's full name */}
-              <div className="text-center text-base font-bold font-poppins mt-1">
+              <div className="text-center text-base font-bold font-garet mt-1">
                 {user?.user?.user?.userName} {user?.user?.name}
               </div>
               {/* Link to "My Profile" */}
-              <div className="text-center text-base font-bold font-poppins mt-1">
+              <div className="text-center text-base font-bold font-garet mt-1">
                 <Link href="/dashboard">My Profile</Link>
               </div>
 
               {/* Logout button */}
-              <div className="max-w-44 items-center justify-center text-white text-base font-poppins font-bold duration-300 cursor-pointer active:scale-[0.98]">
+              <div className="max-w-44 items-center justify-center text-white text-base font-garet font-bold duration-300 cursor-pointer active:scale-[0.98]">
                 <button className="px-0 py-2 flex items-center" onClick={handleLogout}>
                   <IoMdLogOut size={20} className="mx-0" />
                   <span className="text-center">LOGOUT</span>

@@ -1,14 +1,16 @@
 "use client";
 
 import React from "react";
-import { FaFacebookF, FaMapMarkerAlt, FaWhatsapp } from "react-icons/fa";
+import { FaFacebookF, FaGithub, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaWhatsapp, FaYoutube } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
 import { BsTwitterX } from "react-icons/bs";
 import { MdCall, MdOutlineCopyright, MdOutlineMail } from "react-icons/md";
 import { FiArrowRight } from "react-icons/fi";
+import { FaSquareFacebook, FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
   return (
+    <>
     <div className="bg-[#0d1039] font-poppins">
       <div className="container mx-auto px-10 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 space-x-0  space-y-4 md:space-y-0 sm:space-x-0 lg:space-x-12">
@@ -134,10 +136,34 @@ const Footer = () => {
             BOOK A CONSULTATION
             <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12 text-xl" />
           </button>
-          <h1 className="text-white font-medium text-sm md:text-sm lg:text-md text-end sm:text-left flex justify-center items-center">
+          {/* <h1 className="text-white font-medium text-sm md:text-sm lg:text-md text-end sm:text-left flex justify-center items-center">
             <MdOutlineCopyright size={20} className="pr-1" /> 2025 Disenosys |
             All rights reserved
-          </h1>
+          </h1> */}
+          <div className="flex flex-col sm:flex-row justify-center gap-6 items-center py-4">
+        <div className="flex space-x-4 mt-4 sm:mt-0">
+        <FaLinkedin
+            aria-label="Instagram"
+            className="text-white hover:text-gray-400 transition-colors duration-300 cursor-pointer"
+            size={30}
+          />
+          <FaSquareFacebook
+            aria-label="Facebook"
+            className="text-white hover:text-gray-400 transition-colors duration-300 cursor-pointer"
+            size={30}
+          />
+          <FaInstagram
+            aria-label="Twitter"
+            className="text-white hover:text-gray-400 transition-colors duration-300 cursor-pointer"
+            size={30}
+          />
+          <FaYoutube 
+            aria-label="GitHub"
+            className="text-white hover:text-gray-400 transition-colors duration-300 cursor-pointer"
+            size={30}
+          />
+        </div>
+        </div> 
         {/* <div className="relative flex items-center justify-center mt-4 md:mt-0 mb-6">
           <div className="bg-[#182073] rounded-full w-16 h-16 text-center flex items-center justify-center z-40  ring-white ring-2 shadow-xl bg-gradient-to-r from-[#fffff] to-viloet-500 hover:from-indigo-200 hover:to-blue-800 ">
             <FaFacebookF className="text-lg text-purple-700" color="white" size={25}/>
@@ -154,6 +180,13 @@ const Footer = () => {
         </div> */}
       </div>
     </div>
+    <div className="bg-white ">
+    <h1 className="text-[#0d1039] p-1 font-semibold text-sm md:text-sm lg:text-md text-end sm:text-left flex justify-center items-center">
+            <MdOutlineCopyright size={20} className="pr-1" /> 2025 Disenosys |
+            All rights reserved
+          </h1> 
+    </div>
+    </>
   );
 };
 
