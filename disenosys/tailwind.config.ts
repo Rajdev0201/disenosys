@@ -15,7 +15,7 @@ const config: Config = {
         'brush': ['"Brush Script MT"', 'cursive', 'Arial'],
         'berlin': ['"Berlin Sans FB"', 'sans-serif'], 
         "montster":['Montserrat', 'sans-serif'],
-        garet: ['Garet', 'sans-serif'],
+        garet: ['Garet', 'sans-serif'], 
         sans: ['Open Sans', 'sans-serif'],
         montheavy: ['"Montheavy"', 'sans-serif'],
         lexend:['Lexend','sans-serif'],

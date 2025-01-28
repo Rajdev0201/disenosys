@@ -26,11 +26,11 @@ const MyModal = () => {
 
   
 <div
-  class="max-w-44 bg-transparent items-center justify-center flex border-2 border-white shadow-lg hover:bg-[#182073] text-white hover:text-white duration-300 cursor-pointer active:scale-[0.98]"
+  class="max-w-44 bg-transparent items-center justify-center flex  bg-[#0d1039] text-[#0d1039] hover:text-gary-600 duration-300 cursor-pointer active:scale-[0.98]"
 >
-  <button class="px-5 py-2 flex items-center justify-center"onClick={openModal}>
-  <LuUser2 size={20} className=" mx-1" />
-  <span className="text-center">Login</span>
+  <button class="px-1 py-2 flex items-center justify-center ring-2 ring-gray-200 rounded-full"onClick={openModal}>
+  <LuUser2 size={30} className=" mx-1" />
+  {/* <span className="text-center">Login</span> */}
   </button>
 </div>
 

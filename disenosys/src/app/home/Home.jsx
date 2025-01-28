@@ -104,7 +104,7 @@ const Home = () => {
                 }}
                 className="group relative flex mx-auto lg:mx-44 text-[#0d1039] items-center -mt-4 gap-1.5 rounded-sm hover:text-white bg-white px-3 py-1  lg:px-4 lg:py-2  hover:bg-[#182073]"
               >
-                <Link href="/quicktest" className="text-sm lg:text-2xl">Take Test</Link>
+                <Link href="/quicktest" className="text-sm lg:text-2xl font-garet">Take Test</Link>
 
                 <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12 text-2xl" />
               </motion.button>
@@ -161,7 +161,7 @@ const Home = () => {
                     />
 
                     <button
-                      className="px-10 py-2 text-2xl mt-24 font-garet bg-white border-none outline-none text-[#0d1039] rounded-sm font-semibold text-gray-900 border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
+                      className="px-10 py-2 text-2xl mt-24 font-garet bg-white border-none outline-none text-[#0d1039] rounded-sm font-bold  border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
                       type="submit"
                       disabled={loading}
                     >

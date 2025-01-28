@@ -13,7 +13,9 @@ import { IoCartSharp } from 'react-icons/io5';
 import CartModal from '../CartModal';
 import MyModal from '../Modal';
 import { IoMdLogOut } from 'react-icons/io';
-import { FaBell, FaCaretDown } from 'react-icons/fa';
+import { FaBell, FaCaretDown, FaCaretUp } from 'react-icons/fa';
+import NotificationDropdown from '../../component/Alert';
+import { BsCart2, BsCart3 } from 'react-icons/bs';
 
 const BlinkingAlert = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -79,24 +81,22 @@ const length = filteredCartItems.length;
   const handleLogout = () => {
     dispatch(LogOut());
   };
-
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   return (
 
-    <div className="flex fixed top-0 right-0 w-full z-50 px-16 items-center bg-white justify-between">
-  {/* Logo Section */}
+    <div className="hidden lg:flex fixed top-0 right-0 w-full lg:z-50 px-16 items-center bg-white justify-between lg:h-16">
   <div>
     <Link href="/">
       <Image
         src={logo}
         alt="Logo"
-        className="w-48 h-24 object-cover h-auto lg:-mt-16"
+        className="w-48 h-24 object-cover h-auto lg:mt-3"
       />
     </Link>
   </div>
 
-  <div className="flex items-center gap-6 ml-auto lg:-mt-12">
-    {/* Search Box */}
+  <div className="flex items-center gap-6 ml-auto lg:mt-3">
     <div className="flex relative">
       <input
         type="text"
@@ -108,14 +108,10 @@ const length = filteredCartItems.length;
         className="text-[#0d1039] hover:text-[#057FE3] absolute top-1/2 right-3 transform -translate-y-1/2"
       />
     </div>
-       
-    <FaBell  size={24}
-        className="text-[#0d1039]"/>
-    {/* Cart Icon */}
-    {/* <div className="relative flex items-center gap-4 hover:cursor-pointer">
-      <IoCartSharp
+    <div className="relative flex items-center gap-4 hover:cursor-pointer">
+    <BsCart3
         size={40}
-        className="text-[#0d1039] hover:text-[#057FE3]"
+        className="text-[#4e6e9f]"
         onClick={() => setCartModalOpen(true)}
       />
       {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
@@ -127,55 +123,122 @@ const length = filteredCartItems.length;
         </span>
       ) : (
         <span
-          className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#057FE3] rounded-full ring-2 ring-gray-400 z-50"
+          className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#0d1039] rounded-full ring-2 ring-gray-400 z-50"
           onClick={() => setCartModalOpen(true)}
         >
           0
         </span>
       )}
-    </div> */}
+    </div>
+
+      <div className='relative flex items-center gap-4 hover:cursor-pointer' onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+      <FaBell  size={35}
+        className="text-[#0d1039]"/>
+      <span
+          className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#0d1039] rounded-full ring-2 ring-white z-50"
+        >
+          1
+        </span>
+        {isDropdownOpen && <NotificationDropdown onClose={() => setIsDropdownOpen(false)} /> }
+      </div>
 
 
-    {/* <div className="relative">
-      {user?.user?.user?.userName || user?.user?.name ? (
-        <div className="relative flex items-center gap-4 shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
-          <span className="bg-[#0d1039]  px-4 py-2 rounded-full text-white font-garet font-bold text-lg">
+   
+    <div className="relative">
+    {user?.user?.user?.userName || user?.user?.name ? (
+        <div className="relative flex items-center gap-4 cursor-pointer">
+          {/* User Avatar */}
+          <div className="flex items-center space-x-2 p-2 rounded-full">
+            <div className="bg-[#0d1039] text-white w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">
             {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
             {user?.user?.name?.toLocaleUpperCase()?.charAt(0)}
-          </span>
+            </div>
 
-          <button onClick={toggleDropdown} className="ml-0">
-            <FaCaretDown size={20} className="text-gray-800" />
-          </button>
+            <div onClick={toggleDropdown} className="flex items-center gap-2">
+              {/* <span className="font-semibold text-black">
+              {user?.user?.user?.userName?.toLocaleUpperCase()}{" "}
+              {user?.user?.name?.toLocaleUpperCase()}
+              </span> */}
+              {dropdownVisible ? (
+                <FaCaretUp size={20} className="text-gray-800" />
+              ) : (
+                <FaCaretDown size={20} className="text-gray-800" />
+              )}
+            </div>
+          </div>
 
+          {/* Dropdown Menu */}
           {dropdownVisible && (
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-100 transition-opacity duration-300 z-50">
-              <div className="relative w-44">
-                <div className="bg-[#057FE3] text-white flex flex-col rounded-md px-5 py-3">
-                  <div className="text-center text-base font-bold font-garet mt-1">
-                    {user?.user?.user?.userName?.toLocaleUpperCase()}{" "}
-                    {user?.user?.name?.toLocaleUpperCase()}
-                  </div>
-                  <div className="text-center text-base font-bold font-garet mt-1">
-                    <Link href="/dashboard">My Profile</Link>
-                  </div>
-                  <div className="max-w-44 flex items-center justify-center text-white text-base font-garet font-bold duration-300 cursor-pointer active:scale-[0.98]">
-                    <button className="px-0 py-2 flex items-center" onClick={handleLogout}>
-                      <IoMdLogOut size={20} className="mx-0" />
-                      <span className="text-center">LOGOUT</span>
-                    </button>
-                  </div>
+            <div className="absolute top-full right-0 mt-2 w-56 bg-white shadow-lg rounded-md z-50 border border-gray-200">
+              {/* User Info */}
+              <div className="p-4 border-b-2 flex items-center gap-3">
+                <div className="bg-[#0d1039] text-white w-12 h-12 flex items-center justify-center rounded-full text-lg font-bold">
+                {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
+                {user?.user?.name?.toLocaleUpperCase()?.charAt(0)}
                 </div>
+                <div>
+                  <div className="font-semibold text-gray-900">  {user?.user?.user?.userName?.toLocaleUpperCase()}{" "}
+                  {user?.user?.name?.toLocaleUpperCase()}
+                  </div>
+                  <div className="text-sm text-gray-500">  {user?.user?.user?.userEmail}{" "}
+                  {user?.user?.email}</div>
+                </div>
+              </div>
 
-                <div className="absolute left-1/2 transform -translate-x-1/2 -top-2 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-white"></div>
+              {/* Dropdown Links */}
+              <ul className="py-2 text-gray-800">
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">My learning</li>
+                <li className="px-4 py-2 flex justify-between hover:bg-gray-100 cursor-pointer">
+                  My cart <span className="">
+                  {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
+        <span
+          className=" flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#4e6e9f] rounded-full ring-2 ring-white z-50"
+          onClick={() => setCartModalOpen(true)}
+        >
+          {length}
+        </span>
+      ) : (
+        <span
+          className="flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#4e6e9f] rounded-full ring-2 ring-white z-50"
+          onClick={() => setCartModalOpen(true)}
+        >
+          0
+        </span>
+      )}
+                  </span>
+                </li>
+                <li className="px-4 py-2 flex justify-between hover:bg-gray-100 cursor-pointer">
+                  Notifications 
+                  <span
+          className=" flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#4e6e9f] rounded-full ring-2 ring-white z-50"
+          onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+          1
+        </span>
+
+                </li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Account settings</li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Payment methods</li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Purchase history</li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit profile</li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Help and support</li>
+              </ul>
+
+              {/* Logout Button */}
+              <div
+                className="flex items-center justify-center gap-2 py-3 text-red-600 font-semibold hover:bg-gray-100 cursor-pointer border-t"
+                onClick={handleLogout}
+              >
+                <IoMdLogOut size={18} />
+                Logout
               </div>
             </div>
           )}
         </div>
-      ) : (
-        <MyModal />
-      )}
-    </div> */}
+  ) : (
+    <MyModal />
+  )}
+</div>
+
 
   </div>
   <CartModal

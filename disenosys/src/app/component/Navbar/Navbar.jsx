@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import logo from "../../assests/logo.png";
 import { CiSearch } from "react-icons/ci";
 import { RiMenu4Fill } from "react-icons/ri";
+import "../../globals.css"
 // import {
 //   FiEdit,
 //   FiChevronDown,
@@ -92,8 +93,8 @@ const length = filteredCartItems.length;
   };
 
   return (
-    <nav className="shadow-lg bg-[#0d1039] fixed w-full top-0 left-0 right-0 z-50 mt-2 lg:mt-16">
-      <div className=" flex flex-col md:flex-row items-center justify-center px-4 lg:px-32 py-3">
+     <nav className="shadow-lg bg-[#0d1039] z-20 mt-2 lg:mt-16 fixed top-0 right-0 left-0">
+      <div className=" shadow-lg bg-[#0d1039]  flex flex-col md:flex-row items-center justify-center px-4 lg:px-32 py-3">
         <div className="flex lg:hidden items-center w-full md:w-auto justify-between md:justify-start">
            <Link
             href="/"
@@ -116,7 +117,7 @@ const length = filteredCartItems.length;
             href="/"
             passHref
             // onClick={() => handleLinkClick('/')}
-            className={`py-2 px-2 font-semibold  hover:text-[#057FE3] font-garet text-base ${
+            className={`py-2 px-2 font-medium  hover:text-[#057FE3] garet text-md ${
               path === "/" ? "text-[#057FE3]" : "text-white"
             }`}
           >
@@ -133,7 +134,7 @@ const length = filteredCartItems.length;
               href={`/${item.toLowerCase()}`}
               passHref
               // onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
-              className={`py-2 px-4 font-semibold  hover:text-[#057FE3] font-garet text-base ${
+              className={`py-2 px-4 garet  hover:text-[#057FE3] font-medium text-md ${
                 path === `/${item.toLowerCase()}`
                   ? "text-[#057FE3]"
                   : "text-white"
@@ -142,8 +143,8 @@ const length = filteredCartItems.length;
               {item}
             </Link>
           ))}
-          <div className="hidden md:flex space-x-6 justify-center items-center">
-            {/* <CiSearch size={30} className="text-white hover:text-[#057FE3]" /> */}
+          {/* <div className="hidden md:flex space-x-6 justify-center items-center">
+            <CiSearch size={30} className="text-white hover:text-[#057FE3]" />
             <div className="relative flex items-center gap-4 hover:cursor-pointer mx-4">
               <IoCartSharp
                 size={40}
@@ -170,10 +171,10 @@ const length = filteredCartItems.length;
                 </>
               )}
             </div>
-          </div>
+          </div> */}
         </div>
 
-        <div className="hidden md:flex justify-end mx-2">
+        {/* <div className="hidden md:flex justify-end mx-2">
   {user?.user?.user?.userName || user?.user?.name ? (
     <div className="relative  flex items-center gap-4 ring-4 mx-6 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
 
@@ -207,7 +208,7 @@ const length = filteredCartItems.length;
   ) : (
     <Modal />
   )}
-         </div>
+         </div> */}
 
 
 

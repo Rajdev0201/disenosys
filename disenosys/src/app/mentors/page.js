@@ -21,7 +21,7 @@ export default function MentorPage() {
 return(
   <>
   {user?.user?.user?.userType === 'admin'?
-    <div className="h-screen">
+    <div className="">
         <Navbar />
         <div className="grid grid-cols-12 h-full mt-16">
           <div className="col-span-2 bg-[#182073] h-full">
