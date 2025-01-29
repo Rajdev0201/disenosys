@@ -104,7 +104,7 @@ export const Contact = () => {
                 We are here for you! How can we help?
               </p>
               <form>
-                <div className="mb-4">
+                <div className="mb-8">
     
                   <input
                     type="text"
@@ -113,29 +113,29 @@ export const Contact = () => {
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label
+                <div className="mb-8">
+                  {/* <label
                     className="block text-base sm:text-xl mb-2 text-gray-50"
                     htmlFor="email"
                   >
                     Email
-                  </label>
+                  </label> */}
                   <input
                     type="email"
-                    placeholder="Your Email"
+                    placeholder="Enter Your Email"
                     className="w-full p-2 border text-white border-gray-200 rounded-md bg-[#F5F5FF] outline-none focus:border-yellow-600 transition-colors"
                   />
                 </div>
 
-                <div className="mb-4">
-                  <label
+                <div className="mb-8">
+                  {/* <label
                     className="block text-base sm:text-xl mb-2 text-gray-50"
                     htmlFor="message"
                   >
                     Message
-                  </label>
+                  </label> */}
                   <textarea
-                    placeholder="Your Message"
+                    placeholder="Enter Your Message"
                     className="w-full p-2 border text-white border-gray-200 rounded-md bg-[#F5F5FF] outline-none focus:border-yellow-600 transition-colors"
                     rows="5"
                   />
@@ -147,7 +147,7 @@ export const Contact = () => {
               </form>
             </div>
           </div>
-          <div className="flex items-center justify-center flex flex-col" >
+          <div className="flex items-center justify-center flex flex-col -mt-10">
               <div className="mb-6 p-20">
                <Image src={sub} className="object-cover" alt="sub"/>
               </div>
@@ -166,9 +166,9 @@ export const Contact = () => {
                   </p>
               </div>
               <div className="absolute bottom-8 -right-12 ml-1 z-40 flex flex-col items-center space-y-3 py-7 px-4 rounded-br-full rounded-tr-xl  bg-[#0d1039] before:absolute before:inset-0 before:rounded-br-full before:rounded-tr-xl before:bg-[#0d1039]  before:-z-50">
-  <FaLinkedin className="text-white hover:text-gray-400 cursor-pointer" size={18} />
-  <FaSquareFacebook className="text-white hover:text-gray-400 cursor-pointer" size={18} />
-  <FaInstagram className="text-white hover:text-gray-400 cursor-pointer" size={18} />
+  <FaLinkedin className="text-white hover:text-gray-400 cursor-pointer" size={20} />
+  <FaSquareFacebook className="text-white hover:text-gray-400 cursor-pointer" size={20} />
+  <FaInstagram className="text-white hover:text-gray-400 cursor-pointer" size={20} />
 </div>
 
           
