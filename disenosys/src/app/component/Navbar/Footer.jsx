@@ -87,7 +87,7 @@ const Footer = () => {
             </h1>
             <div className="space-y-2">
   <p className="text-base md:text-md text-white flex items-center justify-start gap-2 hover:text-white transition-colors duration-300 cursor-pointer">
-    <FaMapMarkerAlt className="text-white w-10 h-12" />
+    <FaMapMarkerAlt className="text-white w-7 h-7 lg:w-10 lg:h-12" />
     <span>11, VOC St, Ranga Colony, Rajakilpakam, Tamilnadu 60073</span>
   </p>
   <p className="text-base md:text-md text-white flex items-center justify-start gap-2 hover:text-white transition-colors duration-300 cursor-pointer">

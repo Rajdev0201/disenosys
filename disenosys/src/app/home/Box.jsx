@@ -13,7 +13,7 @@ const WhyChooseUs = () => {
       <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium px-4 md:px-12 font-garet lg:px-24 text-[#0d1039] mb-8">
         WHY CHOOSE US?
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
         <div className="flex flex-col items-start justify-start h-full shadow-md rounded-xl shadow-inner">
           <Image
             src={cls}

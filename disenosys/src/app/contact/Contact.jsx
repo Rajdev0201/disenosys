@@ -7,7 +7,7 @@ export const Contact = () => {
   return (
     <>
 
-      <div className="banner-contact p-20 md:p-12 lg:p-48 mt-16">
+      <div className="banner-contact p-20 md:p-12 lg:p-48 mt-0">
         <div className="grid grid-cols-1 md:grid-cols-2">
           <div></div>
           <div className="flex items-center justify-end">
@@ -22,16 +22,6 @@ export const Contact = () => {
       <div className=" p-16 font-poppins w-full h-full bg-white  rounded-lg shadow-lg">
         <div className="grid grid-cols-1 lg:grid-cols-1 gap-8 items-center">
    
-          <div className="flex items-center justify-center">
-            <div className="w-full h-auto max-w-lg">
-              <Image
-                src={side}
-                layout="responsive"
-                className="rounded-full bg-[#182073] p-4 shadow-md"
-                alt="Contact"
-              />
-            </div>
-          </div>
 
           <div className="flex items-center justify-center">
             <div className="w-full h-auto max-w-lg p-8 bg-[#182073] rounded-lg shadow-lg">
