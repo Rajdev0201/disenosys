@@ -87,13 +87,13 @@ export const Contact = () => {
       </div>
     </div> */}
     <div className="banner-contact p-20 md:p-12 lg:p-80 mt-20 ">
-          <div className="flex flex-col items-center justify-start -mt-44">
+          <div className="flex flex-col items-center justify-start lg:-mt-44">
             <Image src={side} className="w-[300px] h-[63px] " alt="brand"/>
             <h4 className="font-garet text-xl  text-white font-medium">Connect With Us</h4>
           </div>
         </div>
 
-      <div className="p-16 font-poppins container mx-auto -mt-96">
+      <div className="lg:p-16 font-poppins lg:container lg:mx-auto lg:-mt-96">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center bg-white rounded-2xl shadow-2xl relative">
           <div className="flex items-center justify-center">
             <div className="w-full h-auto max-w-lg p-8">
@@ -151,7 +151,7 @@ export const Contact = () => {
               <div className="mb-6 p-20">
                <Image src={sub} className="object-cover" alt="sub"/>
               </div>
-              <div className="space-y-6 -mt-20">
+              <div className="space-y-6 p-6 lg:p-0 -mt-16 lg:-mt-20">
                 <p className="text-base font-medium text-gray-600 font-garet flex items-center justify-start gap-2 transition-colors duration-300 cursor-pointer">
                     <FaMapMarkerAlt className="text-[#0d1039] w-6 h-6 ring-2 ring-[#6F65FA] rounded-full p-1" />
                     <span>11, VOC St, Ranga Colony, Rajakilpakam, Tamilnadu 60073</span>
@@ -165,7 +165,7 @@ export const Contact = () => {
                     <span>info@Disenosys.com</span>
                   </p>
               </div>
-              <div className="absolute bottom-8 -right-12 ml-1 z-40 flex flex-col items-center space-y-3 py-7 px-4 rounded-br-full rounded-tr-xl  bg-[#0d1039] before:absolute before:inset-0 before:rounded-br-full before:rounded-tr-xl before:bg-[#0d1039]  before:-z-50">
+              <div className="absolute bottom-8 -right-0 lg:-right-12 ml-1 z-40 flex flex-col items-center space-y-3 py-7 px-4 rounded-br-full rounded-tr-xl  bg-[#0d1039] before:absolute before:inset-0 before:rounded-br-full before:rounded-tr-xl before:bg-[#0d1039]  before:-z-50">
   <FaLinkedin className="text-white hover:text-gray-400 cursor-pointer" size={20} />
   <FaSquareFacebook className="text-white hover:text-gray-400 cursor-pointer" size={20} />
   <FaInstagram className="text-white hover:text-gray-400 cursor-pointer" size={20} />
