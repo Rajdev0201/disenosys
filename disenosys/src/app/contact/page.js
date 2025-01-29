@@ -9,7 +9,7 @@ export default function home () {
         <>
         <BlinkingAlert/>
         <Navbar />
-        <Announce/>
+        {/* <Announce/> */}
         <Contact/>
         <Footer/>
         </>
