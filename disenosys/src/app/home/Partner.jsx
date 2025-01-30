@@ -19,7 +19,7 @@ const Partner = () => {
           Hiring Companies
         </h1>
       </div>
-      <div className='shadow-md mb-4 bg-white rounded'>
+      <div className=' mb-4 bg-white rounded'>
         <div className='py-6'>
           <Marquee
             speed={80}

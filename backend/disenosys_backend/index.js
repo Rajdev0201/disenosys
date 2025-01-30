@@ -105,7 +105,7 @@ const Blog = require("./models/blog.js")
 const blog = require("./routes/blog.js")
 const career = require("./models/career.js")
 const mentor = require('./models/mentor.js');
-
+const contact = require('./routes/contact.js')
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
 app.use("/api/v1",addCart);
@@ -121,6 +121,7 @@ app.use('/admin',adminRoute);
 app.use('/api/admin',code);
 app.use('/api/student',student);
 app.use('/api/blog',blog)
+app.use('/contact',contact);
 
 app.get("/",(req,res) => {
  res.send("hi")

@@ -133,7 +133,6 @@ const Navbar = () => {
             "Gallery",
             "Admissions",
             "Blog",
-            "Contact",
           ].map((item) => (
             <Link
               key={item}
@@ -149,6 +148,16 @@ const Navbar = () => {
               {item}
             </Link>
           ))}
+             <Link
+            href="/contact"
+            passHref
+            // onClick={() => handleLinkClick('/')}
+            className={`py-2 px-2 font-medium  hover:text-[#057FE3] garet text-md ${
+              path === "/contact" ? "text-[#057FE3]" : "text-white"
+            }`}
+          >
+            Contact Us
+          </Link>
           {/* <div className="hidden md:flex space-x-6 justify-center items-center">
             <CiSearch size={30} className="text-white hover:text-[#057FE3]" />
             <div className="relative flex items-center gap-4 hover:cursor-pointer mx-4">
@@ -239,7 +248,7 @@ const Navbar = () => {
                 "Gallery",
                 "Admissions",
                 "Blog",
-                "Contact",
+                "Contact Us",
               ].map((item) => (
                 <Link
                   key={item}
