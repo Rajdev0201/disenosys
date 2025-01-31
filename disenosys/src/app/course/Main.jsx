@@ -56,7 +56,7 @@ const CoursePopup = () => {
       <div className="lg:p-6">
         <div className="flex border-b-4 border-[#0d1039]">
           <button
-            className={`w-1/2 p-2 lg:p-3 text-center font-semibold ${
+            className={`w-1/2 p-2 lg:p-3 text-center font-garet font-medium ${
               activeTab === "pg" ? "bg-blue-300" : "bg-gray-100"
             }`}
             onClick={() => setActiveTab("pg")}
@@ -64,7 +64,7 @@ const CoursePopup = () => {
             PG Programmes
           </button>
           <button
-            className={`w-1/2 p-2 lg:p-3  text-center font-semibold ${
+            className={`w-1/2 p-2 lg:p-3  text-center font-garet font-medium ${
               activeTab === "cert" ? "bg-blue-300" : "bg-gray-100"
             }`}
             onClick={() => setActiveTab("cert")}
