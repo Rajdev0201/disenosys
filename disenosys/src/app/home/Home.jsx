@@ -161,7 +161,7 @@ const Home = () => {
                     />
 
                     <button
-                      className="px-10 py-2 text-2xl mt-24 font-garet bg-white border-none outline-none text-[#0d1039] rounded-sm font-bold  border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
+                      className="px-10 py-2 text-md lg:text-2xl mt-24 font-garet bg-white border-none outline-none text-[#0d1039] rounded-sm font-bold  border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
                       type="submit"
                       disabled={loading}
                     >

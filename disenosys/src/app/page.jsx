@@ -73,7 +73,7 @@ export default function Page() {
       <Testimonials/>
       <WhyChoose />
       <Placement/>
-      <Course />
+      <Course name="Other Online Courses"/>
       <Partner />
       <Footer />
     </div>

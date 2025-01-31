@@ -6,7 +6,7 @@ const AboutSection = () => {
   return (
     <section className="bg-white py-16 px-4 md:px-12 lg:px-20 shadow-xl rounded-lg mt-6">
       <div className="max-w-7xl mx-auto p-6">
-        <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-[#0d1039] text-center mb-8">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-[#0d1039] text-center mb-8 font-garet">
           WHO WE ARE
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
@@ -15,7 +15,7 @@ const AboutSection = () => {
           </div>
 
           <div className="text-[#0d1039] text-lg leading-relaxed">
-            <p className="mt-4 text-lg leading-8 text-[#0d1039]">
+            <p className="mt-4 text-lg leading-8 text-[#0d1039] font-garet">
               We Are Disenosys, A Well-Established EdTech Platform and A
               Successful Life-Changer for Most Students and Professionals. At
               Disenosys, Industry-Specific Courses Are Designed to Upskill You

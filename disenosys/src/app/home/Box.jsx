@@ -4,7 +4,7 @@ import React from 'react';
 import week from "../assests/profile/week.jpg"
 import cls from "../assests/profile/cls.jpg"
 import job from "../assests/profile/job.jpg"
-import hands from "../assests/profile/hands.jpg"
+import hands from "../assests/profile/exp.jpg"
 import { FaBriefcase, FaCalendarDay, FaChalkboardTeacher, FaProjectDiagram } from 'react-icons/fa';
 
 const WhyChooseUs = () => {

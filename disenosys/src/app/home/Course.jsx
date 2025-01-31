@@ -8,7 +8,7 @@ import Link from 'next/link.js';
 import { useRouter } from 'next/navigation';
 import { payment } from '../Redux/action/Payment.js';
 
-const Course = () => {
+const Course = ({name}) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
 
   const courses = useSelector((state) => state?.course?.courses);
@@ -91,8 +91,8 @@ const addCart = (course) => {
 
   const getButtonClass = (category) => {
     return selectedCategory === category
-      ? 'text-[#0d1039] font-josefin font-bold text-xl px-8 rounded shadow-lg py-2 bg-gray-300 hover:bg-blue-800'
-      : ' font-josefin font-bold text-xl px-8 rounded shadow-lg text-white border border-gray-200 py-2 bg-[#0d1039] hover:bg-blue-800';
+      ? 'text-[#0d1039]  font-garet font-medium text-xl px-4 rounded-md shadow-lg py-2 bg-gray-300 hover:bg-blue-800'
+      : '  font-garet font-medium text-xl px-4 rounded-md shadow-lg text-white border border-gray-200 py-2 bg-[#0d1039] hover:bg-blue-800';
   };
 
   const goToDescriptionPage = (courseId) => {
@@ -104,7 +104,7 @@ const addCart = (course) => {
     <div className='mt-6 hover:cursor-pointer'>
       <div className='text-center mb-12'>
         <h1 className='text-3xl md:text-4xl lg:text-5xl font-medium px-4 md:px-12 font-garet lg:px-3 text-[#0d1039] text-center'>
-        Other Online Courses
+        {name}
         </h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 px-12 py-6">
@@ -150,7 +150,7 @@ const addCart = (course) => {
         Automobile Engineering
       </button>
       <button
-        className="font-josefin flex justify-center items-center gap-2 font-bold text-xl px-8 rounded shadow-lg text-white border border-gray-200 py-2 bg-black hover:bg-blue-800"
+        className="font-garet flex justify-center items-center gap-2 font-medium text-xl px-8 rounded-md shadow-lg text-white border border-gray-200 py-2 bg-black hover:bg-blue-800"
         disabled
       >
        Launching Soon
@@ -169,7 +169,7 @@ const addCart = (course) => {
 </div>
 
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 p-12 bg-white">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 lg:p-12 bg-white">
         <div className='col-span-1 md:col-span-2 lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8'>
           {filteredCourses?.map((course) => (
             
@@ -183,14 +183,14 @@ const addCart = (course) => {
                   onClick={() => goToDescriptionPage(course?._id)}
                 />
               </div>
-              <div className="flex flex-col flex-grow" >
-                <div className="font-bold text-xl mb-2 text-center" onClick={() => goToDescriptionPage(course?._id)}>{course?.courseName}</div>
+              <div className="flex flex-col flex-grow font-garet" >
+                <div className="font-medium stroke-2 text-xl mb-2 text-center font-sans" onClick={() => goToDescriptionPage(course?._id)}>{course?.courseName}</div>
                 <p className="text-gray-500 font-medium text-md text-base mb-4 mt-2">{course?.description}</p>
                 <div className="flex justify-between items-center mt-auto">
-                  <button className='bg-[#0d1039] text-white px-1 py-1 lg:px-4 lg:py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
+                  <button className='bg-[#0d1039] text-white px-2 py-2 lg:px-4 lg:py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
                     Add to Cart
                   </button>
-                  <span className="text-base font-semibold text-[#182073] flex items-center" onClick={() => goToDescriptionPage(course?._id)}>More Info</span>
+                  <span className="text-base font-medium text-[#182073] flex items-center" onClick={() => goToDescriptionPage(course?._id)}>More Info</span>
                 </div>
               </div>
         

@@ -85,9 +85,9 @@ const Footer = () => {
             <h1 className="font-bold text-xl md:text-xl text-white mb-4">
               CONTACT
             </h1>
-            <div className="space-y-2">
-  <p className="text-base md:text-md text-white flex items-center justify-start gap-2 hover:text-white transition-colors duration-300 cursor-pointer">
-    <FaMapMarkerAlt className="text-white w-7 h-7 lg:w-10 lg:h-12" />
+            <div className="space-y-5  lg:space-y-2">
+  <p className="text-base md:text-md text-white flex items-center justify-start gap-4 lg:gap-2 hover:text-white transition-colors duration-300 cursor-pointer">
+    <FaMapMarkerAlt className="text-white w-8 h-8 lg:w-10 lg:h-12" />
     <span>11, VOC St, Ranga Colony, Rajakilpakam, Tamilnadu 60073</span>
   </p>
   <p className="text-base md:text-md text-white flex items-center justify-start gap-2 hover:text-white transition-colors duration-300 cursor-pointer">
@@ -181,7 +181,7 @@ const Footer = () => {
       </div>
     </div>
     <div className="bg-white ">
-    <h1 className="text-[#0d1039] p-1 font-semibold text-sm md:text-sm lg:text-md text-end sm:text-left flex justify-center items-center">
+    <h1 className="text-[#0d1039] p-1 font-semibold font-sans text-sm md:text-sm lg:text-md text-end sm:text-left flex justify-center items-center">
             <MdOutlineCopyright size={20} className="pr-1" /> 2025 Disenosys |
             All rights reserved
           </h1> 

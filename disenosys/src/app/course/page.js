@@ -4,15 +4,19 @@ import HomeCourse from "../home/Course.jsx"
 import Navbar from "../component/Navbar/Navbar";
 import Footer from "../component/Navbar/Footer.jsx"
 import Blink from "../component/Blink/BlinkingPopup";
+import Main from "./Main.jsx"
+import Partner from '../home/Partner.jsx';
 export default function course () {
   return (
     <div>
          <Blink/>
          <Navbar />
         <Course />
-        <div className='mt-20'>
+        <Main/>
+        {/* <div className='mt-20'>
         <HomeCourse/>
-        </div>
+        </div> */}
+        <Partner/>
         <Footer/>
     </div>
   )
