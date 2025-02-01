@@ -26,6 +26,12 @@
   background-size: cover;
 }
 
+.bg-faq {
+  background-image: url("../assests/profile/FAQ.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 .c {
   background-image: url("../assests/profile/c1.png");
