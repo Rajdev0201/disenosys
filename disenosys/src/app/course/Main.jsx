@@ -88,7 +88,7 @@ const CoursePopup = () => {
                   <Image
                     src={course.image}
                     alt={course.title}
-                    className="w-full h-96 object-cover rounded-lg"
+                    className="w-full h-96 object-cover rounded-lg" priority loading="eager"
                   />
                 </div>
   

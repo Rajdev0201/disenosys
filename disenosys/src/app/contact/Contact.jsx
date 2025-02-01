@@ -117,7 +117,7 @@ export const Contact = () => {
       <div className="bg-contact flex justify-center py-20 mt-6 lg:mt-32">
         <div className="">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:px-12">
-            <div className="lg:p-8 flex flex-col justify-center lg:-mt-10">
+            <div className="lg:p-8 flex flex-col justify-center lg:-mt-20">
               <h2 className="text-3xl font-semibold text-center lg:text-start font-garet text-[#0d1039] mb-2">
                 Contact Us
               </h2>

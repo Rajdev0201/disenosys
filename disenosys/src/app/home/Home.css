@@ -12,6 +12,21 @@
   background-size: cover;
 }
 
+.bg-tr {
+  background-image: url("../assests/profile/TR.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-pr {
+  background-image: url("../assests/profile/PR-2.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
 .c {
   background-image: url("../assests/profile/c1.png");
   background-position: center;
