@@ -19,7 +19,7 @@ const MyCourse = () => {
 
   useEffect(() => {
     const filtered = pay?.data?.filter((item) =>
-      item.mode === "Online" && 
+      item.mode !== "Offline" && 
       (
         item.customerDetails.name.toLowerCase().includes(search.toLowerCase()) ||
         item.lineItems[0].name.toLowerCase().includes(search.toLowerCase()) ||
