@@ -153,6 +153,7 @@ const MyCourse = () => {
       alert("Student Paid data added");
     } catch (error) {
       console.error(error);
+      alert("Student added data is failed");
     }
     setShowPopup(false);
   };
@@ -306,10 +307,10 @@ const MyCourse = () => {
                 name="courseName"
                 value={newPayment.lineItems[0].name}
                 onChange={handleChange}
-                className="border p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="border p-2 w-full text-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               >
-                <option value="">Select Course</option>
+                <option value="" className="">Select Course</option>
                 {courses?.map((course, index) => (
                   <option
                     key={index}

@@ -189,7 +189,7 @@ const length = filteredCartItems.length;
 
               {/* Dropdown Links */}
               <ul className="py-2 text-gray-800">
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">My learning</li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link href="/mycourse">My learnin</Link>g</li>
                 <li className="px-4 py-2 flex justify-between hover:bg-gray-100 cursor-pointer">
                   My cart <span className="">
                   {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (

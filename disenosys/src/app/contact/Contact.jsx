@@ -114,7 +114,7 @@ export const Contact = () => {
   
   return (
     <>
-      <div className="bg-contact flex justify-center py-20 mt-6 lg:mt-32">
+      <div className="bg-contact flex justify-center py-28 mt-6 lg:mt-32">
         <div className="">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:px-12">
             <div className="lg:p-8 flex flex-col justify-center lg:-mt-20">
