@@ -156,4 +156,29 @@ exports.getPlaceOrder = async(req,res) => {
         }
 }
 
+exports.addOfflinePayment = async (req, res) => {
+  try {
+    const { sessionId, customerDetails, lineItems, mode ,isPaid } = req.body;
+
+    if (!sessionId || !customerDetails?.name || !customerDetails?.email || !lineItems?.length) {
+      return res.status(400).json({ success: false, message: "All fields are required." });
+    }
+
+    const newPayment = new CheckoutSession({
+      sessionId,
+      customerDetails,
+      lineItems,
+      mode,
+      isPaid
+    });
+
+    await newPayment.save();
+
+    return res.status(201).json({ success: true, message: "Payment saved successfully." });
+  } catch (error) {
+    console.error("Error saving payment:", error);
+    return res.status(500).json({ success: false, message: "Internal Server Error." });
+  }
+};
+
 

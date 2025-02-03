@@ -18,16 +18,18 @@ const MyCourse = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const filtered = pay?.data?.filter((item) => {
-      return (
+    const filtered = pay?.data?.filter((item) =>
+      item.mode === "Online" && 
+      (
         item.customerDetails.name.toLowerCase().includes(search.toLowerCase()) ||
         item.lineItems[0].name.toLowerCase().includes(search.toLowerCase()) ||
         item.sessionId.toLowerCase().includes(search.toLowerCase()) ||
         new Date(item.createdAt).toLocaleDateString().toLowerCase().includes(search.toLowerCase())
-      );
-    });
+      )
+    );
     setFilteredData(filtered);
   }, [search, pay]);
+  
 
   const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -36,12 +38,12 @@ const MyCourse = () => {
   const handlePageChange = (page) => setCurrentPage(page);
 
   const handleToggle = (id, isActive) => {
-    // const confirmMessage = isActive
-    //   ? "Do you want to deactivate this course?"
-    //   : "Do you want to activate this course?";
+    const confirmMessage = isActive
+      ? "Do you want to deactivate this course?"
+      : "Do you want to activate this course?";
     
-    // const confirmSubmit = window.confirm(confirmMessage);
-    // if (confirmSubmit) {
+    const confirmSubmit = window.confirm(confirmMessage);
+    if (confirmSubmit) {
       fetch(`https://disenosys-1.onrender.com/course/toggleCode/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -58,7 +60,7 @@ const MyCourse = () => {
           }
         })
         .catch((err) => console.log(err));
-    
+      }
   };
   
 

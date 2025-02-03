@@ -13,11 +13,11 @@ const Sidebar = () => {
   const path = usePathname();
   const dispatch = useDispatch();
   const [isUniversityDropdownOpen, setUniversityDropdownOpen] = useState(false);
+  const [isCourse, setIsCourse] = useState(false);
   const [certificate, setCertificate] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const links = [
-    { href: '/courselist', label: 'Paid Courses', icon: <SiAuthentik /> },
     // { href: '/certificate', label: 'Post certificate', icon: <PiCertificateBold /> },
     { href: '/gpdx', label: 'DEMO', icon: <GrScorecard />    },
     { href: '/applicants', label: 'Applicants', icon: <GrScorecard />},
@@ -123,6 +123,31 @@ const Sidebar = () => {
             )}
           </div>
        
+          <div>
+            <button
+              onClick={() => setIsCourse(!isCourse)}
+              className={`flex items-center w-full py-2 px-4  lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
+                path.startsWith('/courselist') || path.startsWith('/offlinepaid') ? 'bg-blue-700' : ''
+              }`}
+            >
+              <SiAuthentik className="mr-3" />
+              <span>Courses</span>
+              <FaChevronDown className={`ml-auto transition-transform ${isCourse ? 'rotate-180' : ''}`} />
+            </button>
+
+            {isCourse && (
+              <div className="ml-8 mt-2 space-y-2">
+                  <Link href="/courselist" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/courselist' ? 'bg-blue-700' : ''}`}>
+                  <SiAuthentik className="mr-3" />
+                  Online-Paid
+                </Link>
+                <Link href="/offlinepaid" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/offlinepaid' ? 'bg-blue-700' : ''}`}>
+                  <SiAuthentik className="mr-3" />
+                  Offline-Paid
+                </Link>
+              </div>
+            )}
+          </div>
           {links.map((link) => (
             <Link href={link.href} key={link.label} className={`flex items-center py-2  px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === link.href ? 'bg-blue-700' : ''}`}>
               <span className="mr-3">{link.icon}</span>

@@ -14,7 +14,6 @@ const paymentSchema = new mongoose.Schema({
     user: {
       type: mongoose.Types.ObjectId,
       ref: 'users',
-      required: true
     },
     customerDetails: {
       name: {
@@ -26,6 +25,7 @@ const paymentSchema = new mongoose.Schema({
           required: true,
       },
     },
+    mode: { type: String, default: "Online" },
     createdAt: {
       type: Date,
       default: Date.now,

@@ -1,5 +1,5 @@
 const express = require("express");
-const {  createCheckoutSession, getPlaceOrder, handleRazorpayCallback } = require("../controllers/Payment.js");
+const {  createCheckoutSession, getPlaceOrder, handleRazorpayCallback, addOfflinePayment } = require("../controllers/Payment.js");
 const CheckoutSession = require('../models/Payment.js');
 const nodemailer = require('nodemailer');
 
@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/checkout-order",createCheckoutSession)
 router.post('/handle-razorpay-callback', handleRazorpayCallback);
 router.get("/getPlaceOrder",getPlaceOrder)
-
+router.post("/offline-payment",addOfflinePayment)
 
 
 

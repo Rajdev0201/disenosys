@@ -95,7 +95,7 @@ const CoursePopup = () => {
                 {/* Content */}
                 <div className="w-full md:w-1/2 px-4">
                 <div className=""> 
-                  <h2 className="text-lg lg:text-4xl text-center lg:text-start mt-2 lg:mt-0 font-semibold text-[#0d1039] font-garet ">
+                  <h2 className="text-lg lg:text-4xl text-center lg:text-start mt-2 lg:mt-0 font-[500] text-[#0d1039] font-garet ">
                     {course.title}
                   </h2>
                   </div>
