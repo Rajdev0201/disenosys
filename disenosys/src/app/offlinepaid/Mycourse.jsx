@@ -147,6 +147,11 @@ const MyCourse = () => {
       );
 
       const data = await response.json();
+      if (!response.ok) {
+        alert(data.message || "Something went wrong");
+        return;
+      }
+      
       if (data.success) {
         dispatch(payment());
       }

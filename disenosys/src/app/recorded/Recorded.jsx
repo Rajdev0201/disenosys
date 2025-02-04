@@ -430,7 +430,8 @@ const Recorded = () => {
                           disabled={!unlockedModules[idx]}
                         >
                           <span className="font-bold text-lg font-poppins">
-                            Module-{idx + 1}: {item.title}
+                            {/* Module-{idx + 1}:  */}
+                            {item.titles}
                           </span>
                           <span className="text-[#182073]">
                             {unlockedModules[idx] ? (

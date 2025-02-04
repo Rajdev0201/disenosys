@@ -68,7 +68,10 @@ const Course = () => {
           <div key={courseIdx}>
             {course?.Curriculum?.map((item, idx) => (
               <div key={idx} ref={(el) => (courseRefs.current[idx] = el)}>
-                <button
+                {!item.title ? (
+                ""
+                ):(
+                  <button
                   onClick={() => toggleAccordion(idx)}
                   className="w-full text-left bg-gray-100 my-2 p-2 mt-4 rounded-md hover:bg-gray-200 focus:outline-none flex items-center justify-between"
                 >
@@ -77,7 +80,8 @@ const Course = () => {
                     {openAccordionIndex === idx ? "▲" : "▼"}
                   </span>
                 </button>
-
+                )
+                 }
                 {openAccordionIndex === idx && (
                   <div className={`mt-4 gap-3 ${item.title === "INTRODUCTION" ? "grid grid-cols-1" : "grid grid-cols-1 md:grid-cols-2"}`}>
                     <div className="bg-white border border-gray-300 p-4 shadow-md rounded-md">

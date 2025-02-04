@@ -39,7 +39,7 @@ const Course = () => {
       <h4 className="text-[#182073] font-medium text-xl font-poppins">
         My Course
       </h4>
-      <div className="grid grid-cols-1 lg:grid-cols-3 container mx-auto mt-20 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 container mx-auto mt-20">
         {pay?.data?.map((item) =>
           item.customerDetails.name === user?.user?.user?.userName ? (
             item.isActive ? (

@@ -163,6 +163,10 @@ exports.addOfflinePayment = async (req, res) => {
     if (!sessionId || !customerDetails?.name || !customerDetails?.email || !lineItems?.length) {
       return res.status(400).json({ success: false, message: "All fields are required." });
     }
+    const existingPayment = await CheckoutSession.findOne({ sessionId });
+    if (existingPayment) {
+      return res.status(400).json({ success: false, message: "Session ID already exists. Please use a unique ID." });
+    }
 
     const newPayment = new CheckoutSession({
       sessionId,
