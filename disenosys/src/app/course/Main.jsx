@@ -54,18 +54,18 @@ const CoursePopup = () => {
   
     return (
       <div className="lg:p-6">
-        <div className="flex border-b-4 border-[#0d1039]">
+        <div className="flex border-b-4 border-[#a5c2f0]">
           <button
-            className={`w-1/2 p-2 lg:p-3 text-center font-garet font-medium ${
-              activeTab === "pg" ? "bg-blue-300" : "bg-gray-100"
+            className={`w-1/2 p-2 lg:p-4 text-center font-garet font-medium text-[#0d1039] text-lg ${
+              activeTab === "pg" ? "bg-[#a5c2f0] shadow-inner rounded-tl-3xl rounded-tr-3xl" : "bg-white"
             }`}
             onClick={() => setActiveTab("pg")}
           >
             PG Programmes
           </button>
           <button
-            className={`w-1/2 p-2 lg:p-3  text-center font-garet font-medium ${
-              activeTab === "cert" ? "bg-blue-300" : "bg-gray-100"
+            className={`w-1/2 p-2 lg:p-4 text-center font-garet font-medium text-[#0d1039] text-lg ${
+              activeTab === "cert" ? "bg-[#a5c2f0] shadow-inner rounded-tl-3xl rounded-tr-3xl" : "bg-white"
             }`}
             onClick={() => setActiveTab("cert")}
           >
@@ -100,8 +100,8 @@ const CoursePopup = () => {
                   </h2>
                   </div>
                   <p className="text-gray-600 font-garet mt-2">{course.description}</p>
-                  <button className="lg:mt-48 mt-4 px-6 py-2 bg-[#0d1039] text-white rounded-md hover:bg-blue-700 font-garet" onClick={() => pg(course.name)}>
-                    Apply Now →
+                  <button className="lg:mt-48 mt-4 px-6 py-2 bg-[#0d1039] text-white font-medium rounded-md hover:bg-blue-700 font-garet" onClick={() => pg(course.name)}>
+                    More Info →
                   </button>
                 </div>
                

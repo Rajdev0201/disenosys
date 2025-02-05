@@ -11,12 +11,17 @@ import { IoLogoYoutube } from "react-icons/io5";
 import { GiRibbonMedal } from "react-icons/gi";
 import { ImPriceTag } from "react-icons/im";
 import h from "../assests/100.svg";
-
+import i from "../assests/profile/ofc.jpg"
+import { IoIosArrowForward } from "react-icons/io";
 export const Course = () => {
   return (
     <>
-      <div className="Course py-12 lg:py-28 mt-4 lg:mt-28">
-      <h1 className="mt-40 text-center lg:mt-48 text-4xl px-3 lg:px-16 lg:text-start font-semibold text-[#0d1039] font-garet">Courses</h1>
+      <div className="bg-[#6497e6] py-12 lg:py-28 mt-4 lg:mt-28">
+        {/* <div className="flex justify-end">
+          <Image src={i} className="rounded-full object-cover w-44 h-44" alt=""/>
+        </div> */}
+        <span className="mt-40 text-center lg:mt-48 lg:text-start text-4xl px-3 lg:px-16 text-garet text-base font-medium flex items-center">Home <IoIosArrowForward className=""/>Courses</span>
+      <h1 className="mt-6 text-center lg:mt-3 text-4xl px-3 lg:px-16 lg:text-start font-semibold text-[#0d1039] font-garet">Courses</h1>
       </div>
        <div className="mt-2 py-2">
         <h4 className="font-garet px-3 lg:px-16 text-md lg:text-2xl font-medium text-[#0d1039]">At Disenosys, we offer meticulously curated courses designed by industry experts to equip you with industry-relevant skills. Our programs include a range of postgraduate and online certification courses in Automotive Body Design across various domains.</h4>
