@@ -16,7 +16,7 @@ import { IoIosArrowForward } from "react-icons/io";
 export const Course = () => {
   return (
     <>
-      <div className="bg-[#6497e6] py-12 lg:py-28 mt-4 lg:mt-28">
+      <div className="bg-[#a5c2f0] py-12 lg:py-28 mt-4 lg:mt-28">
         {/* <div className="flex justify-end">
           <Image src={i} className="rounded-full object-cover w-44 h-44" alt=""/>
         </div> */}
