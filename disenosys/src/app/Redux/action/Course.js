@@ -1,7 +1,7 @@
 
 "use client"
 import { setProducts } from "../features/CourseSlice.js";
-// import{setCourse} from "../features/categorySlice.js"
+import{setCourse} from "../features/courseLDSlice.js"
 import axios from 'axios'
 
 export const fetchCourse = () => async (dispatch) => {
@@ -13,6 +13,16 @@ export const fetchCourse = () => async (dispatch) => {
       console.error('Error fetching products:', error);
     }
   };
+
+  export const courseld = () => async (dispatch) => {
+    try {
+        const res = await axios.get("https://disenosys-dkhj.onrender.com/ld/courseget");
+        const getData = res.data;
+        dispatch(setCourse(getData));
+    } catch (error) {
+        console.error('Error fetch code:', error);
+    }
+  }
   
 
   // export const fetchByCategory = (category) => async (dispatch) => {

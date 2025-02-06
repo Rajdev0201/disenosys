@@ -37,6 +37,13 @@ const authSlice = createSlice({
       }
       state.user = userData;
     },
+    AdminLD: (state, action) => {
+      const userData = action.payload || {};
+      if (typeof window !== "undefined") {
+        localStorage.setItem("profile", JSON.stringify(userData));
+      }
+      state.user = userData;
+    },
     LogOut: (state, action) => {
       if (typeof window !== "undefined") {
         localStorage.removeItem("profile");
@@ -75,5 +82,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { Signup,Login,LogOut,GoogleLog,GoogleOut,FacebookLog,LinkedInLog,setUser,Admin } = authSlice.actions;
+export const { Signup,Login,LogOut,GoogleLog,GoogleOut,FacebookLog,LinkedInLog,setUser,Admin,AdminLD } = authSlice.actions;
 export default authSlice.reducer;

@@ -19,7 +19,7 @@ import consult from "./features/consultSlice.js";
 import blog from "./features/blogSlice.js";
 import career from "./features/careerSlice.js";
 import mentor from "./features/mentorSlice.js";
-
+import courseLD from "./features/courseLDSlice.js";
 export default configureStore({
   reducer: {
     course: CourseSlice,
@@ -40,6 +40,7 @@ export default configureStore({
     blog:blog,
     career:career,
     mentor:mentor,
-    companyCode:companyCode
+    companyCode:companyCode,
+    courseLD:courseLD
   },
 });

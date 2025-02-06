@@ -74,7 +74,7 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
 
 export const payment = () => async (dispatch) => {
     try {
-        const res = await axios.get("https://disenosys-1.onrender.com/course/getPlaceOrder");
+        const res = await axios.get("https://disenosys-dkhj.onrender.com/course/getPlaceOrder");
         const getData = res.data;
         dispatch(setPayment(getData));
     } catch (error) {

@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Admin, FacebookLog, Login, Signup } from '../features/authSlice.js';
+import { Admin, AdminLD, FacebookLog, Login, Signup } from '../features/authSlice.js';
 import { setStudent, student } from "../features/studentSlice.js"
 import {remove, setCode} from "../features/codeSlice.js";
 import {removeCodeC, setCompanyCode} from "../features/companyCodeSlice.js";
@@ -101,6 +101,39 @@ export const SignupData = (userData) => async (dispatch) => {
       });
       localStorage.setItem("profile", JSON.stringify(data));
       router.push("/historycode")
+    }catch(err) {
+      toast.error(err?.response?.data?.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        });
+      }
+  };
+
+  export const adminLD = (userData,router) => async (dispatch) => {
+    try {
+      const { data } = await axios.post(
+        "https://disenosys-dkhj.onrender.com/admin/loginld",
+        userData
+      );
+      dispatch(AdminLD(data));
+      toast.dark('Login successful!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      localStorage.setItem("profileLD", JSON.stringify(data));
+      router.push("/coursel&d")
     }catch(err) {
       toast.error(err?.response?.data?.message, {
         position: "top-center",

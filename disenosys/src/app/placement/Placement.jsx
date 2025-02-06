@@ -7,6 +7,8 @@ import { fetchCourse } from "../Redux/action/Course.js";
 import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image.js";
 import t from "../assests/profile/f.png";
+import i from "../assests/profile/ofc.jpg";
+
 const Placement = () => {
   const courses = useSelector((state) => state?.course?.courses);
   const dispatch = useDispatch();
@@ -21,9 +23,6 @@ const Placement = () => {
   return (
     <div className="">
       <div className="bg-[#a5c2f0] py-12 lg:py-28 mt-4 lg:mt-28">
-        {/* <div className="flex justify-end">
-                      <Image src={i} className="rounded-full object-cover w-44 h-44" alt=""/>
-                    </div> */}
         <span className="mt-24 text-center lg:mt-16 lg:text-start text-sm lg:text-2xl px-3 lg:px-16 text-garet text-base font-medium flex items-center">
           Home <IoIosArrowForward className="" />
           Courses
@@ -83,6 +82,9 @@ const Placement = () => {
             </span>
           </p>
         </div>
+          <div className="flex justify-end">
+                      <Image src={i} className="rounded-full shadow-inner ring-2 ring-gray-300 object-cover w-96 h-96 -mt-60" alt=""/>
+                    </div>
       </div>
       <div className="text-[#0d1039] font-garet text-center text-2xl lg:text-start lg:text-5xl mt-12 px-3 lg:px-28 mb-8">
         <b>Faculties</b>

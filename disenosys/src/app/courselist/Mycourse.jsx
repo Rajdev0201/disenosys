@@ -44,7 +44,7 @@ const MyCourse = () => {
     
     const confirmSubmit = window.confirm(confirmMessage);
     if (confirmSubmit) {
-      fetch(`https://disenosys-1.onrender.com/course/toggleCode/${id}`, {
+      fetch(`https://disenosys-dkhj.onrender.com/course/toggleCode/${id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ isActive: !isActive }),
