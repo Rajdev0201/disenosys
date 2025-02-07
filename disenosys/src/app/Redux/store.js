@@ -20,6 +20,9 @@ import blog from "./features/blogSlice.js";
 import career from "./features/careerSlice.js";
 import mentor from "./features/mentorSlice.js";
 import courseLD from "./features/courseLDSlice.js";
+import teacher from "./features/teacherSlice.js"
+import online from "./features/onlineStdSlice.js";
+
 export default configureStore({
   reducer: {
     course: CourseSlice,
@@ -41,6 +44,8 @@ export default configureStore({
     career:career,
     mentor:mentor,
     companyCode:companyCode,
-    courseLD:courseLD
+    courseLD:courseLD,
+    teacher:teacher,
+    online:online,
   },
 });

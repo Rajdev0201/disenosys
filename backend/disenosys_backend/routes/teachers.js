@@ -1,12 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Code = require('../models/course.js');
+const teacher = require('../models/teachers.js');
 
 
-router.post("/courseadd", async (req, res) => {
+router.post("/teacheradd", async (req, res) => {
     try {
-      const {course} = req.body;
-      const newContact = new Code({ course });
+      const {name,email,phone,exp,subject} = req.body;
+      const newContact = new teacher({ name,email,phone,exp,subject });
       await newContact.save();
       res.status(200).json({ success: true, message: "Form submitted successfully!" });
     } catch (error) {
@@ -15,16 +15,16 @@ router.post("/courseadd", async (req, res) => {
     }
   });
 
-  router.get("/courseget" ,async (req,res) => {
+  router.get("/teacherget" ,async (req,res) => {
     try{
-        const course = await Code.find();
+        const course = await teacher.find();
     
         if(!course){
               return res.status(400).json({ error: 'No Data is available' });
         }
     
         res.status(200).json({
-            message: 'Course data is saved',
+            message: 'teacher data is saved',
             data: course,
           });
         }catch(err){
@@ -34,13 +34,14 @@ router.post("/courseadd", async (req, res) => {
   })
 
 
-  router.delete('/coursedelete/:id', async (req,res) => {
+
+  router.delete('/teacherdelete/:id', async (req,res) => {
     const { id } = req.params;
     try{
-    const fixed = await Code.findByIdAndDelete(id);
+    const fixed = await teacher.findByIdAndDelete(id);
 
     res.status(200).json({
-        message: 'Course data has deleted',
+        message: 'Teacher data has deleted',
         data: fixed,
       });
     }catch(err){
@@ -49,18 +50,18 @@ router.post("/courseadd", async (req, res) => {
     }
 })
 
-router.put('/courseedit/:id', async (req, res) => {
+router.put('/teacheredit/:id', async (req, res) => {
   const { id } = req.params;
   const updatedData = req.body; 
   try {
-      const updatedCourse = await Code.findByIdAndUpdate(id, updatedData, { new: true });
+      const updatedCourse = await teacher.findByIdAndUpdate(id, updatedData, { new: true });
 
       if (!updatedCourse) {
           return res.status(404).json({ message: 'Course not found' });
       }
 
       res.status(200).json({
-          message: 'Course data has been updated',
+          message: 'teacher data has been updated',
           data: updatedCourse,
       });
   } catch (err) {
@@ -68,5 +69,6 @@ router.put('/courseedit/:id', async (req, res) => {
       return res.status(500).json({ err: 'Failed to update course data' });
   }
 });
+
 
 module.exports = router;

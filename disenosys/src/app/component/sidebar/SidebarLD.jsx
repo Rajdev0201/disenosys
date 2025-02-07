@@ -16,16 +16,14 @@ import { GiTeacher } from 'react-icons/gi';
 const Sidebar = () => {
   const path = usePathname();
   const dispatch = useDispatch();
-  const [isUniversityDropdownOpen, setUniversityDropdownOpen] = useState(false);
   const [isCourse, setIsCourse] = useState(false);
-  const [certificate, setCertificate] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const links = [
     // { href: '/certificate', label: 'Post certificate', icon: <PiCertificateBold /> },
     { href: '/coursel&d', label: 'Course',icon:<SiCoursera /> },
     { href: '/teachers', label: 'Teachers',icon:<GiTeacher />},
-    { href: '/students', label: 'Students', icon: <MdCastForEducation /> },
+    // { href: '/students', label: 'Students', icon: <MdCastForEducation /> },
   ];
 
   const handleLogout = () => {
@@ -35,7 +33,7 @@ const Sidebar = () => {
   return (
     <>
       
-      <nav className="fixed w-full bg-[#0d1039] text-white shadow-md flex items-center justify-between p-4 z-50 lg:hidden">
+      <nav className="fixed w-full bg-[#0d1039] text-white shadow-md flex items-center justify-between p-4 z-50 lg:hidden font-garet">
         <button
           className="text-white"
           onClick={() => setSidebarOpen(!isSidebarOpen)}
@@ -47,36 +45,74 @@ const Sidebar = () => {
 
 
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-[#0d1039] text-white flex flex-col justify-between transition-transform duration-300 transform ${
+        className={`fixed top-0 left-0 h-full w-64 bg-blue-500 text-white flex flex-col justify-between transition-transform duration-300 transform ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 md:w-64 z-40`}
       >
         <div className="flex flex-col flex-grow space-y-6">
             <div className='flex flex-col justify-center items-center border-b-2 border-b-white mt-6'>
             <div>
-                <Image src={Brand} alt='brand' className='w-28 h-28 object-cover'/>
+                <Image src={Brand} alt='brand' className='w-24 h-24 rounded-full'/>
             </div>
-          <div className="text-center mt-2 text-lg font-semibold  md:block hidden mb-6">
+          <div className="text-center mt-2 text-lg font-medium  md:block hidden mb-6 font-garet">
             L&D Admin Panel
           </div>
           </div>
          <div className='px-6 space-y-4'>
           {links.map((link) => (
-            <Link href={link.href} key={link.label} className={` flex justify-start items-center py-2 px-12 rounded-md hover:bg-blue-400  transition-colors duration-200 ${path === link.href ? 'bg-blue-400 rounded-md' : ''}`}>
+            <Link href={link.href} key={link.label} className={` flex justify-start font-garet font-medium items-center py-2 px-12 rounded-md hover:bg-gray-400  transition-colors duration-200 ${path === link.href ? 'bg-gray-500 rounded-md' : ''}`}>
               <span className="mr-3">{link.icon}</span>
               <span>{link.label}</span>
             </Link>
           ))}
+          <div>
+      <button
+        onClick={() => setIsCourse(!isCourse)}
+        className={`flex justify-start font-garet font-medium items-center py-2 px-11 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
+          path.startsWith("/students") || path.startsWith("/prerecord") ? "bg-gray-500" : ""
+        }`}
+      >
+        <MdCastForEducation className="mr-3" />
+        <span>Students</span>
+        <FaChevronDown className={`ml-1 transition-transform ${isCourse ? "rotate-180" : ""}`} />
+      </button>
+
+      {isCourse && (
+        <div className="ml-8 mt-2 space-y-2">
+          <Link
+            href="/students"
+            className={`flex justify-start font-garet font-medium items-center py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
+              path === "/students" ? "bg-gray-500 rounded-md" : ""
+            }`}
+          >
+            <MdCastForEducation className="mr-3" />
+            Online
+          </Link>
+          <Link
+            href="/prerecord"
+            className={`flex justify-start font-garet font-medium items-center py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
+              path === "/prerecord" ? "bg-gray-500 rounded-md" : ""
+            }`}
+          >
+            <MdCastForEducation className="mr-3" />
+            Pre-Record
+          </Link>
+        </div>
+      )}
+    </div>
           </div>
         </div>
+         
 
         <div className="px-6 py-4">
-          <button onClick={handleLogout} className="flex items-center py-3 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition-colors duration-200 w-full">
+          <button onClick={handleLogout} className="flex items-center justify-center py-3 px-2 rounded-lg bg-gray-800 hover:bg-red-700 transition-colors duration-200 w-full">
             <FaSignOutAlt className="mr-3" />
             <span>Logout</span>
           </button>
         </div>
       </div>
+
+    
 
       {isSidebarOpen && (
         <div

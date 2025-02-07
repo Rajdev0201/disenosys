@@ -107,6 +107,9 @@ const career = require("./models/career.js")
 const mentor = require('./models/mentor.js');
 const contact = require('./routes/contact.js')
 const course = require('./routes/course.js')
+const teacher = require('./routes/teachers.js');
+const onlineStd = require('./routes/onlineStd.js');
+
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
 app.use("/api/v1",addCart);
@@ -124,6 +127,8 @@ app.use('/api/student',student);
 app.use('/api/blog',blog)
 app.use('/contact',contact);
 app.use("/ld",course);
+app.use("/ld",teacher)
+app.use("/ld",onlineStd)
 
 app.get("/",(req,res) => {
  res.send("hi")

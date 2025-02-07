@@ -171,10 +171,10 @@ const length = filteredCartItems.length;
 
           {/* Dropdown Menu */}
           {dropdownVisible && (
-            <div className="absolute top-full right-0 mt-2 w-56 bg-white shadow-lg rounded-md z-50 border border-gray-200">
+            <div className="absolute top-full right-0 mt-2 w-68 bg-white shadow-lg rounded-md z-50 border border-gray-200">
               {/* User Info */}
               <div className="p-4 border-b-2 flex items-center gap-3">
-                <div className="bg-[#0d1039] text-white w-12 h-12 flex items-center justify-center rounded-full text-lg font-bold">
+                <div className="bg-[#0d1039] text-white w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">
                 {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
                 {user?.user?.name?.toLocaleUpperCase()?.charAt(0)}
                 </div>

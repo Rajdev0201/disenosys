@@ -1,18 +1,138 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { courseld } from "../Redux/action/Course";
+import { editTeacher, removeTeacher, teacher} from "../Redux/action/teacher.js";
 import { AiOutlineClose } from "react-icons/ai";
+import { courseld } from "../Redux/action/Course.js";
+import { CiEdit } from "react-icons/ci";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { Pagination } from "../component/Pagination.jsx";
 
 const History = () => {
   const [showPopup, setShowPopup] = useState(false);
+ const course = useSelector((state) => state.courseLD);
   const dispatch = useDispatch();
-  const course = useSelector((state) => state.courseLD);
-  console.log(course);
+  const [add, setAdd] = useState({
+      name: "",
+      email:"",
+      phone:"",
+      exp:"",
+      subject:"",
+    });
+  const [showEditPopup, setShowEditPopup] = useState(false);
+  const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredData, setFilteredData] = useState([]);
+  const [editteacher, setEditteacher] = useState({ id: "", name: "",
+    email:"",
+    phone:"",
+    exp:"",
+    subject:"", 
+  });
+ 
+   const itemsPerPage = 10;
+    const teach = useSelector((state) => state.teacher);
+    console.log(teach);
 
+
+    
   useEffect(() => {
+    dispatch(teacher());
     dispatch(courseld());
   }, [dispatch]);
+
+  
+    useEffect(() => {
+      const filtered = teach?.data?.filter((item) => {
+        const name = item.name
+          ?.toLowerCase()
+          .includes(search.toLowerCase());
+          const email = item.email
+          ?.toLowerCase()
+          .includes(search.toLowerCase());
+          const phone = item.phone
+          ?.toLowerCase()
+          .includes(search.toLowerCase());
+          const exp = item.exp
+          ?.toLowerCase()
+          .includes(search.toLowerCase());
+          const subject = item.subject
+          ?.toLowerCase()
+          .includes(search.toLowerCase());
+        return name || email || phone || exp || subject;
+      });
+      setFilteredData(filtered);
+    }, [search, teach]);
+  
+    const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const paginatedData = filteredData?.slice(
+      startIndex,
+      startIndex + itemsPerPage
+    );
+    const handlePageChange = (page) => setCurrentPage(page);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setAdd((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleDelete = (id) => {
+      const confirmSubmit = window.confirm("Do you want to delete the course?");
+      if(confirmSubmit){
+        dispatch(removeTeacher(id));
+        dispatch(teacher());
+      }
+    }
+
+    const handleEditClick = (id,name,email,phone,exp,subject) => {
+      setEditteacher({ id,name,email,phone,exp,subject });
+      setShowEditPopup(true);
+    };
+  
+    const handleEditChange = (e) => {
+      const { name, value } = e.target;
+      setEditteacher((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    };
+  
+    const handleUpdate = (e) => {
+      e.preventDefault();
+      dispatch(editTeacher(editteacher.id, { name: editteacher.name,email:editteacher.email,phone:editteacher.phone,exp:editteacher.exp,subject:editteacher.subject }));
+      dispatch(teacher());
+      setShowEditPopup(false);
+    };
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        const response = await fetch("http://localhost:8000/ld/teacheradd", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(add),
+        });
+  
+        const data = await response.json();
+        if (!response.ok) {
+          alert(data.message || "Something went wrong");
+          return;
+        }
+  
+        if (data.success) {
+          dispatch(teacher());
+        }
+        alert("Teachers Added SuccsessFully!..");
+      } catch (error) {
+        console.error(error);
+        alert("Teachers added data is failed");
+      }
+      setShowPopup(false);
+    };
 
   return (
     <div>
@@ -21,7 +141,7 @@ const History = () => {
       </h2>
       <div className="flex flex-col md:flex-row justify-between items-center px-12 py-20 gap-4  font-garet ">
         <div className="flex items-center">
-          <div className="flex items-center bg-[#0d1039] justify-center w-10  rounded-tl-lg rounded-bl-lg border-r border-gray-200 p-3">
+          <div className="flex items-center bg-blue-500 justify-center w-10  rounded-tl-lg rounded-bl-lg border-r border-gray-200 p-3">
             <svg
               viewBox="0 0 20 20"
               aria-hidden="true"
@@ -34,17 +154,86 @@ const History = () => {
             type="text"
             className="bg-gray-300 pl-2 text-base font-medium outline-0 p-2  rounded-tr-lg rounded-br-lg "
             placeholder="Search..."
-            // value={search}
-            // onChange={(e) => setSearch(e.target.value)}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <button
-          className="bg-[#0d1039] text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
           onClick={() => setShowPopup(true)}
         >
           Add Teacher
         </button>
       </div>
+
+       <div className="px-24  font-garet ">
+           {paginatedData?.length === 0 ? (
+       <p className="text-lg text-red-500 text-center font-semibold">
+         No Teachers added!.
+       </p>
+     ) : (
+       <div className="w-full overflow-x-auto">
+         <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+           <thead className="bg-blue-500 text-white font-sans">
+             <tr>
+               <th className="py-3 px-4 text-center border-r border-gray-300">S.No</th>
+               <th className="py-3 px-4 text-center border-r border-gray-300">Name</th>
+               <th className="py-3 px-4 text-center border-r border-gray-300">Email</th>
+               <th className="py-3 px-4 text-center border-r border-gray-300">Phone</th>
+               <th className="py-3 px-4 text-center border-r border-gray-300">Experience</th>
+               <th className="py-3 px-4 text-center border-r border-gray-300">Subject</th>
+               <th className="py-3 px-4 text-center border-r border-gray-300">
+                       Created Date
+              </th>
+                 
+              <th className="py-3 px-4 text-center border-r border-gray-300">
+                  Action
+              </th>
+             </tr>
+           </thead>
+           <tbody>
+             {paginatedData?.map((item, index) => (
+               <tr
+                 key={item._id}
+                 className={`border-b border-gray-300 ${
+                   index % 2 !== 0 ? "bg-blue-50" : "bg-white"
+                 }`}
+               >
+                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                   {startIndex + index + 1}.
+                 </td>
+                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                   {item.name}
+                 </td>
+                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                   {item.email}
+                 </td>
+                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                   {item.phone}
+                 </td>
+                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                   {item.exp}
+                 </td>
+                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                   {item.subject}
+                 </td>
+                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                         {item.createdAt
+                           ? new Date(item.createdAt).toLocaleDateString()
+                           : "N/A"}
+              </td>
+              <div className="flex justify-center items-center">
+              <td className="py-3 px-2 text-gray-600 font-medium hover:cursor-pointer" onClick={() => handleEditClick(item._id, item.name,item.email,item.phone,item.exp,item.subject)}><CiEdit className="text-gray-500 w-6 h-6" /></td>
+              <td className="py-3 px-2 text-gray-600 font-medium hover:cursor-pointer" onClick={() => handleDelete(item._id)}><RiDeleteBin5Line className="text-red-500 w-6 h-6"/></td>
+              </div>
+               </tr>
+             ))}
+           </tbody>
+         </table>
+       </div>
+     )}
+               </div>
+
       {showPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm w-full z-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-[500px] relative animate-slide-up ml-44 ">
@@ -59,14 +248,14 @@ const History = () => {
               Add Teachers
             </h2>
 
-            <form className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 type="text"
                 name="name"
                 placeholder="Enter FullName"
                 required
                 className="border p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                //   onChange={handleChange}
+                  onChange={handleChange}
               />
               <input
                 type="email"
@@ -74,7 +263,7 @@ const History = () => {
                 placeholder="Enter Email"
                 required
                 className="border p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                //   onChange={handleChange}
+                  onChange={handleChange}
               />
 
               <input
@@ -83,19 +272,23 @@ const History = () => {
                 placeholder="Enter Number"
                 required
                 className="border p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                //   onChange={handleChange}
+                  onChange={handleChange}
               />
 
               <input
                 type="text"
-                name="designation"
-                placeholder="Enter designation"
+                name="exp"
+                placeholder="Total Year of Experience"
                 required
                 className="border p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                //   onChange={handleChange}
+                  onChange={handleChange}
               />
 
-              <select className="border p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <select
+               name="subject"
+                value={add.subject}
+                onChange={handleChange}
+               className="border p-2 w-full text-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 <option value="" disabled>
                   Select Subject
                 </option>
@@ -116,7 +309,7 @@ const History = () => {
                 </button>
                 <button
                   type="submit"
-                  className="bg-[#182073] text-white px-4 py-2 rounded-md hover:bg-[#0f165a] transition"
+                  className="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-[#0f165a] transition"
                 >
                   Submit
                 </button>
@@ -125,6 +318,40 @@ const History = () => {
           </div>
         </div>
       )}
+
+{showEditPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm w-full z-50">
+          <div className="bg-white p-6 rounded-lg ml-44 w-[500px] space-y-4">
+            <h2 className="text-xl font-bold mb-4">Edit Teacher</h2>
+            <input type="text" name = "name" value={editteacher.name} onChange={handleEditChange} className="border p-2 w-full rounded" />
+            <input type="text" name = "email" value={editteacher.email} onChange={handleEditChange} className="border p-2 w-full rounded" />
+            <input type="text" name = "phone" value={editteacher.phone} onChange={handleEditChange} className="border p-2 w-full rounded" />
+            <input type="text" name = "exp" value={editteacher.exp} onChange={handleEditChange} className="border p-2 w-full rounded" />
+            <input type="text" name = "subject" value={editteacher.subject} onChange={handleEditChange} className="border p-2 w-full rounded" />
+            <div className="flex justify-between mt-4">
+                <button
+                  type="button"
+                  className="bg-red-500 rounded text-white px-4 py-2 mt-4"
+                  onClick={() => setShowEditPopup(false)}
+                >
+                  Cancel
+                </button>
+            <button className="bg-blue-500 rounded text-white px-4 py-2 mt-4" onClick={handleUpdate}>
+              Update Course
+            </button>
+            </div>
+          </div>
+        </div>
+      )} 
+         {paginatedData?.length > 0 && (
+                          <div className="w-full mt-4 flex justify-center">
+                            <Pagination
+                              totalPages={totalPages}
+                              currentPage={currentPage}
+                              onPageChange={handlePageChange}
+                            />
+                          </div>
+                        )}
     </div>
   );
 };

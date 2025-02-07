@@ -1,5 +1,4 @@
 "use client"
-
 import Navbar from "./Navbar";
 import Sidebar from "../component/sidebar/SidebarLD";
 import Home from "./Home";

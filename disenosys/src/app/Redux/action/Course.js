@@ -1,7 +1,7 @@
 
 "use client"
 import { setProducts } from "../features/CourseSlice.js";
-import{setCourse} from "../features/courseLDSlice.js"
+import{remove, setCourse, updateCourse} from "../features/courseLDSlice.js"
 import axios from 'axios'
 
 export const fetchCourse = () => async (dispatch) => {
@@ -23,7 +23,27 @@ export const fetchCourse = () => async (dispatch) => {
         console.error('Error fetch code:', error);
     }
   }
-  
+
+  export const removeCourse = (Id) => async (dispatch) => {
+    try {
+        await axios.delete(`https://disenosys-dkhj.onrender.com/ld/coursedelete/${Id}`);
+        dispatch(remove(Id));
+        dispatch(courseld())
+    } catch (error) {
+        console.error('Error removing for courses:', error);
+    }
+};
+
+export const editCourse = (Id, updatedCourseData) => async (dispatch) => {
+  try {
+      const response = await axios.put(`https://disenosys-dkhj.onrender.com/ld/courseedit/${Id}`, updatedCourseData);
+      dispatch(updateCourse(response.data.data)); 
+      dispatch(courseld());
+  } catch (error) {
+      console.error('Error updating course:', error);
+  }
+};
+
 
   // export const fetchByCategory = (category) => async (dispatch) => {
   //   try {

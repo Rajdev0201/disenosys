@@ -2,14 +2,19 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { courseld } from "../Redux/action/Course";
+import { courseld, editCourse, removeCourse } from "../Redux/action/Course";
 import { Pagination } from "../component/Pagination";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
 
 const Home = () => {
   const [showPopup, setShowPopup] = useState(false);
+  const [showEditPopup, setShowEditPopup] = useState(false);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
+  const [editCourseData, setEditCourseData] = useState({ id: "", course: "" });
+
   const itemsPerPage = 10;
   const dispatch = useDispatch();
   const [add, setAdd] = useState({
@@ -74,6 +79,27 @@ const Home = () => {
     setShowPopup(false);
   };
 
+  const handleDelete = (id) => {
+    const confirmSubmit = window.confirm("Do you want to delete the course?");
+    if(confirmSubmit){
+      dispatch(removeCourse(id))
+    }
+  }
+  const handleEditClick = (id, courseName) => {
+    setEditCourseData({ id, course: courseName });
+    setShowEditPopup(true);
+  };
+
+  const handleEditChange = (e) => {
+    setEditCourseData({ ...editCourseData, course: e.target.value });
+  };
+
+  const handleUpdate = (e) => {
+    e.preventDefault();
+    dispatch(editCourse(editCourseData.id, { course: editCourseData.course }));
+    dispatch(courseld());
+    setShowEditPopup(false);
+  };
   return (
     <div>
       <h2 className="text-[#0d1039] font-medium text-4xl text-center font-garet mb-1 mt-5">
@@ -81,7 +107,7 @@ const Home = () => {
        </h2>
       <div className="flex flex-col md:flex-row justify-between items-center px-12 py-20 gap-4  font-garet ">
         <div className="flex items-center">
-          <div className="flex items-center bg-[#0d1039] justify-center w-10  rounded-tl-lg rounded-bl-lg border-r border-gray-200 p-3">
+          <div className="flex items-center bg-blue-500 justify-center w-10  rounded-tl-lg rounded-bl-lg border-r border-gray-200 p-3">
             <svg
               viewBox="0 0 20 20"
               aria-hidden="true"
@@ -99,7 +125,7 @@ const Home = () => {
           />
         </div>
         <button
-          className="bg-[#0d1039] text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
           onClick={() => setShowPopup(true)}
         >
           Add Course
@@ -114,12 +140,16 @@ const Home = () => {
 ) : (
   <div className="w-full overflow-x-auto">
     <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
-      <thead className="bg-[#0d1039] text-white">
+      <thead className="bg-blue-500 text-white font-sans">
         <tr>
           <th className="py-3 px-4 text-center border-r border-gray-300">S.No</th>
           <th className="py-3 px-4 text-center border-r border-gray-300">Course Name</th>
           <th className="py-3 px-4 text-center border-r border-gray-300">
                   Created Date
+         </th>
+            
+         <th className="py-3 px-4 text-center border-r border-gray-300">
+             Action
          </th>
         </tr>
       </thead>
@@ -142,6 +172,10 @@ const Home = () => {
                       ? new Date(item.createdAt).toLocaleDateString()
                       : "N/A"}
          </td>
+         <div className="flex justify-center items-center">
+         <td className="py-3 px-2 text-gray-600 font-medium hover:cursor-pointer" onClick={() => handleEditClick(item._id, item.course)}><CiEdit className="text-gray-500 w-6 h-6" /></td>
+         <td className="py-3 px-2 text-gray-600 font-medium hover:cursor-pointer" onClick={() => handleDelete(item._id)}><RiDeleteBin5Line className="text-red-500 w-6 h-6"/></td>
+         </div>
           </tr>
         ))}
       </tbody>
@@ -184,12 +218,32 @@ const Home = () => {
                 </button>
                 <button
                   type="submit"
-                  className="bg-[#182073] text-white px-4 py-2 rounded-md hover:bg-[#0f165a] transition"
+                  className="bg-gray-800 text-white px-4 py-2 rounded-md hover:bg-[#0f165a] transition"
                 >
                   Submit
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+       {showEditPopup && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg  w-[500px]">
+            <h2 className="text-xl font-bold mb-4">Edit Course</h2>
+            <input type="text" value={editCourseData.course} onChange={handleEditChange} className="border p-2 w-full rounded" />
+            <div className="flex justify-between mt-4">
+                <button
+                  type="button"
+                  className="bg-red-500 rounded text-white px-4 py-2 mt-4"
+                  onClick={() => setShowEditPopup(false)}
+                >
+                  Cancel
+                </button>
+            <button className="bg-blue-500 rounded text-white px-4 py-2 mt-4" onClick={handleUpdate}>
+              Update Course
+            </button>
+            </div>
           </div>
         </div>
       )}
