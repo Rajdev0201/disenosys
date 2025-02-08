@@ -21,13 +21,13 @@ export default function LDAdminRoutePage() {
 return(
   <>
   {user?.user?.user?.userType === 'L&D'?
-    <div className="h-screen">
+    <div className="">
        
         <div className="grid grid-cols-12 h-full mt-16">
           <div className="col-span-2 h-full">
           <Sidebar />
           </div>
-          <div className="col-span-10 h-full">
+          <div className="col-span-10 ">
            <div className="">
             <Navbar />
           </div>
