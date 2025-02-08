@@ -58,49 +58,70 @@ const Sidebar = () => {
             L&D Admin Panel
           </div>
           </div>
-         <div className='px-6 space-y-4'>
-          {links.map((link) => (
-            <Link href={link.href} key={link.label} className={` flex justify-start font-garet font-medium items-center py-2 px-12 rounded-md hover:bg-gray-400  transition-colors duration-200 ${path === link.href ? 'bg-gray-500 rounded-md' : ''}`}>
-              <span className="mr-3">{link.icon}</span>
-              <span>{link.label}</span>
-            </Link>
-          ))}
-          <div>
-      <button
-        onClick={() => setIsCourse(!isCourse)}
-        className={`flex justify-start font-garet font-medium items-center py-2 px-11 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
-          path.startsWith("/students") || path.startsWith("/prerecord") ? "bg-gray-500" : ""
-        }`}
-      >
-        <MdCastForEducation className="mr-3" />
-        <span>Students</span>
-        <FaChevronDown className={`ml-1 transition-transform ${isCourse ? "rotate-180" : ""}`} />
-      </button>
+          <div className="space-y-4">
+  {links.map((link) => (
+    <Link
+      href={link.href}
+      key={link.label}
+      className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
+        path === link.href ? "bg-white rounded-md" : ""
+      }`}
+    >
+      <span className="pl-4 mr-3">{link.icon}</span>
+      <span>{link.label}</span>
+    </Link>
+  ))}
 
-      {isCourse && (
-        <div className="ml-8 mt-2 space-y-2">
-          <Link
-            href="/students"
-            className={`flex justify-start font-garet font-medium items-center py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
-              path === "/students" ? "bg-gray-500 rounded-md" : ""
-            }`}
-          >
-            <MdCastForEducation className="mr-3" />
-            Online
-          </Link>
-          <Link
-            href="/prerecord"
-            className={`flex justify-start font-garet font-medium items-center py-2 px-4 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
-              path === "/prerecord" ? "bg-gray-500 rounded-md" : ""
-            }`}
-          >
-            <MdCastForEducation className="mr-3" />
-            Pre-Record
-          </Link>
-        </div>
-      )}
-    </div>
-          </div>
+  <div>
+    <button
+      onClick={() => setIsCourse(!isCourse)}
+      className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
+        path.startsWith("/students") || path.startsWith("/prerecord")
+          ? "bg-white"
+          : ""
+      }`}
+    >
+      <span className="pl-4 mr-3">
+        <MdCastForEducation />
+      </span>
+      <span>Students</span>
+      <FaChevronDown
+        className={`ml-1 transition-transform ${
+          isCourse ? "rotate-180" : ""
+        }`}
+      />
+    </button>
+
+    {isCourse && (
+      <div className="mt-2 space-y-2">
+        <Link
+          href="/students"
+          className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
+            path === "/students" ? "bg-white" : ""
+          }`}
+        >
+          <span className="pl-4 mr-3">
+            <MdCastForEducation />
+          </span>
+          <span>Online</span>
+        </Link>
+        <Link
+          href="/prerecord"
+          className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
+            path === "/prerecord" ? "bg-white " : ""
+          }`}
+        >
+          <span className="pl-4 mr-3">
+            <MdCastForEducation />
+          </span>
+          <span>Pre-Record</span>
+        </Link>
+      </div>
+    )}
+  </div>
+</div>
+
+
         </div>
          
 

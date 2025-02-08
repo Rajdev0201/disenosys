@@ -15,7 +15,7 @@ export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   };
 
   return (
-    <div className="flex space-x-3 mt-5">
+    <div className="flex space-x-3 mt-5 mb-24">
       <button
         onClick={handlePrevious}
         className={`flex items-center px-4 py-2 mx-1 text-white bg-[#182073] box-shadow rounded-md ${currentPage === 1 ? 'cursor-not-allowed opacity-50' : 'hover:bg-blue-600 hover:text-white'

@@ -26,7 +26,7 @@ const Auth = () => {
   return (
     <div className="flex flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <h2 className="text-3xl font-semibold font-garet text-center text-gray-800 mb-6">
-        Welcome, Log into your account
+        Welcome, Log into your L&D account
       </h2>
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-lg font-garet">
         <p className="text-center text-gray-600 mb-6">
@@ -38,7 +38,7 @@ const Auth = () => {
               htmlFor="school"
               className="block text-sm font-medium text-gray-700"
             >
-              Enter the name of L&D
+              User Name
             </label>
             <input
               type="text"
@@ -51,7 +51,7 @@ const Auth = () => {
               htmlFor="password"
               className="block text-sm font-medium text-gray-700"
             >
-              Enter Password
+              User Password
             </label>
             <input
               type="password"
