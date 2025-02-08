@@ -143,7 +143,7 @@ const History = () => {
   return (
     <div>
       <h2 className="text-[#0d1039] font-medium text-4xl text-center font-garet mb-1 mt-5">
-        Students-Online
+        Students-Live
       </h2>
       <div className="flex flex-col md:flex-row justify-between items-center px-12 py-20 gap-4  font-garet ">
         <div className="flex items-center">
@@ -171,7 +171,7 @@ const History = () => {
           Add Students
         </button>
       </div>
-      <div className="px-8  font-garet ">
+      <div className="px-3  font-garet ">
         {paginatedData?.length === 0 ? (
           <p className="text-lg text-red-500 text-center font-semibold">
             No Students added!.
@@ -181,34 +181,34 @@ const History = () => {
             <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
               <thead className="bg-blue-500 text-white font-sans">
                 <tr>
-                  <th className="py-3 px-4 text-center border-r border-gray-300">
+                  <th className="py-2 px-2 text-start border-r border-gray-300">
                     S.No
                   </th>
-                  <th className="py-3 px-4 text-center border-r border-gray-300">
+                  <th className="py-2 px-2 text-start border-r border-gray-300">
                     Name
                   </th>
-                  <th className="py-3 px-4 text-center border-r border-gray-300">
+                  <th className="py-2 px-2 text-start border-r border-gray-300">
                     Email
                   </th>
-                  <th className="py-3 px-4 text-center border-r border-gray-300">
+                  <th className="py-22 px-2 text-start border-r border-gray-300">
                     Phone
                   </th>
-                  <th className="py-3 px-4 text-center border-r border-gray-300">
+                  <th className="py-2 px-2 text-start border-r border-gray-300">
                     Section
                   </th>
-                  <th className="py-3 px-4 text-center border-r border-gray-300">
+                  <th className="py-2 px-2 text-start border-r border-gray-300">
                     Course Name
                   </th>
-                  <th className="py-3 px-4 text-center border-r border-gray-300">
+                  <th className="py-2 px-2 text-start border-r w-full border-gray-300">
                     Start Date
                   </th>
-                  <th className="py-3 px-4 text-center border-r border-gray-300">
+                  <th className="py-2 px-2 text-start border-r border-gray-300">
                     End Date
                   </th>
-                  <th className="py-3 px-4 text-center border-r border-gray-300">
+                  <th className="py-2 px-2 text-start border-r border-gray-300">
                     Status
                   </th>
-                  <th className="py-3 px-4 text-center border-r border-gray-300">
+                  <th className="py-2 px-2 text-center border-r border-gray-300">
                     Action
                   </th>
                 </tr>
@@ -221,50 +221,50 @@ const History = () => {
                       index % 2 !== 0 ? "bg-blue-50" : "bg-white"
                     }`}
                   >
-                    <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                    <td className="py-2 px-2 text-start text-gray-600 font-medium">
                       {startIndex + index + 1}.
                     </td>
-                    <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                    <td className="py-2 px-2  text-start text-gray-600 font-medium">
                       {item.name}
                     </td>
-                    <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                    <td className="py-2 px-2  text-start text-gray-600 font-medium">
                       {item.email}
                     </td>
-                    <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                    <td className="py-2 px-2  text-start text-gray-600 font-medium">
                       {item.phone}
                     </td>
-                    <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                    <td className="py-2 px-2  text-start text-gray-600 font-medium">
                       Online
                     </td>
-                    <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                    <td className="py-2 px-2  text-start w-full text-gray-600 font-medium">
                       {item.course}
                     </td>
-                    <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                    <td className="py-2 px-2 text-start text-gray-600 font-medium">
                       {item.start
                         ? new Date(item.start).toLocaleDateString()
                         : "N/A"}
                     </td>
-                    <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                    <td className="py-2 px-2 text-start text-gray-600 font-medium">
                       {item.end === "Not Completed"
                         ? "Not Completed"
                         : new Date(item.end).toLocaleDateString()}
                     </td>
-                    <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                    <td className="py-2 px-2 text-start text-gray-600 font-medium">
                       {item.end !== "Not Completed" ? ( 
                         <p className="flex items-center text-green-500 gap-2">
                           <IoCheckmarkDoneCircleOutline className="w-5 h-5 text-green-500" />{" "}
                           Completed
                         </p>
                       ) : (
-                        <p className="flex items-center text-red-500 gap-2">
-                          <GrInProgress className="w-5 h-5 text-red-500" />{" "}
+                        <p className="flex items-start justify-center text-red-500 gap-2">
+                          <GrInProgress className="w-4 h-4 text-red-500" />{" "}
                           In-progress
                         </p>
                       )}
                     </td>
-                    <div className="flex justify-center items-center">
+                    <div className="flex justify-start items-start">
                       <td
-                        className="py-3 px-2 text-gray-600 font-medium hover:cursor-pointer"
+                        className="py-2 px-2 text-gray-600 font-medium hover:cursor-pointer"
                         onClick={() =>
                           handleEditClick(
                             item._id,
@@ -280,7 +280,7 @@ const History = () => {
                         <CiEdit className="text-gray-500 w-6 h-6" />
                       </td>
                       <td
-                        className="py-3 px-2 text-gray-600 font-medium hover:cursor-pointer"
+                        className="py-2 px-2 text-gray-600 font-medium hover:cursor-pointer"
                         onClick={() => handleDelete(item._id)}
                       >
                         <RiDeleteBin5Line className="text-red-500 w-6 h-6" />
@@ -304,7 +304,7 @@ const History = () => {
             </button>
 
             <h2 className="text-xl font-bold mb-4 text-center text-gray-800">
-              Add Teachers
+              Add Students
             </h2>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -427,6 +427,7 @@ const History = () => {
               onChange={handleEditChange}
               className="border p-2 w-full rounded"
             />
+            <span className="text-red-500 text-sm">Please enter course of End Date *</span>
             <input
               type="text"
               name="status"

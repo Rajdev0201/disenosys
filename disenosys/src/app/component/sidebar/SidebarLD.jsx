@@ -64,7 +64,7 @@ const Sidebar = () => {
       href={link.href}
       key={link.label}
       className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
-        path === link.href ? "bg-white rounded-md" : ""
+        path === link.href ? "bg-white rounded" : ""
       }`}
     >
       <span className="pl-4 mr-3">{link.icon}</span>
@@ -97,18 +97,18 @@ const Sidebar = () => {
         <Link
           href="/students"
           className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
-            path === "/students" ? "bg-white" : ""
+            path === "/students" ? "bg-white rounded" : ""
           }`}
         >
           <span className="pl-4 mr-3">
             <MdCastForEducation />
           </span>
-          <span>Online</span>
+          <span>Live</span>
         </Link>
         <Link
           href="/prerecord"
           className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
-            path === "/prerecord" ? "bg-white " : ""
+            path === "/prerecord" ? "bg-white rounded" : ""
           }`}
         >
           <span className="pl-4 mr-3">

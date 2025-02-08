@@ -142,9 +142,9 @@ const Home = () => {
     <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
       <thead className="bg-blue-500 text-white font-sans">
         <tr>
-          <th className="py-3 px-4 text-center border-r border-gray-300">S.No</th>
-          <th className="py-3 px-4 text-center border-r border-gray-300">Course Name</th>
-          <th className="py-3 px-4 text-center border-r border-gray-300">
+          <th className="py-3 px-4 text-start border-r border-gray-300">S.No</th>
+          <th className="py-3 px-4 text-start border-r border-gray-300">Course Name</th>
+          <th className="py-3 px-4 text-start border-r border-gray-300">
                   Created Date
          </th>
             
@@ -161,13 +161,13 @@ const Home = () => {
               index % 2 !== 0 ? "bg-blue-50" : "bg-white"
             }`}
           >
-            <td className="py-3 px-4 text-center text-gray-600 font-medium">
+            <td className="py-3 px-4 text-start text-gray-600 font-medium">
               {startIndex + index + 1}.
             </td>
-            <td className="py-3 px-4 text-center text-gray-600 font-medium">
+            <td className="py-3 px-4 text-start text-gray-600 font-medium">
               {item.course}
             </td>
-            <td className="py-3 px-4 text-center text-gray-600 font-medium">
+            <td className="py-3 px-4 text-start text-gray-600 font-medium">
                     {item.createdAt
                       ? new Date(item.createdAt).toLocaleDateString()
                       : "N/A"}

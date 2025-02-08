@@ -7,6 +7,8 @@ import { courseld } from "../Redux/action/Course.js";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { Pagination } from "../component/Pagination.jsx";
+import PhoneInput from 'react-phone-input-2';
+import 'react-phone-input-2/lib/style.css';
 
 const History = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -73,11 +75,18 @@ const History = () => {
     const handlePageChange = (page) => setCurrentPage(page);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setAdd((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (typeof e === 'string') {
+      setAdd((prev) => ({
+        ...prev,
+        phone: e, 
+      }));
+    } else {
+      const { name, value } = e.target;
+      setAdd((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleDelete = (id) => {
@@ -94,11 +103,20 @@ const History = () => {
     };
   
     const handleEditChange = (e) => {
-      const { name, value } = e.target;
-      setEditteacher((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+      if (typeof e === 'string') {
+        // Phone input passes only value, update phone number
+        setEditteacher((prev) => ({
+          ...prev,
+          phone: e, // Update phone field directly
+        }));
+      } else {
+        // Handle regular text inputs
+        const { name, value } = e.target;
+        setEditteacher((prev) => ({
+          ...prev,
+          [name]: value,
+        }));
+      }
     };
   
     const handleUpdate = (e) => {
@@ -166,7 +184,7 @@ const History = () => {
         </button>
       </div>
 
-       <div className="px-24  font-garet ">
+       <div className="px-3  font-garet ">
            {paginatedData?.length === 0 ? (
        <p className="text-lg text-red-500 text-center font-semibold">
          No Teachers added!.
@@ -176,13 +194,13 @@ const History = () => {
          <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
            <thead className="bg-blue-500 text-white font-sans">
              <tr>
-               <th className="py-3 px-4 text-center border-r border-gray-300">S.No</th>
-               <th className="py-3 px-4 text-center border-r border-gray-300">Name</th>
-               <th className="py-3 px-4 text-center border-r border-gray-300">Email</th>
-               <th className="py-3 px-4 text-center border-r border-gray-300">Phone</th>
-               <th className="py-3 px-4 text-center border-r border-gray-300">Experience</th>
-               <th className="py-3 px-4 text-center border-r border-gray-300">Subject</th>
-               <th className="py-3 px-4 text-center border-r border-gray-300">
+               <th className="py-3 px-4 text-start border-r border-gray-300">S.No</th>
+               <th className="py-3 px-4 text-start border-r border-gray-300">Name</th>
+               <th className="py-3 px-4 text-start border-r border-gray-300">Email</th>
+               <th className="py-3 px-4 text-start border-r border-gray-300">Phone</th>
+               <th className="py-3 px-4 text-start border-r border-gray-300">Experience</th>
+               <th className="py-3 px-4 text-start border-r border-gray-300">Subject</th>
+               <th className="py-3 px-4 text-start border-r border-gray-300">
                        Created Date
               </th>
                  
@@ -199,25 +217,25 @@ const History = () => {
                    index % 2 !== 0 ? "bg-blue-50" : "bg-white"
                  }`}
                >
-                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                 <td className="py-3 px-4 text-start text-gray-600 font-medium">
                    {startIndex + index + 1}.
                  </td>
-                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                 <td className="py-3 px-4 text-start text-gray-600 font-medium">
                    {item.name}
                  </td>
-                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                 <td className="py-3 px-4 text-start  text-gray-600 font-medium">
                    {item.email}
                  </td>
-                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                 <td className="py-3 px-4 text-start  text-gray-600 font-medium">
                    {item.phone}
                  </td>
-                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                 <td className="py-3 px-4 text-start  text-gray-600 font-medium">
                    {item.exp}
                  </td>
-                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                 <td className="py-3 px-4 text-start w-72 text-gray-600 font-medium">
                    {item.subject}
                  </td>
-                 <td className="py-3 px-4 text-center text-gray-600 font-medium">
+                 <td className="py-3 px-4  text-start text-gray-600 font-medium">
                          {item.createdAt
                            ? new Date(item.createdAt).toLocaleDateString()
                            : "N/A"}
@@ -266,14 +284,18 @@ const History = () => {
                   onChange={handleChange}
               />
 
-              <input
-                type="number"
-                name="phone"
-                placeholder="Enter Number"
-                required
-                className="border p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  onChange={handleChange}
-              />
+            <PhoneInput
+            country={'in'}
+            value={add.phone}
+            onChange={handleChange} 
+            placeholder="Enter your number"
+            inputProps={{
+              name: 'phone',
+              required: true,
+              autoFocus: true,
+              className: 'w-[260px] lg:w-[406px] border border-gray-300 p-2 ml-12 rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500',
+            }}
+          />
 
               <input
                 type="text"
@@ -323,11 +345,35 @@ const History = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm w-full z-50">
           <div className="bg-white p-6 rounded-lg ml-44 w-[500px] space-y-4">
             <h2 className="text-xl font-bold mb-4">Edit Teacher</h2>
-            <input type="text" name = "name" value={editteacher.name} onChange={handleEditChange} className="border p-2 w-full rounded" />
-            <input type="text" name = "email" value={editteacher.email} onChange={handleEditChange} className="border p-2 w-full rounded" />
-            <input type="text" name = "phone" value={editteacher.phone} onChange={handleEditChange} className="border p-2 w-full rounded" />
-            <input type="text" name = "exp" value={editteacher.exp} onChange={handleEditChange} className="border p-2 w-full rounded" />
-            <input type="text" name = "subject" value={editteacher.subject} onChange={handleEditChange} className="border p-2 w-full rounded" />
+            <input type="text" name = "name" value={editteacher.name} onChange={handleEditChange} className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <input type="text" name = "email" value={editteacher.email} onChange={handleEditChange} className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <PhoneInput
+            country={'in'}
+            value={editteacher.phone} 
+            onChange={handleEditChange}
+            placeholder="Enter your number"
+            inputProps={{
+              name: 'phone',
+              required: true,
+              autoFocus: true,
+              className: 'w-[260px] lg:w-[406px] border border-gray-300 p-2 ml-12 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500',
+            }}
+          />
+            <input type="text" name = "exp" value={editteacher.exp} onChange={handleEditChange} className="border p-2 w-full rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            <select
+               name="subject"
+                value={editteacher.subject}
+                onChange={handleEditChange}
+               className="border p-2 w-full text-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="" disabled>
+                  Select Subject
+                </option>
+                {course?.data?.map((item, index) => (
+                  <option key={item._id} value={item.course}>
+                    {item.course}
+                  </option>
+                ))}
+              </select>
             <div className="flex justify-between mt-4">
                 <button
                   type="button"
