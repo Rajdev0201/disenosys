@@ -143,7 +143,7 @@ const Home = () => {
       <thead className="bg-blue-500 text-white font-sans">
         <tr>
           <th className="py-3 px-4 text-start border-r border-gray-300">S.No</th>
-          <th className="py-3 px-4 text-start border-r border-gray-300">Course Name</th>
+          <th className="py-3 px-4 text-center border-r border-gray-300">Course Name</th>
           <th className="py-3 px-4 text-start border-r border-gray-300">
                   Created Date
          </th>

@@ -3,17 +3,6 @@ const router = express.Router();
 const students = require('../models/onlineStd.js');
 
 
-router.post("/studentadd", async (req, res) => {
-    try {
-      const {name,email,phone,course,start,end,status} = req.body;
-      const newContact = new students({ name,email,phone,course,start,end,status });
-      await newContact.save();
-      res.status(200).json({ success: true, message: "Form submitted successfully!" });
-    } catch (error) {
-      console.error("Error saving contact:", error);
-      res.status(500).json({ success: false, message: "Server error!" });
-    }
-  });
 
   router.get("/studentget" ,async (req,res) => {
     try{

@@ -109,6 +109,7 @@ const contact = require('./routes/contact.js')
 const course = require('./routes/course.js')
 const teacher = require('./routes/teachers.js');
 const onlineStd = require('./routes/onlineStd.js');
+const spa = require('./models/onlineStd.js');
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
@@ -313,6 +314,31 @@ const uploadMentor = multer({
   { name: 'filePic', maxCount: 1 }, // For the image
 ]);
 
+const storageSPA = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'SPA_images', 
+    format: async (req, file) => 'png', 
+    public_id: (req, file) => `${Date.now()}-${file.originalname}`,
+  },
+});
+
+const uploadSPA = multer({
+  storage: storageSPA,
+  limits: { fileSize: 5 * 1024 * 1024 },
+}).fields([
+  { name: 'profile', maxCount: 1 }, 
+  { name: 'file', maxCount: 1 },
+  { name: 'ten', maxCount: 1 }, 
+  { name: 'plustwo', maxCount: 1 }, 
+  { name: 'ug', maxCount: 1 }, 
+  { name: 'pg', maxCount: 1 }, 
+  { name: 'afile', maxCount: 1 }, 
+  { name: 'voter', maxCount: 1 },
+  { name: 'pan', maxCount: 1 },
+]);
+
+
 app.post('/mentor', uploadMentor, async (req, res) => {
   const {
     name,
@@ -406,6 +432,122 @@ app.post('/mentor', uploadMentor, async (req, res) => {
 
 
 
+app.post("/studentadd",uploadSPA, async (req, res) => {
+  const { fname,
+    lname,
+    dob,
+    gender,
+    permanent,
+    communication,
+    no1,
+    no2,
+    emg,
+    email,
+    panno,
+    aadharno,
+    blood,
+    father,
+    mother,
+    marital,
+    spouse,
+    n1,
+    ndob,
+    nrealtion,
+    naddress,
+    bank,
+    branch,
+    Ac,
+    IFSC,
+    Edu,
+    Passed,
+    Academy,
+    rdate,
+    cdate,
+    start,
+    end,
+    status,
+    sid,
+    cname,} = req.body;
+    
+    if (!req.files || !req.files['profile'] || !req.files['file'] || !req.files['ten'] || !req.files['plustwo'] || !req.files['ug'] || !req.files['pg'] || !req.files['afile'] || !req.files['voter'] ) {
+      return res.status(400).send('Both files must be uploaded.');
+    }
+  
+    const profile = req.files['profile'][0];
+    const file = req.files['file'][0];
+    const ten = req.files['ten'][0];
+    const plustwo = req.files['plustwo'][0];
+    const ug = req.files['ug'][0];
+    const pg = req.files['pg'][0];
+    const afile = req.files['afile'][0];
+    const voter = req.files['voter'][0];
+    const pan = req.files['pan'][0];
+    console.log("Uploaded files:", req.files);
+console.log("Request body:", req.body);
+
+  try {
+    const newContact = new spa({  fname,
+      lname,
+      dob,
+      gender,
+      permanent,
+      communication,
+      no1,
+      no2,
+      emg,
+      email,
+      panno,
+      aadharno,
+      blood,
+      father,
+      mother,
+      marital,
+      spouse,
+      n1,
+      ndob,
+      nrealtion,
+      naddress,
+      bank,
+      branch,
+      Ac,
+      IFSC,
+      Edu,
+      Passed,
+      Academy,
+      profile:profile.path,
+      file:file.path,
+      ten:ten.path,
+      plustwo:plustwo.path,
+      ug:ug.path,
+      pg:pg.path,
+      afile:afile.path,
+      voter:voter.path,
+      pan:pan.path,
+      rdate,
+      cdate,
+      cname,
+      start,
+      end,
+      status,
+      sid
+     });
+    await newContact.save();
+    res.status(200).json({ success: true, message: "Form submitted successfully!",
+      profile:profile,
+      file:file,
+      ten:ten,
+      plustwo:plustwo,
+      ug:ug,
+      pg:pg,
+      afile:afile,
+      voter:voter,
+      pan:pan,
+     });
+  } catch (error) {
+    console.error("Error saving contact:", error);
+    res.status(500).json({ success: false, message: "Server error!" });
+  }
+});
 app.get('/mentordata', async (req, res) => {
   try {
     const data = await mentor.find();

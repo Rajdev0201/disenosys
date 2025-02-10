@@ -93,7 +93,7 @@ const Sidebar = () => {
     </button>
 
     {isCourse && (
-      <div className="mt-2 space-y-2">
+      <div className="mt-2 space-y-2 px-6">
         <Link
           href="/students"
           className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
