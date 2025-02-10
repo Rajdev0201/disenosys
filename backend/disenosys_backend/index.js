@@ -466,7 +466,6 @@ app.post("/studentadd",uploadSPA, async (req, res) => {
     start,
     end,
     status,
-    sid,
     cname,} = req.body;
     
     if (!req.files || !req.files['profile'] || !req.files['file'] || !req.files['ten'] || !req.files['plustwo'] || !req.files['ug'] || !req.files['pg'] || !req.files['afile'] || !req.files['voter'] ) {
@@ -486,6 +485,13 @@ app.post("/studentadd",uploadSPA, async (req, res) => {
 console.log("Request body:", req.body);
 
   try {
+
+    const lastEntry = await spa.findOne().sort({ sid: -1 });
+
+    let newSidNumber = lastEntry ? parseInt(lastEntry.sid.split("-")[0]) + 1 : 1;
+
+    let newSid = newSidNumber.toString().padStart(4, "0") + "-CATDES";
+
     const newContact = new spa({  fname,
       lname,
       dob,
@@ -529,7 +535,7 @@ console.log("Request body:", req.body);
       start,
       end,
       status,
-      sid
+      sid:newSid
      });
     await newContact.save();
     res.status(200).json({ success: true, message: "Form submitted successfully!",
