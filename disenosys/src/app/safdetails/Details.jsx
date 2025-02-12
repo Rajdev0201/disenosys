@@ -95,7 +95,7 @@ const Details = () => {
     <div className='px-24 py-12'>
         <h1 className='text-2xl font-garet font-bold text-gray-800'>Documents:</h1>
         {online?.data?.filter((data) => data._id === courseId)?.map((data,i) => (
-            <div className='grid grid-cols-4 border-gray-200 shadow-md p-4 gap-x-4 gap-y-3 rounded-md'>
+            <div key={i} className='grid grid-cols-4 border-gray-200 shadow-md p-4 gap-x-4 gap-y-3 rounded-md'>
                   <button
           className="mt-2 text-white bg-[#182073] px-2 py-1 flex justify-center items-center gap-2 rounded-md shadow-inner w-44"
           onClick={openModal}
