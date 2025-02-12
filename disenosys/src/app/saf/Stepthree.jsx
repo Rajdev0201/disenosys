@@ -132,7 +132,7 @@ const Stepthree = ({
   return (
     <div className='flex flex-col space-y-3 '>
         <h1 className='text-lg font-sans font-bold'>Academic Details:</h1>
-          <div className='grid grid-cols-3 gap-2'>
+          <div className='grid lg:grid-cols-3 gap-2'>
           <input 
           type='text'
           name='Edu'
@@ -162,7 +162,7 @@ const Stepthree = ({
           />
           </div>
           <h1 className='text-lg font-sans font-bold'>Documents to be submit:</h1>
-          <div className='grid grid-cols-3 gap-2'>
+          <div className='grid lg:grid-cols-3 gap-2'>
             <div>
           <input 
           type='file'
@@ -272,7 +272,7 @@ const Stepthree = ({
           </div>
           </div>
           <h1 className='text-lg font-sans font-bold'>Course Details:</h1>
-          <div className='grid grid-cols-3 gap-2'>
+          <div className='grid lg:grid-cols-3 gap-2'>
             <div>
           <input 
           type='date'

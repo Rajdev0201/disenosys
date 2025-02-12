@@ -1,29 +1,80 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 
 const Steptow = ({nextStep,prevStep, formData, setFormData,}) => {
+  const [errors, setErrors] = useState({
+    pannoError: '',
+    aadharnoError: '',
+  });
+
+  const handlePanChange = (e) => {
+    const value = e.target.value;
+    if (value.length > 10) {
+      setErrors((prev) => ({
+        ...prev,
+        pannoError: 'PAN Number cannot be more than 10 characters.',
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        pannoError: '',
+      }));
+    }
+
+    setFormData({ ...formData, panno: value });
+  };
+
+  const handleAadharChange = (e) => {
+    const value = e.target.value;
+    if (value.length > 12) {
+      setErrors((prev) => ({
+        ...prev,
+        aadharnoError: 'Aadhar Number cannot be more than 12 digits.',
+      }));
+    } else if (value.length === 12 && !/^\d+$/.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        aadharnoError: 'Aadhar Number must be numeric.',
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        aadharnoError: '',
+      }));
+    }
+
+    setFormData({ ...formData, aadharno: value });
+  };
+
   return (
     <div>
     <div className='flex flex-col space-y-3 '>
         <h1 className='text-lg font-sans font-bold'>Personal Details:</h1>
-        <div className='grid grid-cols-3 gap-2'>
+        <div className='grid grid-cols-1 lg:grid-cols-3 gap-2'>
+          <div>
           <input 
           type='text'
           name='panno'
           value={formData.panno}
-          onChange={(e) => setFormData({ ...formData, panno: e.target.value })}
+          onChange={handlePanChange}
           className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
           placeholder='PAN No'
           required
           />
+             {errors.pannoError && <p className="text-red-500 text-sm">{errors.pannoError}</p>}
+             </div>
+             <div>
            <input 
            type='text'
           name='aadharno'
           value={formData.aadharno}
-          onChange={(e) => setFormData({ ...formData, aadharno: e.target.value })}
+          onChange={handleAadharChange}
            className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
           placeholder='Aadhar No'
           required
           />
+          {errors.aadharnoError && <p className="text-red-500 text-sm">{errors.aadharnoError}</p>}
+          </div>
           <input 
           type='text'
           name='blood'
@@ -72,7 +123,7 @@ const Steptow = ({nextStep,prevStep, formData, setFormData,}) => {
         </div>
         <h1 className='text-lg font-sans font-bold'>Nominee Details:</h1>
          
-           <div className='grid grid-cols-2 gap-2'>
+           <div className='grid grid-cols-1 lg:grid-cols-2 gap-2'>
             <div >
           <input 
           type='text'
@@ -84,7 +135,7 @@ const Steptow = ({nextStep,prevStep, formData, setFormData,}) => {
           required
           />
           </div>
-          <div className='-mt-6'>
+          <div className='lg:-mt-6'>
           <span className='text-sm text-red-500'>Nominee Date Of Birth*</span>
            <input 
             type='date'
@@ -117,7 +168,7 @@ const Steptow = ({nextStep,prevStep, formData, setFormData,}) => {
           </div>
 
           <h1 className='text-lg font-sans font-bold'>Personal Bank Account Details:</h1>
-          <div className='grid grid-cols-2 gap-2'>
+          <div className='grid lg:grid-cols-2 gap-2'>
           <input 
           type='text'
           name='bank'

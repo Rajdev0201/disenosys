@@ -245,11 +245,6 @@ const Multiple = () => {
             alert("Error: ug doc is required.");
             return;
           } 
-
-          if (!pg) {
-            alert("Error: pg doc is required.");
-            return;
-          } 
                
           if (!afile) {
             alert("Error: Aadhar file is required.");
@@ -346,7 +341,7 @@ const Multiple = () => {
       const prevStep = () => setCurrentStep((prev) => prev - 1);
     
   return (
-    <div className="lg:max-w-2xl mx-auto lg:mt-24 lg:mb-10 border rounded-lg shadow-md bg-white">
+    <div className="lg:max-w-2xl mx-auto mt-16 lg:mt-24 lg:mb-10 border rounded-lg shadow-md bg-white">
     <div className="flex items-center justify-between px-8 py-6">
     <div className="flex items-center w-full">
   <div

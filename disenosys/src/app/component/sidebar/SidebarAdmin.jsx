@@ -22,8 +22,10 @@ const Sidebar = () => {
     { href: '/gpdx', label: 'DEMO', icon: <GrScorecard />    },
     { href: '/applicants', label: 'Applicants', icon: <GrScorecard />},
     { href: '/mentors', label: 'Mentors-Profile', icon: <GrScorecard />},
+    { href: '/studentsapplied', label: 'SAF', icon: <GrScorecard />},
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
+
   ];
 
   const handleLogout = () => {
@@ -51,12 +53,12 @@ const Sidebar = () => {
       >
         <div className="flex flex-col  px-4 flex-grow space-y-6">
   
-          <div className="text-center mt-20 text-2xl font-semibold  md:block hidden">
+          {/* <div className="text-center mt-20 text-2xl font-semibold  md:block hidden">
             Admin Panel
-          </div>
+          </div> */}
 
      
-          <div>
+          <div className='mt-20'>
             <button
               onClick={() => setUniversityDropdownOpen(!isUniversityDropdownOpen)}
               className={`flex items-center w-full py-2 px-4  lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${

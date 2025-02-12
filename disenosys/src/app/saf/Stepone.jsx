@@ -1,5 +1,6 @@
 "use client"
 import React from 'react'
+import DatePicker from "react-multi-date-picker";
 
 const Stepone = ({nextStep,formData,setFormData}) => {
   return (
@@ -26,6 +27,17 @@ const Stepone = ({nextStep,formData,setFormData}) => {
               required
               />
               <div>
+              {/* <DatePicker
+                    name='dob'
+                    selected={formData.dob}
+                    onChange={(e) => setFormData({ ...formData, dob : e.target.value })}
+                    dateFormat="MM/dd/yyyy"
+                    placeholder="yyyy/MM/dd"
+                    className="w-full border-none focus:outline-none text-base px-4 py-2 rounded-lg"
+                    showYearDropdown
+                    showMonthDropdown
+                    dropdownMode="select"
+                  /> */}
                <input 
                type='date'
                name='dob'

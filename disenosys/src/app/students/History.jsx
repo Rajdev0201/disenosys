@@ -9,6 +9,7 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { Pagination } from "../component/Pagination.jsx";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { FaRegCopy } from "react-icons/fa";
 
 const History = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -30,11 +31,8 @@ const History = () => {
   });
   const [editStudent, setEditStudent] = useState({
     id: "",
-    name: "",
-    email: "",
-    phone: "",
-    course: "",
-    start: "",
+    fname: "",
+    cname: "",
     end: "",
     status: "",
   });
@@ -46,14 +44,15 @@ const History = () => {
 
   useEffect(() => {
     const filtered = online?.data?.filter((item) => {
-      const name = item.name?.toLowerCase().includes(search.toLowerCase());
+      const name = item.fname?.toLowerCase().includes(search.toLowerCase());
       const email = item.email?.toLowerCase().includes(search.toLowerCase());
       const phone = item.phone?.toLowerCase().includes(search.toLowerCase());
-      const course = item.course?.toLowerCase().includes(search.toLowerCase());
+      const stdid = item.sid?.toLowerCase().includes(search.toLowerCase());
+      const course = item.cname?.toLowerCase().includes(search.toLowerCase());
       const start = item.start?.toLowerCase().includes(search.toLowerCase());
       const end = item.end?.toLowerCase().includes(search.toLowerCase());
       const status = item.status?.toLowerCase().includes(search.toLowerCase());
-      return name || email || phone || course || start || end || status;
+      return name || email || phone || course || start || end || status || stdid;
     });
     setFilteredData(filtered);
   }, [search, online]);
@@ -82,8 +81,8 @@ const History = () => {
     }
   };
 
-  const handleEditClick = (id, name, email, phone, course, end, status) => {
-    setEditStudent({ id, name, email, phone, course, end, status });
+  const handleEditClick = (id, fname, cname, end, status) => {
+    setEditStudent({ id, fname, cname, end, status });
     setShowEditPopup(true);
   };
 
@@ -99,10 +98,8 @@ const History = () => {
     e.preventDefault();
     dispatch(
       editOnline(editStudent.id, {
-        name: editStudent.name,
-        email: editStudent.email,
-        phone: editStudent.phone,
-        course: editStudent.course,
+        fname: editStudent.fname,
+        cname: editStudent.cname,
         end: editStudent.end,
         status: editStudent.status,
       })
@@ -164,14 +161,27 @@ const History = () => {
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <button
+        {/* <button
           className="bg-blue-500 text-white px-4 py-2 rounded"
           onClick={() => setShowPopup(true)}
         >
           Add Students
-        </button>
+        </button> */}
+        <div className="">
+        <button
+  className="rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600 flex items-center gap-2 mt-4"
+  onClick={() => {
+    navigator.clipboard.writeText("https://www.disenosys.com/saf");
+    alert("Link copied to clipboard!");
+  }}
+>
+  Copy Link <FaRegCopy className="w-5 h-5 text-white"/>
+</button>
+<h5 className="text-red-500 w-52 text-sm">Quickly copy and share the student application form*</h5>
+</div>
+
       </div>
-      <div className="px-3  font-garet ">
+      <div className="px-12  font-garet ">
         {paginatedData?.length === 0 ? (
           <p className="text-lg text-red-500 text-center font-semibold">
             No Students added!.
@@ -185,21 +195,16 @@ const History = () => {
                     S.No
                   </th>
                   <th className="py-2 px-2 text-start border-r border-gray-300">
+                    Std-ID
+                  </th>
+                  <th className="py-2 px-2 text-start border-r border-gray-300">
                     Name
                   </th>
-                  <th className="py-2 px-2 text-start border-r border-gray-300">
-                    Email
-                  </th>
-                  <th className="py-22 px-2 text-start border-r border-gray-300">
-                    Phone
-                  </th>
-                  <th className="py-2 px-2 text-start border-r border-gray-300">
-                    Section
-                  </th>
+                   
                   <th className="py-2 px-2 text-start border-r border-gray-300">
                     Course Name
                   </th>
-                  <th className="py-2 px-2 text-start border-r w-full border-gray-300">
+                  <th className="py-2 px-2 text-start border-r border-gray-300">
                     Start Date
                   </th>
                   <th className="py-2 px-2 text-start border-r border-gray-300">
@@ -208,7 +213,7 @@ const History = () => {
                   <th className="py-2 px-2 text-start border-r border-gray-300">
                     Status
                   </th>
-                  <th className="py-2 px-2 text-center border-r border-gray-300">
+                  <th className="py-2 px-2 text-start border-r border-gray-300">
                     Action
                   </th>
                 </tr>
@@ -225,23 +230,17 @@ const History = () => {
                       {startIndex + index + 1}.
                     </td>
                     <td className="py-2 px-2  text-start text-gray-600 font-medium">
-                      {item.name}
+                      {item.sid}
                     </td>
                     <td className="py-2 px-2  text-start text-gray-600 font-medium">
-                      {item.email}
+                      {item.fname}
                     </td>
                     <td className="py-2 px-2  text-start text-gray-600 font-medium">
-                      {item.phone}
-                    </td>
-                    <td className="py-2 px-2  text-start text-gray-600 font-medium">
-                      Online
-                    </td>
-                    <td className="py-2 px-2  text-start w-full text-gray-600 font-medium">
-                      {item.course}
+                      {item.cname}
                     </td>
                     <td className="py-2 px-2 text-start text-gray-600 font-medium">
-                      {item.start
-                        ? new Date(item.start).toLocaleDateString()
+                      {item.cdate
+                        ? new Date(item.cdate).toLocaleDateString()
                         : "N/A"}
                     </td>
                     <td className="py-2 px-2 text-start text-gray-600 font-medium">
@@ -256,7 +255,7 @@ const History = () => {
                           Completed
                         </p>
                       ) : (
-                        <p className="flex items-start justify-center text-red-500 gap-2">
+                        <p className="flex items-center text-red-500 gap-2">
                           <GrInProgress className="w-4 h-4 text-red-500" />{" "}
                           In-progress
                         </p>
@@ -268,10 +267,8 @@ const History = () => {
                         onClick={() =>
                           handleEditClick(
                             item._id,
-                            item.name,
-                            item.email,
-                            item.phone,
-                            item.course,
+                            item.fname,
+                            item.cname,
                             item.end,
                             item.status
                           )
@@ -391,32 +388,18 @@ const History = () => {
       {showEditPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm w-full z-50">
           <div className="bg-white p-6 rounded-lg ml-44 w-[500px] space-y-4">
-            <h2 className="text-xl font-bold mb-4">Edit Teacher</h2>
+            <h2 className="text-xl font-bold mb-4">Edit Students</h2>
             <input
               type="text"
-              name="name"
-              value={editStudent.name}
+              name="fname"
+              value={editStudent.fname}
               onChange={handleEditChange}
               className="border p-2 w-full rounded"
             />
             <input
               type="text"
-              name="email"
-              value={editStudent.email}
-              onChange={handleEditChange}
-              className="border p-2 w-full rounded"
-            />
-            <input
-              type="text"
-              name="phone"
-              value={editStudent.phone}
-              onChange={handleEditChange}
-              className="border p-2 w-full rounded"
-            />
-            <input
-              type="text"
-              name="course"
-              value={editStudent.course}
+              name="cname"
+              value={editStudent.cname}
               onChange={handleEditChange}
               className="border p-2 w-full rounded"
             />

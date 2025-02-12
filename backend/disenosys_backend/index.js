@@ -485,11 +485,15 @@ app.post("/studentadd",uploadSPA, async (req, res) => {
 console.log("Request body:", req.body);
 
   try {
-
     const lastEntry = await spa.findOne().sort({ sid: -1 });
+    let newSidNumber = 1; 
 
-    let newSidNumber = lastEntry ? parseInt(lastEntry.sid.split("-")[0]) + 1 : 1;
-
+    if (lastEntry && lastEntry.sid) {
+      const lastNumber = parseInt(lastEntry.sid.split("-")[0], 10);
+      if (!isNaN(lastNumber)) {
+        newSidNumber = lastNumber + 1;
+      }
+    }
     let newSid = newSidNumber.toString().padStart(4, "0") + "-CATDES";
 
     const newContact = new spa({  fname,
