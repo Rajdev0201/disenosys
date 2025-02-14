@@ -327,6 +327,7 @@ const uploadSPA = multer({
   storage: storageSPA,
   limits: { fileSize: 5 * 1024 * 1024 },
 }).fields([
+  { name: 'idProof', maxCount: 1 }, 
   { name: 'profile', maxCount: 1 }, 
   { name: 'file', maxCount: 1 },
   { name: 'ten', maxCount: 1 }, 
@@ -466,23 +467,24 @@ app.post("/studentadd",uploadSPA, async (req, res) => {
     start,
     end,
     status,
-    cname,} = req.body;
-    
-    if (!req.files || !req.files['profile'] || !req.files['file'] || !req.files['ten'] || !req.files['plustwo'] || !req.files['ug'] || !req.files['pg'] || !req.files['afile'] || !req.files['voter'] ) {
-      return res.status(400).send('Both files must be uploaded.');
-    }
+    cname,
+    isIndia
+  } = req.body;
+ 
+  const profile = req?.files?.['profile']?.[0] || null;
+  const idProof = req?.files?.['idProof']?.[0] || null;
+  const file = req?.files?.['file']?.[0] || null;
+  const ten = req?.files?.['ten']?.[0] || null;
+  const plustwo = req?.files?.['plustwo']?.[0] || null;
+  const ug = req?.files?.['ug']?.[0] || null;
+  const pg = req?.files?.['pg']?.[0] || null;
+  const afile = req?.files?.['afile']?.[0] || null;
+  const voter = req?.files?.['voter']?.[0] || null;
+  const pan = req?.files?.['pan']?.[0] || null;
   
-    const profile = req.files['profile'][0];
-    const file = req.files['file'][0];
-    const ten = req.files['ten'][0];
-    const plustwo = req.files['plustwo'][0];
-    const ug = req.files['ug'][0];
-    const pg = req.files['pg'][0];
-    const afile = req.files['afile'][0];
-    const voter = req.files['voter'][0];
-    const pan = req.files['pan'][0];
-    console.log("Uploaded files:", req.files);
-console.log("Request body:", req.body);
+
+    console.log("Uploaded files:", req?.files);
+console.log("Request body:", req?.body);
 
   try {
     const lastEntry = await spa.findOne().sort({ sid: -1 });
@@ -524,15 +526,17 @@ console.log("Request body:", req.body);
       Edu,
       Passed,
       Academy,
-      profile:profile.path,
-      file:file.path,
-      ten:ten.path,
-      plustwo:plustwo.path,
-      ug:ug.path,
-      pg:pg.path,
-      afile:afile.path,
-      voter:voter.path,
-      pan:pan.path,
+      isIndia,
+      idProof: idProof?.path || null,
+     profile: profile?.path || null,
+     file: file?.path || null,
+    ten: ten?.path || null,
+   plustwo: plustwo?.path || null,
+   ug: ug?.path || null,
+   pg: pg?.path || null,
+   afile: afile?.path || null,
+   voter: voter?.path || null,
+    pan: pan?.path || null,
       rdate,
       cdate,
       cname,
@@ -544,6 +548,7 @@ console.log("Request body:", req.body);
     await newContact.save();
     res.status(200).json({ success: true, message: "Form submitted successfully!",
       profile:profile,
+      idProof:idProof,
       file:file,
       ten:ten,
       plustwo:plustwo,

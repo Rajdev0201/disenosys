@@ -27,7 +27,7 @@ const SAF = () => {
       online?.data?.map((data, i) => (
         <div key={i} className="flex justify-start">
           <div className="w-72 rounded-xl border-2 border-gray-500 bg-white p-6 text-center shadow-md dark:bg-gray-800 dark:border-gray-700">
-            <figure className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-500 dark:bg-indigo-600">
+            <figure className="mx-auto flex items-center justify-center rounded-full mb-4">
               {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="48"
@@ -38,7 +38,7 @@ const SAF = () => {
               >
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
               </svg> */}
-              <img src={data?.profile} className='w-24 h-24 object-cover' alt='profile'/>
+              <img src={data?.profile} className='object-cover w-28  ring-2 ring-blue-400  rounded-full' alt='profile'/>
               <figcaption className="sr-only">{data?.fname}, Profile</figcaption>
             </figure>
 

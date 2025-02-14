@@ -83,6 +83,7 @@ const Stepone = ({nextStep,formData,setFormData}) => {
               />
                <h1 className='text-lg font-sans font-bold'>Contact Details:</h1>
                <div className='grid grid-cols-2 gap-2'>
+                
               <input 
               type='text'
               name='no1'

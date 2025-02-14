@@ -38,6 +38,8 @@ const Multiple = () => {
         Edu:"",
         Passed:"",
         Academy:"",
+        isIndia:"yes",
+        idProof:null,
         profile:null,
         file:null,
         ten:null,
@@ -56,6 +58,7 @@ const Multiple = () => {
       };
     
       const [formData, setFormData] = useState(initialFormData);
+
 
       const handleSubmit = async (e) => {
         e.preventDefault();
@@ -88,6 +91,8 @@ const Multiple = () => {
             Edu,
             Passed,
             Academy,
+            isIndia,
+            idProof,
             profile,
             ten,
             plustwo,
@@ -226,41 +231,23 @@ const Multiple = () => {
             return;
           } 
 
-          if (!profile) {
-            alert("Error: profile image is required.");
+          if (isIndia === null) {
+            alert("Please select if you are Indian or not.");
             return;
-          } 
-          
-          if (!ten) {
-            alert("Error: 10th doc is required.");
-            return;
-          } 
-          
-          if (!plustwo) {
-            alert("Error: 12th doc is required.");
-            return;
-          } 
-          
-          if (!ug) {
-            alert("Error: ug doc is required.");
-            return;
-          } 
-               
-          if (!afile) {
-            alert("Error: Aadhar file is required.");
-            return;
-          } 
-                  
-          if (!voter) {
-            alert("Error: Voter file is required.");
-            return;
-          } 
-                  
-          if (!pan) {
-            alert("Error: Pan file is required.");
-            return;
-          } 
-          
+          }
+      
+          if (isIndia === "yes") {
+            if (!profile || !ten || !plustwo || !ug || !pg || !afile || !pan || !voter) {
+              alert("Error: All documents are required for Indian applicants.");
+              return;
+            }
+          } else {
+            if (!profile || !idProof) {
+              alert("Error: All docs are required for non-Indian applicants.");
+              return;
+            }
+          }
+
           if (!rdate.trim()) {
             alert("Error: Registration Date is required.");
             return;
@@ -303,6 +290,8 @@ const Multiple = () => {
         form.append("Edu",formData.Edu);
         form.append("Passed",formData.Passed);
         form.append("Academy",formData.Academy);
+        form.append("isIndia",formData.isIndia);
+        form.append("idProof",formData.idProof);
         form.append("profile",formData.profile);
         form.append("file",formData.file);
         form.append("ten",formData.ten);

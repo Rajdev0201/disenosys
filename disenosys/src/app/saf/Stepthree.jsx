@@ -10,6 +10,7 @@ const Stepthree = ({
     // setIsChecked,
 }) => {
 
+
     const handleFileUpload = (e) => {
         const file = e.target.files[0];
         if (!file) return;
@@ -22,6 +23,17 @@ const Stepthree = ({
         }
       };
       
+      const handleID = (e) => {
+        const idProof = e.target.files[0];
+        if (!idProof) return;
+    
+        const fileType = idProof.type;
+        if (fileType === "application/pdf") {
+          setFormData((prev) => ({ ...prev, idProof}));
+        } else {
+          setError("Unsupported file type. Please upload a PDF file.");
+        }
+      };
       
       const handleProfile = (e) => {
         const profile = e.target.files[0];
@@ -161,7 +173,36 @@ const Stepthree = ({
           required
           />
           </div>
-          <h1 className='text-lg font-sans font-bold'>Documents to be submit:</h1>
+          <h1 className="text-lg font-sans font-bold">Are you an Indian citizen?</h1>
+      <div className="flex gap-4 mb-4">
+        <label className="flex items-center gap-2">
+          <input
+            type="radio"
+            name="isIndia"
+            value="yes"
+            checked={formData.isIndia === "yes"} 
+            onChange={(e) => setFormData({ ...formData, isIndia: e.target.value })}
+            className=''
+            required
+          />
+          Yes
+        </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="radio"
+            name="isIndia"
+            value="no"
+            checked={formData.isIndia === "no"} 
+            onChange={(e) => setFormData({ ...formData, isIndia: e.target.value })}
+            required
+          />
+          No
+        </label>
+      </div>
+    
+          <>
+          <h1 className='text-lg font-sans font-bold mt-5'>Documents to be submit:</h1>
+          {formData.isIndia === "yes" && (
           <div className='grid lg:grid-cols-3 gap-2'>
             <div>
           <input 
@@ -271,6 +312,33 @@ const Stepthree = ({
              <span className='text-sm text-red-500'>PAN Card*</span>
           </div>
           </div>
+           )}
+           { formData.isIndia === "no" && (
+                 <div className='flex flex-row gap-2'>
+                 <div>
+                 <input
+                   type="file"
+                   name="profile"
+                   onChange={handleProfile}
+                   className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:outline-purple-500"
+                   required
+                 />
+                 <span className="text-sm text-red-500">Passport Size Photo*</span>
+                 </div>
+                 <div>
+                 <input
+                   type="file"
+                   name="idProof"
+                   onChange={handleID}
+                   className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:outline-purple-500"
+                   required
+                 />
+                 <span className="text-sm text-red-500">ID Proof*</span>
+                 </div>
+               </div>
+           )}
+          </>
+     
           <h1 className='text-lg font-sans font-bold'>Course Details:</h1>
           <div className='grid lg:grid-cols-3 gap-2'>
             <div>

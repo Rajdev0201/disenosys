@@ -19,7 +19,7 @@ const Details = () => {
     const [is5,setIs5] = useState(false);
     const [is6,setIs6] = useState(false);
     const [is7,setIs7] = useState(false);
-
+    const [is8,setIs8] = useState(false);
 
     const openModal = () => {
       setIsModalOpen(true);
@@ -84,7 +84,14 @@ const Details = () => {
       const closeModal7 = () => {
         setIs7(false);
       };
-
+     
+      const openModal8 = () => {
+        setIs8(true);
+      };
+    
+      const closeModal8 = () => {
+        setIs8(false);
+      }; 
      
 
     useEffect(() => {
@@ -95,12 +102,15 @@ const Details = () => {
     <div className='px-24 py-12'>
         <h1 className='text-2xl font-garet font-bold text-gray-800'>Documents:</h1>
         {online?.data?.filter((data) => data._id === courseId)?.map((data,i) => (
+          data.isIndia === "yes" ? (
             <div key={i} className='grid grid-cols-4 border-gray-200 shadow-md p-4 gap-x-4 gap-y-3 rounded-md'>
+
                   <button
           className="mt-2 text-white bg-[#182073] px-2 py-1 flex justify-center items-center gap-2 rounded-md shadow-inner w-44"
           onClick={openModal}
+          
         >
-         Resume <FaEye className="text-white w-4 h-4"/>
+         Resume <FaEye className="text-white w-4 h-4"/> 
         </button>
         <button
           className="mt-2 text-white bg-[#182073] px-2 py-1 flex justify-center items-center gap-2 rounded-md shadow-inner w-44"
@@ -144,6 +154,8 @@ const Details = () => {
         >
           PAN <FaEye className="text-white w-4 h-4"/>
         </button>
+      
+         
                  {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
@@ -441,7 +453,53 @@ const Details = () => {
         </div>
         
              )}
+            
             </div>
+          ):(
+            <div key={i} className='grid grid-cols-4 border-gray-200 shadow-md p-4 gap-x-4 gap-y-3 rounded-md'>
+                  <button
+          className="mt-2 text-white bg-[#182073] px-2 py-1 flex justify-center items-center gap-2 rounded-md shadow-inner w-44"
+          onClick={openModal8}
+          
+        >
+         ID-Proof <FaEye className="text-white w-4 h-4"/> 
+        </button>
+
+        {is8 && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="relative w-full h-full flex items-center justify-center">
+            <button
+              className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+              onClick={closeModal8}
+            >
+              Close
+            </button>
+
+            <div className="w-11/12 h-5/6 flex justify-center items-center mt-6">
+            {data?.idProof.endsWith(".pdf") ? (
+                <iframe
+                  src={data?.idProof}
+                  className="w-full h-full"
+                  title="Resume Viewer"
+                  frameBorder="0"
+                ></iframe>
+            ) : (
+                <Image
+                  src={data?.idProof}
+                  alt="Resume"
+                  className="object-contain max-h-full max-w-full"
+                  width={800}
+                  height={800}
+                />
+              )}
+            </div>
+          </div>
+        </div>
+        
+             )}
+        </div>
+        
+          )
         ))}
         
     </div>

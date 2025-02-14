@@ -9,7 +9,7 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { Pagination } from "../component/Pagination.jsx";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { FaRegCopy } from "react-icons/fa";
+import { FaPlus, FaRegCopy } from "react-icons/fa";
 
 const History = () => {
   const [showPopup, setShowPopup] = useState(false);
@@ -20,6 +20,10 @@ const History = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [expandedRows, setExpandedRows] = useState({});
+  const [subRows, setSubRows] = useState({});
   const [add, setAdd] = useState({
     name: "",
     email: "",
@@ -56,6 +60,25 @@ const History = () => {
     });
     setFilteredData(filtered);
   }, [search, online]);
+
+  const toggleRow = (id) => {
+    setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  // Open modal to add subrow
+  const openModal = (id) => {
+    setSelectedId(id);
+    setModalOpen(true);
+  };
+
+  // Handle adding a new subrow
+  const handleAddSubrow = (cname, start, end) => {
+    setSubRows((prev) => ({
+      ...prev,
+      [selectedId]: [...(prev[selectedId] || []), { cname, start, end }],
+    }));
+    setModalOpen(false);
+  };
 
   const itemsPerPage = 10;
   const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
@@ -220,6 +243,16 @@ const History = () => {
               </thead>
               <tbody>
                 {paginatedData?.map((item, index) => (
+             <>    {search && (
+              <div className="mt-2">
+                  <button
+                    className="bg-blue-500 text-white px-2 py-2 rounded-md"
+                    onClick={() => openModal(item._id)}
+                  >
+                    <FaPlus />
+                  </button>
+                  </div>
+             )}
                   <tr
                     key={item._id}
                     className={`border-b border-gray-300 ${
@@ -284,6 +317,24 @@ const History = () => {
                       </td>
                     </div>
                   </tr>
+                  {expandedRows[item._id] &&
+                subRows[item._id]?.map((sub, subIndex) => (
+                  <tr key={subIndex} className="bg-gray-100 border-b border-gray-300">
+                    <td colSpan="2"></td>
+                    <td className="py-2 px-2 text-start">{sub.cname}</td>
+                    <td className="py-2 px-2 text-start">
+                      {new Date(sub.start).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-2 text-start">
+                      {new Date(sub.end).toLocaleDateString()}
+                    </td>
+                    <td className="py-2 px-2 text-start">
+                      <button className="text-blue-500">Edit</button>
+                      <button className="text-red-500 ml-2">Delete</button>
+                    </td>
+                  </tr>
+                ))}
+                  </>
                 ))}
               </tbody>
             </table>
@@ -443,6 +494,41 @@ const History = () => {
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
+        </div>
+      )}
+         {modalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <div className="bg-white p-6 rounded-md">
+            <h2 className="text-lg font-bold">Add Subrow</h2>
+            <input
+              type="text"
+              placeholder="Course Name"
+              className="border p-2 w-full my-2"
+              id="cname"
+            />
+            <input type="date" className="border p-2 w-full my-2" id="start" />
+            <input type="date" className="border p-2 w-full my-2" id="end" />
+            <div className="flex justify-end gap-2 mt-4">
+              <button
+                className="bg-red-500 text-white px-3 py-1 rounded-md"
+                onClick={() => setModalOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                onClick={() =>
+                  handleAddSubrow(
+                    document.getElementById("cname").value,
+                    document.getElementById("start").value,
+                    document.getElementById("end").value
+                  )
+                }
+              >
+                Submit
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
