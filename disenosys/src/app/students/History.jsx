@@ -9,12 +9,14 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { Pagination } from "../component/Pagination.jsx";
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { FaPlus, FaRegCopy } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaPlus, FaRegCopy } from "react-icons/fa";
+import { BsArrowReturnRight } from "react-icons/bs";
 
 const History = () => {
   const [showPopup, setShowPopup] = useState(false);
   const course = useSelector((state) => state.courseLD);
   const online = useSelector((state) => state.online);
+  console.log(online);
   const dispatch = useDispatch();
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [search, setSearch] = useState("");
@@ -40,6 +42,14 @@ const History = () => {
     end: "",
     status: "",
   });
+  const [modalEditOpen, setModalEditOpen] = useState(false);
+  const [editData, setEditData] = useState({
+    parentId: "",
+    subrowId: "",
+    cname: "",
+    start: "",
+    end: "",
+  });
 
   useEffect(() => {
     dispatch(Online());
@@ -56,28 +66,116 @@ const History = () => {
       const start = item.start?.toLowerCase().includes(search.toLowerCase());
       const end = item.end?.toLowerCase().includes(search.toLowerCase());
       const status = item.status?.toLowerCase().includes(search.toLowerCase());
-      return name || email || phone || course || start || end || status || stdid;
+      return (
+        name || email || phone || course || start || end || status || stdid
+      );
     });
     setFilteredData(filtered);
   }, [search, online]);
 
-  const toggleRow = (id) => {
-    setExpandedRows((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggleRow = (itemId) => {
+    setExpandedRows((prev) => ({
+      ...prev,
+      [itemId]: !prev[itemId],
+    }));
   };
 
-  // Open modal to add subrow
   const openModal = (id) => {
     setSelectedId(id);
     setModalOpen(true);
   };
 
-  // Handle adding a new subrow
-  const handleAddSubrow = (cname, start, end) => {
-    setSubRows((prev) => ({
-      ...prev,
-      [selectedId]: [...(prev[selectedId] || []), { cname, start, end }],
-    }));
-    setModalOpen(false);
+  // const handleAddSubrow = (cname, start, end) => {
+  //   setSubRows((prev) => ({
+  //     ...prev,
+  //     [selectedId]: [...(prev[selectedId] || []), { cname, start, end }],
+  //   }));
+  //   setModalOpen(false);
+  // };
+
+  const handleAddSubrow = async (cname, start, end) => {
+    try {
+      const response = await fetch(
+        `https://disenosys-dkhj.onrender.com/ld/subrows/${selectedId}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cname, start, end }),
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to add subrow");
+
+      const updatedData = await response.json();
+      setSubRows((prev) => ({
+        ...prev,
+        [selectedId]: updatedData.subrows,
+      }));
+      setExpandedRows((prev) => ({
+        ...prev,
+        [selectedId]: true,
+      }));
+      dispatch(Online());
+      setModalOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleEditSubrow = (parentId, subrowId, cname, start, end) => {
+    setEditData({ parentId, subrowId, cname, start, end });
+    setModalEditOpen(true);
+  };
+
+  const handleUpdateSubrow = async () => {
+    try {
+      const response = await fetch(
+        `https://disenosys-dkhj.onrender.com/ld/subrows/${editData.parentId}/${editData.subrowId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            cname: editData.cname,
+            start: editData.start,
+            end: editData.end,
+          }),
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to edit subrow");
+
+      const updatedData = await response.json();
+      setSubRows((prev) => ({
+        ...prev,
+        [editData.parentId]: updatedData.subrows,
+      }));
+      dispatch(Online());
+      setModalEditOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDeleteSubrow = async (parentId, subrowId) => {
+    try {
+      const response = await fetch(
+        `https://disenosys-dkhj.onrender.com/ld/subrows/${parentId}/${subrowId}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) throw new Error("Failed to delete subrow");
+
+      const updatedData = await response.json();
+      setSubRows((prev) => ({
+        ...prev,
+        [parentId]: updatedData.subrows, // Update state with new data
+      }));
+      dispatch(Online());
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const itemsPerPage = 10;
@@ -163,7 +261,7 @@ const History = () => {
   return (
     <div>
       <h2 className="text-[#0d1039] font-medium text-4xl text-center font-garet mb-1 mt-5">
-        Students-Live
+        Students Application Form
       </h2>
       <div className="flex flex-col md:flex-row justify-between items-center px-12 py-20 gap-4  font-garet ">
         <div className="flex items-center">
@@ -191,18 +289,19 @@ const History = () => {
           Add Students
         </button> */}
         <div className="">
-        <button
-  className="rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600 flex items-center gap-2 mt-4"
-  onClick={() => {
-    navigator.clipboard.writeText("https://www.disenosys.com/saf");
-    alert("Link copied to clipboard!");
-  }}
->
-  Copy Link <FaRegCopy className="w-5 h-5 text-white"/>
-</button>
-<h5 className="text-red-500 w-52 text-sm">Quickly copy and share the student application form*</h5>
-</div>
-
+          <button
+            className="rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600 flex items-center gap-2 mt-4"
+            onClick={() => {
+              navigator.clipboard.writeText("https://www.disenosys.com/saf");
+              alert("Link copied to clipboard!");
+            }}
+          >
+            Copy Link <FaRegCopy className="w-5 h-5 text-white" />
+          </button>
+          <h5 className="text-red-500 w-52 text-sm">
+            Quickly copy and share the student application form*
+          </h5>
+        </div>
       </div>
       <div className="px-12  font-garet ">
         {paginatedData?.length === 0 ? (
@@ -223,7 +322,7 @@ const History = () => {
                   <th className="py-2 px-2 text-start border-r border-gray-300">
                     Name
                   </th>
-                   
+
                   <th className="py-2 px-2 text-start border-r border-gray-300">
                     Course Name
                   </th>
@@ -243,97 +342,177 @@ const History = () => {
               </thead>
               <tbody>
                 {paginatedData?.map((item, index) => (
-             <>    {search && (
-              <div className="mt-2">
-                  <button
-                    className="bg-blue-500 text-white px-2 py-2 rounded-md"
-                    onClick={() => openModal(item._id)}
-                  >
-                    <FaPlus />
-                  </button>
-                  </div>
-             )}
-                  <tr
-                    key={item._id}
-                    className={`border-b border-gray-300 ${
-                      index % 2 !== 0 ? "bg-blue-50" : "bg-white"
-                    }`}
-                  >
-                    <td className="py-2 px-2 text-start text-gray-600 font-medium">
-                      {startIndex + index + 1}.
-                    </td>
-                    <td className="py-2 px-2  text-start text-gray-600 font-medium">
-                      {item.sid}
-                    </td>
-                    <td className="py-2 px-2  text-start text-gray-600 font-medium">
-                      {item.fname}
-                    </td>
-                    <td className="py-2 px-2  text-start text-gray-600 font-medium">
-                      {item.cname}
-                    </td>
-                    <td className="py-2 px-2 text-start text-gray-600 font-medium">
-                      {item.cdate
-                        ? new Date(item.cdate).toLocaleDateString()
-                        : "N/A"}
-                    </td>
-                    <td className="py-2 px-2 text-start text-gray-600 font-medium">
-                      {item.end === "Not Completed"
-                        ? "Not Completed"
-                        : new Date(item.end).toLocaleDateString()}
-                    </td>
-                    <td className="py-2 px-2 text-start text-gray-600 font-medium">
-                      {item.end !== "Not Completed" ? ( 
-                        <p className="flex items-center text-green-500 gap-2">
-                          <IoCheckmarkDoneCircleOutline className="w-5 h-5 text-green-500" />{" "}
-                          Completed
-                        </p>
-                      ) : (
-                        <p className="flex items-center text-red-500 gap-2">
-                          <GrInProgress className="w-4 h-4 text-red-500" />{" "}
-                          In-progress
-                        </p>
-                      )}
-                    </td>
-                    <div className="flex justify-start items-start">
-                      <td
-                        className="py-2 px-2 text-gray-600 font-medium hover:cursor-pointer"
-                        onClick={() =>
-                          handleEditClick(
-                            item._id,
-                            item.fname,
-                            item.cname,
-                            item.end,
-                            item.status
-                          )
-                        }
-                      >
-                        <CiEdit className="text-gray-500 w-6 h-6" />
+                  <>
+                    {" "}
+                   
+                    <tr
+                      key={item._id}
+                      className={`border-b border-gray-300 ${
+                        index % 2 !== 0 ? "bg-blue-50" : "bg-white"
+                      }`}
+                    >
+                      <td className="py-2 px-2 text-start text-gray-600 font-medium">
+                        {startIndex + index + 1}.
+                        <>
+                          {item.subrows?.length > 0 && (
+                            <button
+                              className="w-6 ml-2 ring-2 rounded-full bg-blue-500 p-1"
+                              onClick={() => toggleRow(item._id)}
+                            >
+                              {expandedRows[item._id] ? (
+                                <FaChevronUp className="text-white" />
+                              ) : (
+                                <FaChevronDown className="text-white" />
+                              )}
+                            </button>
+                          )}
+                        </>
                       </td>
-                      <td
-                        className="py-2 px-2 text-gray-600 font-medium hover:cursor-pointer"
-                        onClick={() => handleDelete(item._id)}
-                      >
-                        <RiDeleteBin5Line className="text-red-500 w-6 h-6" />
+                      <td className="py-2 px-2  text-start text-gray-600 font-medium">
+                        {item.sid}
                       </td>
-                    </div>
-                  </tr>
-                  {expandedRows[item._id] &&
-                subRows[item._id]?.map((sub, subIndex) => (
-                  <tr key={subIndex} className="bg-gray-100 border-b border-gray-300">
-                    <td colSpan="2"></td>
-                    <td className="py-2 px-2 text-start">{sub.cname}</td>
-                    <td className="py-2 px-2 text-start">
-                      {new Date(sub.start).toLocaleDateString()}
-                    </td>
-                    <td className="py-2 px-2 text-start">
-                      {new Date(sub.end).toLocaleDateString()}
-                    </td>
-                    <td className="py-2 px-2 text-start">
-                      <button className="text-blue-500">Edit</button>
-                      <button className="text-red-500 ml-2">Delete</button>
-                    </td>
-                  </tr>
-                ))}
+                      <td className="py-2 px-2  text-start text-gray-600 font-medium">
+                        {item.fname}
+                      </td>
+                      <td className="py-2 px-2  text-start text-gray-600 font-medium">
+                        {item.cname}
+                      </td>
+                      <td className="py-2 px-2 text-start text-gray-600 font-medium">
+                        {item.cdate
+                          ? new Date(item.cdate).toLocaleDateString()
+                          : "N/A"}
+                      </td>
+                      <td className="py-2 px-2 text-start text-gray-600 font-medium">
+                        {item.end === "Not Completed"
+                          ? <span className="bg-[#FDD5D9] text-[#FF0000] rounded-full px-4 py-1 font-medium text-sm">Pending</span>
+                          : new Date(item.end).toLocaleDateString()}
+                      </td>
+                      <td className="py-2 px-2 text-start text-gray-600 font-medium">
+                        {item.end !== "Not Completed" ? (
+                          <p className="flex items-center justify-center  text-green-500 gap-2">
+                            <IoCheckmarkDoneCircleOutline className="w-5 h-5 text-green-500" />{" "}
+                           
+                          </p>
+                        ) : (
+                          <p className="flex items-center justify-center text-red-500 gap-2">
+                            <GrInProgress className="w-4 h-4 text-red-500" />{" "}
+                            
+                          </p>
+                        )}
+                      </td>
+                      <div className="flex justify-start items-start">
+                        <td
+                          className="py-2 px-2 text-gray-600 font-medium hover:cursor-pointer"
+                          onClick={() =>
+                            handleEditClick(
+                              item._id,
+                              item.fname,
+                              item.cname,
+                              item.end,
+                              item.status
+                            )
+                          }
+                        >
+                          <CiEdit className="text-gray-500 w-6 h-6" />
+                        </td>
+                        <td
+                          className="py-2 px-2 text-gray-600 font-medium hover:cursor-pointer"
+                          onClick={() => handleDelete(item._id)}
+                        >
+                          <RiDeleteBin5Line className="text-red-500 w-6 h-6" />
+                        </td>
+                        {/* <td>
+                          {item.subrows?.length > 0 && (
+                            <button
+                              className="ml-2 mt-2 ring-2 rounded-full bg-blue-500 p-1"
+                              onClick={() => toggleRow(item._id)}
+                            >
+                              {expandedRows[item._id] ? (
+                                <FaChevronUp className="text-white" />
+                              ) : (
+                                <FaChevronDown className="text-white" />
+                              )}
+                            </button>
+                          )}
+                        </td> */}
+                        <td>
+                        {search && (
+                      <div className="mt-2">
+                        <button
+                          className="bg-blue-500 text-white px-2 py-1 rounded-md"
+                          onClick={() => openModal(item._id)}
+                        >
+                          <FaPlus />
+                        </button>
+                      </div>
+                    )}
+                        </td>
+                      </div>
+                    </tr>
+                    {expandedRows[item._id] &&
+                      item.subrows?.map((sub, subIndex) => (
+                        <tr
+                          key={subIndex}
+                          className="bg-gray-100 border-b border-gray-300"
+                        >
+                          <td className="py-2 px-2 text-start text-gray-600 font-medium">
+                            {/* Sub-{subIndex + 1}. */}
+                            <BsArrowReturnRight className="text-blue-500 " />
+                          </td>
+                          <td className="py-2 px-2  text-start text-gray-600 font-medium">
+                            {item.sid}
+                          </td>
+                          <td className="py-2 px-2 text-start">{item.fname}</td>
+                          <td className="py-2 px-2 text-start">{sub.cname}</td>
+                          <td className="py-2 px-2 text-start">
+                            {new Date(sub.start).toLocaleDateString()}
+                          </td>
+                          <td className="py-2 px-2 text-start">
+                            {sub.end
+                              ? new Date(sub.end).toLocaleDateString()
+                              : "N/A"}
+                          </td>
+                          <td className="py-2 px-2 text-start text-gray-600 font-medium">
+                            {sub.end !== "" ? (
+                              <p className="flex items-center justify-center text-green-500 gap-2">
+                                <IoCheckmarkDoneCircleOutline className="w-5 h-5 text-green-500" />{" "}
+                                
+                              </p>
+                            ) : (
+                              <p className="flex items-center justify-center text-red-500 gap-2">
+                                <GrInProgress className="w-4 h-4 text-red-500" />{" "}
+                                
+                              </p>
+                            )}
+                          </td>
+                          <td className="py-2 px-2 flex justify-start">
+                            <button
+                              onClick={() =>
+                                handleEditSubrow(
+                                  item._id,
+                                  sub._id,
+                                  sub.cname,
+                                  sub.start,
+                                  sub.end
+                                )
+                              }
+                              className="text-blue-500"
+                            >
+                              {" "}
+                              <CiEdit className="text-gray-500 w-6 h-6" />
+                            </button>
+                            <button
+                              onClick={() =>
+                                handleDeleteSubrow(item._id, sub._id)
+                              }
+                              className="text-red-500 ml-5"
+                            >
+                              {" "}
+                              <RiDeleteBin5Line className="text-red-500 w-6 h-6" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                   </>
                 ))}
               </tbody>
@@ -461,7 +640,9 @@ const History = () => {
               onChange={handleEditChange}
               className="border p-2 w-full rounded"
             />
-            <span className="text-red-500 text-sm">Please enter course of End Date *</span>
+            <span className="text-red-500 text-sm">
+              Please enter course of End Date *
+            </span>
             <input
               type="text"
               name="status"
@@ -496,18 +677,50 @@ const History = () => {
           />
         </div>
       )}
-         {modalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="bg-white p-6 rounded-md">
-            <h2 className="text-lg font-bold">Add Subrow</h2>
-            <input
+      {modalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 ml-44">
+          <div className="bg-white p-6 rounded-md w-[600px]">
+            <h2 className="text-lg font-bold mb-3">Add Subrow</h2>
+            <span className="text-sm text-red-500 font-garet font-medium">
+              Course Name*
+            </span>
+            {/* <input
               type="text"
               placeholder="Course Name"
               className="border p-2 w-full my-2"
               id="cname"
+            /> */}
+            <select
+              name="course"
+              placeholder="Course Name"
+              className="border p-2 w-full my-2 bg-blue-100 focus:outline-none"
+              id="cname"
+            >
+              <option value="" disabled>
+                Select Subject
+              </option>
+              {course?.data?.map((item, index) => (
+                <option key={item._id} value={item.course}>
+                  {item.course}
+                </option>
+              ))}
+            </select>
+            <span className="text-sm text-red-500 font-garet font-medium">
+              Course Start Date*
+            </span>
+            <input
+              type="date"
+              className="border p-2 w-full my-2 bg-blue-100 focus:outline-none"
+              id="start"
             />
-            <input type="date" className="border p-2 w-full my-2" id="start" />
-            <input type="date" className="border p-2 w-full my-2" id="end" />
+            <span className="text-sm text-red-500 font-garet font-medium ">
+              Course End Date*
+            </span>
+            <input
+              type="date"
+              className="border p-2 w-full my-2 bg-blue-100 focus:outline-none"
+              id="end"
+            />
             <div className="flex justify-end gap-2 mt-4">
               <button
                 className="bg-red-500 text-white px-3 py-1 rounded-md"
@@ -524,6 +737,79 @@ const History = () => {
                     document.getElementById("end").value
                   )
                 }
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {modalEditOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 ml-44">
+          <div className="bg-white p-6 rounded-md w-[600px]">
+            <h2 className="text-lg font-bold">Edit Subrow</h2>
+            <span className="text-sm text-red-500 font-garet font-medium">
+              Course Name*
+            </span>
+            {/* <input
+              type="text"
+              placeholder="Course Name"
+              value={editData.cname}
+              onChange={(e) =>
+                setEditData((prev) => ({ ...prev, cname: e.target.value }))
+              }
+              className="border p-2 w-full my-2 bg-blue-100 focus:outline-none"
+            /> */}
+               <select
+              placeholder="Course Name"
+              value={editData.cname}
+              onChange={(e) =>
+                setEditData((prev) => ({ ...prev, cname: e.target.value }))
+              }
+              className="border p-2 w-full my-2 bg-blue-100 focus:outline-none"
+            >
+              <option value="" disabled>
+                Select Subject
+              </option>
+              {course?.data?.map((item, index) => (
+                <option key={item._id} value={item.course}>
+                  {item.course}
+                </option>
+              ))}
+            </select>
+            <span className="text-sm text-red-500 font-garet font-medium">
+              Course StartDate*
+            </span>
+            <input
+              type="date"
+              value={editData.start}
+              onChange={(e) =>
+                setEditData((prev) => ({ ...prev, start: e.target.value }))
+              }
+              className="border p-2 w-full my-2 bg-blue-100 focus:outline-none"
+            />
+            <span className="text-sm text-red-500 font-garet font-medium">
+              Course EndDate*
+            </span>
+            <input
+              type="date"
+              value={editData.end}
+              onChange={(e) =>
+                setEditData((prev) => ({ ...prev, end: e.target.value }))
+              }
+              className="border p-2 w-full my-2 bg-blue-100 focus:outline-none"
+            />
+            <div className="flex justify-end gap-2 mt-4">
+              <button
+                className="bg-red-500 text-white px-3 py-1 rounded-md"
+                onClick={() => setModalEditOpen(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-blue-500 text-white px-3 py-1 rounded-md"
+                onClick={handleUpdateSubrow}
               >
                 Submit
               </button>

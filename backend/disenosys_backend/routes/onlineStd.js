@@ -60,4 +60,52 @@ router.put('/studentedit/:id', async (req, res) => {
 });
 
 
+router.post("/subrows/:id", async (req, res) => {
+  try {
+    const { cname, start, end } = req.body;
+    const updatedEntry = await students.findByIdAndUpdate(
+      req.params.id,
+      { $push: { subrows: { cname, start, end } } },
+      { new: true }
+    );
+    res.status(200).json(updatedEntry);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to add subrow" });
+  }
+});
+
+router.put("/subrows/:parentId/:subrowId", async (req, res) => {
+  try {
+    const { cname, start, end } = req.body;
+    const updatedEntry = await students.findOneAndUpdate(
+      { _id: req.params.parentId, "subrows._id": req.params.subrowId },
+      {
+        $set: {
+          "subrows.$.cname": cname,
+          "subrows.$.start": start,
+          "subrows.$.end": end
+        }
+      },
+      { new: true }
+    );
+    res.status(200).json(updatedEntry);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to edit subrow" });
+  }
+});
+
+router.delete("/subrows/:parentId/:subrowId", async (req, res) => {
+  try {
+    const updatedEntry = await students.findByIdAndUpdate(
+      req.params.parentId,
+      { $pull: { subrows: { _id: req.params.subrowId } } },
+      { new: true }
+    );
+    res.status(200).json(updatedEntry);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to delete subrow" });
+  }
+});
+
+
 module.exports = router;

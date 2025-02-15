@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 
+const subrowSchema = new mongoose.Schema({
+  cname: { type: String },
+  start: { type: String },
+  end: { type: String }
+});
+
 const onlineSchema = new mongoose.Schema(
   {
     fname: { type: String },     
@@ -47,7 +53,8 @@ const onlineSchema = new mongoose.Schema(
     sid: { type: String }, 
     start:{type: String},
     end: { type: String }, 
-    status: { type: String }
+    status: { type: String },
+    subrows: [subrowSchema]
   }, 
   { timestamps: true }
 );
