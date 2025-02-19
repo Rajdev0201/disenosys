@@ -86,9 +86,22 @@ const courseSchema = new mongoose.Schema({
     },
     noOfLessons:{
         type: Number
-    }
-
-
+    },
+    questions: [
+        {
+         head:{ type: String, required: true },
+          questionText: { type: String, required: true }, // Question statement
+          type: { type: String, enum: ["input", "mcq", "match", "fill"], required: true }, // Type of question
+          options: [{ type: String }], // Options for MCQ
+          correctAnswer: { type: mongoose.Schema.Types.Mixed, required: true }, // Can be a string, array, or object
+          matchPairs: [
+            {
+              left: { type: String },
+              right: { type: String },
+            },
+          ],
+        },
+      ],
 
 })
 

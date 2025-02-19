@@ -190,25 +190,25 @@ const length = filteredCartItems.length;
               {/* Dropdown Links */}
               <ul className="py-2 text-gray-800">
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link href="/mycourse">My learnin</Link>g</li>
-                <li className="px-4 py-2 flex justify-between hover:bg-gray-100 cursor-pointer">
+                <Link  href='/cart' className="px-4 py-2 flex justify-between hover:bg-gray-100 cursor-pointer">
                   My cart <span className="">
                   {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
         <span
+       
           className=" flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#4e6e9f] rounded-full ring-2 ring-white z-50"
-          onClick={() => setCartModalOpen(true)}
         >
           {length}
         </span>
       ) : (
-        <span
+         <span
+        href='/cart'
           className="flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#4e6e9f] rounded-full ring-2 ring-white z-50"
-          onClick={() => setCartModalOpen(true)}
         >
           0
         </span>
       )}
                   </span>
-                </li>
+                </Link>
                 <li className="px-4 py-2 flex justify-between hover:bg-gray-100 cursor-pointer">
                   Notifications 
                   <span

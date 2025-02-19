@@ -12,7 +12,7 @@ const Applicants = () => {
   const data = useSelector((state) => state.career);
 
   const [filteredData, setFilteredData] = useState([]);
-  const exp = [
+  const experience = [
     { label: "Fresher", value: 0 },
     { label: "1 Year", value: 1 },
     { label: "2 Years", value: 2 },
@@ -75,14 +75,13 @@ const Applicants = () => {
     } = filters;
 
     const filtered = data?.data?.filter((profile) => {
-      const profileExperience = profile.experience || "";
+      const profileExperience = parseInt(profile.experience) || 0 ;
       const profileNotice = profile.notice || "";
       const profileExpmonths = profile.expmonths || "";
       const profileCompanies = profile.companies || [];
 
-      const matchesExperience = experience
-        ? profileExperience.includes(experience)
-        : true;
+      const matchesExperience = experience !== "" ? profileExperience === parseInt(experience) : true;
+
 
       const matchesNotice = notice ? profileNotice.includes(notice) : true;
 
@@ -349,7 +348,7 @@ const Applicants = () => {
                   required
                 >
                   <option value="">Total Experience</option>
-                  {exp?.map((experience, index) => (
+                  {experience?.map((experience, index) => (
                     <option
                       key={index}
                       value={experience.value}

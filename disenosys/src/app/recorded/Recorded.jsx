@@ -16,6 +16,8 @@ const Recorded = () => {
   const [selectedSubtopic, setSelectedSubtopic] = useState(null);
   const [subLink, setSubLink] = useState(null);
   const [showQuiz, setShowQuiz] = useState(false);
+  const [selectedCurriculumIdx, setSelectedCurriculumIdx] = useState(null);
+
   const [unlockedModules, setUnlockedModules] = useState(
     JSON.parse(localStorage.getItem("unlockedModules")) || { 0: true }
   );
@@ -48,6 +50,11 @@ const Recorded = () => {
   useEffect(() => {
     localStorage.setItem("unlockedModules", JSON.stringify(unlockedModules));
   }, [unlockedModules]);
+
+useEffect(() => {
+  console.log(selectedOptions); // Logs the updated state after every change
+}, [selectedOptions]);
+console.log(selectedOptions)
 
   useEffect(() => {
     if (courses && courses[0]?.Curriculum[0]?.subTopic && !selectedSubtopic) {
@@ -98,10 +105,11 @@ const Recorded = () => {
     setShowQuiz(false);
   };
 
-
   const nextVideo = () => {
-    const currentCourse = courses?.find((course) => course?.courseName === courseId);
-  
+    const currentCourse = courses?.find(
+      (course) => course?.courseName === courseId
+    );
+
     if (!currentCourse || !currentCourse.Curriculum) {
       console.error("No course or curriculum found.");
       alert("No course or curriculum found.");
@@ -109,31 +117,44 @@ const Recorded = () => {
     }
     console.log("Available Curriculums:", currentCourse?.Curriculum);
     const currentCurriculum = currentCourse?.Curriculum.find((curriculum) => {
-      const subTopicsArray = curriculum?.subTopic?.split(",").map(item => item.trim());
-      console.log("Subtopics in curriculum:", subTopicsArray); 
-  
+      const subTopicsArray = curriculum?.subTopic
+        ?.split(",")
+        .map((item) => item.trim());
+      console.log("Subtopics in curriculum:", subTopicsArray);
+
       return subTopicsArray?.includes(selectedSubtopic);
     });
-  
+
     if (!currentCurriculum) {
-      console.error("Current curriculum is undefined for the selected subtopic:", selectedSubtopic);
-      alert("click on the first topic or previous topic in your current module and continue");
+      console.error(
+        "Current curriculum is undefined for the selected subtopic:",
+        selectedSubtopic
+      );
+      alert(
+        "click on the first topic or previous topic in your current module and continue"
+      );
       return;
     }
-  
+
     console.log("Current Curriculum:", currentCurriculum);
 
-    const subTopicsArray = currentCurriculum?.subTopic?.split(",").map(item => item.trim());
-    const subLinksArray = currentCurriculum?.subLinks?.split(",").map(item => item.trim());
-  
+    const subTopicsArray = currentCurriculum?.subTopic
+      ?.split(",")
+      .map((item) => item.trim());
+    const subLinksArray = currentCurriculum?.subLinks
+      ?.split(",")
+      .map((item) => item.trim());
+
     if (!subTopicsArray || !subLinksArray) {
-      console.error("Subtopics or links are missing in the current curriculum.");
+      console.error(
+        "Subtopics or links are missing in the current curriculum."
+      );
       alert("Subtopics or links are missing.");
       return;
     }
-  
+
     const currentSubTopicIndex = subTopicsArray.indexOf(selectedSubtopic);
-  
+
     if (currentSubTopicIndex === -1) {
       console.error("Selected subtopic not found in the list of subtopics.");
       alert("Selected subtopic not found.");
@@ -141,25 +162,20 @@ const Recorded = () => {
     }
 
     const nextSubTopicIndex = currentSubTopicIndex + 1;
-  
+
     if (nextSubTopicIndex >= subTopicsArray?.length) {
       console.warn("No more subtopics available.");
       alert("No more subtopics available.");
       return;
     }
-  
+
     setCurrentSubTopicIndex(nextSubTopicIndex);
     setSelectedSubtopic(subTopicsArray[nextSubTopicIndex]);
     setSubLink(subLinksArray[nextSubTopicIndex]);
-  
+
     console.log("Next Subtopic:", subTopicsArray[nextSubTopicIndex]);
     console.log("Next SubLink:", subLinksArray[nextSubTopicIndex]);
   };
-  
-  
-  
-  
-  
 
   const handleVideoEnd = () => {
     setCompletedVideos((prev) => {
@@ -173,69 +189,113 @@ const Recorded = () => {
     nextVideo();
   };
 
-
-
-  
-  
-
-  const showQuizSection = () => {
+  const showQuizSection = (curriculumIdx) => {
+    setSelectedCurriculumIdx(curriculumIdx);
     setShowQuiz(true);
     setSelectedSubtopic(null);
   };
 
-  const handleOptionSelect = (moduleIndex, questionIndex, option) => {
+  const handleOptionSelect = (moduleIndex, questionIndex, sentenceIdx, index, option) => {
     setSelectedOptions((prev) => ({
       ...prev,
-      [`${moduleIndex}-${questionIndex}`]: option,
+      [`${moduleIndex}-${questionIndex}-${sentenceIdx}-${index}`]: option,
     }));
   };
 
+
+
   const handleQuizSubmit = () => {
+    const selectedCourse = courses?.find((course) => course.courseName === courseId);
     const currentModule = openAccordionIndex;
-    const moduleQuestions = quizData[currentModule];
+    const moduleQuestions = selectedCourse?.Curriculum?.[currentModule]?.questions;
+  
+    if (!moduleQuestions || moduleQuestions.length === 0) {
+      alert("No questions found for this module.");
+      return;
+    }
+  
     const newFeedback = {};
-
     let allCorrect = true;
-
+  
     moduleQuestions.forEach((question, questionIndex) => {
-      const selected = selectedOptions[`${currentModule}-${questionIndex}`];
-      const isCorrect = selected === question.correctAnswer;
-
-      newFeedback[`${currentModule}-${questionIndex}`] = isCorrect
-        ? { message: "Correct!", color: "text-green-600" }
-        : { message: "Wrong answer.", color: "text-red-600" };
-
-      if (!isCorrect) allCorrect = false;
+      let userAnswer = "";
+  
+      if (question.type === "input") {
+        question.questionText.split(",").forEach((sentence, sentenceIdx) => {
+          sentence.split("input").forEach((part, index, array) => {
+            const selectedKey = `${currentModule}-${questionIndex}-${sentenceIdx}-${index}`;
+            userAnswer += (selectedOptions[selectedKey] || "").trim() + ",";
+          });
+        });
+  
+        // Remove trailing comma
+        userAnswer = userAnswer.replace(/,$/, "");
+      }
+  
+      console.log(`User Answer for Question ${questionIndex}: ${userAnswer}`);
+  
+      if (!userAnswer) {
+        newFeedback[`${currentModule}-${questionIndex}`] = {
+          message: "No answer provided.",
+          color: "text-gray-600",
+        };
+        allCorrect = false;
+        return;
+      }
+  
+      // ✅ Filter out empty values from the user answer array
+      const userAnswerArray = userAnswer
+        .split(",")
+        .map((item) => item.trim())
+        .filter((item) => item !== "");
+  
+      console.log(`User Answer Array for Question ${questionIndex}:`, userAnswerArray);
+  
+      // ✅ Ensure correct answers are also formatted properly
+      const correctAnswerArray = Array.isArray(question.correctAnswer)
+        ? question.correctAnswer.map((item) => item.trim())
+        : [];
+  
+      console.log(`Correct Answer for Question ${questionIndex}:`, correctAnswerArray);
+  
+      // ✅ Check exact equality (ORDER matters)
+      const isCorrect =
+        JSON.stringify(userAnswerArray) === JSON.stringify(correctAnswerArray);
+  
+      if (isCorrect) {
+        newFeedback[`${currentModule}-${questionIndex}`] = {
+          message: "Correct!",
+          color: "text-green-600",
+        };
+      } else {
+        newFeedback[`${currentModule}-${questionIndex}`] = {
+          message: "Wrong answer.",
+          color: "text-red-600",
+        };
+        allCorrect = false;
+      }
     });
-
+  
     setFeedback(newFeedback);
-
-    const allQuestionsAnswered = moduleQuestions.every(
-      (_, index) => selectedOptions[`${currentModule}-${index}`] !== undefined
-    );
-
+  
+    // Ensure all questions are answered
+    const allQuestionsAnswered = moduleQuestions.every((_, index) => {
+      const answer = selectedOptions[`${currentModule}-${index}`];
+      return answer !== undefined && answer !== "";
+    });
+  
     if (allQuestionsAnswered) {
       if (allCorrect) {
         const nextModuleIndex = currentModule + 1;
-        const updatedUnlockedModules = {
-          ...unlockedModules,
-          [nextModuleIndex]: true,
-        };
-
+        const updatedUnlockedModules = { ...unlockedModules, [nextModuleIndex]: true };
         setUnlockedModules(updatedUnlockedModules);
-        localStorage.setItem(
-          "unlockedModules",
-          JSON.stringify(updatedUnlockedModules)
-        );
-
+        localStorage.setItem("unlockedModules", JSON.stringify(updatedUnlockedModules));
+  
         setTimeout(() => {
           setOpenAccordionIndex(nextModuleIndex);
-          setSelectedSubtopic(null);
-          setSubLink(null);
-          setShowQuiz(false);
-          setFeedback({});
           setSelectedOptions({});
-        }, 5000);
+          setFeedback({});
+        }, 3000);
       } else {
         alert("Please answer all questions correctly to proceed.");
       }
@@ -243,6 +303,7 @@ const Recorded = () => {
       alert("Please answer all questions before proceeding.");
     }
   };
+  
 
   const quizData = [
     [
@@ -310,6 +371,7 @@ const Recorded = () => {
       },
     ],
   ];
+
   const isCoursePaid = pay?.data?.some(
     (item) =>
       item._id === id &&
@@ -333,51 +395,126 @@ const Recorded = () => {
           )}
           <div className="flex">
             <div className="col-span-9 bg-white p-4 shadow-md rounded-md ml-1/4 w-3/4">
-              {showQuiz ? (
+              {showQuiz && selectedCurriculumIdx !== null ? (
                 <div>
                   <h4 className="font-bold text-xl">Quiz</h4>
                   <ul className="list-disc space-y-2 px-1">
-                    {quizData[openAccordionIndex]?.map((question, qIdx) => (
-                      <li key={qIdx} className="my-4">
-                        <p>{question.question}</p>
-                        <ul className="space-y-1">
-                          {question.options.map((option, optIdx) => (
-                            <li key={optIdx} className="flex items-center">
-                              <label className="flex items-center ">
-                                <input
-                                  type="radio"
-                                  name={`quiz-${openAccordionIndex}-${qIdx}`}
-                                  value={option}
-                                  checked={
-                                    selectedOptions[
-                                      `${openAccordionIndex}-${qIdx}`
-                                    ] === option
-                                  }
-                                  onChange={() =>
-                                    handleOptionSelect(
-                                      openAccordionIndex,
-                                      qIdx,
-                                      option
+                    {courses
+                      ?.filter((course) => course.courseName === courseId)
+                      ?.flatMap((course) => course.Curriculum)
+                      ?.filter((_, idx) => idx === selectedCurriculumIdx)
+                      ?.map((module, moduleIdx) => (
+                        <div key={moduleIdx} className="my-4">
+                          <h3 className="font-bold text-lg">
+                            {module.moduleName}
+                          </h3>
+                          {module?.questions?.map((question, qIdx) => {
+                            // const head = Array.isArray(question.head)
+                            // ? question?.head[qIdx]
+                            // : question?.head.split(",")[qIdx];
+                            const questionText = Array.isArray(
+                              question.questionText
+                            )
+                              ? question?.questionText
+                              : question?.questionText?.split(",");
+                            return (
+                              <div key={qIdx} className="space-y-4 mb-2">
+                                <div className="shadow-inner rounded-md p-4">
+                                  <p className="font-semibold mb-2">
+                                    {question.head}
+                                  </p>
+                                  <p className="font-semibold mb-2 text-red-500 text-sm">
+                                    {!question?.sample ? (
+                                        ""
+                                    ): (
+                                      <span> Sample Ans:{question?.sample} *</span>
                                     )
                                   }
-                                  className="mr-2 "
-                                />
-                                {option}
-                              </label>
-                            </li>
-                          ))}
-                        </ul>
-                        {feedback[`${openAccordionIndex}-${qIdx}`] && (
-                          <p
-                            className={`mt-2 text-sm ${
-                              feedback[`${openAccordionIndex}-${qIdx}`].color
-                            }`}
-                          >
-                            {feedback[`${openAccordionIndex}-${qIdx}`].message}
-                          </p>
-                        )}
-                      </li>
-                    ))}
+                                  </p>
+                                  
+                                  <div className="space-y-2">
+  {question.questionText.split(",").map((sentence, sentenceIdx) => (
+    <p key={sentenceIdx} className="block">
+      {sentence.split("input").map((part, index, array) => (
+        <span key={index} className="inline">
+          {part.trim()}
+          {index < array.length - 1 && (
+           <input
+           type="text"
+           value={selectedOptions[`${moduleIdx}-${qIdx}-${sentenceIdx}-${index}`] || ""}
+           onChange={(e) =>
+             handleOptionSelect(moduleIdx, qIdx, sentenceIdx, index, e.target.value)
+           }
+           placeholder="Type answer"
+           className="border-2 border-sky-100 rounded-lg p-2 bg-blue-200 mx-2 w-56 text-black placeholder:text-gray-500 focus:outline-none"
+         />
+          )}
+        </span>
+      ))}
+    </p>
+  ))}
+</div>
+
+                                                             
+                              </div>
+                                {question.type === "input" ? (
+                                  // <input
+                                  //   type="text"
+                                  //   value={
+                                  //     selectedOptions[`${moduleIdx}-${qIdx}`] ||
+                                  //     ""
+                                  //   }
+                                  //   onChange={(e) =>
+                                  //     handleOptionSelect(
+                                  //       moduleIdx,
+                                  //       qIdx,
+                                  //       e.target.value
+                                  //     )
+                                  //   }
+                                  //   placeholder="Type the answer ex: a, b, c, d"
+                                  //   className="border p-2 rounded bg-blue-50 w-3/4 text-black placeholder:text-gray-500 placeholder:italic"
+                                  // />
+                                  " "
+                                ) : (
+                                  question?.options?.map(
+                                    (option, optionIdx) => (
+                                      <label key={optionIdx} className="block">
+                                        <input
+                                          type="radio"
+                                          name={`quiz-${moduleIdx}-${qIdx}`}
+                                          value={option}
+                                          checked={
+                                            selectedOptions[
+                                              `${moduleIdx}-${qIdx}`
+                                            ] === option
+                                          }
+                                          onChange={() =>
+                                            handleOptionSelect(
+                                              moduleIdx,
+                                              qIdx,
+                                              option
+                                            )
+                                          }
+                                        />
+                                        {option}
+                                      </label>
+                                    )
+                                  )
+                                )}
+                                {feedback[`${moduleIdx}-${qIdx}`] && (
+                                  <p
+                                    className={
+                                      feedback[`${moduleIdx}-${qIdx}`].color
+                                    }
+                                  >
+                                    {feedback[`${moduleIdx}-${qIdx}`].message}
+                                  </p>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      ))}
                   </ul>
                   <button
                     onClick={handleQuizSubmit}
@@ -387,8 +524,8 @@ const Recorded = () => {
                   </button>
                 </div>
               ) : (
-             <div className="video-container">
-                {selectedSubtopic && subLink ? (
+                <div className="video-container">
+                  {selectedSubtopic && subLink ? (
                     <div>
                       <h4 className="font-bold text-xl">{selectedSubtopic}</h4>
                       <video
@@ -405,9 +542,11 @@ const Recorded = () => {
                       </video>
                     </div>
                   ) : (
-                  <p className="font-bold text-lg text-red-500 min-h-screen text-center flex justify-center">Plesae select your curriculum and watch the videos</p>
-                )}
-              </div>
+                    <p className="font-bold text-lg text-red-500 min-h-screen text-center flex justify-center">
+                      Plesae select your curriculum and watch the videos
+                    </p>
+                  )}
+                </div>
               )}
             </div>
 
@@ -476,7 +615,7 @@ const Recorded = () => {
                             })}
 
                             <button
-                              onClick={showQuizSection}
+                              onClick={() => showQuizSection(idx)}
                               className="text-blue-600 mt-4 underline"
                             >
                               Take Quiz
