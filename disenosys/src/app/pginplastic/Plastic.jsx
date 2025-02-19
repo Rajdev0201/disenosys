@@ -188,6 +188,92 @@ const Plastic = () => {
         <div className="flex justify-center items-center mt-12">
           <span className="text-white font-garet p-4 bg-[#0d1039] text-3xl">View all programmes in plastic trims </span>
         </div>
+        <div className="text-center py-10">
+        <h1 className="text-2xl font-bold">PG Diploma in Plastic Trims Design Programmes</h1>
+      </div>
+
+      {/* Program Sections */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-10 md:px-20 pb-10">
+        {/* Weekend Programme */}
+        <div className="bg-[#C8D4ED] text-black p-6 rounded-lg shadow-md">
+          <h2 className="text-lg font-bold text-center">Weekend Programme</h2>
+          <p className="mt-4"><strong>Duration:</strong></p>
+          <p><strong>Days:</strong></p>
+          <p><strong>Time:</strong></p>
+          <div className="mt-4 text-center">
+            <button className="bg-[#0A0F33] text-white px-4 py-2 rounded-lg">Learn More</button>
+          </div>
+        </div>
+
+        {/* Live Programme */}
+        <div className="bg-[#C8D4ED] text-black p-6 rounded-lg shadow-md">
+          <h2 className="text-lg font-bold text-center">Live Programme</h2>
+          <p className="mt-4"><strong>Duration:</strong></p>
+          <p><strong>Days:</strong></p>
+          <p><strong>Time:</strong></p>
+          <div className="mt-4 text-center">
+            <button className="bg-[#0A0F33] text-white px-4 py-2 rounded-lg">Learn More</button>
+          </div>
+        </div>
+
+        {/* Recorded Programme */}
+        <div className="bg-[#C8D4ED] text-black p-6 rounded-lg shadow-md">
+          <h2 className="text-lg font-bold text-center">Recorded Programme</h2>
+          <p className="mt-4"><strong>Duration:</strong></p>
+          <p><strong>Days:</strong></p>
+          <p><strong>Time:</strong></p>
+          <div className="mt-4 text-center">
+            <button className="bg-[#0A0F33] text-white px-4 py-2 rounded-lg">Learn More</button>
+          </div>
+        </div>
+      </div>
+
+      {/* FAQs Section */}
+      <div className="bg-[#F8F8F8] text-black py-10 px-10 md:px-20">
+        <h2 className="text-2xl font-bold mb-6">FAQs</h2>
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* Column 1 */}
+          <div>
+            <h3 className="font-bold">What is this programme about?</h3>
+            <p className="text-sm mt-2">
+              A specialized course in plastic trim design for automotive, consumer products, and 
+              industrial applications, covering CAD, tooling, and manufacturing.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-bold">Who can apply?</h3>
+            <p className="text-sm mt-2">
+              Graduates in Engineering, Industrial Design, or related fields. Diploma holders with 
+              experience may also be eligible.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-bold">Duration & Mode?</h3>
+            <p className="text-sm mt-2">
+              Typically 6 months - 1 year, available in online & offline formats.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-bold">Industries Hiring?</h3>
+            <p className="text-sm mt-2">
+              Automotive, consumer electronics, packaging, and medical devices.
+            </p>
+          </div>
+          <div>
+            <h3 className="font-bold">Fees & Salary?</h3>
+            <p className="text-sm mt-2">
+              <strong>Fees:</strong> ₹1.5 - 2.5 Lakhs ($5,000 - $15,000) <br />
+              <strong>Salary:</strong> ₹4 - ₹12 LPA ($50,000 - $90,000)
+            </p>
+          </div>
+          <div>
+            <h3 className="font-bold">How to Apply?</h3>
+            <p className="text-sm mt-2">
+              Check institute websites for applications, deadlines, and entrance requirements.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

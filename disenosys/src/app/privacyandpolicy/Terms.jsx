@@ -41,7 +41,7 @@ const Terms = () => {
             </Link>
           </div>
         </div>
-        <div className="col-span-12 lg:col-span-9 mb-8 ">
+        {/* <div className="col-span-12 lg:col-span-9 mb-8 ">
           <div className="flex flex-col justify-center items-start lg:justify-start space-y-4 px-1 mt-12 lg:mt-0 leading-7 lg:px-12">
             <div className="font-garet text-lg font-medium text-black">
               <p>Effective Date: [Insert Date]</p>
@@ -147,7 +147,7 @@ const Terms = () => {
             </div>
 
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
