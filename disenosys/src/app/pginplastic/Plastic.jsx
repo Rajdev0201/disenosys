@@ -192,9 +192,8 @@ const Plastic = () => {
         <h1 className="text-2xl font-bold">PG Diploma in Plastic Trims Design Programmes</h1>
       </div>
 
-      {/* Program Sections */}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-10 md:px-20 pb-10">
-        {/* Weekend Programme */}
         <div className="bg-[#C8D4ED] text-black p-6 rounded-lg shadow-md">
           <h2 className="text-lg font-bold text-center">Weekend Programme</h2>
           <p className="mt-4"><strong>Duration:</strong></p>
@@ -205,7 +204,7 @@ const Plastic = () => {
           </div>
         </div>
 
-        {/* Live Programme */}
+
         <div className="bg-[#C8D4ED] text-black p-6 rounded-lg shadow-md">
           <h2 className="text-lg font-bold text-center">Live Programme</h2>
           <p className="mt-4"><strong>Duration:</strong></p>
@@ -216,7 +215,7 @@ const Plastic = () => {
           </div>
         </div>
 
-        {/* Recorded Programme */}
+
         <div className="bg-[#C8D4ED] text-black p-6 rounded-lg shadow-md">
           <h2 className="text-lg font-bold text-center">Recorded Programme</h2>
           <p className="mt-4"><strong>Duration:</strong></p>
@@ -228,11 +227,10 @@ const Plastic = () => {
         </div>
       </div>
 
-      {/* FAQs Section */}
+
       <div className="bg-[#F8F8F8] text-black py-10 px-10 md:px-20">
         <h2 className="text-2xl font-bold mb-6">FAQs</h2>
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Column 1 */}
           <div>
             <h3 className="font-bold">What is this programme about?</h3>
             <p className="text-sm mt-2">
