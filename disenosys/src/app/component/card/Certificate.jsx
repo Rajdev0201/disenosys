@@ -93,6 +93,8 @@ const CertificateComponent = () => {
   
         setStudentsData(updatedData);
         setIsUploaded(true);
+        setFile(null);
+        document.getElementById("fileInput").value = "";                 
       } else {
         alert("No student data received.");
       }
@@ -126,7 +128,8 @@ const CertificateComponent = () => {
       formData.append("email", email);
       formData.append("name", name);
       formData.append("course", course);
-  
+     //https://disenosys-dkhj.onrender.com
+     
       await axios.post("https://disenosys-dkhj.onrender.com/send-certificate", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -173,17 +176,49 @@ const CertificateComponent = () => {
  
   };
   
+  const handleDownload = async () => {
+    try {
+
+      const response = await axios.get('https://disenosys-dkhj.onrender.com/api/student/demo-intern', {
+        responseType: 'blob', // Important to set the response type to blob
+      });
+
+      // Create a URL for the file
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+
+      // Set the download attribute with the filename
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getFullYear()}`;
+      
+      // Set the download attribute with the dynamic filename
+      link.setAttribute('download', `dummydata_${formattedDate}.xlsx`);
+
+      // Append the link to the document and click it to start the download
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+      alert('Failed to download the file',error);
+    }
+  };
 
   
 
   return (
     <>
       <div className="px-24 mt-6">
-        <div className="p-6 border rounded shadow-lg">
+        <div className="p-6 border rounded shadow-lg flex justify-between items-center">
+          <div className="flex flex-col">
         <h3 className="text-lg font-bold text-[#182073]">Send Certificate to Bulk Student</h3>
         <form onSubmit={handleUpload} className="border border-gray-300 shadow-lg rounded w-[478px] flex mt-2">
           <input
             type="file"
+            id="fileInput"
             onChange={handleFileChange}
             className="p-2"
           />
@@ -218,6 +253,18 @@ const CertificateComponent = () => {
           )}
         </div>
         </div>
+        <div className="flex flex-col space-y-2">
+          <button
+              type="submit"
+              className="bg-[#182073] w-44 h-12 text-white font-semibold 
+              p-2 rounded"
+              onClick={handleDownload}
+            >
+              Sample_sheet.xlsx
+            </button>
+            <span className="text-sm text-green-500 font-bold ">Here,You can download sample xl_sheet *</span>
+            </div>
+        </div>
 
         <SingleCertificate/>
       </div>
@@ -236,10 +283,10 @@ const CertificateComponent = () => {
                 <div className="w-64 h-24 mr-12 mb-8">
                   <Image src={logo} alt="logo" className="text-blue-600" />
                 </div>
-                <h2 className="text-[#cc1919] font-medium text-8xl font-berlin ml-28">
+                <h2 className="text-[#cc1919] font-medium text-8xl font-berlin ml-36">
                   Certificate
                 </h2>
-                <p className="text-6xl font-medium font-berlin text-gray-700 mr-2 ml-10">
+                <p className="text-6xl font-medium font-berlin text-gray-700 mr-2 ml-16">
                   of Internship
                 </p>
               </div>
@@ -278,13 +325,13 @@ const CertificateComponent = () => {
                 </p>
               </div>
               <div className="flex flex-col justify-end items-end mt-3 mr-16">
-                <Image
+                {/* <Image
                   src={s}
                   alt="signature"
                   className="text-blue-600 w-40 h-20"
-                />
-                <div className="border border-b-2 border-gray-900 w-40"></div>
-                <p className="text-lg font-bold text-blue-900">
+                /> */}
+                {/* <div className="border border-b-2 border-gray-900 w-40"></div> */}
+                <p className="text-lg font-bold text-blue-900 mt-24">
                   PRAVEEN KUMAR S
                 </p>
                 <p className="text-gray-700 text-center mr-5">CEO, Disenosys</p>

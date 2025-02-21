@@ -286,18 +286,99 @@ router.get('/demo', (req, res) => {
     const dummyData = [
       {
         name: 'John Doe',
-        email: 'john.doe@example.com',
+        email: 'john.doe@gmail.com',
         course: 'Catia v5',
         udin: 'UD123456',
         date: '01/01/2025',
       },
       {
         name: 'Jane Smith',
-        email: 'jane.smith@example.com',
+        email: 'jane.smith@gmail.com',
         course: 'Advanced Catia',
         udin: 'UD654321',
         date: '02/01/2025',
       }
+    ];
+
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(dummyData);
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Template');
+
+    const dummyBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+    res.setHeader('Content-Disposition', 'attachment; filename="template.xlsx"');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    return res.send(dummyBuffer);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Failed to generate Excel file' });
+  }
+});
+
+router.get('/demo-intern', (req, res) => {
+  try {
+    const dummyData = [
+      {
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        course: 'Catia v5',
+        from: '01/01/2025',
+        to: '02/02/2025',
+        awardedDate:"05/02/2025",
+      },
+    ];
+
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(dummyData);
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Template');
+
+    const dummyBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+    res.setHeader('Content-Disposition', 'attachment; filename="template.xlsx"');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    return res.send(dummyBuffer);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Failed to generate Excel file' });
+  }
+});
+
+router.get('/demo-examc', (req, res) => {
+  try {
+    const dummyData = [
+      {
+        name: 'John Doe',
+        email: 'rajkumarprjpm@gmail.com',
+        course: 'Catia v5',
+        Score: '45',
+      },
+    ];
+
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(dummyData);
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Template');
+
+    const dummyBuffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+    res.setHeader('Content-Disposition', 'attachment; filename="template.xlsx"');
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    return res.send(dummyBuffer);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: 'Failed to generate Excel file' });
+  }
+});
+
+
+router.get('/demo-gpdx', (req, res) => {
+  try {
+    const dummyData = [
+      {
+        name: 'John Doe',
+        email: 'rajkumarprjpm@gmail.com',
+        score: '90',
+        awardedDate: '01-02-2025',
+      },
     ];
 
     const workbook = XLSX.utils.book_new();

@@ -58,6 +58,8 @@ const Share = () => {
     
           setStudentsData(updatedData);
           setIsUploaded(true);
+          setFile(null);
+          document.getElementById("fileInput").value = "";
         } else {
           alert("No student data received.");
         }
@@ -91,16 +93,16 @@ const Share = () => {
         formData.append("email", email);
         formData.append("name", name);
         formData.append("score", score);
-        formData.append("award", awardedDate);
+        formData.append("awardedDate", awardedDate);
     
         await axios.post("https://disenosys-dkhj.onrender.com/send-gpdxcourse", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
     
         console.log(`Certificate sent to ${email}`);
+        alert("Certificates have been successfully sent!")
       } catch (error) {
         return alert("Error generating or sending certificate", error)
-        console.error("Error generating or sending certificate:", error);
       }
       setShowCertificate(false)
     };
@@ -110,7 +112,6 @@ const Share = () => {
   
     const sendCertificates = async () => {
       setIsSending(true);
-    
       const emailPromises = studentsData.map(async (student, index) => {
         const uniqueId = `certificate-${index}`; 
     
@@ -130,7 +131,7 @@ const Share = () => {
         setIsSending(false);
         setIsSent(true);
         if(setIsSent){
-          alert("Certificates have been successfully sent!");
+          console.log("");
         }else{
           alert("certificate have not been sent!");
         }
@@ -138,15 +139,48 @@ const Share = () => {
       }, 2000);
    
     };
+
+    const handleDownload = async () => {
+      try {
+  
+        const response = await axios.get('https://disenosys-dkhj.onrender.com/api/student/demo-gpdx', {
+          responseType: 'blob', // Important to set the response type to blob
+        });
+  
+        // Create a URL for the file
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+  
+        // Set the download attribute with the filename
+        const currentDate = new Date();
+        const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getFullYear()}`;
+        
+        // Set the download attribute with the dynamic filename
+        link.setAttribute('download', `dummydata_${formattedDate}.xlsx`);
+  
+        // Append the link to the document and click it to start the download
+        document.body.appendChild(link);
+        link.click();
+  
+        // Cleanup
+        document.body.removeChild(link);
+      } catch (error) {
+        console.error('Error downloading the file:', error);
+        alert('Failed to download the file',error);
+      }
+    };
       
   return (
     <>
     <div className="px-24 mt-6">
-      <div className="p-6 border rounded shadow-lg">
+      <div className="p-6 border rounded shadow-lg flex justify-between items-center">
+        <div className="flex flex-col">
       <h3 className="text-lg font-bold text-[#182073]">Send Certificate to Bulk Student</h3>
       <form onSubmit={handleUpload} className="border border-gray-300 shadow-lg rounded w-[478px] flex mt-2">
         <input
           type="file"
+          id="fileInput"
           onChange={handleFileChange}
           className="p-2"
         />
@@ -157,7 +191,7 @@ const Share = () => {
           Upload Excel
         </button>
       </form>
-
+       
       <div className="mt-4">
         {isUploaded ? (
           <div>
@@ -180,6 +214,19 @@ const Share = () => {
           </p>
         )}
       </div>
+      </div>
+      <div className="flex flex-col space-y-2">
+          <button
+              type="submit"
+              className="bg-[#182073] w-44 h-12 text-white font-semibold 
+              p-2 rounded"
+              onClick={handleDownload}
+            >
+              Sample_sheet.xlsx
+            </button>
+            <span className="text-sm text-green-500 font-bold ">Here,You can download sample xl_sheet *</span>
+            </div>
+
       </div>
 
       <SingleCertificate/>
@@ -235,13 +282,13 @@ const Share = () => {
           </p>
         </div>
         <div className="flex flex-col items-end justify-end mt-24">
-          <p className="text-2xl font-light text-gray-600">Authorized by:</p>
+          {/* <p className="text-2xl font-light text-gray-600">Authorized by:</p>
           <Image
                   src={Signature}
                   alt="signature"
-                  className="text-blue-600 w-40 h-20 mt-2"
-                />
-                <p className="text-xl font-bold text-blue-900 -mt-2">
+                  className="text-blue-600 w-64 mt-2"
+                /> */}
+                <p className="text-xl font-bold text-blue-900 mt-24">
                   PRAVEEN KUMAR S
                 </p>
                 <p className="text-gray-700 text-center mr-5">CEO, Disenosys</p>

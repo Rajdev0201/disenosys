@@ -63,6 +63,8 @@ const CertificateComponent = () => {
         });
         setStudentsData(updatedData);
         setIsUploaded(true);
+        setFile(null);
+        document.getElementById("fileInput").value = "";
       } else {
         alert("No student data received.");
       }
@@ -84,7 +86,7 @@ const CertificateComponent = () => {
         html2canvas: { scale: 2.5, useCORS: true },
         jsPDF: {
           unit: "px",
-          format: [1080, 776],
+          format: [1080, 770],
           orientation: "landscape",
         },
       };
@@ -206,7 +208,7 @@ const CertificateComponent = () => {
             onSubmit={handleUpload}
             className="border border-gray-300 shadow-lg rounded w-[478px] flex mt-2"
           >
-            <input type="file" onChange={handleFileChange} className="p-2" />
+            <input type="file" id="fileInput" onChange={handleFileChange} className="p-2" />
             <button
               type="submit"
               className="bg-[#182073] text-white font-semibold 
@@ -247,7 +249,7 @@ const CertificateComponent = () => {
               type="submit"
               className="bg-[#182073] w-44 h-12 text-white font-semibold 
               p-2 rounded"
-              onClick={handleDownload}
+              onClick={handleDownload} 
             >
               Sample_sheet.xlsx
             </button>
@@ -292,20 +294,17 @@ const CertificateComponent = () => {
               </p>
             </div>
 
-            <div className="flex justify-between items-center mt-16">
-              <div className="flex items-center justify-center">
-                <div className="mt-4">
-                  <p className="text-sm font-light font-sans text-center text-gray-800">
+            <div className="flex justify-between mt-16">
+      
+                {/* <div className="mt-4">
+                  <p className="text-sm font-light font-sans text-center text-gray-800 bg-red-100">
                     Accredited by
                   </p>
-                  <Image
-                    src={Nsdca}
-                    alt="Accreditation Logo"
-                    className="object-cover w-28 h-28 w-auto"
-                  />
-                </div>
+                  <div className="flex justify-center items-center w-24 h-24 overflow-hidden bg-red-100">
+  <Image src={Nsdca} alt="Accreditation Logo" className="w-full h-full object-contain" />
+</div> */}
 
-                <div className="mt-12 px-16">
+                <div className="mt-20 mx-64">
                   <p className="text-sm font-light font-sans">
                     Certificate UDIN :{" "}
                     <span className="font-light">{student?.udin}</span>
@@ -315,16 +314,11 @@ const CertificateComponent = () => {
                     <span className="font-light">{student?.date}</span>
                   </p>
                 </div>
-              </div>
+  
 
-              <div className="flex flex-col justify-end items-end mt-8 mr-16">
-                <Image
-                  src={Signature}
-                  alt="signature"
-                  className="text-blue-600 w-40 h-20"
-                />
+              <div className="flex flex-col justify-end mt-12 mr-16">
                 <div className="border border-b-2 border-gray-900 w-40"></div>
-                <p className="text-xl font-bold text-blue-900 -mt-2">
+                <p className="text-xl font-bold text-blue-900 mt-12">
                   PRAVEEN KUMAR S
                 </p>
                 <p className="text-gray-700 text-center mr-5">CEO, Disenosys</p>

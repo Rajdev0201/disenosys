@@ -24,7 +24,7 @@ const [showCertificate, setShowCertificate] = useState(false);
 
 
 
-  const generateSinglePDF = async (id, name, course, email) => {
+  const generateSinglePDF = async (id, name, course, email,score) => {
    
     setShowCertificate(true);
     try {
@@ -37,7 +37,7 @@ const [showCertificate, setShowCertificate] = useState(false);
         html2canvas: { scale: 2.5,useCORS: true  }, 
         jsPDF: { 
             unit: 'px', 
-            format: [980, 724], 
+            format: [980, 739], 
             orientation: 'landscape' 
         }
     };
@@ -54,10 +54,10 @@ const [showCertificate, setShowCertificate] = useState(false);
       formData.append("email", email);
       formData.append("name", name);
       formData.append("course", course);
-      
+      formData.append("score", score);
     
 
-     
+     //https://disenosys-dkhj.onrender.com
       await axios.post("https://disenosys-dkhj.onrender.com/send-single-certificate-exam", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -80,7 +80,7 @@ const [showCertificate, setShowCertificate] = useState(false);
 
     // setShowSendCertificateButton(true);
     const uniqueId = `certificate-single`;
-    generateSinglePDF(uniqueId, name, course, email);
+    generateSinglePDF(uniqueId, name, course, email,score);
   };
 
   return (
@@ -175,7 +175,7 @@ const [showCertificate, setShowCertificate] = useState(false);
                   </h2>
                   <div className="w-full border-2 border-gray-800 mb-0 mt-5"></div>
                   <p className="text-xl font-semibold text-gray-800 mt-8 max-w-[800px]">
-                    got for participating in CATIA exam and has scored{" "}
+                    got for participating in {singleStudent.course} exam and has scored{" "}
                     <span className="font-bold text-gray-800 underline">
                       {singleStudent.score}
                     </span>

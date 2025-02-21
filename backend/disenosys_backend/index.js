@@ -110,6 +110,10 @@ const course = require('./routes/course.js')
 const teacher = require('./routes/teachers.js');
 const onlineStd = require('./routes/onlineStd.js');
 const spa = require('./models/onlineStd.js');
+const ExamC = require('./models/certificatesave.js');
+const InternC = require('./models/internship.js');
+const CourseC = require('./models/coursecertificate.js');
+const gpdxC = require('./models/Gpdxcertificate.js');
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
@@ -940,7 +944,7 @@ app.post("/upload-xl-course", uploadxlCourse.single("file"), (req, res) => {
 
 
 const uploadcertificateExam = multer({ storage: multer.memoryStorage() });
-app.post("/send-certificate-exam", uploadcertificateExam.none(), (req, res) => {
+app.post("/send-certificate-exam", uploadcertificateExam.none(), async(req, res) => {
   const { email, pdfDataUrl,score,name,course} = req.body;
   console.log(email)
   if (!email || !pdfDataUrl) {
@@ -952,15 +956,14 @@ app.post("/send-certificate-exam", uploadcertificateExam.none(), (req, res) => {
   const pdfBuffer = Buffer.from(base64Data, "base64");
 
   const transporter = nodemailer.createTransport({
-
- host: 'smtp.office365.com', 
-port: 587,                 
-secure: false,   
-auth: {
-  user: 'classes@disenosys.com',
-  pass: 'xnccsypkfhfpymwg',
-}
-});
+         host: 'smtp.office365.com', 
+         port: 587,                 
+         secure: false,   
+         auth: {
+         user: 'classes@disenosys.com',
+        pass: 'xnccsypkfhfpymwg',
+        }
+     });
 
 
   const mailOptions = {
@@ -984,14 +987,23 @@ auth: {
     }
     res.status(200).send("Certificate sent successfully");
   });
+  const newExam = new ExamC({
+    name:name,
+    course:course,
+    email:email,
+    score:score,
+  });
+
+  await newExam.save();
+  res.status(200).send({ success: true, message: "Certificate sent successfully",data:newExam });
 });
 
 
 const uploadgpdxCourse= multer({ storage: multer.memoryStorage() });
 
-app.post("/send-gpdxcourse", uploadgpdxCourse.none(), (req, res) => {
-  const { email, pdfDataUrl,name } = req.body;
-  console.log(email)
+app.post("/send-gpdxcourse", uploadgpdxCourse.none(), async(req, res) => {
+  const { email, pdfDataUrl,name,score,awardedDate } = req.body;
+  console.log(awardedDate)
   if (!email || !pdfDataUrl) {
     return res.status(400).send("Missing email or PDF data");
   }
@@ -1033,14 +1045,82 @@ auth: {
     }
     res.status(200).send("Certificate sent successfully");
   });
+  const newExam = new gpdxC({
+    name:name,
+    email:email,
+    score:score,
+    Completion:awardedDate,
+  });
+
+  await newExam.save();
+  res.status(200).send({ success: true, message: "Certificate sent successfully",data:newExam });
 });
+
+const uploadCourse= multer({ storage: multer.memoryStorage() });
+app.post("/send-certificate-course", uploadCourse.none(), async(req, res) => {
+  const { email, pdfDataUrl,name ,course,date,udin} = req.body;
+  if (!email || !pdfDataUrl) {
+    return res.status(400).send("Missing email or PDF data");
+  }
+
+
+  const base64Data = pdfDataUrl.split(";base64,").pop();
+  const pdfBuffer = Buffer.from(base64Data, "base64");
+
+  const transporter = nodemailer.createTransport({
+
+ host: 'smtp.office365.com', 
+port: 587,                 
+secure: false,   
+auth: {
+  user: 'classes@disenosys.com',
+  pass: 'xnccsypkfhfpymwg',
+}
+});
+
+
+  const mailOptions = {
+    from: "classes@disenosys.com",
+    to: email,
+    subject: `Certificate for ${course}`,
+    text: `Dear ${name},\n\nPlease find attached your certificate for completing the ${course}.\n\nBest Regards,\nYour Company`,
+    attachments: [
+      {
+        filename:`${name}_certificate.pdf`,
+        content: pdfBuffer,
+      },
+    ],
+  };
+
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.error("Error sending email:", error);
+      return res.status(500).send("Error sending email");
+    }
+    res.status(200).send("Certificate sent successfully");
+  });
+
+  
+  const newCourse = new CourseC({
+    name:name,
+    course:course,
+    email:email,
+    Completion:date,
+    Udin:udin,
+  });
+
+  await newCourse.save();
+  res.status(200).send({ success: true, message: "Certificate sent successfully",data:newCourse });
+});
+
 
 
 const uploadsingleExam = multer({ storage: multer.memoryStorage() });
 
 app.post("/send-single-certificate-exam", uploadsingleExam.none(),async (req, res) => {
   try {
-    const { email, pdfDataUrl,name,course} = req.body;
+    const { email, pdfDataUrl,name,course,score} = req.body;
     console.log(email)
     if (!email || !pdfDataUrl) {
       return res.status(400).send("Missing email or PDF data");
@@ -1083,17 +1163,28 @@ app.post("/send-single-certificate-exam", uploadsingleExam.none(),async (req, re
       console.log("Email sent: " + info.response);
       res.send("Certificate sent successfully");
     });
+
+    const newExam = new ExamC({
+      name:name,
+      course:course,
+      email:email,
+      score:score,
+    });
+  
+    await newExam.save();
+    res.status(200).send({ success: true, message: "Certificate sent successfully",data:newExam });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("Error processing the certificate request");
   }
+  
 });
 
 const uploadsingleCourse= multer({ storage: multer.memoryStorage() });
 
 app.post("/send-single-certificate-course", uploadsingleCourse.none(),async (req, res) => {
   try {
-    const { email, pdfDataUrl,name,course} = req.body;
+    const { email, pdfDataUrl,name,course,date,udin} = req.body;
     console.log(email)
     if (!email || !pdfDataUrl) {
       return res.status(400).send("Missing email or PDF data");
@@ -1194,6 +1285,16 @@ app.post("/send-single-certificate-course", uploadsingleCourse.none(),async (req
       console.log("Email sent: " + info.response);
       res.send("Certificate sent successfully");
     });
+    const newCourse = new CourseC({
+      name:name,
+      course:course,
+      email:email,
+      Completion:date,
+      Udin:udin,
+    });
+  
+    await newCourse.save();
+    res.status(200).send({ success: true, message: "Certificate sent successfully",data:newCourse });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("Error processing the certificate request");
@@ -1204,7 +1305,7 @@ const uploadsingleGpdx= multer({ storage: multer.memoryStorage() });
 
 app.post("/send-single-gpdx", uploadsingleGpdx.none(),async (req, res) => {
   try {
-    const { email, pdfDataUrl,name} = req.body;
+    const { email, pdfDataUrl,name,score,date} = req.body;
     console.log(email)
     if (!email || !pdfDataUrl) {
       return res.status(400).send("Missing email or PDF data");
@@ -1305,13 +1406,24 @@ app.post("/send-single-gpdx", uploadsingleGpdx.none(),async (req, res) => {
       console.log("Email sent: " + info.response);
       res.send("Certificate sent successfully");
     });
+    const newExam = new gpdxC({
+      name:name,
+      email:email,
+      score:score,
+      Completion:date,
+    });
+  
+    await newExam.save();
+    res.status(200).send({ success: true, message: "Certificate sent successfully",data:newExam });
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("Error processing the certificate request");
   }
 });
 const uploadcertificate = multer({ dest: 'uploadcertificate/' });
-app.post("/send-certificate", uploadcertificate.none(), (req, res) => {
+
+
+app.post("/send-certificate", uploadcertificate.none(), async(req, res) => {
   const { email, pdfDataUrl,name,course } = req.body;
   console.log(email)
   if (!email || !pdfDataUrl) {
@@ -1355,6 +1467,15 @@ auth: {
     }
     res.status(200).send("Certificate sent successfully");
   });
+
+  const newIntern = new InternC({
+    name:name,
+    course:course,
+    email:email,
+  });
+
+  await newIntern.save();
+  res.status(200).send({ success: true, message: "Certificate sent successfully",data:newIntern}) 
 });
 
 
@@ -1406,6 +1527,14 @@ app.post("/send-single-certificate", uploadsingle.none(),async (req, res) => {
       console.log("Email sent: " + info.response);
       res.send("Certificate sent successfully");
     });
+    const newIntern = new InternC({
+      name:name,
+      course:course,
+      email:email,
+    });
+  
+    await newIntern.save();
+    res.status(200).send({ success: true, message: "Certificate sent successfully",data:newIntern}) 
   } catch (error) {
     console.error("Error:", error);
     res.status(500).send("Error processing the certificate request");

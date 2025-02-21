@@ -48,15 +48,15 @@ const Plastic = () => {
   return (
     <div>
       <div className="bg-blue-100">
-        <div className="grid grid-cols-12 px-0 py-44">
+        <div className="grid lg:grid-cols-12 px-0 py-28 lg:py-36">
           <div className="col-span-8 ">
-            <div className="space-y-12 mt-44 border border-white flex flex-col bg-[#0d1039] w-12 text-white">
+            <div className="space-y-12 mt-20 lg:mt-44 border border-white flex flex-col bg-[#0d1039] w-12 text-white">
             <button
               type="submit"
               class="flex justify-center gap-2 w-44 items-center shadow-xl text-lg bg-[#0d1039] text-white backdrop-blur-md lg:font-semibold isolation-auto border-gray-50
                before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full
                 before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 
-                before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group rotate-45 "
+                before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group rotate-5 "
             >
               Take Test
               <svg
@@ -90,8 +90,8 @@ const Plastic = () => {
             </div>
           </div>
 
-          <div className="col-span-4 flex flex-col justify-end px-8">
-            <h1 className="font-bold mb-4 text-xl lg:text-3xl ml-5 font-garet">
+          <div className="col-span-4 flex flex-col justify-end lg:px-8 mt-12">
+            <h1 className="font-bold mb-4 text-2xl lg:text-3xl ml-4 lg:ml-5 font-garet">
               Get a call back from us!
             </h1>
             <form onSubmit={onSubmit}>
@@ -148,9 +148,9 @@ const Plastic = () => {
 
         </div>
       </div>
-        <div className="flex flex-col px-24 space-y-6">
-        <h1 className="text-4xl font-bold font-garet text-center mt-8 text-[#0d1039]">PG Diploma in Plastic Trims Design</h1>
-          <p className="font-garet font-medium text-md lg:text-xl text-[#0d1039]">
+        <div className="flex flex-col px-2 lg:px-24 space-y-6">
+        <h1 className="lg:text-4xl text-md font-bold font-garet text-center mt-8 text-[#0d1039]">PG Diploma in Plastic Trims Design</h1>
+          <p className="font-garet font-medium text-sm lg:text-xl text-[#0d1039]">
             The Postgraduate Diploma in Plastic Trims Design is a speciaspanzed
             program designed to equip students with the technical knowledge and
             industry-relevant skills required for designing high-quaspanty
@@ -160,7 +160,7 @@ const Plastic = () => {
             plastic materials, manufacturing processes, and design
             methodologies.
           </p>
-          <p className="font-garet font-medium text-md lg:text-xl text-[#0d1039] mt-4 flex flex-col space-y-2">
+          <p className="font-garet font-medium text-sm lg:text-xl text-[#0d1039] mt-4 flex flex-col space-y-2 ">
             <b>Key Highspanghts:</b>
             <span>
               ✔ In-depth study of plastic materials, properties, and
@@ -185,88 +185,88 @@ const Plastic = () => {
             </span>
           </p>
         </div> 
-        <div className="flex justify-center items-center mt-12">
-          <span className="text-white font-garet p-4 bg-[#0d1039] text-3xl">View all programmes in plastic trims </span>
+        <div className="flex justify-center items-center mt-12 mb-2 lg:mb-6">
+          <span className="text-white font-garet p-2 lg:p-4 bg-[#0d1039] text-md lg:text-3xl rounded shadow-inner">View all programmes in plastic trims </span>
         </div>
-        <div className="text-center py-10">
-        <h1 className="text-2xl font-bold">PG Diploma in Plastic Trims Design Programmes</h1>
+
+        <div className="py-12 lg:py-24 bg-[#0d1039]">
+        <h1 className="lg:text-5xl text-lg  font-garet font-medium text-white mb-2 lg:mb-20 text-center">PG Diploma in Plastic Trims Design Programmes</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-10 md:px-10 pb-10">
+
+        <div className="bg-[#d7e4f9] text-black p-6 rounded-lg shadow-md font-garet">
+          <h2 className="text-2xl font-medium text-center ">Weekend Programme</h2>
+          <p className="mt-4 text-lg font-medium "><strong>Duration:</strong></p>
+          <p className="text-lg font-medium "><strong>Days:</strong></p>
+          <p className="text-lg font-medium"><strong>Time:</strong></p>
+          <div className="mt-4 text-center">
+            <button className="bg-[#0A0F33] text-white px-4 py-2 rounded-lg">Learn More</button>
+          </div>
+        </div>
+      
+
+        <div className="bg-[#d7e4f9] text-black p-6 rounded-lg shadow-md font-garet">
+          <h2 className="text-2xl font-medium text-center ">Live Programme</h2>
+          <p className="mt-4 text-lg font-medium "><strong>Duration:</strong></p>
+          <p className="text-lg font-medium "><strong>Days:</strong></p>
+          <p className="text-lg font-medium"><strong>Time:</strong></p>
+          <div className="mt-4 text-center">
+            <button className="bg-[#0A0F33] text-white px-4 py-2 rounded-lg">Learn More</button>
+          </div>
+          </div>
+
+
+        <div className="bg-[#d7e4f9] text-black p-6 rounded-lg shadow-md font-garet">
+          <h2 className="text-2xl font-medium text-center">Recorded Programme</h2>
+          <p className="mt-4 text-lg font-medium "><strong>Duration:</strong></p>
+          <p className="text-lg font-medium "><strong>Days:</strong></p>
+          <p className="text-lg font-medium"><strong>Time:</strong></p>
+          <div className="mt-4 text-center">
+            <button className="bg-[#0A0F33] text-white px-4 py-2 rounded-lg">Learn More</button>
+          </div>
+        </div>
+
+      </div>
       </div>
 
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-10 md:px-20 pb-10">
-        <div className="bg-[#C8D4ED] text-black p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-bold text-center">Weekend Programme</h2>
-          <p className="mt-4"><strong>Duration:</strong></p>
-          <p><strong>Days:</strong></p>
-          <p><strong>Time:</strong></p>
-          <div className="mt-4 text-center">
-            <button className="bg-[#0A0F33] text-white px-4 py-2 rounded-lg">Learn More</button>
-          </div>
-        </div>
-
-
-        <div className="bg-[#C8D4ED] text-black p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-bold text-center">Live Programme</h2>
-          <p className="mt-4"><strong>Duration:</strong></p>
-          <p><strong>Days:</strong></p>
-          <p><strong>Time:</strong></p>
-          <div className="mt-4 text-center">
-            <button className="bg-[#0A0F33] text-white px-4 py-2 rounded-lg">Learn More</button>
-          </div>
-        </div>
-
-
-        <div className="bg-[#C8D4ED] text-black p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-bold text-center">Recorded Programme</h2>
-          <p className="mt-4"><strong>Duration:</strong></p>
-          <p><strong>Days:</strong></p>
-          <p><strong>Time:</strong></p>
-          <div className="mt-4 text-center">
-            <button className="bg-[#0A0F33] text-white px-4 py-2 rounded-lg">Learn More</button>
-          </div>
-        </div>
-      </div>
-
-
-      <div className="bg-[#F8F8F8] text-black py-10 px-10 md:px-20">
-        <h2 className="text-2xl font-bold mb-6">FAQs</h2>
+      <div className="bg-[#F8F8F8] text-black py-10 px-10 md:px-20 font-garet">
+        <h2 className="text-4xl font-bold mb-6">FAQs</h2>
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <h3 className="font-bold">What is this programme about?</h3>
-            <p className="text-sm mt-2">
+            <h3 className="font-medium text-2xl">What is this programme about?</h3>
+            <p className="text-md mt-2 font-medium">
               A specialized course in plastic trim design for automotive, consumer products, and 
               industrial applications, covering CAD, tooling, and manufacturing.
             </p>
           </div>
           <div>
-            <h3 className="font-bold">Who can apply?</h3>
-            <p className="text-sm mt-2">
+            <h3 className="font-medium text-2xl">Who can apply?</h3>
+            <p className="text-md mt-2 font-medium">
               Graduates in Engineering, Industrial Design, or related fields. Diploma holders with 
               experience may also be eligible.
             </p>
           </div>
           <div>
-            <h3 className="font-bold">Duration & Mode?</h3>
-            <p className="text-sm mt-2">
+            <h3 className="font-medium text-2xl">Duration & Mode?</h3>
+            <p className="text-md mt-2 font-medium">
               Typically 6 months - 1 year, available in online & offline formats.
             </p>
           </div>
           <div>
-            <h3 className="font-bold">Industries Hiring?</h3>
-            <p className="text-sm mt-2">
+            <h3 className="font-medium text-2xl">Industries Hiring?</h3>
+            <p className="text-md mt-2 font-medium">
               Automotive, consumer electronics, packaging, and medical devices.
             </p>
           </div>
           <div>
-            <h3 className="font-bold">Fees & Salary?</h3>
-            <p className="text-sm mt-2">
-              <strong>Fees:</strong> ₹1.5 - 2.5 Lakhs ($5,000 - $15,000) <br />
-              <strong>Salary:</strong> ₹4 - ₹12 LPA ($50,000 - $90,000)
+            <h3 className="font-medium text-2xl">Fees & Salary?</h3>
+            <p className="text-md mt-2 font-medium">
+              <li>Fees: ₹1.5 - 2.5 Lakhs ($5,000 - $15,000) </li>
+              <li>Salary: ₹4 - ₹12 LPA ($50,000 - $90,000) </li>
             </p>
           </div>
           <div>
-            <h3 className="font-bold">How to Apply?</h3>
-            <p className="text-sm mt-2">
+            <h3 className="font-medium text-2xl">How to Apply?</h3>
+            <p className="text-md mt-2 font-medium">
               Check institute websites for applications, deadlines, and entrance requirements.
             </p>
           </div>

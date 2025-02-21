@@ -47,6 +47,9 @@ const CertificateComponent = () => {
         });
         setStudentsData(updatedData);
         setIsUploaded(true);
+        setFile(null);
+        setFile(null);
+        document.getElementById("fileInput").value = "";
       } else {
         alert("No student data received.");
       }
@@ -94,6 +97,7 @@ const CertificateComponent = () => {
       );
 
       console.log(`Certificate sent to ${email}`);
+      alert("Certificates have been successfully sent!")
     } catch (error) {
       alert("Error generating or sending certificate", error);
       console.error("Error generating or sending certificate:", error);
@@ -136,17 +140,50 @@ const CertificateComponent = () => {
       setIsSending(false);
       setIsSent(true);
       if (setIsSent) {
-        alert("Certificates have been successfully sent!");
+        console.log("")
       } else {
         alert("certificate have not been sent!");
       }
     }, 2000);
   };
+ 
+  const handleDownload = async () => {
+    try {
+
+      const response = await axios.get('https://disenosys-dkhj.onrender.com/api/student/demo-exam-c', {
+        responseType: 'blob', // Important to set the response type to blob
+      });
+
+      // Create a URL for the file
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+
+      // Set the download attribute with the filename
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getDate().toString().padStart(2, '0')}${(currentDate.getMonth() + 1).toString().padStart(2, '0')}${currentDate.getFullYear()}`;
+      
+      // Set the download attribute with the dynamic filename
+      link.setAttribute('download', `dummydata_${formattedDate}.xlsx`);
+
+      // Append the link to the document and click it to start the download
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading the file:', error);
+      alert('Failed to download the file',error);
+    }
+  };
+
 
   return (
     <>
       <div className="px-24 mt-6">
-        <div className="p-6 border rounded shadow-lg">
+        <div className="p-6 border rounded shadow-lg flex justify-between items-center">
+        <div className="flex flex-col">
           <h3 className="text-lg font-bold text-[#182073]">
             Send Certificate to Bulk Student
           </h3>
@@ -154,7 +191,7 @@ const CertificateComponent = () => {
             onSubmit={handleUpload}
             className="border border-gray-300 shadow-lg rounded w-[478px] flex mt-2"
           >
-            <input type="file" onChange={handleFileChange} className="p-2" />
+            <input type="file" id="fileInput" onChange={handleFileChange} className="p-2" />
             <button
               type="submit"
               className="bg-[#182073] text-white font-semibold 
@@ -187,6 +224,18 @@ const CertificateComponent = () => {
               </p>
             )}
           </div>
+          </div>
+          <div className="flex flex-col space-y-2">
+          <button
+              type="submit"
+              className="bg-[#182073] w-44 h-12 text-white font-semibold 
+              p-2 rounded"
+              onClick={handleDownload}
+            >
+              Sample_sheet.xlsx
+            </button>
+            <span className="text-sm text-green-500 font-bold ">Here,You can download sample xl_sheet *</span>
+            </div>
         </div>
 
         <Single/>
@@ -219,7 +268,7 @@ const CertificateComponent = () => {
                   </h2>
                   <div className="w-full border-2 border-gray-800 mb-0 mt-5"></div>
                   <p className="text-xl font-semibold text-gray-800 mt-8 max-w-[800px]">
-                    got for participating in CATIA exam and has scored{" "}
+                    got for participating in {student.course} exam and has scored{" "}
                     <span className="font-bold text-gray-800 underline">
                       {student.score}
                     </span>

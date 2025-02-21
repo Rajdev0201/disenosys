@@ -73,7 +73,7 @@ const [showCertificate, setShowCertificate] = useState(false);
     
 
      
-      await axios.post("https://disenosys-1.onrender.com/send-single-certificate", formData, {
+      await axios.post("https://disenosys-dkhj.onrender.com/send-single-certificate", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert(`Certificate sent to ${email}`);
@@ -201,8 +201,8 @@ const [showCertificate, setShowCertificate] = useState(false);
       <div className="w-64 h-24 mr-12 mb-8">
         <Image src={logo} alt="logo" className="text-blue-600" />
       </div>
-      <h2 className="text-[#cc1919] font-medium text-8xl font-berlin ml-28">Certificate</h2>
-      <p className="text-6xl font-medium font-berlin text-gray-700 mr-2 ml-10">of Internship</p>
+      <h2 className="text-[#cc1919] font-medium text-8xl font-berlin ml-36">Certificate</h2>
+      <p className="text-6xl font-medium font-berlin text-gray-700 mr-2 ml-16">of Internship</p>
     </div>
 
    
@@ -241,9 +241,9 @@ const [showCertificate, setShowCertificate] = useState(false);
               </div>
 
     <div className="flex flex-col justify-end items-end mt-3 mr-16">
-      <Image src={s} alt="signature" className="text-blue-600 w-40 h-20" />
-      <div className="border border-b-2 border-gray-900 w-40"></div>
-      <p className="text-lg font-bold text-blue-900">PRAVEEN KUMAR S</p>
+      {/* <Image src={s} alt="signature" className="text-blue-600 w-40 h-20" /> */}
+      {/* <div className="border border-b-2 border-gray-900 w-40"></div> */}
+      <p className="text-lg font-bold text-blue-900 mt-24">PRAVEEN KUMAR S</p>
       <p className="text-gray-700 text-center mr-5">CEO, Disenosys</p>
     </div>
   </div>

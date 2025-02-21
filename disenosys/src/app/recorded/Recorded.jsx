@@ -433,7 +433,7 @@ console.log(selectedOptions)
                                   </p>
                                   
                                   <div className="space-y-2">
-  {question.questionText.split(",").map((sentence, sentenceIdx) => (
+  {question?.questionText?.split(",").map((sentence, sentenceIdx) => (
     <p key={sentenceIdx} className="block">
       {sentence.split("input").map((part, index, array) => (
         <span key={index} className="inline">

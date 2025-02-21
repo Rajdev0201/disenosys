@@ -210,13 +210,13 @@ const [showCertificate, setShowCertificate] = useState(false);
           </p>
         </div>
         <div className="flex flex-col items-end justify-end mt-24">
-          <p className="text-2xl font-light text-gray-600">Authorized by:</p>
+          {/* <p className="text-2xl font-light text-gray-600">Authorized by:</p>
           <Image
                   src={Signature}
                   alt="signature"
-                  className="text-blue-600 w-40 h-20 mt-2"
-                />
-                <p className="text-xl font-bold text-blue-900 -mt-2">
+                  className="text-blue-600 w-64 mt-2"
+                /> */}
+                <p className="text-xl font-bold text-blue-900 mt-24">
                   PRAVEEN KUMAR S
                 </p>
                 <p className="text-gray-700 text-center mr-5">CEO, Disenosys</p>

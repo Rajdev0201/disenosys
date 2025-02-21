@@ -34,7 +34,7 @@
 }
 
 .c {
-  background-image: url("../assests/profile/c1.png");
+  background-image: url("../assests/profile/c1u.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -48,14 +48,14 @@
 }
 
 .certificate-bg{
-  background-image: url("../assests/bg-certificate.png");
+  background-image: url("../assests/c1.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
 
 .gpdx-bg{
-  background-image: url("../assests/profile/gpdx.jpeg");
+  background-image: url("../assests/profile/gpdx2.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
