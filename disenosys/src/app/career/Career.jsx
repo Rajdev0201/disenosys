@@ -12,6 +12,7 @@ import "../home/Home.css";
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 import DatePicker from "react-multi-date-picker";
+import { useRouter } from "next/navigation";
 
 const CareerForm = () => {
   const [formData, setFormData] = useState({
@@ -44,6 +45,7 @@ const CareerForm = () => {
 
   const [error, setError] = useState(null);
   const [resumeData, setResumeData] = useState(null);
+  const router = useRouter();
 
   const [skills, setSkills] = useState([]);
   const importantCities = [
@@ -346,6 +348,34 @@ const CareerForm = () => {
         },
       });
       alert("Form submitted successfully!");
+      router.push("/applied");
+       setFormData({
+    name: "",
+    email: "",
+    phone: "",
+    dob: new Date(),
+    gender: "",
+    experience: "",
+    expmonths: "",
+    employee: "",
+    current: "",
+    cinr: "",
+    expected: "",
+    einr: "",
+    notice: "Immediate",
+    city: "",
+    relocate: "",
+    location: "",
+    companies: [
+      {
+        companyName: "",
+        from: "",
+        to: "",
+        rows: [{ industry: "", domain: "", software: "", months: "" }],
+      },
+    ],
+    file: null,
+  });
     } catch (error) {
       console.error("Error submitting career:", error);
       alert("An error occurred. Please try again later.");

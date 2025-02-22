@@ -15,7 +15,7 @@ const Home = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [editCourseData, setEditCourseData] = useState({ id: "", course: "" });
 
-  const itemsPerPage = 10;
+  const itemsPerPage = 100;
   const dispatch = useDispatch();
   const [add, setAdd] = useState({
     course: "",
@@ -139,7 +139,7 @@ const Home = () => {
   </p>
 ) : (
   <div className="w-full overflow-x-auto">
-    <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
+    <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg mb-8">
       <thead className="bg-blue-500 text-white font-sans">
         <tr>
           <th className="py-3 px-4 text-start border-r border-gray-300">S.No</th>
@@ -247,7 +247,7 @@ const Home = () => {
           </div>
         </div>
       )}
-         {paginatedData?.length > 0 && (
+         {/* {paginatedData?.length > 0 && (
                     <div className="w-full mt-4 flex justify-center">
                       <Pagination
                         totalPages={totalPages}
@@ -255,7 +255,7 @@ const Home = () => {
                         onPageChange={handlePageChange}
                       />
                     </div>
-                  )}
+                  )} */}
     </div>
   );
 };

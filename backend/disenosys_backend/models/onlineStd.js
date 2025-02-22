@@ -50,6 +50,7 @@ const onlineSchema = new mongoose.Schema(
     rdate: { type: String }, 
     cdate: { type: String }, 
     cname: { type: String }, 
+    mode:{type:String},
     sid: { type: String }, 
     start:{type: String},
     end: { type: String }, 

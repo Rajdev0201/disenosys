@@ -11,6 +11,7 @@ const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const[load,setLoad] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const router = useRouter();
   const initialFormData = {
     name: "",
     email: "",
@@ -216,6 +217,7 @@ form.append("a11", JSON.stringify(formData.a11));
       });
       alert("Form submitted successfully!");
       setFormData(initialFormData);
+      router.push("/applied");
       resetStepThree();
     } catch (error) {
       console.error("Error submitting career:", error);

@@ -6,8 +6,6 @@ import { FaCog, FaChartBar, FaSignOutAlt, FaChevronDown, FaBars } from 'react-ic
 import { SiAuthentik, SiCoursera } from "react-icons/si";
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { PiCertificateBold } from "react-icons/pi";
-import { GrScorecard } from "react-icons/gr";
 import Image from 'next/image';
 import Brand from "../../assests/brand-1.png"
 import { MdCastForEducation } from 'react-icons/md';
@@ -105,7 +103,7 @@ const Sidebar = () => {
           </span>
           <span>SAF</span>
         </Link>
-        <Link
+        {/* <Link
           href="/prerecord"
           className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
             path === "/prerecord" ? "bg-white rounded" : ""
@@ -115,7 +113,7 @@ const Sidebar = () => {
             <MdCastForEducation />
           </span>
           <span>Pre-Record</span>
-        </Link>
+        </Link> */}
       </div>
     )}
   </div>

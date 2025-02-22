@@ -4,11 +4,13 @@ import StepOne from './Stepone';
 import StepTwo from './Steptow';
 import StepThree from './Stepthree';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 const Multiple = () => {
       const [currentStep, setCurrentStep] = useState(1);
       const[load,setLoad] = useState(false);
       const [isChecked, setIsChecked] = useState(false);
+      const router = useRouter();
       const initialFormData = {
         fname: "",
         lname:"",
@@ -26,7 +28,6 @@ const Multiple = () => {
         father:"",
         mother:"",
         marital:"",
-        spouse:"",
         n1:"",
         ndob:"",
         nrealtion:"",
@@ -52,6 +53,7 @@ const Multiple = () => {
         rdate:"",
         cdate:"",
         cname:"",
+        mode:"",
         sid:"",
         end: "Not Completed",
         status: "In-progress",
@@ -70,7 +72,6 @@ const Multiple = () => {
             permanent,
             communication,
             no1,
-            no2,
             emg,
             email,
             panno,
@@ -79,8 +80,6 @@ const Multiple = () => {
             father,
             mother,
             marital,
-            spouse,
-            n1,
             ndob,
             nrealtion,
             naddress,
@@ -104,6 +103,7 @@ const Multiple = () => {
             rdate,
             cdate,
             cname,
+            mode,
         } = formData;
       
         // Validation checks
@@ -136,8 +136,18 @@ const Multiple = () => {
             return;
           }
 
+          if (!communication.trim()) {
+            alert("Error: communication address is required.");
+            return;
+          }
+
           if (!no1.trim() || !/^\d{10}$/.test(no1)) {
             alert("Error: Personal number is required.");
+            return;
+          }
+
+          if (!emg.trim() || !/^\d{10}$/.test(emg)) {
+            alert("Error: Emergency number is required.");
             return;
           }
 
@@ -169,11 +179,6 @@ const Multiple = () => {
 
         if (!marital.trim()) {
             alert("Error: Marital Status is required.");
-            return;
-          }
-
-          if (!spouse.trim()) {
-            alert("Error: Spous name is required.");
             return;
           }
 
@@ -235,6 +240,10 @@ const Multiple = () => {
             alert("Please select if you are Indian or not.");
             return;
           }
+          if (!mode.trim()) {
+            alert("Error: Please enter your course preference.");
+            return;
+          }
       
           if (isIndia === "yes") {
             if (!profile || !ten || !plustwo || !ug || !pg || !afile || !pan || !voter) {
@@ -278,8 +287,7 @@ const Multiple = () => {
         form.append("blood",formData.blood); 
         form.append("father",formData.father); 
         form.append("mother",formData.mother); 
-        form.append("marital",formData.marital);       
-        form.append("spouse",formData.spouse);  
+        form.append("marital",formData.marital);        
         form.append("ndob",formData.ndob);  
         form.append("nrealtion",formData.nrealtion);    
         form.append("naddress",formData.naddress);    
@@ -304,6 +312,7 @@ const Multiple = () => {
         form.append("rdate", formData.rdate);
         form.append("cdate", formData.cdate);
         form.append("cname", formData.cname);
+        form.append("mode",formData.mode); 
         form.append("sid", formData.sid);
         form.append("start", formData.sid);
         form.append("end", formData.end);
@@ -316,6 +325,7 @@ const Multiple = () => {
             },
           });
           alert("Form submitted successfully!");
+          router.push("/applied");
           setFormData(initialFormData);
         } catch (error) {
           console.error("Error submitting career:", error);

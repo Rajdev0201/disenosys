@@ -454,7 +454,6 @@ app.post("/studentadd",uploadSPA, async (req, res) => {
     father,
     mother,
     marital,
-    spouse,
     n1,
     ndob,
     nrealtion,
@@ -472,6 +471,7 @@ app.post("/studentadd",uploadSPA, async (req, res) => {
     end,
     status,
     cname,
+    mode,
     isIndia
   } = req.body;
  
@@ -518,7 +518,6 @@ console.log("Request body:", req?.body);
       father,
       mother,
       marital,
-      spouse,
       n1,
       ndob,
       nrealtion,
@@ -544,6 +543,7 @@ console.log("Request body:", req?.body);
       rdate,
       cdate,
       cname,
+      mode,
       start,
       end,
       status,

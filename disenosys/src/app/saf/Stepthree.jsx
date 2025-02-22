@@ -1,4 +1,7 @@
-import React from 'react'
+"use client"
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { courseld } from '../Redux/action/Course';
 
 const Stepthree = ({
     formData,
@@ -9,6 +12,13 @@ const Stepthree = ({
     // isChecked,
     // setIsChecked,
 }) => {
+   
+  const course = useSelector((state) => state.courseLD);
+ const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(courseld());
+  }, [dispatch]);
 
 
     const handleFileUpload = (e) => {
@@ -19,6 +29,7 @@ const Stepthree = ({
         if (fileType === "application/pdf") {
           setFormData((prev) => ({ ...prev, file }));
         } else {
+          alert("Unsupported file type. Please upload a PDF file.")
           setError("Unsupported file type. Please upload a PDF file.");
         }
       };
@@ -31,6 +42,7 @@ const Stepthree = ({
         if (fileType === "application/pdf") {
           setFormData((prev) => ({ ...prev, idProof}));
         } else {
+          alert("Unsupported file type. Please upload a PDF file.")
           setError("Unsupported file type. Please upload a PDF file.");
         }
       };
@@ -44,6 +56,7 @@ const Stepthree = ({
         if (fileType.startsWith('application/pdf') || fileType.startsWith('image/') )  {
           setFormData((prev) => ({ ...prev, profile })); 
         } else {
+          alert("Unsupported file type. Please upload a PDF file or Png file.")
           setError('Unsupported file type. Please upload an image.');
         }
       };
@@ -59,6 +72,7 @@ const Stepthree = ({
         if (fileType.startsWith('application/pdf')) {
           setFormData((prev) => ({ ...prev,  ten})); // Assign the file to `formData.filePic`
         } else {
+          alert("Unsupported file type. Please upload a PDF file.")
           setError('Unsupported file type. Please upload an image.');
         }
       };
@@ -73,6 +87,7 @@ const Stepthree = ({
         if (fileType.startsWith('application/pdf')) {
           setFormData((prev) => ({ ...prev,  ug})); // Assign the file to `formData.filePic`
         } else {
+          alert("Unsupported file type. Please upload a PDF file.")
           setError('Unsupported file type. Please upload an image.');
         }
       };
@@ -86,6 +101,7 @@ const Stepthree = ({
         if (fileType.startsWith('application/pdf')) {
           setFormData((prev) => ({ ...prev,  pg})); // Assign the file to `formData.filePic`
         } else {
+          alert("Unsupported file type. Please upload a PDF file.")
           setError('Unsupported file type. Please upload an image.');
         }
       };
@@ -98,6 +114,7 @@ const Stepthree = ({
         if (fileType.startsWith('application/pdf')) {
           setFormData((prev) => ({ ...prev,  plustwo})); // Assign the file to `formData.filePic`
         } else {
+          alert("Unsupported file type. Please upload a PDF file.")
           setError('Unsupported file type. Please upload an image.');
         }
       };
@@ -110,6 +127,7 @@ const Stepthree = ({
         if (fileType.startsWith('application/pdf')) {
           setFormData((prev) => ({ ...prev,  afile})); // Assign the file to `formData.filePic`
         } else {
+          alert("Unsupported file type. Please upload a PDF file.")
           setError('Unsupported file type. Please upload an image.');
         }
       };
@@ -122,6 +140,7 @@ const Stepthree = ({
         if (fileType.startsWith('application/pdf')) {
           setFormData((prev) => ({ ...prev,  voter})); // Assign the file to `formData.filePic`
         } else {
+          alert("Unsupported file type. Please upload a PDF file.")
           setError('Unsupported file type. Please upload an image.');
         }
       };
@@ -136,6 +155,7 @@ const Stepthree = ({
         if (fileType.startsWith('application/pdf')) {
           setFormData((prev) => ({ ...prev,  pan})); // Assign the file to `formData.filePic`
         } else {
+          alert("Unsupported file type. Please upload a PDF file.")
           setError('Unsupported file type. Please upload an image.');
         }
       };
@@ -145,33 +165,55 @@ const Stepthree = ({
     <div className='flex flex-col space-y-3 '>
         <h1 className='text-lg font-sans font-bold'>Academic Details:</h1>
           <div className='grid lg:grid-cols-3 gap-2'>
-          <input 
-          type='text'
-          name='Edu'
-          value={formData.Edu}
-          onChange={(e) => setFormData({ ...formData, Edu: e.target.value })}
-          className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
-          placeholder='Highest Qualification'
-          required
-          />
+          <div>
+  <span className="text-sm text-red-500">Highest Qualification*</span>
+  <select
+    name="Edu"
+    value={formData.Edu}
+    onChange={(e) => setFormData({ ...formData, Edu: e.target.value })}
+    className="w-full h-12  bg-blue-100 shadow-inner rounded-lg p-3 text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500"
+    required
+  >
+    <option value="">Select Qualification</option>
+    {[
+      "High School",
+      "Diploma",
+      "Bachelor's Degree",
+      "Master's Degree",
+      "PhD",
+      "Other"
+    ].map((qualification, index) => (
+      <option key={index} value={qualification}>
+        {qualification}
+      </option>
+    ))}
+  </select>
+</div>
+
+          <div>
+          <span className="text-sm text-red-500">Passed Out Year *</span>
            <input 
             type='text'
           name='Passed'
           value={formData.Passed}
           onChange={(e) => setFormData({ ...formData, Passed: e.target.value })}
-           className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+           className='w-full h-12  bg-blue-100 shadow-inner rounded-lg p-3 text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='Passed Out Year'
           required
           />
+          </div>
+          <div>
+          <span className="text-sm text-red-500">Academy Name *</span>
           <input 
            type='text'
           name='Academy'
           value={formData.Academy}
           onChange={(e) => setFormData({ ...formData, Academy: e.target.value })}
-          className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+          className='w-full rounded-lg  bg-blue-100 shadow-inner p-3 text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='Academy Name'
           required
           />
+          </div>
           </div>
           <h1 className="text-lg font-sans font-bold">Are you an Indian citizen?</h1>
       <div className="flex gap-4 mb-4">
@@ -205,177 +247,205 @@ const Stepthree = ({
           {formData.isIndia === "yes" && (
           <div className='grid lg:grid-cols-3 gap-2'>
             <div>
+            <span className='text-sm text-red-500'>Passport Size photo*</span>
           <input 
           type='file'
           name='profile'
-       
           onChange={handleProfile}
-          className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+          className='w-full rounded-lg  bg-blue-100 shadow-inner p-3 text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='profile'
           required
           />
-          <span className='text-sm text-red-500'>Passport Size photo*</span>
           </div>
+
           <div>
+          <span className='text-sm text-red-500'>Updated Resume*</span>
            <input 
             type='file'
           name='file'
           accept=".pdf,.doc,.docx"
        
           onChange={handleFileUpload}
-           className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+           className='w-full rounded-lg p-3 bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='resume'
           required
           />
-             <span className='text-sm text-red-500'>Updated Resume*</span>
           </div>
+
           <div>
+          <span className='text-sm text-red-500'>Accadmic Proof 10th*</span>
            <input 
             type='file'
           name='ten'
           onChange={handleTen}
-           className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+           className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='10th'
           required
           />
-             <span className='text-sm text-red-500'>Accadmic Proof 10th*</span>
           </div>
+
           <div>
+          <span className='text-sm text-red-500'>Accadmic Proof 12th*</span>
            <input 
             type='file'
           name='plustwo'
           onChange={handlePlus}
-           className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+           className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='12th'
           required
           />
-             <span className='text-sm text-red-500'>Accadmic Proof 12th*</span>
           </div>
+
           <div>
+          <span className='text-sm text-red-500'>Accadmic Proof UG*</span>
            <input 
             type='file'
           name='ug'
           onChange={handleUg}
-           className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+           className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='ug'
           required
           />
-             <span className='text-sm text-red-500'>Accadmic Proof UG*</span>
           </div>
 
           <div>
+          <span className='text-sm text-red-500'>Accadmic Proof PG*</span>
            <input 
             type='file'
           name='pg'
           onChange={handlePg}
-           className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+           className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='pg'
           required
           />
-             <span className='text-sm text-red-500'>Accadmic Proof PG*</span>
           </div>
 
           
           <div>
+          <span className='text-sm text-red-500'>Aadhar Card*</span>
            <input 
             type='file'
           name='afile'
           onChange={handleAfile}
-           className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+           className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='aadhar'
           required
           />
-             <span className='text-sm text-red-500'>Aadhar Card*</span>
           </div>
 
           <div>
+          <span className='text-sm text-red-500'>Voter ID*</span>
            <input 
             type='file'
           name='voter'
           onChange={handleVoter}
-           className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+           className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='voter'
           required
           />
-             <span className='text-sm text-red-500'>Voter ID*</span>
           </div>
        
           <div>
+          <span className='text-sm text-red-500'>PAN Card*</span>
            <input 
             type='file'
           name='pan'
           onChange={handlePan}
-           className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+           className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='pan'
           required
           />
-             <span className='text-sm text-red-500'>PAN Card*</span>
           </div>
           </div>
            )}
            { formData.isIndia === "no" && (
-                 <div className='flex flex-row gap-2'>
+                 <div className='flex flex-col lg:flex-row gap-2'>
                  <div>
+                 <span className="text-sm text-red-500">Passport Size Photo*</span>
                  <input
                    type="file"
                    name="profile"
                    onChange={handleProfile}
-                   className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:outline-purple-500"
+                   className="w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:outline-purple-500"
                    required
                  />
-                 <span className="text-sm text-red-500">Passport Size Photo*</span>
                  </div>
                  <div>
+                 <span className="text-sm text-red-500">ID Proof*</span>
                  <input
                    type="file"
                    name="idProof"
                    onChange={handleID}
-                   className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:outline-purple-500"
+                   className="w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:outline-purple-500"
                    required
                  />
-                 <span className="text-sm text-red-500">ID Proof*</span>
                  </div>
                </div>
            )}
           </>
      
           <h1 className='text-lg font-sans font-bold'>Course Details:</h1>
-          <div className='grid lg:grid-cols-3 gap-2'>
+          <div className='grid lg:grid-cols-2 gap-2'>
             <div>
+            <span className='text-sm text-red-500'>Registration Date*</span>
           <input 
           type='date'
           name='rdate'      
           value={formData.rdate}
          onChange={(e) => setFormData({ ...formData, rdate: e.target.value })}
-          className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+          className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='Registration Date'
           required
           />
-                    <span className='text-sm text-red-500'>Registration Date*</span>
         </div>
         <div>
+        <span className='text-sm text-red-500'>Course Joining Date*</span>
            <input 
             type='date'
           name='cdate'
           value={formData.cdate}
           onChange={(e) => setFormData({ ...formData, cdate: e.target.value })}
-           className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
+           className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='Course Joining Date'
           required
           />
-           <span className='text-sm text-red-500'>Course Joining Date*</span>
            </div>
            <div>
-          <input 
-           type='text'
-          name='cname'
-          value={formData.cname}
-          onChange={(e) => setFormData({ ...formData, cname: e.target.value })}
-          className='w-full rounded-lg p-3 text-gray-700 text-base border-2 border-gray-300 focus:border-none outline-none focus:outline-purple-500'
-          placeholder='Course Name'
-          required
-          />
-          </div>
+  <label className="text-sm text-red-500">Course Name*</label>
+  <select
+    name="cname"
+    value={formData.cname}
+    onChange={(e) => setFormData({ ...formData, cname: e.target.value })}
+    className="w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  outline-none focus:outline-purple-500"
+    required
+  >
+    <option value="" disabled>Select a course</option>
+    {course?.data?.map((item, index) => (
+                  <option key={item._id} value={item.course}>
+                    {item.course}
+                  </option>
+                ))}
+  </select>
+</div>
+
+          <div>
+  <span className="text-sm text-red-500">Course Preference*</span>
+  <select
+    name="mode"
+    value={formData.mode}
+    onChange={(e) => setFormData({ ...formData, mode: e.target.value })}
+    className="w-full h-12 rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500"
+    required
+  >
+    <option value="">Select Course Mode</option>
+    {["Live", "Pre-recorded"].map((mode, index) => (
+      <option key={index} value={mode}>
+        {mode}
+      </option>
+    ))}
+  </select>
+</div>
+
           </div>
           <div className='mt-4 flex justify-between'>
      <button
