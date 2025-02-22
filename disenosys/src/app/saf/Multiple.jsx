@@ -152,15 +152,15 @@ const Multiple = () => {
           }
 
       
-        if (!panno.trim()) {
-          alert("Error: Pan number is required.");
-          return;
-        }
+        // if (!panno.trim()) {
+        //   alert("Error: Pan number is required.");
+        //   return;
+        // }
       
-        if (!aadharno.trim()) {
-          alert("Error: Aadhar no is required.");
-          return;
-        }
+        // if (!aadharno.trim()) {
+        //   alert("Error: Aadhar no is required.");
+        //   return;
+        // }
       
         if (!blood.trim()) {
           alert("Error: Blood group is required.");

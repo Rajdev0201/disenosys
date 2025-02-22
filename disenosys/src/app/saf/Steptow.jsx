@@ -52,7 +52,7 @@ const Steptow = ({ nextStep, prevStep, formData, setFormData }) => {
         <h1 className="text-lg font-sans font-bold">Personal Details:</h1>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
           <div>
-            <span className="text-sm text-red-500">PAN No *</span>
+            <span className="text-sm text-gray-800">PAN No </span>
             <input
               type="text"
               name="panno"
@@ -67,7 +67,7 @@ const Steptow = ({ nextStep, prevStep, formData, setFormData }) => {
             )}
           </div>
           <div>
-            <span className="text-sm text-red-500">Aadhar No *</span>
+            <span className="text-sm text-gray-800">Aadhar No </span>
             <input
               type="text"
               name="aadharno"
@@ -144,7 +144,7 @@ const Steptow = ({ nextStep, prevStep, formData, setFormData }) => {
     required
   >
     <option value="">Select Marital Status</option>
-    {["Single", "Married"].map((status, index) => (
+    {["Married","Widowed","Divorced","Separated","Single"].map((status, index) => (
       <option key={index} value={status}>
         {status}
       </option>
