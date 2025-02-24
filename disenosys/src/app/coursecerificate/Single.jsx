@@ -4,20 +4,20 @@ import axios from "axios";
 import html2pdf from "html2pdf.js";
 import "../home/Home.css";
 import "../globals.css";
-import Nsdca from "../assests/profile/NSDCA.png";
-import Signature from "../assests/profile/Signature.png";
-import Image from "next/image";
+
 
 const CertificateSingle = () => {
   const [singleStudent, setSingleStudent] = useState({
     name: "",
     course: "",
     date:"",
-    udin:"",
     email: "",
   });
 
-
+  const [udin, setUdin] = useState("");
+  const generateRandomUdin = () => {
+    return Math.floor(1000000000 + Math.random() * 9000000000).toString();
+  };
 
 const [showCertificate, setShowCertificate] = useState(false);
 
@@ -38,7 +38,7 @@ const [showCertificate, setShowCertificate] = useState(false);
 
   const formattedDate = formatDate(singleStudent.date);
 
-  const generateSinglePDF = async (id, name, course, email,udin,date) => { 
+  const generateSinglePDF = async (id, name, course, email,date,udin) => { 
    
     setShowCertificate(true);
     try {
@@ -62,7 +62,7 @@ const [showCertificate, setShowCertificate] = useState(false);
         .outputPdf("datauristring");
         
         
-
+         
       const formData = new FormData();
       formData.append("pdfDataUrl", pdfDataUrl);
       formData.append("email", email);
@@ -88,15 +88,16 @@ const [showCertificate, setShowCertificate] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { name, course, email,udin,date } = singleStudent;
-    if (!email || !name || !course || !course ||!udin ||!date) {
+    const { name, course, email,date } = singleStudent;
+    if (!email || !name || !course || !course ||!date) {
       alert("Please fill all the fields.");
       return;
     }
-
+    const newUdin = generateRandomUdin();
+    setUdin(newUdin);
     // setShowSendCertificateButton(true);
     const uniqueId = `certificate-single`;
-    generateSinglePDF(uniqueId, name, course, email,udin,date);
+    generateSinglePDF(uniqueId, name, course, email,date,newUdin);
   };
 
   return (
@@ -143,7 +144,7 @@ const [showCertificate, setShowCertificate] = useState(false);
     />
   </div>
 
-  <div className="flex items-center mt-2 space-x-6">
+  {/* <div className="flex items-center mt-2 space-x-6">
     <span className="w-[400px] text-lg font-bold font-poppins text-[#182073]">UDIN NO:</span>
     <input
       type="text"
@@ -154,7 +155,7 @@ const [showCertificate, setShowCertificate] = useState(false);
       required
       className="border p-2 w-[800px] bg-blue-50 shadow-sm rounded"
     />
-  </div>
+  </div> */}
 
   <div className="flex items-center mt-2 space-x-6">
     <span className="w-[400px] text-lg font-bold font-poppins text-[#182073]">Completion Date:</span>
@@ -223,7 +224,7 @@ const [showCertificate, setShowCertificate] = useState(false);
       <div className="mt-20 mx-64">
         <p className="text-sm font-light font-sans">
           Certificate UDIN :{" "}
-          <span className="font-light">{singleStudent?.udin}</span>
+          <span className="font-light">{udin}</span>
         </p>
         <p className="text-sm font-light font-sans">
           Completion Date :{" "}

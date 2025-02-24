@@ -928,8 +928,13 @@ app.post("/upload-xl-course", uploadxlCourse.single("file"), (req, res) => {
   try {
     const workbook = XLSX.read(req.file.buffer, { type: "buffer" });
     const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const generateRandomUdin = () => {
+      return Math.floor(1000000000 + Math.random() * 9000000000).toString();
+    };
+
     const students = XLSX.utils.sheet_to_json(sheet).map(student => {
       if (student.date) student.date = excelDateToJSDate(student.date);
+      student.udin = generateRandomUdin();
       return student;
     });
 
@@ -1059,6 +1064,7 @@ auth: {
 const uploadCourse= multer({ storage: multer.memoryStorage() });
 app.post("/send-certificate-course", uploadCourse.none(), async(req, res) => {
   const { email, pdfDataUrl,name ,course,date,udin} = req.body;
+  console.log(udin)
   if (!email || !pdfDataUrl) {
     return res.status(400).send("Missing email or PDF data");
   }
@@ -1114,6 +1120,23 @@ auth: {
   res.status(200).send({ success: true, message: "Certificate sent successfully",data:newCourse });
 });
 
+app.get("/courselist-c" ,async (req,res) => {
+  try{
+      const course = await CourseC.find();
+  
+      if(!course){
+            return res.status(400).json({ error: 'No Data is available' });
+      }
+  
+      res.status(200).json({
+          message: 'course-c data is saved',
+          data: course,
+        });
+      }catch(err){
+          console.log(err);
+          return res.status(500).json({err : "data is not fetched"})
+      }
+})
 
 
 const uploadsingleExam = multer({ storage: multer.memoryStorage() });
@@ -1185,7 +1208,7 @@ const uploadsingleCourse= multer({ storage: multer.memoryStorage() });
 app.post("/send-single-certificate-course", uploadsingleCourse.none(),async (req, res) => {
   try {
     const { email, pdfDataUrl,name,course,date,udin} = req.body;
-    console.log(email)
+    console.log(udin)
     if (!email || !pdfDataUrl) {
       return res.status(400).send("Missing email or PDF data");
     }

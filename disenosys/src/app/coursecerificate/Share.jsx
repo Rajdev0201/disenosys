@@ -5,10 +5,8 @@ import axios from "axios";
 import html2pdf from "html2pdf.js";
 import "../home/Home.css";
 import "../globals.css";
-import Image from "next/image";
 import Single from "./Single";
-import Nsdca from "../assests/profile/NSDCA.png";
-import Signature from "../assests/profile/Signature.png";
+
 
 const CertificateComponent = () => {
   const [file, setFile] = useState(null);
@@ -18,11 +16,7 @@ const CertificateComponent = () => {
   const [isSent, setIsSent] = useState(false);
   const handleFileChange = (e) => setFile(e.target.files[0]);
   const [showCertificate, setShowCertificate] = useState(false);
-
-  // const handleInputChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setSingleStudent((prev) => ({ ...prev, [name]: value }));
-  // };
+   
 
   const handleUpload = async (e) => {
     e.preventDefault();
@@ -74,7 +68,7 @@ const CertificateComponent = () => {
     }
   };
 
-  const generatePDF = async (id, name, course, date, email, udin) => {
+  const generatePDF = async (id, name, course, date, email,udin) => {
     setShowCertificate(true);
     try {
       const element = document.getElementById(id);
@@ -315,6 +309,7 @@ const CertificateComponent = () => {
                   </p>
                 </div>
   
+
 
               <div className="flex flex-col justify-end mt-12 mr-16">
                 <div className="border border-b-2 border-gray-900 w-40"></div>

@@ -22,6 +22,8 @@ import mentor from "./features/mentorSlice.js";
 import courseLD from "./features/courseLDSlice.js";
 import teacher from "./features/teacherSlice.js"
 import online from "./features/onlineStdSlice.js";
+import coursec from "./features/CourseCertificateSlice.js";
+
 
 export default configureStore({
   reducer: {
@@ -47,5 +49,6 @@ export default configureStore({
     courseLD:courseLD,
     teacher:teacher,
     online:online,
+    coursec:coursec
   },
 });

@@ -288,14 +288,14 @@ router.get('/demo', (req, res) => {
         name: 'John Doe',
         email: 'john.doe@gmail.com',
         course: 'Catia v5',
-        udin: 'UD123456',
+        // udin: 'UD123456',
         date: '01/01/2025',
       },
       {
         name: 'Jane Smith',
         email: 'jane.smith@gmail.com',
         course: 'Advanced Catia',
-        udin: 'UD654321',
+        // udin: 'UD654321',
         date: '02/01/2025',
       }
     ];

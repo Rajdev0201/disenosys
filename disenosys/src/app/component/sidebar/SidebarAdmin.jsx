@@ -15,6 +15,7 @@ const Sidebar = () => {
   const [isUniversityDropdownOpen, setUniversityDropdownOpen] = useState(false);
   const [isCourse, setIsCourse] = useState(false);
   const [certificate, setCertificate] = useState(false);
+  const [certificateList, setCertificateList] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const links = [
@@ -23,8 +24,8 @@ const Sidebar = () => {
     { href: '/applicants', label: 'Applicants', icon: <GrScorecard />},
     { href: '/mentors', label: 'Mentors-Profile', icon: <GrScorecard />},
     { href: '/studentsapplied', label: 'SAF', icon: <GrScorecard />},
-    { href: '/settings', label: 'Settings', icon: <FaCog /> },
-    { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
+    // { href: '/settings', label: 'Settings', icon: <FaCog /> },
+    // { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
 
   ];
 
@@ -120,6 +121,28 @@ const Sidebar = () => {
                 <Link href="/gpdxcerificate" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/gpdxcerificate' ? 'bg-blue-700' : ''}`}>
                   <PiCertificateBold className="mr-3" />
                   GPDX
+                </Link>
+              </div>
+            )}
+          </div>
+
+          <div>
+            <button
+              onClick={() => setCertificateList(!certificateList)}
+              className={`flex items-center w-full px-4 py-2  mt-12 lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
+                path.startsWith('/course-c-list') || path.startsWith('/') ? 'bg-blue-700' : ''
+              }`}
+            >
+              <SiAuthentik className="mr-3" />
+              <span>Certification List</span>
+              <FaChevronDown className={`ml-auto transition-transform ${certificateList ? 'rotate-180' : ''}`} />
+            </button>
+
+            {certificateList && (
+              <div className="ml-8 mt-2 space-y-2">
+                <Link href="/course-c-list" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/course-c-list' ? 'bg-blue-700' : ''}`}>
+                  <PiCertificateBold className="mr-3" />
+                  Course List
                 </Link>
               </div>
             )}
