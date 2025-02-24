@@ -7,7 +7,7 @@ import { setCourse } from '../features/CourseCertificateSlice';
 
 export const CourseList = () => async (dispatch) => {
     try {
-        const res = await axios.get("http://localhost:8000/courselist-c");
+        const res = await axios.get("https://disenosys-dkhj.onrender.com/courselist-c");
         const getData = res.data;
         dispatch(setCourse(getData));
     } catch (error) {

@@ -45,7 +45,7 @@ const MyCourse = () => {
   return (
     <div className="p-6 flex flex-col w-full mt-12">
       <h2 className="text-[#182073] font-bold text-2xl md:text-3xl lg:text-4xl text-center mb-1">
-        My Courses
+        Course-Certificate-List
       </h2>
       
       <div className="flex flex-col md:flex-row justify-between items-center p-5">

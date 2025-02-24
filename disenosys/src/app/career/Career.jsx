@@ -377,8 +377,11 @@ const CareerForm = () => {
     file: null,
   });
     } catch (error) {
-      console.error("Error submitting career:", error);
-      alert("An error occurred. Please try again later.");
+      if (error.response && error.response.status === 409) {
+        alert("Your data already exists!");
+      } else {
+        alert("Something went wrong! Please try again.");
+      }
     }
     setLoad(false);
   };

@@ -277,6 +277,14 @@ app.post('/career', uploadCareer.single('file'), async (req, res) => {
   }
   console.log(req.file)
   try {
+
+    const existingCareer = await career.findOne({ 
+      $or: [{ email }, { name }] 
+    });
+
+    if (existingCareer) {
+      return res.status(409).json({ error: 'Your data already exists!' }); 
+    }
     const newCareer = new career({
       filePath: req.file.path,
       name,
@@ -587,9 +595,19 @@ app.get('/mentordata', async (req, res) => {
 
 app.get('/careerdata', async (req, res) => {
   try {
-    const data = await career.find();
+    const data = await career.aggregate([
+      {
+        $group: {
+          _id: "$name", 
+          data: { $first: "$$ROOT" } 
+        }
+      },
+      {
+        $replaceRoot: { newRoot: "$data" } 
+      }
+    ]);
 
-    if (!data) {
+    if (!data.length) {
       return res.status(400).json({ error: 'No Data is available' });
     }
 
@@ -602,6 +620,7 @@ app.get('/careerdata', async (req, res) => {
     return res.status(500).json({ error: 'Data could not be fetched' });
   }
 });
+
 
 
 app.use('/uploadsPortfolio', express.static(path.join(__dirname, 'uploadsPortfolio')));
