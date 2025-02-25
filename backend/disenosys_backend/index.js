@@ -114,6 +114,7 @@ const ExamC = require('./models/certificatesave.js');
 const InternC = require('./models/internship.js');
 const CourseC = require('./models/coursecertificate.js');
 const gpdxC = require('./models/Gpdxcertificate.js');
+const GpdxC = require("./models/Gpdxcertificate.js")
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
@@ -1157,6 +1158,62 @@ app.get("/courselist-c" ,async (req,res) => {
       }
 })
 
+
+
+app.get("/internlist-c" ,async (req,res) => {
+  try{
+      const intern = await InternC.find();
+  
+      if(!intern){
+            return res.status(400).json({ error: 'No Data is available' });
+      }
+  
+      res.status(200).json({
+          message: 'intern-c data is saved',
+          data: intern,
+        });
+      }catch(err){
+          console.log(err);
+          return res.status(500).json({err : "data is not fetched"})
+      }
+})
+
+app.get("/gpdx-c" ,async (req,res) => {
+  try{
+      const gpdx = await GpdxC.find();
+  
+      if(!gpdx){
+            return res.status(400).json({ error: 'No Data is available' });
+      }
+  
+      res.status(200).json({
+          message: 'gpdx-c data is saved',
+          data: gpdx,
+        });
+      }catch(err){
+          console.log(err);
+          return res.status(500).json({err : "data is not fetched"})
+      }
+})
+
+
+app.get("/exam-c" ,async (req,res) => {
+  try{
+      const exam = await ExamC.find();
+  
+      if(!exam){
+            return res.status(400).json({ error: 'No Data is available' });
+      }
+  
+      res.status(200).json({
+          message: 'exam-c data is saved',
+          data: exam,
+        });
+      }catch(err){
+          console.log(err);
+          return res.status(500).json({err : "data is not fetched"})
+      }
+})
 
 const uploadsingleExam = multer({ storage: multer.memoryStorage() });
 

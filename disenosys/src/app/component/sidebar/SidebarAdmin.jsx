@@ -2,12 +2,14 @@
 import { LogOut } from '@/app/Redux/features/authSlice.js';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FaCog, FaChartBar, FaSignOutAlt, FaChevronDown, FaBars } from 'react-icons/fa';
+import { FaCog, FaChartBar, FaSignOutAlt, FaChevronDown, FaBars, FaMailBulk, FaRegListAlt } from 'react-icons/fa';
 import { SiAuthentik } from "react-icons/si";
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { PiCertificateBold } from "react-icons/pi";
 import { GrScorecard } from "react-icons/gr";
+import { TfiWrite } from "react-icons/tfi";
+
 
 const Sidebar = () => {
   const path = usePathname();
@@ -17,21 +19,20 @@ const Sidebar = () => {
   const [certificate, setCertificate] = useState(false);
   const [certificateList, setCertificateList] = useState(false);
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  
 
   const links = [
     // { href: '/certificate', label: 'Post certificate', icon: <PiCertificateBold /> },
-    { href: '/gpdx', label: 'DEMO', icon: <GrScorecard />    },
+    { href: '/gpdx', label: 'DEMO', icon: <TfiWrite />    },
     { href: '/applicants', label: 'Applicants', icon: <GrScorecard />},
     { href: '/mentors', label: 'Mentors-Profile', icon: <GrScorecard />},
     { href: '/studentsapplied', label: 'SAF', icon: <GrScorecard />},
-    // { href: '/settings', label: 'Settings', icon: <FaCog /> },
-    // { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
+    { href: '/settings', label: 'Settings', icon: <FaCog /> },
+    { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
 
   ];
 
-  const handleLogout = () => {
-    dispatch(LogOut());
-  };
+ 
 
   return (
     <>
@@ -48,7 +49,7 @@ const Sidebar = () => {
 
 
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-[#182073] text-white flex flex-col justify-between transition-transform duration-300 transform ${
+        className={`fixed top-0 left-0 h-full w-64 bg-[#182073] text-white flex flex-col justify-between transition-transform duration-300 transform overflow-y-scroll ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 md:w-64 z-40`}
       >
@@ -66,7 +67,7 @@ const Sidebar = () => {
                 path.startsWith('/historycode') || path.startsWith('/externalcode') ? 'bg-blue-700' : ''
               }`}
             >
-              <SiAuthentik className="mr-3" />
+              <TfiWrite className="mr-3" />
               <span>GPDX</span>
               <FaChevronDown className={`ml-auto transition-transform ${isUniversityDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
@@ -96,10 +97,10 @@ const Sidebar = () => {
             <button
               onClick={() => setCertificate(!certificate)}
               className={`flex items-center w-full px-4 py-2  mt-12 lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
-                path.startsWith('/examcertficate') || path.startsWith('/certificate') ? 'bg-blue-700' : ''
+                path.startsWith('/examcertficate') || path.startsWith('/certificate') || path.startsWith('/coursecerificate') || path.startsWith('/gpdxcerificate') ? 'bg-blue-700' : ''
               }`}
             >
-              <SiAuthentik className="mr-3" />
+              <FaMailBulk className="mr-3" />
               <span>Post certificate</span>
               <FaChevronDown className={`ml-auto transition-transform ${certificate ? 'rotate-180' : ''}`} />
             </button>
@@ -130,19 +131,34 @@ const Sidebar = () => {
             <button
               onClick={() => setCertificateList(!certificateList)}
               className={`flex items-center w-full px-4 py-2  mt-12 lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
-                path.startsWith('/course-c-list') || path.startsWith('/') ? 'bg-blue-700' : ''
+                path.startsWith('/course-c-list') || path.startsWith('/intern-c-list') || path.startsWith('/gpdx-c-list') || path.startsWith('/exam-c-list') ? 'bg-blue-700' : ''
               }`}
             >
-              <SiAuthentik className="mr-3" />
+              <FaRegListAlt className="mr-3" />
               <span>Certification List</span>
               <FaChevronDown className={`ml-auto transition-transform ${certificateList ? 'rotate-180' : ''}`} />
             </button>
 
             {certificateList && (
-              <div className="ml-8 mt-2 space-y-2">
+              <div className="ml-8 mt-2 space-y-2"> 
+              <Link href="/intern-c-list" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/intern-c-list' ? 'bg-blue-700' : ''}`}>
+              <PiCertificateBold className="mr-3" />
+                   Intern List
+                </Link>
+
+                <Link href="/exam-c-list" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/exam-c-list' ? 'bg-blue-700' : ''}`}>
+                  <PiCertificateBold className="mr-3" />
+                  Exam List
+                </Link>
+
                 <Link href="/course-c-list" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/course-c-list' ? 'bg-blue-700' : ''}`}>
                   <PiCertificateBold className="mr-3" />
                   Course List
+                </Link>
+
+                <Link href="/gpdx-c-list" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/gpdx-c-list' ? 'bg-blue-700' : ''}`}>
+                  <PiCertificateBold className="mr-3" />
+                  Gpdx List
                 </Link>
               </div>
             )}
@@ -181,12 +197,7 @@ const Sidebar = () => {
           ))}
         </div>
 
-        <div className="px-6 py-4">
-          <button onClick={handleLogout} className="flex items-center py-3 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition-colors duration-200 w-full">
-            <FaSignOutAlt className="mr-3" />
-            <span>Logout</span>
-          </button>
-        </div>
+       
       </div>
 
       {isSidebarOpen && (

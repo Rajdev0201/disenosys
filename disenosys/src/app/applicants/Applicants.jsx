@@ -10,7 +10,6 @@ import { MdCancel } from "react-icons/md";
 const Applicants = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.career);
- console.log(data)
   const [filteredData, setFilteredData] = useState([]);
   const experience = [
     { label: "Fresher", value: 0 },

@@ -2,12 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from '../component/Pagination.jsx';
-import { CourseList } from '../Redux/action/CourseCertificate.js';
+import { ExamList } from '../Redux/action/examCertificate.js';
 
 
 const MyCourse = () => {
   const dispatch = useDispatch();
-  const course = useSelector((state) => state.coursec);
+  const course = useSelector((state) => state.exam);
+  console.log(course)
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
@@ -15,7 +16,7 @@ const MyCourse = () => {
   console.log(course);
 
   useEffect(() => {
-    dispatch(CourseList());
+    dispatch(ExamList());
   }, [dispatch]);
 
 
@@ -23,11 +24,9 @@ const MyCourse = () => {
       const filtered = course?.data?.filter((item) => {
         const name = item.name?.toLowerCase().includes(search.toLowerCase());
         const email = item.email?.toLowerCase().includes(search.toLowerCase());
-        const udin = item.Udin?.toLowerCase().includes(search.toLowerCase());
-        const course = item.course?.toLowerCase().includes(search.toLowerCase());
  
         return (
-          name || udin || course
+          name || email
         );
       });
       setFilteredData(filtered);
@@ -45,7 +44,7 @@ const MyCourse = () => {
   return (
     <div className="p-6 flex flex-col w-full mt-12">
       <h2 className="text-[#182073] font-bold text-2xl md:text-3xl lg:text-4xl text-center mb-1">
-        Course-Certificate-List
+        Exam-Certificate-List
       </h2>
       
       <div className="flex flex-col md:flex-row justify-between items-center p-5">
@@ -81,10 +80,8 @@ const MyCourse = () => {
                 <th className="py-3 px-4 text-center border-r border-[#182073]">S.No</th>
                 <th className="py-3 px-4 text-center border-r border-[#182073]">Name</th>
                 <th className="py-3 px-4 text-center border-r border-[#182073]">Email</th>
-                <th className="py-3 px-4 text-center border-r border-[#182073]">Course</th>
-                <th className="py-3 px-4 text-center border-r border-[#182073]">UDIN</th>
-                <th className="py-3 px-4 text-center border-r border-[#182073]">Completion</th>
-                <th className="py-3 px-4 text-center border-r border-[#182073]">created Date</th>
+                <th className="py-3 px-4 text-center border-r border-[#182073]">Score</th>
+                <th className="py-3 px-4 text-center ">created Date</th>
               </tr>
             </thead>
              <tbody>
@@ -94,9 +91,7 @@ const MyCourse = () => {
         <td className="py-3 px-4 text-center text-gray-400">{startIndex + index + 1}</td>
         <td className="py-3 px-4 text-center text-gray-400 w-44">{item.name}</td>
         <td className="py-3 px-4 text-center text-gray-400 w-44">{item.email}</td>
-        <td className="py-3 px-4 text-center text-gray-400">{item.course}</td>
-        <td className="py-3 px-4 text-center text-gray-400">{item.Udin}</td>
-        <td className="py-3 px-4 text-center text-gray-400">{new Date(item.Completion).toLocaleDateString()}</td>
+        <td className="py-3 px-4 text-center text-gray-400">{item.score}</td>
         <td className="py-3 px-4 text-center text-gray-400">
           {new Date(item.createdAt).toLocaleDateString()}
         </td>

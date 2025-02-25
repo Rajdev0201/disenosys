@@ -23,7 +23,9 @@ import courseLD from "./features/courseLDSlice.js";
 import teacher from "./features/teacherSlice.js"
 import online from "./features/onlineStdSlice.js";
 import coursec from "./features/CourseCertificateSlice.js";
-
+import intern from "./features/internshipCertificate.js";
+import gpdx from "./features/gpdxSlice.js";
+import exam from "./features/examCertificateSlice.js";
 
 export default configureStore({
   reducer: {
@@ -49,6 +51,9 @@ export default configureStore({
     courseLD:courseLD,
     teacher:teacher,
     online:online,
-    coursec:coursec
+    coursec:coursec,
+    intern:intern,
+    gpdx:gpdx,
+    exam:exam,
   },
 });
