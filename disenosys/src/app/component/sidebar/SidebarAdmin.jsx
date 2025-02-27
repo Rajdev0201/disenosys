@@ -29,7 +29,6 @@ const Sidebar = () => {
     { href: '/studentsapplied', label: 'SAF', icon: <GrScorecard />},
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
-
   ];
 
  

@@ -10,7 +10,6 @@ import { useRouter } from "next/navigation";
 
 const Course = () => {
   const pay = useSelector((state) => state.payment);
-  console.log(pay)
   const courses = useSelector((state) => state?.course?.courses);
   const user = useSelector((state) => state?.user);
   const dispatch = useDispatch();
