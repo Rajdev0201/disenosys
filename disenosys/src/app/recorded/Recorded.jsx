@@ -554,10 +554,10 @@ const Recorded = () => {
   <li>✅ Correct Ans - <span className="font-bold">Strength</span></li>
   <li>❌ Incorrect Ans - <span className="font-bold">strength</span> or <span className="font-bold">STRENGTH</span></li>
   <li>⏳ No time limit, but answer carefully.</li>
-  <li>✔️ Click <span className="font-bold">"Submit"</span> after answering all questions.</li>
+  <li>✔️ Click <span className="font-bold">Submit</span> after answering all questions.</li>
   <li>📌 If unsure, refer to the <span className="font-bold">Sample Answer</span> provided.</li>
   <li>🔍 After submission, incorrect answers will be marked <span className="text-red-600">Wrong Answered</span>, and correct answers will be marked <span className="text-green-600">Correct Answered</span>.</li>
-  <li>🔄 "Match the Following" questions will display sample text above the question.</li>
+  <li>🔄 Match the Following questions will display sample text above the question.</li>
   <li>🚀 Once all answers are correct, the next module will unlock for you to continue learning.</li>
   <li>🎉 <span className="font-bold text-blue-500">Happy Learning!</span></li>
 </ul>
