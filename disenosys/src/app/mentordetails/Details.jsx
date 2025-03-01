@@ -1,9 +1,10 @@
 "use client"
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { getMentor } from "../Redux/action/Portfolio.js";
 
 const MentorProfile = () => {
     const dispatch = useDispatch();
@@ -21,6 +22,9 @@ const MentorProfile = () => {
       setIsModalOpen(false);
     };
 
+    useEffect(() => {
+      dispatch(getMentor());
+    })
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-50 via-white to-blue-100 p-6">
 

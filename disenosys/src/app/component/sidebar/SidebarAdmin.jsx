@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { PiCertificateBold } from "react-icons/pi";
 import { GrScorecard } from "react-icons/gr";
 import { TfiWrite } from "react-icons/tfi";
+import { MdDashboardCustomize } from 'react-icons/md';
 
 
 const Sidebar = () => {
@@ -57,9 +58,12 @@ const Sidebar = () => {
           {/* <div className="text-center mt-20 text-2xl font-semibold  md:block hidden">
             Admin Panel
           </div> */}
-
+           
+           <div className='mt-20'>
+             <Link href="/dashboard-admin"  className={`flex items-center py-2  px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === "/dashboard-admin" ? 'bg-blue-700' : ''}`}> <MdDashboardCustomize className="mr-3"  />Dashboard</Link>
+           </div>
      
-          <div className='mt-20'>
+          <div className=''>
             <button
               onClick={() => setUniversityDropdownOpen(!isUniversityDropdownOpen)}
               className={`flex items-center w-full py-2 px-4  lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
