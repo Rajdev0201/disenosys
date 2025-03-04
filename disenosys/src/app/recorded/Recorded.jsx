@@ -7,6 +7,7 @@ import { CiLock, CiUnlock } from "react-icons/ci";
 import { payment } from "../Redux/action/Payment.js";
 import { PiCheckCircleFill, PiVideoFill } from "react-icons/pi";
 import "../home/Home.css";
+import { FaDiagramNext } from "react-icons/fa6";
 
 const Recorded = () => {
   const [openAccordionIndex, setOpenAccordionIndex] = useState(0);
@@ -422,6 +423,25 @@ const Recorded = () => {
     }, 500);
   };
 
+  const noQuiz = () => {
+    const currentModule = openAccordionIndex;
+    const nextModuleIndex = currentModule + 1;
+    const updatedUnlockedModules = {
+      ...unlockedModules,
+      [nextModuleIndex]: true,
+    };
+
+    setUnlockedModules(updatedUnlockedModules);
+    localStorage.setItem(
+      "unlockedModules",
+      JSON.stringify(updatedUnlockedModules)
+    );
+    setTimeout(() => {
+      setOpenAccordionIndex(nextModuleIndex);
+      setSelectedOptions({});
+      setFeedback({});
+    }, 500);
+  }
   const quizData = [
     [
       {
@@ -771,13 +791,22 @@ const Recorded = () => {
                                 </li>
                               );
                             })}
-
-                            <button
-                              onClick={() => showQuizSection(idx)}
-                              className="text-blue-600 mt-4 underline"
+                            {item?.questions ? (
+                                 <button
+                                 onClick={() => showQuizSection(idx)}
+                                 className="text-blue-600 mt-4 underline"
+                               >
+                                 Take Quiz
+                               </button>
+                            ) : (
+                              <button
+                              onClick={noQuiz}
+                              className="bg-blue-600 mt-4 p-2 text-white rounded-md flex items-center gap-2"
                             >
-                              Take Quiz
+                              Next Video <FaDiagramNext className=""/> 
                             </button>
+                            )}
+                         
                           </ul>
                         )}
                       </div>
