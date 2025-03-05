@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import "../home/Home.css"
+import Link from "next/link";
 const Scholarship = () => {
   return (
     <div className="">
@@ -142,9 +143,9 @@ const Scholarship = () => {
         </li>
       </div>
       <div className="flex flex-col justify-center items-start px-2 lg:px-24 lg:py-12 py-2">
-        <button className="px-5 py-3 text-white bg-[#0d1039] rounded-md shadow-inner mb-5">
+        <Link href="/scholarship-form" className="px-5 py-3 text-white bg-[#0d1039] rounded-md shadow-inner mb-5">
           Apply Now
-        </button>
+        </Link>
         <h4 className="text-md text-[#0d1039] font-garet">
           For any queries, contact us at{" "}
           <span className="text-blue-600">support@disenosys.com</span>

@@ -106,6 +106,7 @@ const blog = require("./routes/blog.js")
 const career = require("./models/career.js")
 const mentor = require('./models/mentor.js');
 const contact = require('./routes/contact.js')
+const scholar = require('./routes/scholar.js')
 const course = require('./routes/course.js')
 const teacher = require('./routes/teachers.js');
 const onlineStd = require('./routes/onlineStd.js');
@@ -132,6 +133,7 @@ app.use('/api/admin',code);
 app.use('/api/student',student);
 app.use('/api/blog',blog)
 app.use('/contact',contact);
+app.use('/scholar',scholar);
 app.use("/ld",course);
 app.use("/ld",teacher)
 app.use("/ld",onlineStd)

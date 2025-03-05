@@ -5,6 +5,7 @@ import { Online } from '../Redux/action/onlineStd';
 import { useSearchParams } from 'next/navigation';
 import { FaEye } from 'react-icons/fa';
 import Image from 'next/image';
+import StudentApplicationForm from './Pdf';
 
 const Details = () => {
     const online = useSelector((state) => state.online);
@@ -12,6 +13,7 @@ const Details = () => {
     const search = useSearchParams();
     const courseId = search.get("profileId");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isPdf, setPdf] = useState(false);
     const [is1,setIs1] = useState(false);
     const [is2,setIs2] = useState(false);
     const [is3,setIs3] = useState(false);
@@ -20,6 +22,14 @@ const Details = () => {
     const [is6,setIs6] = useState(false);
     const [is7,setIs7] = useState(false);
     const [is8,setIs8] = useState(false);
+
+    const openModalPdf = () => {
+      setPdf(true);
+    };
+  
+    const closeModalPdf = () => {
+      setPdf(false);
+    };
 
     const openModal = () => {
       setIsModalOpen(true);
@@ -102,7 +112,8 @@ const Details = () => {
     <div className='px-24 py-12'>
         <h1 className='text-2xl font-garet font-bold text-gray-800'>Documents:</h1>
         {online?.data?.filter((data) => data._id === courseId)?.map((data,i) => (
-          data.isIndia === "yes" ? (
+          <>
+          {data.isIndia === "yes" ? (
             <div key={i} className='grid grid-cols-4 border-gray-200 shadow-md p-4 gap-x-4 gap-y-3 rounded-md'>
 
                   <button
@@ -498,8 +509,10 @@ const Details = () => {
         
              )}
         </div>
-        
-          )
+          )}
+          <hr/>
+            <StudentApplicationForm data = {data} isPdf={isPdf} openModalPdf={openModalPdf} closeModalPdf={closeModalPdf}/>
+          </>
         ))}
         
     </div>

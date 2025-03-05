@@ -80,6 +80,7 @@ const Multiple = () => {
             father,
             mother,
             marital,
+            n1,
             ndob,
             nrealtion,
             naddress,
@@ -182,7 +183,7 @@ const Multiple = () => {
             return;
           }
 
-          if (!no1.trim()) {
+          if (!n1.trim()) {
             alert("Error: nominee name is required.");
             return;
           }
@@ -247,7 +248,7 @@ const Multiple = () => {
 
           
           if (isIndia === "yes") {
-            if (!pan || !aadharno) {
+            if (!panno || !aadharno) {
               alert("Error: Pan and Aadhar are required for Indian applicants.");
               return;
             }
@@ -295,7 +296,8 @@ const Multiple = () => {
         form.append("blood",formData.blood); 
         form.append("father",formData.father); 
         form.append("mother",formData.mother); 
-        form.append("marital",formData.marital);        
+        form.append("marital",formData.marital); 
+        form.append("n1",formData.n1);       
         form.append("ndob",formData.ndob);  
         form.append("nrealtion",formData.nrealtion);    
         form.append("naddress",formData.naddress);    

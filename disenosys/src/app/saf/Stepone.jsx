@@ -4,8 +4,8 @@ import DatePicker from "react-multi-date-picker";
 
 const Stepone = ({nextStep,formData,setFormData}) => {
   const gender = [
-    { label: "Male", value: 0},
-    { label: "Female", value: 1 },
+    { label: "Male", value: "Male"},
+    { label: "Female", value: "Female" },
   ];
 
   return (

@@ -74,11 +74,31 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+.bg-sch-form{
+  background-image: url("../assests/profile/sch-form.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 70%;
+}
 
 .certificate-container {
-  width: 980px; /* Define exact width */
-  height: 700px; /* Define exact height */
+  width: 980px; 
+  height: 700px; 
   position: relative;
+}
+
+.pdf-page {
+  page-break-after: always;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-bottom: 2px dashed gray;
+}
+
+@media print {
+  .pdf-page {
+    page-break-after: always;
+  }
 }
 
 
