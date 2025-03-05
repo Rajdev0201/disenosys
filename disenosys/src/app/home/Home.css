@@ -68,6 +68,13 @@
   background-size: cover;
 }
 
+.bg-sch{
+  background-image: url("../assests/profile/sch-bg.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .certificate-container {
   width: 980px; /* Define exact width */
   height: 700px; /* Define exact height */

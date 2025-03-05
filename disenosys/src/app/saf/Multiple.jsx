@@ -244,6 +244,14 @@ const Multiple = () => {
             alert("Error: Please enter your course preference.");
             return;
           }
+
+          
+          if (isIndia === "yes") {
+            if (!pan || !aadharno) {
+              alert("Error: Pan and Aadhar are required for Indian applicants.");
+              return;
+            }
+          }
       
           if (isIndia === "yes") {
             if (!profile || !ten || !plustwo || !ug || !pg || !afile || !pan || !voter) {
@@ -256,7 +264,7 @@ const Multiple = () => {
               return;
             }
           }
-
+               
           if (!rdate.trim()) {
             alert("Error: Registration Date is required.");
             return;

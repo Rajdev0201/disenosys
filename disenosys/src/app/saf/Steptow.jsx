@@ -49,10 +49,37 @@ const Steptow = ({ nextStep, prevStep, formData, setFormData }) => {
   return (
     <div>
       <div className="flex flex-col space-y-3 ">
+      <h1 className="text-lg font-sans font-bold">Are you an Indian citizen?</h1>
+      <div className="flex gap-4 mb-4">
+        <label className="flex items-center gap-2">
+          <input
+            type="radio"
+            name="isIndia"
+            value="yes"
+            checked={formData.isIndia === "yes"} 
+            onChange={(e) => setFormData({ ...formData, isIndia: e.target.value })}
+            className=''
+            required
+          />
+          Yes
+        </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="radio"
+            name="isIndia"
+            value="no"
+            checked={formData.isIndia === "no"} 
+            onChange={(e) => setFormData({ ...formData, isIndia: e.target.value })}
+            required
+          />
+          No
+        </label>
+      </div>
         <h1 className="text-lg font-sans font-bold">Personal Details:</h1>
+        {formData.isIndia === "yes" && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
           <div>
-            <span className="text-sm text-gray-800">PAN No </span>
+            <span className="text-sm text-red-500">PAN No *</span>
             <input
               type="text"
               name="panno"
@@ -67,7 +94,7 @@ const Steptow = ({ nextStep, prevStep, formData, setFormData }) => {
             )}
           </div>
           <div>
-            <span className="text-sm text-gray-800">Aadhar No </span>
+            <span className="text-sm text-red-500">Aadhar No *</span>
             <input
               type="text"
               name="aadharno"
@@ -154,6 +181,85 @@ const Steptow = ({ nextStep, prevStep, formData, setFormData }) => {
 
  
         </div>
+        )}
+
+{formData.isIndia === "no" && (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+          <div>
+            <span className="text-sm text-red-500">Blood Group*</span>
+            <select
+              name="blood"
+              value={formData.blood}
+              onChange={(e) =>
+                setFormData({ ...formData, blood: e.target.value })
+              }
+              className="w-full h-12 rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500"
+              required
+            >
+              <option value="">Select Blood Group</option>
+              {["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"].map(
+                (group, index) => (
+                  <option key={index} value={group}>
+                    {group}
+                  </option>
+                )
+              )}
+            </select>
+          </div>
+
+          <div>
+          <span className='text-sm text-red-500'>Father Name *</span>
+            <input
+              type="text"
+              name="father"
+              value={formData.father}
+              onChange={(e) =>
+                setFormData({ ...formData, father: e.target.value })
+              }
+              className="w-full h-12 rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500"
+              placeholder="Father Name"
+              required
+            />
+          </div>
+
+          <div>
+          <span className='text-sm text-red-500'>Mother Name *</span>
+            <input
+              type="text"
+              name="mother"
+              value={formData.mother}
+              onChange={(e) =>
+                setFormData({ ...formData, mother: e.target.value })
+              }
+              className="w-full h-12 rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500"
+              placeholder="Mother Name"
+              required
+            />
+          </div>
+          <div>
+  <span className="text-sm text-red-500">Marital Status*</span>
+  <select
+    name="marital"
+    value={formData.marital}
+    onChange={(e) =>
+      setFormData({ ...formData, marital: e.target.value })
+    }
+    className="w-full h-12 rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500"
+    required
+  >
+    <option value="">Select Marital Status</option>
+    {["Married","Widowed","Divorced","Separated","Single"].map((status, index) => (
+      <option key={index} value={status}>
+        {status}
+      </option>
+    ))}
+  </select>
+</div>
+
+ 
+        </div>
+        )}
+
         <h1 className="text-lg font-sans font-bold">Nominee Details:</h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
