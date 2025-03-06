@@ -331,10 +331,12 @@ const uploadMentor = multer({
 
 const storageSPA = new CloudinaryStorage({
   cloudinary: cloudinary,
-  params: {
-    folder: 'SPA_images', 
-    format: async (req, file) => 'png', 
-    public_id: (req, file) => `${Date.now()}-${file.originalname}`,
+  params: async (req, file) => {
+    return {
+      folder: 'SPA_images',
+      format: file.fieldname === 'profile' ? 'png' : 'pdf', 
+      public_id: `${Date.now()}-${file.originalname}`,
+    };
   },
 });
 
@@ -596,17 +598,51 @@ app.get('/mentordata', async (req, res) => {
   }
 });
 
+// app.get('/careerdata', async (req, res) => {
+//   try {
+//     const data = await career.aggregate([
+//       {
+//         $group: {
+//           _id: "$name", 
+//           data: { $first: "$$ROOT" } 
+//         }
+//       },
+//       {
+//         $replaceRoot: { newRoot: "$data" } 
+//       }
+//     ]);
+
+//     if (!data.length) {
+//       return res.status(400).json({ error: 'No Data is available' });
+//     }
+
+//     res.status(200).json({
+//       message: 'Career data retrieved successfully',
+//       data: data,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(500).json({ error: 'Data could not be fetched' });
+//   }
+// });
+
 app.get('/careerdata', async (req, res) => {
   try {
     const data = await career.aggregate([
       {
+        $sort: { createdAt: -1 } // Step 1: Sort all records by newest first
+      },
+      {
         $group: {
-          _id: "$name", 
-          data: { $first: "$$ROOT" } 
+          _id: "$name", // Step 2: Group by unique user (email or userId)
+          latestApplication: { $first: "$$ROOT" } // Step 3: Keep the latest application
         }
       },
       {
-        $replaceRoot: { newRoot: "$data" } 
+        $replaceRoot: { newRoot: "$latestApplication" } // Step 4: Replace the root to show only filtered data
+      },
+      {
+        $sort: { createdAt: -1 } // Step 5: Sort again to maintain order
       }
     ]);
 

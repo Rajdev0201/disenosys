@@ -44,8 +44,20 @@ const Applicants = () => {
     { label: "29 Years", value: 29 },
     { label: "30 Years", value: 30 }
   ];
+  const experienceOptions = [
+    { label: "Fresher", value: "0" },
+    { label: "1 Year", value: "1" },
+    { label: "2-3 Years", value: "2-3" },
+    { label: "4-5 Years", value: "4-5" },
+    { label: "6-10 Years", value: "6-10" },
+    { label: "11-15 Years", value: "11-15" },
+    { label: "16-20 Years", value: "16-20" },
+    { label: "21-30 Years", value: "21-30" },
+  ];
+  
   const [filters, setFilters] = useState({
     experience: "",
+    multiExperience: "",
     notice: "",
     expmonths: "",
     companyName: "",
@@ -56,6 +68,8 @@ const Applicants = () => {
 
   const router = useRouter();
 
+  
+  
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -65,6 +79,7 @@ const Applicants = () => {
   const applyFilters = () => {
     const {
       experience,
+      multiExperience,
       notice,
       expmonths,
       companyName,
@@ -81,6 +96,17 @@ const Applicants = () => {
 
       const matchesExperience = experience !== "" ? profileExperience === parseInt(experience) : true;
 
+      let matchesMultiExperience = true;
+      if (multiExperience) {
+        let minExp, maxExp;
+        if (multiExperience.includes("-")) {
+          [minExp, maxExp] = multiExperience.split("-").map(Number);
+        } else {
+          minExp = maxExp = Number(multiExperience);
+        }
+        matchesMultiExperience =
+          profileExperience >= minExp && profileExperience <= maxExp;
+      }
 
       const matchesNotice = notice ? profileNotice.includes(notice) : true;
 
@@ -101,7 +127,7 @@ const Applicants = () => {
           : true;
         const matchesDomain = domain
           ? company.rows?.[0]?.domain
-              .toLowerCase()
+              .toLowerCase() 
               .includes(domain.toLowerCase())
           : true;
         const matchesSoftware = software
@@ -112,6 +138,7 @@ const Applicants = () => {
 
         return (
           matchesCompanyName &&
+          matchesMultiExperience &&
           matchesIndustry &&
           matchesDomain &&
           matchesSoftware
@@ -148,6 +175,7 @@ const Applicants = () => {
   const handleReset = () => {
     setFilters({
       experience: "",
+      multiExperience: "",
       notice: "",
       expmonths: "",
       companyName: "",
@@ -161,10 +189,11 @@ const Applicants = () => {
   useEffect(() => {
     applyFilters();
   }, [filters, data]);
-
+ 
   const goTo = (id) => {
-    router.push(`/profileapplied?profileId=${id}`);
+    window.open(`/profileapplied?profileId=${id}`, '_blank');
   };
+  
   useEffect(() => {
     dispatch(getCareer());
   }, [dispatch]);
@@ -337,7 +366,6 @@ const Applicants = () => {
     <div className="">
       <div className="px-24 py-12">
         <div className="grid grid-cols-4 gap-4">
-  
           <div>
                 <select
                   name="experience"
@@ -359,8 +387,21 @@ const Applicants = () => {
                   ))}
                 </select>
           </div>
-               
-          
+          <div>
+          <select
+        className="w-full  rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500"
+        name="multiExperience"
+        value={filters.multiExperience}
+        onChange={handleFilterChange}
+      >
+        <option value="">All Experience Ranges</option>
+        {experienceOptions.map((exp) => (
+          <option key={exp.value} value={exp.value}>
+            {exp.label}
+          </option>
+        ))}
+      </select>
+           </div>
           <div>
             <select
               name="notice"
@@ -463,19 +504,20 @@ const Applicants = () => {
               className="w-full rounded-lg p-3 text-gray-700 text-base border-2 border-blue-500 focus:border-none outline-none focus:outline-purple-500 placeholder:text-gray-800"
             />
           </div>
-          <div className="flex gap-4">
+          
+          <div className="flex gap-2">
             <button
-              className="flex ring-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold font-poppins bg-red-600 text-white items-center justify-center px-6 py-1"
+              className="flex ring-2 gap-2 py-2 px-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold font-poppins bg-red-600 text-white items-center justify-center "
               onClick={handleDownload}
             >
-              Download <BsFiletypeXlsx className="px-2 w-10 h-10" />
+              Download <BsFiletypeXlsx className="" />
             </button>
             
           <button
-              className="flex ring-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold font-poppins bg-stone-600 text-white items-center justify-center px-4 py-1"
+              className="flex gap-2 ring-2 p-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold font-poppins bg-stone-600 text-white items-center justify-center"
               onClick={handleReset}
            >
-             Reset <MdCancel className="px-2 w-10 h-10" />
+             Reset <MdCancel className="" />
             </button>
           </div>
       
@@ -511,7 +553,6 @@ const Applicants = () => {
     </p>
   </div>
 
-  {/* Button Container */}
   <div className="mt-auto flex items-center justify-center space-x-4">
     <button
       className="rounded-full bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 dark:bg-indigo-400 dark:hover:bg-indigo-500"

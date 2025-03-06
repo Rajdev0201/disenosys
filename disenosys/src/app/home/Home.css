@@ -91,8 +91,8 @@
 .pdf-page {
   page-break-after: always;
   padding: 20px;
-  margin-bottom: 20px;
-  border-bottom: 2px dashed gray;
+  /* margin-bottom: 20px;
+  border-bottom: 2px dashed gray; */
 }
 
 @media print {

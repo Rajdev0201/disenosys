@@ -1,34 +1,94 @@
 "use client"
-// import Image from 'next/image';
-import React from 'react'
-// import logo from "../assests/profile/logo.jpg"
+import React, { useState } from 'react'
 import { FaCheckCircle } from 'react-icons/fa';
 import "../home/Home.css"
-
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 
 
  const  StudentApplicationForm = ({ data,isPdf, openModalPdf,closeModalPdf }) => {
+
+  const [show,setShow] = useState(false);
+
+  const downloadPDF = () => {
+    setShow(true)
+    setTimeout(() => {
+      const pdf = new jsPDF("p", "mm", "a4");
+      const pages = document.querySelectorAll(".pdf-page"); // Select all pdf-page sections
+  
+      if (!pages.length) {
+        alert("Error: No pages found!");
+        return;
+      }
+  
+      const generatePage = (index) => {
+        if (index >= pages.length) {
+          pdf.save("Student_Application_Form.pdf");
+          return;
+        }
+  
+        html2canvas(pages[index], {
+          scale: 2,
+          useCORS: true,
+          windowWidth: pages[index].scrollWidth,
+          windowHeight: pages[index].scrollHeight,
+        }).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          const imgWidth = 210; // A4 width in mm
+          const pageHeight = 297; // A4 height in mm
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  
+          if (index !== 0) {
+            pdf.addPage(); // Add new page except for the first one
+          }
+  
+          pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+          generatePage(index + 1); // Process the next page
+        });
+      };
+  
+      generatePage(0); // Start generating pages
+    }, 500);
+    setShow(false)
+  };
+  
+  
     return (
         <>
         <div className=' border-gray-200 shadow-md p-4 gap-x-4 gap-y-3 rounded-md mt-6 w-1/4 flex flex-col justify-center'>
         <h1 className='text-2xl font-garet font-bold text-gray-800 text-center'>SAF FORM:</h1>
-          <button
+        <div className='flex gap-2'>
+        <button
         onClick={openModalPdf}
         className="bg-blue-600 mt-5 text-white px-4 py-2 rounded-md font-garet"
       >
         View PDF
       </button>
+      <button onClick={() => { openModalPdf(); setTimeout(downloadPDF, 700); }} 
+  className="bg-green-600 mt-5 text-white px-4 py-2 rounded-md font-garet">
+  Download PDF
+</button>
+
+        </div>
+
+
       </div>
       {isPdf && (
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white p-6 w-3/4 rounded-md shadow-lg overflow-y-auto max-h-[95vh] relative">
-            <button
-              onClick={closeModalPdf}
-              className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-md"
-            >
-              Close
-            </button>
+      <div  className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div id="application-form" className="bg-white p-6 w-3/4 rounded-md shadow-lg overflow-y-auto max-h-[95vh] relative">
+             {show ? ( 
+              "" ): (
+                <button
+                onClick={closeModalPdf}
+                className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-md"
+              >
+                Close
+              </button>
+              )
+             }
+          
+        <div className="pdf-page">
         <h2 className="text-center text-2xl font-medium mb-12 mt-4">Student Application Form (SAF)</h2>
 
         <div className="grid grid-cols-2 gap-4 mb-4 px-8">
@@ -41,15 +101,15 @@ import "../home/Home.css"
             <p>Last Name : {data.lname}</p>
             <p>Gender : {data.gender}</p>
             </div>
-            <div className="w-24 h-24 border border-gray-400 rounded-md mx-auto -mt-10">
-                <img src={data.profile} alt='profile'/>
+            <div className="w-24 h-24 border border-gray-400 rounded-md mx-auto -mt-5">
+                <img src={data.profile} alt='profile' className='w-full'/>
             </div>
           </div>
   
         </div>
   
       
-        <div className="pdf-page">
+      
         <h3 className="font-semibold mt-10 mb-2">Address Details</h3>
         <table className="w-full border-2 border-gray-500">
           <tbody>
@@ -117,11 +177,12 @@ import "../home/Home.css"
             </tr>
           </tbody>
         </table>
-         <div className='text-sm text-center text-gray-400'>page-1</div>
+         {/* <div className='text-sm text-center text-gray-400'>page-1</div> */}
           </div>
  
 
-          <div className="pdf-page">
+          <div className="pdf-page min-h-screen flex flex-col justify-between">
+  <div>
         <h3 className="font-semibold mt-8 mb-2">Nominee Details</h3>
         <table className="w-full border-2 border-gray-500">
           <tbody>
@@ -185,10 +246,6 @@ import "../home/Home.css"
             </tr>
           </tbody>
         </table>
-        <div className='text-sm text-center text-gray-400'>page-2</div>
-      </div>
-
-      <div className="pdf-image">
         <h3 className="font-semibold mt-8 mb-2">Documents to be submit</h3>
         {data.isIndia === "yes" ? (
         <table className="w-full border-2 border-gray-500">
@@ -232,6 +289,11 @@ import "../home/Home.css"
           </table> 
         )
     }
+        </div>
+        {/* <div className='text-sm text-center text-gray-400'>page-2</div> */}
+          </div>
+
+      <div className="pdf-page">
         <h3 className="font-semibold mt-6 mb-2">Course Details</h3>
         <table className="w-full border-2 border-gray-500 mb-3">
           <tbody>
@@ -244,9 +306,14 @@ import "../home/Home.css"
               <td className="p-2 w-1/2 border-2 border-gray-500">{data.rdate}</td>
             </tr>
             <tr className="border-2 border-gray-500">
-              <td className="p-2 w-1/2 font-medium border-2 border-gray-500">Course Name
+              <td className="p-2 w-1/2 font-medium border-2 border-gray-500">Course Joining Date
               </td>
               <td className="p-2 w-1/2 border-2 border-gray-500">{data.cdate}</td>
+            </tr>
+            <tr className="border-2 border-gray-500">
+              <td className="p-2 w-1/2 font-medium border-2 border-gray-500">Course Name
+              </td>
+              <td className="p-2 w-1/2 border-2 border-gray-500">{data.cname}</td>
             </tr>
             <tr className="border-2 border-gray-500">
               <td className="p-2 w-1/2 font-medium border-2 border-gray-500">Course Mode
@@ -255,10 +322,11 @@ import "../home/Home.css"
             </tr>
           </tbody>
         </table>
-        <div className='text-sm text-center text-gray-400'>page-3</div>
+        {/* <div className='text-sm text-center text-gray-400'>page-3</div> */}
       </div>
       </div>
       </div>
+      
       )}
       </>
     );

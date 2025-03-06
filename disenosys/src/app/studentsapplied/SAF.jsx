@@ -50,7 +50,7 @@ const SAF = () => {
             <div className="mt-3 space-y-2 text-gray-600 dark:text-gray-300">
               <p><span className="font-medium text-base">ID:</span> {data?.sid}</p>
               <p><span className="font-medium text-base">Phone:</span> {data?.no1}</p>
-              <p><span className="font-medium text-base">Course:</span> {data?.cname}</p>
+              {/* <p><span className="font-medium text-base">Course:</span> {data?.cname}</p> */}
             </div>
 
     

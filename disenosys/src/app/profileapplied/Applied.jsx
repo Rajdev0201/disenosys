@@ -164,7 +164,8 @@ const Applied = () => {
                     <div className="group rounded-lg bg-gradient-to-r w-44 from-blue-700 to-blue-500 p-5 text-center transition duration-300 hover:shadow-lg cursor-pointer">
                       <p className="text-white text-2xl font-bold">
                         <p className="text-white text-2xl font-bold">
-                          {data.experience}.{parseInt(data?.expmonths)} Years
+                        {data.experience}
+                        {data.expmonths && parseInt(data.expmonths) ? `.${parseInt(data.expmonths)}` : ""} Years
                         </p>
                       </p>
                       <p className="text-white text-sm">Experience</p>
