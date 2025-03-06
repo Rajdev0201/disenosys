@@ -142,12 +142,12 @@ const Multiple = () => {
             return;
           }
 
-          if (!no1.trim() || !/^\d{10}$/.test(no1)) {
+          if (!no1) {
             alert("Error: Personal number is required.");
             return;
           }
 
-          if (!emg.trim() || !/^\d{10}$/.test(emg)) {
+          if (!emg) {
             alert("Error: Emergency number is required.");
             return;
           }

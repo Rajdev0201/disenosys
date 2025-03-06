@@ -7,6 +7,7 @@ import html2canvas from "html2canvas";
 
 
 
+
  const  StudentApplicationForm = ({ data,isPdf, openModalPdf,closeModalPdf }) => {
 
   const [show,setShow] = useState(false);
@@ -101,8 +102,9 @@ import html2canvas from "html2canvas";
             <p>Last Name : {data.lname}</p>
             <p>Gender : {data.gender}</p>
             </div>
-            <div className="w-24 h-24 border border-gray-400 rounded-md mx-auto -mt-5">
-                <img src={data.profile} alt='profile' className='w-full'/>
+            <div className="w-28 h-28 border border-gray-400 rounded-md mx-auto -mt-5">
+                <img src={data.profile} alt='profile' className=' object-cover'/>
+                {/* <Image src={profile} alt='profile' /> */}
             </div>
           </div>
   

@@ -38,7 +38,7 @@ const SAF = () => {
               >
                 <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
               </svg> */}
-              <img src={data?.profile} className='object-cover w-28  ring-2 ring-blue-400  rounded-full' alt='profile'/>
+              <img src={data?.profile} className='object-cover w-28  ring-2 ring-blue-400  rounded-md' alt='profile'/>
               <figcaption className="sr-only">{data?.fname}, Profile</figcaption>
             </figure>
 
