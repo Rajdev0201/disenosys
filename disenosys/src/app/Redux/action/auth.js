@@ -100,7 +100,7 @@ export const SignupData = (userData) => async (dispatch) => {
         theme: "dark",
       });
       localStorage.setItem("profile", JSON.stringify(data));
-      router.push("/historycode")
+      router.push("/dashboard-admin")
     }catch(err) {
       toast.error(err?.response?.data?.message, {
         position: "top-center",

@@ -372,7 +372,7 @@ const Recorded = () => {
       );
 
       const correctAnswerArray = Array.isArray(question.correctAnswer)
-        ? question.correctAnswer.map((item) => item.trim())
+        ? question.correctAnswer.map((item) => item.trim().toLowerCase())
         : [];
 
       console.log(
@@ -551,13 +551,14 @@ const Recorded = () => {
                           return (
                             <div key={originalModuleIdx} className="my-4">
                               {/* <h3 className="font-bold text-lg">Module: {originalModuleIdx}</h3> */}
+                              <div className="flex justify-end">
                               <button
                                 onClick={() => setShowModal(true)}
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition mb-2"
                               >
                                 Click Info*
                               </button>
-
+                              </div>
                               {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
@@ -570,9 +571,6 @@ const Recorded = () => {
 
             <ul className="list-disc pl-5 space-y-2 text-gray-700">
   <li>⚡ Input format: Ensure all answers follow the specified format.</li>
-  <li>✍️ Answers should be case-sensitive.</li>
-  <li>✅ Correct Ans - <span className="font-bold">Strength</span></li>
-  <li>❌ Incorrect Ans - <span className="font-bold">strength</span> or <span className="font-bold">STRENGTH</span></li>
   <li>⏳ No time limit, but answer carefully.</li>
   <li>✔️ Click <span className="font-bold">Submit</span> after answering all questions.</li>
   <li>📌 If unsure, refer to the <span className="font-bold">Sample Answer</span> provided.</li>
@@ -596,7 +594,7 @@ const Recorded = () => {
                               {module?.questions?.map((question, qIdx) => {
                                 return (
                                   <div key={qIdx} className="space-y-4 mb-2">
-                                    <div className="shadow-inner rounded-md p-4">
+                                    <div className="rounded-xl border border-gray-200 shadow-sm bg-white font-garet p-4">
                                       <p className="font-semibold mb-2">
                                         {question.head}
                                       </p>
@@ -611,7 +609,7 @@ const Recorded = () => {
                                         )}
                                       </p>
 
-                                      <div className="space-y-2">
+                                      <div className="space-y-3">
                                         {question?.questionText
                                           ?.split(",")
                                           .map((sentence, sentenceIdx) => (
@@ -644,11 +642,7 @@ const Recorded = () => {
                                                           } // Ensure input value is updated correctly
                                                           onChange={(e) => {
                                                             const newValue =
-                                                              e.target.value;
-                                                            console.log(
-                                                              `Updating Key: ${inputKey}, New Value: ${newValue}`
-                                                            );
-
+                                                              e.target.value.toLowerCase();
                                                             setSelectedOptions(
                                                               (prev) => ({
                                                                 ...prev,

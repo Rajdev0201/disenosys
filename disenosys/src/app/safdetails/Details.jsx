@@ -171,13 +171,13 @@ const Details = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+              className="absolute top-4  right-0 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
               onClick={closeModal}
             >
               Close
             </button>
 
-            <div className="w-11/12 h-5/6 flex justify-center items-center mt-6">
+            <div className="w-11/12 h-full flex justify-center items-center mt-6">
               {data?.file.endsWith(".pdf") ? (
                 <iframe
                   src={data?.file}
@@ -204,13 +204,13 @@ const Details = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+              className="absolute top-4 right-0 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
               onClick={closeModal}
             >
               Close
             </button>
 
-            <div className="w-11/12 h-5/6 flex justify-center items-center mt-6">
+            <div className="w-11/12  h-full flex justify-center items-center mt-6">
             {data?.file.endsWith(".pdf") ? (
                 <iframe
                   src={data?.file}
@@ -237,13 +237,13 @@ const Details = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+              className="absolute top-4  right-0 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
               onClick={closeModal1}
             >
               Close
             </button>
 
-            <div className="w-11/12 h-5/6 flex justify-center items-center mt-6">
+            <div className="w-11/12  h-full flex justify-center items-center mt-6">
             {data?.ten.endsWith(".pdf") ? (
                 <iframe
                   src={data?.ten}
@@ -271,13 +271,13 @@ const Details = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+              className="absolute top-4  right-0 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
               onClick={closeModal2}
             >
               Close
             </button>
 
-            <div className="w-11/12 h-5/6 flex justify-center items-center mt-6">
+            <div className="w-11/12  h-full flex justify-center items-center mt-6">
             {data?.plustwo.endsWith(".pdf") ? (
                 <iframe
                   src={data?.plustwo}
@@ -304,13 +304,13 @@ const Details = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+              className="absolute top-4  right-0 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
               onClick={closeModal3}
             >
               Close
             </button>
 
-            <div className="w-11/12 h-5/6 flex justify-center items-center mt-6">
+            <div className="w-11/12  h-full flex justify-center items-center mt-6">
             {data?.ug.endsWith(".pdf") ? (
                 <iframe
                   src={data?.ug}
@@ -336,13 +336,13 @@ const Details = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+              className="absolute top-4  right-0 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
               onClick={closeModal4}
             >
               Close
             </button>
 
-            <div className="w-11/12 h-5/6 flex justify-center items-center mt-6">
+            <div className="w-11/12  h-full flex justify-center items-center mt-6">
             {data?.pg.endsWith(".pdf") ? (
                 <iframe
                   src={data?.pg}
@@ -369,13 +369,13 @@ const Details = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+              className="absolute top-4  right-0 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
               onClick={closeModal5}
             >
               Close
             </button>
 
-            <div className="w-11/12 h-5/6 flex justify-center items-center mt-6">
+            <div className="w-11/12  h-full flex justify-center items-center mt-6">
             {data?.afile.endsWith(".pdf") ? (
                 <iframe
                   src={data?.afile}
@@ -402,13 +402,13 @@ const Details = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+              className="absolute top-4  right-0 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
               onClick={closeModal6}
             >
               Close
             </button>
 
-            <div className="w-11/12 h-5/6 flex justify-center items-center mt-6">
+            <div className="w-11/12  h-full flex justify-center items-center mt-6">
             {data?.voter.endsWith(".pdf") ? (
                 <iframe
                   src={data?.voter}
@@ -436,13 +436,13 @@ const Details = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+              className="absolute top-4  right-0 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
               onClick={closeModal7}
             >
               Close
             </button>
 
-            <div className="w-11/12 h-5/6 flex justify-center items-center mt-6">
+            <div className="w-11/12  h-full flex justify-center items-center mt-6">
             {data?.pan.endsWith(".pdf") ? (
                 <iframe
                   src={data?.pan}
@@ -480,13 +480,13 @@ const Details = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
             <button
-              className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
+              className="absolute top-4  right-0 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600"
               onClick={closeModal8}
             >
               Close
             </button>
 
-            <div className="w-11/12 h-5/6 flex justify-center items-center mt-6">
+            <div className="w-11/12  h-full flex justify-center items-center mt-6">
             {data?.idProof.endsWith(".pdf") ? (
                 <iframe
                   src={data?.idProof}
