@@ -59,7 +59,7 @@ const CheckCertificate = () => {
     <iframe
         src={`${certificate.url}#toolbar=0`}
         width="100%"
-        height="600px"
+        height="500px"
         className="border"
     ></iframe>
 ) : (
