@@ -22,9 +22,9 @@ const CheckCertificate = () => {
     };
 
     return (
-        <div className='mx-auto container flex flex-col space-y-4 items-center justify-center font-garet relative'>
+        <div className='lg:mx-auto container flex flex-col space-y-4 items-center justify-center font-garet relative'>
             <h1 className="text-2xl font-semibold">Certificate Verification</h1>
-            <div className="border-2 border-gray-300 rounded-md shadow-md flex flex-col w-1/4 p-6 space-y-4">
+            <div className="border-2 border-gray-300 rounded-md shadow-md flex flex-col w-full lg:w-1/4 p-6 space-y-4">
                 <input
                     type="text"
                     value={udin}
@@ -44,7 +44,7 @@ const CheckCertificate = () => {
 
             {isModalOpen && certificate && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-md z-50">
-                    <div className="bg-white rounded-lg p-6 shadow-lg w-1/2 relative">
+                    <div className="bg-white rounded-lg p-6 shadow-lg lg:w-1/2 relative">
                         <button
                             onClick={() => setIsModalOpen(false)}
                             className="absolute top-2 right-3 text-red-500 font-bold text-xl"
@@ -56,15 +56,16 @@ const CheckCertificate = () => {
                         <p><strong>Name:</strong> {certificate.name}</p>
                         <p><strong>Course Name:</strong> {certificate.course}</p>
                         {certificate.url ? (
-                            <iframe
-                                src={certificate.url}
-                                width="100%"
-                                height="400px"
-                                className="border"
-                            ></iframe>
-                        ) : (
-                            <p className="text-red-500">PDF not available</p>
-                        )}
+    <iframe
+        src={`${certificate.url}#toolbar=0`}
+        width="100%"
+        height="350px"
+        className="border"
+    ></iframe>
+) : (
+    <p className="text-red-500">PDF not available</p>
+)}
+
                     </div>
                 </div>
             )}
