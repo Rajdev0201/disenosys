@@ -1172,6 +1172,7 @@ auth: {
     email:email,
     Completion:date,
     Udin:udin,
+    url:pdfDataUrl
   });
 
   await newCourse.save();
@@ -1195,6 +1196,30 @@ app.get("/courselist-c" ,async (req,res) => {
           return res.status(500).json({err : "data is not fetched"})
       }
 })
+
+app.get("/udinget", async (req, res) => {
+  try {
+      const { udin } = req.query;
+      // console.log(udin);
+      if (!udin) {
+          return res.status(400).json({ error: "UDIN is required" });
+      }
+
+      const course = await CourseC.findOne({ Udin:udin }); 
+      // console.log(course)
+      if (!course) {
+          return res.status(404).json({ error: "No certificate found for this UDIN" });
+      }
+
+      res.status(200).json({
+          message: "Certificate found",
+          data: course,
+      });
+  } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: "Data could not be fetched" });
+  }
+});
 
 
 
@@ -1428,6 +1453,7 @@ app.post("/send-single-certificate-course", uploadsingleCourse.none(),async (req
       email:email,
       Completion:date,
       Udin:udin,
+      url:pdfDataUrl
     });
   
     await newCourse.save();

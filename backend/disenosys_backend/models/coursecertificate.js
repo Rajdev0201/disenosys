@@ -6,6 +6,7 @@ const courseSchema = new mongoose.Schema({
   course: {type: String, required: true},
   Completion: {type: String, required: true},
   Udin: {type: String, required: true},
+  url:{type:String,required: true},
 }, { timestamps: true }); 
 const ExamC = mongoose.model("coursecertificate", courseSchema);
 

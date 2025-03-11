@@ -18,6 +18,7 @@ import Placement from "./home/Placement"
 import Education from "./home/Education"
 import Who from './home/Who'
 import Announce from './home/Announce';
+import Check from "./home/CheckCertificate";
 
 // import Marquee from "./home/Marquee.jsx";
 
@@ -74,6 +75,7 @@ export default function Page() {
       <WhyChoose />
       <Placement/>
       <Course name="Other Online Courses"/>
+      <Check/>
       <Partner />
       <Footer />
     </div>

@@ -441,7 +441,7 @@ const Recorded = () => {
       setSelectedOptions({});
       setFeedback({});
     }, 500);
-  }
+  };
   const quizData = [
     [
       {
@@ -552,45 +552,90 @@ const Recorded = () => {
                             <div key={originalModuleIdx} className="my-4">
                               {/* <h3 className="font-bold text-lg">Module: {originalModuleIdx}</h3> */}
                               <div className="flex justify-end">
-                              <button
-                                onClick={() => setShowModal(true)}
-                                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition mb-2"
-                              >
-                                Click Info*
-                              </button>
+                                <button
+                                  onClick={() => setShowModal(true)}
+                                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition mb-2"
+                                >
+                                  Click Info*
+                                </button>
                               </div>
                               {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-            <div className="flex justify-between items-center border-b pb-2 mb-4">
-              <h2 className="text-lg font-bold">Quiz Instructions</h2>
-              <button onClick={() => setShowModal(false)} className="text-red-500 text-xl">
-                &times;
-              </button>
-            </div>
+                                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                                  <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+                                    <div className="flex justify-between items-center border-b pb-2 mb-4">
+                                      <h2 className="text-lg font-bold">
+                                        Quiz Instructions
+                                      </h2>
+                                      <button
+                                        onClick={() => setShowModal(false)}
+                                        className="text-red-500 text-xl"
+                                      >
+                                        &times;
+                                      </button>
+                                    </div>
 
-            <ul className="list-disc pl-5 space-y-2 text-gray-700">
-  <li>⚡ Input format: Ensure all answers follow the specified format.</li>
-  <li>⏳ No time limit, but answer carefully.</li>
-  <li>✔️ Click <span className="font-bold">Submit</span> after answering all questions.</li>
-  <li>📌 If unsure, refer to the <span className="font-bold">Sample Answer</span> provided.</li>
-  <li>🔍 After submission, incorrect answers will be marked <span className="text-red-600">Wrong Answered</span>, and correct answers will be marked <span className="text-green-600">Correct Answered</span>.</li>
-  <li>🔄 Match the Following questions will display sample text above the question.</li>
-  <li>🚀 Once all answers are correct, the next module will unlock for you to continue learning.</li>
-  <li>🎉 <span className="font-bold text-blue-500">Happy Learning!</span></li>
-</ul>
+                                    <ul className="list-disc pl-5 space-y-2 text-gray-700">
+                                      <li>
+                                        ⚡ Input format: Ensure all answers
+                                        follow the specified format.
+                                      </li>
+                                      <li>
+                                        ⏳ No time limit, but answer carefully.
+                                      </li>
+                                      <li>
+                                        ✔️ Click{" "}
+                                        <span className="font-bold">
+                                          Submit
+                                        </span>{" "}
+                                        after answering all questions.
+                                      </li>
+                                      <li>
+                                        📌 If unsure, refer to the{" "}
+                                        <span className="font-bold">
+                                          Sample Answer
+                                        </span>{" "}
+                                        provided.
+                                      </li>
+                                      <li>
+                                        🔍 After submission, incorrect answers
+                                        will be marked{" "}
+                                        <span className="text-red-600">
+                                          Wrong Answered
+                                        </span>
+                                        , and correct answers will be marked{" "}
+                                        <span className="text-green-600">
+                                          Correct Answered
+                                        </span>
+                                        .
+                                      </li>
+                                      <li>
+                                        🔄 Match the Following questions will
+                                        display sample text above the question.
+                                      </li>
+                                      <li>
+                                        🚀 Once all answers are correct, the
+                                        next module will unlock for you to
+                                        continue learning.
+                                      </li>
+                                      <li>
+                                        🎉{" "}
+                                        <span className="font-bold text-blue-500">
+                                          Happy Learning!
+                                        </span>
+                                      </li>
+                                    </ul>
 
-            <div className="mt-4 text-right">
-              <button
-                onClick={() => setShowModal(false)}
-                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+                                    <div className="mt-4 text-right">
+                                      <button
+                                        onClick={() => setShowModal(false)}
+                                        className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
+                                      >
+                                        Close
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              )}
                               {module?.questions?.map((question, qIdx) => {
                                 return (
                                   <div key={qIdx} className="space-y-4 mb-2">
@@ -786,21 +831,20 @@ const Recorded = () => {
                               );
                             })}
                             {item?.questions ? (
-                                 <button
-                                 onClick={() => showQuizSection(idx)}
-                                 className="text-blue-600 mt-4 underline"
-                               >
-                                 Take Quiz
-                               </button>
+                              <button
+                                onClick={() => showQuizSection(idx)}
+                                className="text-blue-600 mt-4 underline"
+                              >
+                                Take Quiz
+                              </button>
                             ) : (
                               <button
-                              onClick={noQuiz}
-                              className="bg-blue-600 mt-4 p-2 text-white rounded-md flex items-center gap-2"
-                            >
-                              Next Video <FaDiagramNext className=""/> 
-                            </button>
+                                onClick={noQuiz}
+                                className="bg-blue-600 mt-4 p-2 text-white rounded-md flex items-center gap-2"
+                              >
+                                Next Video <FaDiagramNext className="" />
+                              </button>
                             )}
-                         
                           </ul>
                         )}
                       </div>
