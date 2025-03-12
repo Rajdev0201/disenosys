@@ -3,7 +3,7 @@
 import axios from 'axios'
 import {remove, setOnline, updateOnline} from "../features/onlineStdSlice.js"
 
-
+//students-l&d -> admin-panel
 export const Online = () => async (dispatch) => {
     try {
         const res = await axios.get("https://disenosys-dkhj.onrender.com/ld/studentget");

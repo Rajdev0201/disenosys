@@ -81,6 +81,19 @@
   background-size: cover;
   opacity: 70%;
 }
+.bg-chart{
+  background-image: url("../assests/profile/chart.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.bg-week{
+  background-image: url("../assests/profile/pg-weekend.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 
 .certificate-container {
   width: 980px; 

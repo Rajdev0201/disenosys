@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import "../home/Home.css"
 
 const Plastic = () => {
   const [result, setResult] = useState("");
@@ -47,16 +48,13 @@ const Plastic = () => {
   };
   return (
     <div>
-      <div className="bg-blue-100">
-        <div className="grid lg:grid-cols-12 px-0 py-28 lg:py-36">
+      <div className="bg-week">
+        <div className="grid lg:grid-cols-12 px-0 py-28 lg:py-44 mt-28">
           <div className="col-span-8 ">
-            <div className="space-y-12 mt-20 lg:mt-44 border border-white flex flex-col bg-[#0d1039] w-12 text-white">
+            <div className="space-y-7 mt-20 lg:mt-48 flex flex-col text-white">
             <button
               type="submit"
-              class="flex justify-center gap-2 w-44 items-center shadow-xl text-lg bg-[#0d1039] text-white backdrop-blur-md lg:font-semibold isolation-auto border-gray-50
-               before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full
-                before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 
-                before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group rotate-5 "
+              class="flex justify-center gap-2 items-center rotate-05 w-64 shadow-xl text-lg bg-[#0d1039] text-white backdrop-blur-md lg:font-semibold isolation-auto border-gray-50 before:absolute before:w-full before:transition-all before:duration-700 before:hover:w-full before:-left-full before:hover:left-0 before:rounded-full before:bg-emerald-500 hover:text-gray-50 before:-z-10 before:aspect-square before:hover:scale-150 before:hover:duration-700 relative z-10 px-4 py-2 overflow-hidden border-2 rounded-full group"
             >
               Take Test
               <svg

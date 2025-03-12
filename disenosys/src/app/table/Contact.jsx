@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import "../home/Home.css"
 
 const Contact = () => {
       const [result, setResult] = useState("");
@@ -46,7 +47,7 @@ const Contact = () => {
         }
       };
   return (
-    <div className=" bg-blue-50 mb-5 lg:py-20">
+    <div className=" bg-chart mb-5 lg:py-20">
       <div className="grid lg:grid-cols-2 lg:gap-12">
         <div className="bg-[#0d1039]/50 text-white lg:w-3/4 h-20 mt-6 lg:mt-24 rounded-br-2xl rounded-tr-2xl shadow-inner ">
             <span className="flex items-center justify-center p-3 font-garet lg:text-5xl font-medium">For More Info</span>

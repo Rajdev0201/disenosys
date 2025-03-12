@@ -3,7 +3,7 @@ import { LogOut } from '@/app/Redux/features/authSlice.js';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FaCog, FaChartBar, FaSignOutAlt, FaChevronDown, FaBars } from 'react-icons/fa';
-import { SiAuthentik, SiCoursera } from "react-icons/si";
+import { SiAuthentik, SiCoursera, SiGoogleanalytics } from "react-icons/si";
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import Image from 'next/image';
@@ -19,6 +19,7 @@ const Sidebar = () => {
 
   const links = [
     // { href: '/certificate', label: 'Post certificate', icon: <PiCertificateBold /> },
+    {href: "/dashboard-l&d",label:"Dashboard",icon:<SiGoogleanalytics />},
     { href: '/coursel&d', label: 'Course',icon:<SiCoursera /> },
     { href: '/teachers', label: 'Teachers',icon:<GiTeacher />},
     // { href: '/students', label: 'Students', icon: <MdCastForEducation /> },
@@ -123,9 +124,9 @@ const Sidebar = () => {
         </div>
          
 
-        <div className="px-6 py-4">
-          <button onClick={handleLogout} className="flex items-center justify-center py-3 px-2 rounded-lg bg-gray-800 hover:bg-red-700 transition-colors duration-200 w-full">
-            <FaSignOutAlt className="mr-3" />
+        <div className="px-2 py-4">
+          <button onClick={handleLogout} className="flex items-center justify-center py-3 gap-2 text-lg  rounded-lg bg-gray-800 hover:bg-red-700 transition-colors duration-200 w-full">
+            <FaSignOutAlt className="" />
             <span>Logout</span>
           </button>
         </div>

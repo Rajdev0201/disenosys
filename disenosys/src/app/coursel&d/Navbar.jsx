@@ -1,13 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import logo from "../assests/logo.png";
-import Image from "next/image";
 import { RiMenu4Fill } from "react-icons/ri";
 import { FaRegBell } from "react-icons/fa";
 import { CiUser } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../Redux/features/authSlice.js";
-import Link from "next/link";
 
 const Navbar = () => {
   const user = useSelector((state) => state?.user);

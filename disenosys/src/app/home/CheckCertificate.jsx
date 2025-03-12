@@ -60,7 +60,7 @@ const CheckCertificate = () => {
         src={`${certificate.url}#toolbar=0`}
         width="100%"
         height="500px"
-        className="border"
+        className="border bg-white"
     ></iframe>
 ) : (
     <p className="text-red-500">PDF not available</p>

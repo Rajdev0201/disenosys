@@ -195,7 +195,7 @@ const History = () => {
     }));
   };
   const handleDelete = (id) => {
-    const confirmSubmit = window.confirm("Do you want to delete the course?");
+    const confirmSubmit = window.confirm("Do you want to delete?");
     if (confirmSubmit) {
       dispatch(removeOnline(id));
       dispatch(Online());
