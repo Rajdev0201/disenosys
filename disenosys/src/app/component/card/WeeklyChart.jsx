@@ -79,7 +79,7 @@ const ChartsMonth = () => {
   };
 
   return (
-    <div className="bg-white shadow-md rounded-md p-6 flex flex-col items-center">
+    <div className="bg-white shadow-md border-2 border-gray-300 rounded-md p-6 flex flex-col items-center">
     <h4 className="text-center mb-4 text-lg font-semibold">Monthly SAF Applications</h4>
     <div className="w-[300px] h-[300px] md:w-[400px] md:h-[400px]">
       <Doughnut data={doughnutData} options={options} />

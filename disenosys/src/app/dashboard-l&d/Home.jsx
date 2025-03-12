@@ -29,7 +29,7 @@ const Home = () => {
     <div className='px-2 py-16 lg:px-6 lg:py-6'>
       <div className='flex flex-col w-full'>
 
-        <div className='grid grid-cols-12 mt-8'>
+        <div className='grid grid-cols-12'>
            <div className='col-span-12 lg:col-span-3'>
              <Card No={course?.data?.length} text="Course" icon={icon1} />
            </div>
