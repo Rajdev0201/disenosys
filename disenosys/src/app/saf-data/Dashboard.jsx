@@ -156,9 +156,7 @@ const Dashboard = () => {
                         {item.cname}
                       </td>
                       <td className="py-2 px-2 text-start text-gray-600 font-medium">
-                        {item.cdate
-                          ? new Date(item.cdate).toLocaleDateString()
-                          : "N/A"}
+                        {item.no1}
                       </td>
                       <td className="py-2 px-2 text-start text-gray-600 font-medium">
                         {item.email}
