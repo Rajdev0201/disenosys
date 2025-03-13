@@ -213,7 +213,7 @@ const Dashboard = () => {
                                     <td className="py-2 px-4 border text-gray-600">
                                       {course.cname}
                                     </td>
-                                    <td className="py-2 px-2 text-start text-gray-600 font-medium">
+                                    <td className="py-2 px-2 text-start border text-gray-600 font-medium">
                                                                 {course.end !== "" ? (
                                                                   <p className="flex items-center justify-center text-green-500 gap-2">
                                                                     <IoCheckmarkDoneCircleOutline className="w-5 h-5 text-green-500" />{" "}
