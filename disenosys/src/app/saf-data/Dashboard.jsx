@@ -7,10 +7,7 @@ import { GrInProgress } from "react-icons/gr";
 import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { Pagination } from "../component/Pagination.jsx";
 
-
 const Dashboard = () => {
-  const [showPopup, setShowPopup] = useState(false);
-  const course = useSelector((state) => state.courseLD);
   const online = useSelector((state) => state.online);
   console.log(online);
   const dispatch = useDispatch();
@@ -18,12 +15,12 @@ const Dashboard = () => {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
- 
 
   useEffect(() => {
     dispatch(Online());
-    dispatch(courseld());
   }, [dispatch]);
+
+  const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const filtered = online?.data?.filter((item) => {
@@ -62,8 +59,6 @@ const Dashboard = () => {
   //   setModalOpen(false);
   // };
 
-
-
   const itemsPerPage = 10;
   const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -72,9 +67,6 @@ const Dashboard = () => {
     startIndex + itemsPerPage
   );
   const handlePageChange = (page) => setCurrentPage(page);
-
-
-
 
   return (
     <div>
@@ -128,7 +120,7 @@ const Dashboard = () => {
                     Course Name
                   </th>
                   <th className="py-2 px-2 text-start border-r border-gray-300">
-                    Contact                 
+                    Contact
                   </th>
                   <th className="py-2 px-2 text-start border-r border-gray-300">
                     Email
@@ -145,7 +137,6 @@ const Dashboard = () => {
                 {paginatedData?.map((item, index) => (
                   <>
                     {" "}
-                   
                     <tr
                       key={item._id}
                       className={`border-b border-gray-300 ${
@@ -170,26 +161,97 @@ const Dashboard = () => {
                           : "N/A"}
                       </td>
                       <td className="py-2 px-2 text-start text-gray-600 font-medium">
-                        {item.end === "Not Completed"
-                          ? <span className="bg-[#FDD5D9] text-[#FF0000] rounded-full px-4 py-1 font-medium text-sm">Pending</span>
-                          : new Date(item.end).toLocaleDateString()}
+                        {item.email}
+                      </td>
+                      <td className="py-2 px-2 text-start text-gray-600 font-medium">
+                        <button
+                          className="text-blue-600 underline"
+                          onClick={() => setIsOpen(true)}
+                        >
+                          Click Here
+                        </button>
                       </td>
                       <td className="py-2 px-2 text-start text-gray-600 font-medium">
                         {item.end !== "Not Completed" ? (
                           <p className="flex items-center justify-center  text-green-500 gap-2">
                             <IoCheckmarkDoneCircleOutline className="w-5 h-5 text-green-500" />{" "}
-                           
                           </p>
                         ) : (
                           <p className="flex items-center justify-center text-red-500 gap-2">
                             <GrInProgress className="w-4 h-4 text-red-500" />{" "}
-                            
                           </p>
                         )}
                       </td>
-
                     </tr>
+                    {isOpen && (
+                      <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 font-garet">
+                        <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 ml-44">
+                          <h2 className="text-xl font-semibold mb-4 text-blue-500">
+                            All course
+                          </h2>
+                          <table className="w-full border border-gray-300">
+                            <thead>
+                              <tr className="bg-gray-200">
+                                <th className="py-2 px-4 border font-medium text-start">
+                                  S.No
+                                </th>
+                                <th className="py-2 px-4 border font-medium  text-start">
+                                  Course Name
+                                </th>
+                                <th className="py-2 px-4 border font-medium  text-start">
+                                  Status
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {item.subrows?.length > 0 ? (
+                                item.subrows.map((course, index) => (
+                                  <tr key={index}>
+                                    <td className="py-2 px-4 border text-gray-600">
+                                      {startIndex + index + 1}.
+                                    </td>
+                                    <td className="py-2 px-4 border text-gray-600">
+                                      {course.cname}
+                                    </td>
+                                    <td className="py-2 px-2 text-start text-gray-600 font-medium">
+                                                                {course.end !== "" ? (
+                                                                  <p className="flex items-center justify-center text-green-500 gap-2">
+                                                                    <IoCheckmarkDoneCircleOutline className="w-5 h-5 text-green-500" />{" "}
+                                                                    
+                                                                  </p>
+                                                                ) : (
+                                                                  <p className="flex items-center justify-center text-red-500 gap-2">
+                                                                    <GrInProgress className="w-4 h-4 text-red-500" />{" "}
+                                                                    
+                                                                  </p>
+                                                                )}
+                                                              </td>
+                                  </tr>
+                                ))
+                              ) : (
+                                <tr>
+                                  <td
+                                    colSpan="2"
+                                    className="py-2 px-4 text-center text-gray-600"
+                                  >
+                                    No course Added
+                                  </td>
+                                </tr>
+                              )}
+                            </tbody>
+                          </table>
 
+                          <div className="flex justify-end">
+                            <button
+                              className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 "
+                              onClick={() => setIsOpen(false)}
+                            >
+                              Close
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                   </>
                 ))}
               </tbody>
@@ -198,8 +260,6 @@ const Dashboard = () => {
         )}
       </div>
 
-
-  
       {paginatedData?.length > 0 && (
         <div className="w-full mt-4 flex justify-center">
           <Pagination
@@ -209,8 +269,6 @@ const Dashboard = () => {
           />
         </div>
       )}
-
- 
     </div>
   );
 };

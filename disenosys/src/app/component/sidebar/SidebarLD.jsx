@@ -102,7 +102,7 @@ const Sidebar = () => {
           <span className="pl-4 mr-3">
             <MdCastForEducation />
           </span>
-          <span>SAF</span>
+          <span>Hyper-Drive</span>
         </Link>
         {/* <Link
           href="/prerecord"

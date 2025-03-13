@@ -27,7 +27,7 @@ const Sidebar = () => {
     { href: '/gpdx', label: 'DEMO', icon: <TfiWrite />    },
     { href: '/applicants', label: 'Applicants', icon: <GrScorecard />},
     { href: '/mentors', label: 'Mentors-Profile', icon: <GrScorecard />},
-    { href: '/studentsapplied', label: 'SAF', icon: <GrScorecard />},
+    { href: '/studentsapplied', label: 'Hyper-Drive', icon: <GrScorecard />},
     { href: '/settings', label: 'Settings', icon: <FaCog /> },
     { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];
