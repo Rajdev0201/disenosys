@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 import Image from 'next/image';
 import Brand from "../../assests/brand-1.png"
-import { MdCastForEducation } from 'react-icons/md';
+import { MdCastForEducation, MdOutlineDashboard } from 'react-icons/md';
 import { GiTeacher } from 'react-icons/gi';
 
 const Sidebar = () => {
@@ -75,7 +75,7 @@ const Sidebar = () => {
     <button
       onClick={() => setIsCourse(!isCourse)}
       className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
-        path.startsWith("/students") || path.startsWith("/prerecord")
+        path.startsWith("/students") || path.startsWith("/prerecord") || path.startsWith("/saf-data")
           ? "bg-white"
           : ""
       }`}
@@ -115,6 +115,18 @@ const Sidebar = () => {
           </span>
           <span>Pre-Record</span>
         </Link> */}
+
+         <Link
+          href="/saf-data"
+          className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
+            path === "/saf-data" ? "bg-white rounded" : ""
+          }`}
+        >
+          <span className="pl-4 mr-3">
+          <MdOutlineDashboard />
+          </span>
+          <span>Dashboard</span>
+        </Link>
       </div>
     )}
   </div>

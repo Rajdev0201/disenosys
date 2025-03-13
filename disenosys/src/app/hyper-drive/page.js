@@ -12,7 +12,7 @@ export default function SAFPage() {
          <Image src={logo} className="w-28 lg:w-44" alt=""/>
          <div className="flex gap-2 items-center">
          <MdOutlineCastForEducation className="text-white w-8 h-8" />
-         <h4 className="font-garet text-sm lg:text-lg font-medium text-white">Student Application Form </h4>
+         <h4 className="font-garet text-sm lg:text-lg font-medium text-white">Hyper Drive</h4>
          </div>
         </div>
          <Multiple/>
