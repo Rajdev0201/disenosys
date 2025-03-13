@@ -11,7 +11,8 @@ import html2canvas from "html2canvas";
  const  StudentApplicationForm = ({ data,isPdf, openModalPdf,closeModalPdf }) => {
 
   const [show,setShow] = useState(false);
-
+  const fname = data.fname;
+  const lname = data.lname;
   const downloadPDF = () => {
     setShow(true)
     setTimeout(() => {
@@ -25,7 +26,7 @@ import html2canvas from "html2canvas";
   
       const generatePage = (index) => {
         if (index >= pages.length) {
-          pdf.save("Student_Application_Form.pdf");
+          pdf.save(`Student_Application_Form_${fname} ${lname}.pdf`);
           return;
         }
   

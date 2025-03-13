@@ -505,15 +505,17 @@ console.log("Request body:", req?.body);
 
   try {
     const lastEntry = await spa.findOne().sort({ sid: -1 });
-    let newSidNumber = 1; 
+    let newSidNumber = 110; 
 
-    if (lastEntry && lastEntry.sid) {
-      const lastNumber = parseInt(lastEntry.sid.split("-")[0], 10);
-      if (!isNaN(lastNumber)) {
-        newSidNumber = lastNumber + 1;
-      }
-    }
-    let newSid = newSidNumber.toString().padStart(4, "0") + "-CATDES";
+if (lastEntry && lastEntry.sid) {
+  const lastNumber = parseInt(lastEntry.sid.replace(/\D/g, ""), 10);
+  if (!isNaN(lastNumber)) {
+    newSidNumber = lastNumber + 1;
+  }
+}
+
+let newSid = `DSST${newSidNumber}-CATDES`;
+
 
     const newContact = new spa({  fname,
       lname,

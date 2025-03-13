@@ -64,13 +64,11 @@ const Stepthree = ({
   
 
       const handleTen = (e) => {
-        const ten = e.target.files[0]; // Get the uploaded file from the event
+        const ten = e.target.files[0];
         if (!ten) return;
-      
-        // Validation for file type
         const fileType = ten.type;
         if (fileType.startsWith('application/pdf')) {
-          setFormData((prev) => ({ ...prev,  ten})); // Assign the file to `formData.filePic`
+          setFormData((prev) => ({ ...prev,  ten})); 
         } else {
           alert("Unsupported file type. Please upload a PDF file.")
           setError('Unsupported file type. Please upload an image.');
@@ -79,13 +77,12 @@ const Stepthree = ({
 
 
       const handleUg = (e) => {
-        const ug = e.target.files[0]; // Get the uploaded file from the event
+        const ug = e.target.files[0]; 
         if (!ug) return;
       
-        // Validation for file type
         const fileType = ug.type;
         if (fileType.startsWith('application/pdf')) {
-          setFormData((prev) => ({ ...prev,  ug})); // Assign the file to `formData.filePic`
+          setFormData((prev) => ({ ...prev,  ug})); 
         } else {
           alert("Unsupported file type. Please upload a PDF file.")
           setError('Unsupported file type. Please upload an image.');
