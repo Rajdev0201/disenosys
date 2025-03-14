@@ -4,7 +4,7 @@ import Course from "./Course";
 
 export default function DashboardPage() {
     return (
-        <div className="h-screen">
+        <div className="">
         <Navbar />
         <div className="grid grid-cols-12 h-full mt-16">
           {/* Sidebar with full height */}

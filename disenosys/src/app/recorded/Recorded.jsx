@@ -20,16 +20,16 @@ const Recorded = () => {
   const [selectedCurriculumIdx, setSelectedCurriculumIdx] = useState(null);
   const [answers, setAnswers] = useState({});
   const [showModal, setShowModal] = useState(false);
-
+  const search = useSearchParams();
+  const courseId = search.get("courseName");
   const [unlockedModules, setUnlockedModules] = useState(
-    JSON.parse(localStorage.getItem("unlockedModules")) || { 0: true }
+    JSON.parse(localStorage.getItem(`unlockedModules${courseId}`)) || { 0: true }
   );
   const [completedVideos, setCompletedVideos] = useState({});
+  console.log(completedVideos)
 
   const dispatch = useDispatch();
   const courseRefs = useRef([]);
-  const search = useSearchParams();
-  const courseId = search.get("courseName");
   const pay = useSelector((state) => state.payment);
   const id = search.get("id");
   const courseState = useSelector((state) => state?.course);
@@ -39,7 +39,7 @@ const Recorded = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const storedData = localStorage.getItem("completedVideos");
+    const storedData = localStorage.getItem(`completedVideos${openAccordionIndex}`);
     if (storedData) {
       setCompletedVideos(JSON.parse(storedData));
     }
@@ -51,7 +51,7 @@ const Recorded = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    localStorage.setItem("unlockedModules", JSON.stringify(unlockedModules));
+    localStorage.setItem(`unlockedModules${courseId}`, JSON.stringify(unlockedModules));
   }, [unlockedModules]);
 
   useEffect(() => {
@@ -166,11 +166,11 @@ const Recorded = () => {
 
     const nextSubTopicIndex = currentSubTopicIndex + 1;
 
-    if (nextSubTopicIndex >= subTopicsArray?.length) {
-      console.warn("No more subtopics available.");
-      alert("No more subtopics available.");
-      return;
-    }
+    // if (nextSubTopicIndex >= subTopicsArray?.length) {
+    //   console.warn("No more subtopics available.");
+    //   alert("No more subtopics available.");
+    //   return;
+    // }
 
     setCurrentSubTopicIndex(nextSubTopicIndex);
     setSelectedSubtopic(subTopicsArray[nextSubTopicIndex]);
@@ -180,18 +180,25 @@ const Recorded = () => {
     console.log("Next SubLink:", subLinksArray[nextSubTopicIndex]);
   };
 
-  const handleVideoEnd = () => {
+  const handleVideoEnd = (subLink) => {
+    if (openAccordionIndex === null || subLink === null) return;
+  
     setCompletedVideos((prev) => {
       const updatedVideos = {
         ...prev,
-        [selectedSubtopic]: true,
+        [subLink]: true,  // No need for module index in key
       };
-      localStorage.setItem("completedVideos", JSON.stringify(updatedVideos));
+      localStorage.setItem(
+        `completedVideos${openAccordionIndex}`,  // Separate storage per module
+        JSON.stringify(updatedVideos)
+      );
       return updatedVideos;
     });
+  
     nextVideo();
   };
-
+  
+  
   const showQuizSection = (curriculumIdx) => {
     setSelectedCurriculumIdx(curriculumIdx);
     setShowQuiz(true);
@@ -199,124 +206,12 @@ const Recorded = () => {
   };
 
   const handleInputChange = (key, value) => {
-    console.log(`Updating key ${key} with value ${value}`); // Debugging log
+    console.log(`Updating key ${key} with value ${value}`);
     setSelectedOptions((prev) => ({
       ...prev,
-      [key]: value, // Unique storage per module
+      [key]: value,
     }));
   };
-
-  //   const handleQuizSubmit = () => {
-  //     const selectedCourse = courses?.find((course) => course.courseName === courseId);
-  //     const currentModule = openAccordionIndex;
-  //     const moduleQuestions = selectedCourse?.Curriculum?.[currentModule]?.questions;
-
-  //     console.log("Current module:", currentModule);
-  // console.log("Next module index:", moduleQuestions);
-
-  //     if (!moduleQuestions || moduleQuestions.length === 0) {
-  //       alert("No questions found for this module.");
-  //       return;
-  //     }
-
-  //     const newFeedback = {};
-  //     let allCorrect = true;
-
-  //     moduleQuestions.forEach((question, questionIndex) => {
-  //       let userAnswer = "";
-
-  //       if (question.type === "input") {
-  //         question.questionText.split(",").forEach((sentence, sentenceIdx) => {
-  //           sentence.split("input").forEach((_, index) => {
-  //             const selectedKey = `${currentModule}-${questionIndex}-${sentenceIdx}-${index}`;
-  //             userAnswer += (selectedOptions[selectedKey] || "").trim() + ",";
-  //           });
-  //         });
-
-  //         // Remove trailing comma
-  //         userAnswer = userAnswer.replace(/,$/, "");
-  //       }
-
-  //       if (!userAnswer) {
-  //         newFeedback[`${currentModule}-${questionIndex}`] = {
-  //           message: "No answer provided.",
-  //           color: "text-gray-600",
-  //         };
-  //         allCorrect = false;
-  //         return;
-  //       }
-
-  //       // Ensure all inputs are answered
-  //       const userAnswerArray = userAnswer
-  //         .split(",")
-  //         .map((item) => item.trim())
-  //         .filter((item) => item !== "");
-
-  //       const correctAnswerArray = Array.isArray(question.correctAnswer)
-  //         ? question.correctAnswer.map((item) => item.trim())
-  //         : [];
-  //         console.log(`User Answer for Question ${questionIndex}: ${userAnswer}`);
-  //         console.log(`Correct Answer for Question ${questionIndex}:${correctAnswerArray}`);
-  //       if (userAnswerArray.length !== correctAnswerArray.length) {
-  //         console.log("Please answer all questions");
-  //         allCorrect = false;
-  //       }
-
-  //       const isCorrect =
-  //         JSON.stringify(userAnswerArray) === JSON.stringify(correctAnswerArray);
-
-  //       if (isCorrect) {
-  //         newFeedback[`${currentModule}-${questionIndex}`] = {
-  //           message: "Correct!",
-  //           color: "text-green-600",
-  //         };
-  //       } else {
-  //         newFeedback[`${currentModule}-${questionIndex}`] = {
-  //           message: "Wrong answer.",
-  //           color: "text-red-600",
-  //         };
-  //         allCorrect = false;
-  //       }
-  //     });
-
-  //     setFeedback(newFeedback);
-
-  //     // ✅ Ensure all input questions are answered
-  //     const allQuestionsAnswered = moduleQuestions.every((question, questionIndex) => {
-  //       if (question.type === "input") {
-  //         return question.questionText.split(",").some((sentence, sentenceIdx) => {
-  //           return sentence.split("input").some((_, index) => {
-  //             const key = `${currentModule}-${questionIndex}-${sentenceIdx}-${index}`;
-  //             return selectedOptions[key] && selectedOptions[key].trim() !== "";
-  //           });
-  //         });
-  //       }
-  //       return true;
-  //     });
-
-  //     console.log("All questions answered:", allQuestionsAnswered);
-
-  //     if (!allQuestionsAnswered) {
-  //       alert("Please answer all questions before proceeding.");
-  //       return;
-  //     }
-
-  //     if (allCorrect) {
-  //       const nextModuleIndex = currentModule + 1;
-  //       const updatedUnlockedModules = { ...unlockedModules, [nextModuleIndex]: true };
-
-  //       setUnlockedModules(updatedUnlockedModules);
-
-  //       setTimeout(() => {
-  //         localStorage.setItem("unlockedModules", JSON.stringify(updatedUnlockedModules));
-  //         setOpenAccordionIndex(nextModuleIndex);
-  //         setSelectedOptions({});
-  //         setFeedback({});
-  //       }, 500);
-  //     } else {
-  //       alert("Please answer all questions correctly to proceed.");
-  //     }
-  //   };
 
   const handleQuizSubmit = () => {
     const selectedCourse = courses?.find(
@@ -412,7 +307,7 @@ const Recorded = () => {
 
     setUnlockedModules(updatedUnlockedModules);
     localStorage.setItem(
-      "unlockedModules",
+      `unlockedModules${courseId}`,
       JSON.stringify(updatedUnlockedModules)
     );
 
@@ -425,89 +320,38 @@ const Recorded = () => {
 
   const noQuiz = () => {
     const currentModule = openAccordionIndex;
+    const selectedCourse = courses.find((course) => course.courseName === courseId);
+    const currentModuleData = selectedCourse?.Curriculum?.[currentModule];
+  
+    if (!currentModuleData) return;
+  
+    const subTopics = Array.isArray(currentModuleData.subTopic)
+      ? currentModuleData.subTopic
+      : currentModuleData.subTopic.split(",");
+  
+    const allCompleted = subTopics.every((subTopic) => completedVideos[currentModule]?.[subTopic]);
+  
+    if (!allCompleted) {
+      return alert("Please complete all videos before proceeding to the next module.");
+    }
+
     const nextModuleIndex = currentModule + 1;
     const updatedUnlockedModules = {
       ...unlockedModules,
       [nextModuleIndex]: true,
     };
-
+  
     setUnlockedModules(updatedUnlockedModules);
-    localStorage.setItem(
-      "unlockedModules",
-      JSON.stringify(updatedUnlockedModules)
-    );
+    localStorage.setItem(`unlockedModules${courseId}`, JSON.stringify(updatedUnlockedModules));
+  
     setTimeout(() => {
       setOpenAccordionIndex(nextModuleIndex);
       setSelectedOptions({});
       setFeedback({});
     }, 500);
   };
-  const quizData = [
-    [
-      {
-        question: "Question 1 for Module 1?",
-        options: ["Wrong 1", "Wrong 2", "Correct Answer", "Wrong 3"],
-        correctAnswer: "Correct Answer",
-      },
-      {
-        question: "Question 2 for Module 1?",
-        options: ["Correct Answer", "Wrong 1", "Wrong 2", "Wrong 3"],
-        correctAnswer: "Correct Answer",
-      },
-    ],
+  
 
-    [
-      {
-        question: "Question 1 for Module 1?",
-        options: ["Wrong 1", "Wrong 2", "Correct Answer", "Wrong 3"],
-        correctAnswer: "Correct Answer",
-      },
-      {
-        question: "Question 2 for Module 1?",
-        options: ["Correct Answer", "Wrong 1", "Wrong 2", "Wrong 3"],
-        correctAnswer: "Correct Answer",
-      },
-    ],
-
-    [
-      {
-        question: "Question 1 for Module 1?",
-        options: ["Wrong 1", "Wrong 2", "Correct Answer", "Wrong 3"],
-        correctAnswer: "Correct Answer",
-      },
-      {
-        question: "Question 2 for Module 1?",
-        options: ["Correct Answer", "Wrong 1", "Wrong 2", "Wrong 3"],
-        correctAnswer: "Correct Answer",
-      },
-    ],
-
-    [
-      {
-        question: "Question 1 for Module 1?",
-        options: ["Wrong 1", "Wrong 2", "Correct Answer", "Wrong 3"],
-        correctAnswer: "Correct Answer",
-      },
-      {
-        question: "Question 2 for Module 1?",
-        options: ["Correct Answer", "Wrong 1", "Wrong 2", "Wrong 3"],
-        correctAnswer: "Correct Answer",
-      },
-    ],
-
-    [
-      {
-        question: "Question 1 for Module 1?",
-        options: ["Wrong 1", "Wrong 2", "Correct Answer", "Wrong 3"],
-        correctAnswer: "Correct Answer",
-      },
-      {
-        question: "Question 2 for Module 1?",
-        options: ["Correct Answer", "Wrong 1", "Wrong 2", "Wrong 3"],
-        correctAnswer: "Correct Answer",
-      },
-    ],
-  ];
 
   const isCoursePaid = pay?.data?.some(
     (item) =>
@@ -530,7 +374,7 @@ const Recorded = () => {
               </div>
             </div>
           )}
-          <div className="flex">
+          <div className="flex font-garet">
             <div className="col-span-9 bg-white p-4 shadow-md rounded-md ml-1/4 w-3/4">
               {showQuiz && openAccordionIndex !== null ? (
                 <div>
@@ -750,7 +594,7 @@ const Recorded = () => {
                         width="100%"
                         height="600px"
                         controls
-                        onEnded={handleVideoEnd}
+                        onEnded={() => handleVideoEnd(subLink)}
                         disablePictureInPicture
                         controlsList="nodownload"
                         onContextMenu={(e) => e.preventDefault()}
@@ -811,7 +655,9 @@ const Recorded = () => {
                                   <div className="flex items-center gap-2 w-full h-12">
                                     <PiVideoFill className="w-6 h-6" />
                                     <span
-                                      className="hover:cursor-pointer flex items-center flex-1 text-gray-700 hover:text-blue-700 font-poppins"
+                                   className="hover:cursor-pointer flex items-center font-garet flex-1 
+                                   hover:text-blue-700"
+                                  
                                       onClick={() =>
                                         handlesubTopicelect(
                                           subTopic,
@@ -822,9 +668,10 @@ const Recorded = () => {
                                     >
                                       {subTopic.trim()}
 
-                                      {completedVideos[subTopic] && (
-                                        <PiCheckCircleFill className="text-green-500 ml-2 w-6 h-6 absolute right-8" />
-                                      )}
+                                      {completedVideos[subLink] && (
+  <PiCheckCircleFill className="text-green-500 ml-2 w-6 h-6 absolute right-8" />
+)}
+
                                     </span>
                                   </div>
                                 </li>
