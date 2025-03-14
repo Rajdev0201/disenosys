@@ -109,6 +109,7 @@ const Recorded = () => {
   };
 
   const nextVideo = () => {
+    const currentModule = openAccordionIndex;
     const currentCourse = courses?.find(
       (course) => course?.courseName === courseId
     );
@@ -166,11 +167,17 @@ const Recorded = () => {
 
     const nextSubTopicIndex = currentSubTopicIndex + 1;
 
-    // if (nextSubTopicIndex >= subTopicsArray?.length) {
-    //   console.warn("No more subtopics available.");
-    //   alert("No more subtopics available.");
-    //   return;
-    // }
+    if (nextSubTopicIndex >= subTopicsArray?.length) {
+      const nextModuleIndex = currentModule + 1;
+    const updatedUnlockedModules = {
+      ...unlockedModules,
+      [nextModuleIndex]: true,
+    };
+    setUnlockedModules(updatedUnlockedModules);
+    localStorage.setItem(`unlockedModules${courseId}`, JSON.stringify(updatedUnlockedModules));
+    alert("Successfully You got second module access!")
+    }
+
 
     setCurrentSubTopicIndex(nextSubTopicIndex);
     setSelectedSubtopic(subTopicsArray[nextSubTopicIndex]);
@@ -329,12 +336,21 @@ const Recorded = () => {
       ? currentModuleData.subTopic
       : currentModuleData.subTopic.split(",");
   
-    const allCompleted = subTopics.every((subTopic) => completedVideos[currentModule]?.[subTopic]);
+    const completedVideosForModule = JSON.parse(localStorage.getItem(`completedVideos${currentModule}`)) || {};
+
+    // Check if all subtopics have a completed video
+    const allCompleted = subTopics.every((subTopic) => {
+      return Object.keys(completedVideosForModule).some((subLink) =>
+        subLink.includes(subTopic) && completedVideosForModule[subLink]
+      );
+    });
+  
+    console.log("All Completed Status:", allCompleted);
   
     if (!allCompleted) {
       return alert("Please complete all videos before proceeding to the next module.");
     }
-
+  
     const nextModuleIndex = currentModule + 1;
     const updatedUnlockedModules = {
       ...unlockedModules,
@@ -350,6 +366,8 @@ const Recorded = () => {
       setFeedback({});
     }, 500);
   };
+  
+  
   
 
 
@@ -685,12 +703,13 @@ const Recorded = () => {
                                 Take Quiz
                               </button>
                             ) : (
-                              <button
-                                onClick={noQuiz}
-                                className="bg-blue-600 mt-4 p-2 text-white rounded-md flex items-center gap-2"
-                              >
-                                Next Video <FaDiagramNext className="" />
-                              </button>
+                              // <button
+                              //   onClick={noQuiz}
+                              //   className="bg-blue-600 mt-4 p-2 text-white rounded-md flex items-center gap-2"
+                              // >
+                              //   Next Video <FaDiagramNext className="" />
+                              // </button>
+                              ""
                             )}
                           </ul>
                         )}
