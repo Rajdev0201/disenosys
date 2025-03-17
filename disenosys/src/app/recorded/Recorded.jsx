@@ -119,13 +119,13 @@ const Recorded = () => {
       alert("No course or curriculum found.");
       return;
     }
+
     console.log("Available Curriculums:", currentCourse?.Curriculum);
     const currentCurriculum = currentCourse?.Curriculum.find((curriculum) => {
       const subTopicsArray = curriculum?.subTopic
         ?.split(",")
         .map((item) => item.trim());
       console.log("Subtopics in curriculum:", subTopicsArray);
-
       return subTopicsArray?.includes(selectedSubtopic);
     });
 
@@ -166,8 +166,9 @@ const Recorded = () => {
     }
 
     const nextSubTopicIndex = currentSubTopicIndex + 1;
-
-    if (nextSubTopicIndex >= subTopicsArray?.length) {
+    const questionsArray = currentCurriculum?.questions || [];
+   
+    if (nextSubTopicIndex >= subTopicsArray?.length && questionsArray.length === 0) {
       const nextModuleIndex = currentModule + 1;
     const updatedUnlockedModules = {
       ...unlockedModules,
