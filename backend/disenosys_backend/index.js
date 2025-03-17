@@ -514,7 +514,7 @@ if (lastEntry && lastEntry.sid) {
   }
 }
 
-let newSid = `DSST${newSidNumber}-CATDES`;
+let newSid = `DSST${newSidNumber}`;
 
 
     const newContact = new spa({  fname,

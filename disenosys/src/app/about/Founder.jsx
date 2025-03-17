@@ -6,8 +6,8 @@ import Image from "next/image";
 
 const Founder = () => {
   return (
-    <div className="container-2xl bg-who-gradient mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 pb-12 font-poppins py-3">
-      <h1 className="font-bold text-center text-[#182073]  text-xl lg:text-5xl">
+    <div className="container-2xl bg-who-gradient mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-20 pb-12 font-garet py-3">
+      <h1 className="font-medium text-center text-[#0d1039]  text-xl lg:text-5xl">
         The <span className="">F</span>ounder
       </h1>
       

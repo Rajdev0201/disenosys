@@ -3,9 +3,9 @@ import React from "react";
 const Vision = () => {
   return (
     <>
-  <div className="container mx-auto px-6 md:px-44 py-24">
+  <div className="container mx-auto px-6 md:px-44 py-24 font-garet">
     <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-      <h1 className="text-slate-900 w-full md:w-96 font-bold text-2xl mb-4 md:mb-0">
+      <h1 className="text-[#0d1039] w-full md:w-96 font-medium text-2xl mb-4 md:mb-0">
         Our Vission
       </h1>
       <p className="border-l-4 border-slate-300 pl-5 text-lg">
@@ -13,9 +13,9 @@ const Vision = () => {
       </p>
     </div>
   </div>
-  <div className="container mx-auto px-6 pb-24 md:px-44 ">
+  <div className="container mx-auto px-6 pb-24 md:px-44 font-garet">
     <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-      <h1 className="text-slate-900 w-full md:w-96  font-bold text-2xl mb-4 md:mb-0">
+      <h1 className="text-[#0d1039] w-full md:w-96 font-medium text-2xl mb-4 md:mb-0">
         Our Mission
       </h1>
       <p className="border-l-4 border-slate-300 pl-5 text-lg  ">

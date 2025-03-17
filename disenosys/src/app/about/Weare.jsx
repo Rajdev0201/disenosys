@@ -6,7 +6,7 @@ import lady from "../assests/lady.jpg";
 export const Weare = () => {
   return (
     <div>
-    <h1 className='font-bold font-poppins text-center text-[#182073]  text-xl lg:text-5xl'>WHO <span className=''>WE </span> ARE</h1>
+    <h1 className='font-medium font-garet text-center text-[#0d1039]  text-xl lg:text-5xl'>WHO <span className=''>WE </span> ARE</h1>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-16 pb-12 mt-12 font-poppins">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 mx-auto">
           <div className="flex justify-center">
@@ -34,12 +34,12 @@ export const Weare = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 py-28 mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 py-28 mx-auto font-garet">
           <div className="flex flex-col justify-center">
-            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-4xl font-bold pb-3 text-center md:text-left">
+            <h1 className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-4xl font-medium pb-3 text-center md:text-left">
               One Platform for Lifting Your Career
             </h1>
-            <p className="text-[#182073]  text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl pb-3 text-center md:text-left">
+            <p className="text-[#0d1039] text-sm font-bold sm:text-base md:text-lg lg:text-xl xl:text-2xl pb-3 text-center md:text-left">
               EMPOWERING ENGINEER
             </p>
             <p className="italic text-gray-600 text-sm sm:text-base md:text-lg lg:text-lg xl:text-md pb-3 text-center md:text-left">

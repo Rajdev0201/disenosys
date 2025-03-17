@@ -30,7 +30,7 @@ const Sidebar = () => {
   return (
     <>
       
-      <nav className="fixed w-full bg-blue-600 text-white shadow-md flex items-center justify-between p-4 z-50 lg:hidden">
+      <nav className="fixed w-full bg-blue-600 text-white shadow-md flex items-center justify-between p-4 z-30 lg:hidden">
         <button
           className="text-white"
           onClick={() => setSidebarOpen(!isSidebarOpen)}
@@ -67,7 +67,7 @@ const Sidebar = () => {
 
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black opacity-50 lg:hidden z-30"
+          className="fixed inset-0 bg-black opacity-50 lg:hidden z-10"
           onClick={() => setSidebarOpen(false)}
         ></div>
       )}

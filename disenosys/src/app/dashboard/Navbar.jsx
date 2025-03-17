@@ -37,7 +37,7 @@ const Navbar = () => {
                     </div>
                 </div>
 
-                <div className={`flex items-center ${isMobileMenuOpen ? 'flex-col md:flex-row' : 'hidden md:flex'} space-x-7`}>
+                <div className={`flex items-center hidden md:flex space-x-7`}>
                     <div className="relative w-full max-w-xs">
                         <input
                             type="text"
@@ -72,8 +72,8 @@ const Navbar = () => {
 
             {/* Mobile Menu */}
             {isMobileMenuOpen && (
-                <div className="flex flex-col md:hidden bg-[#182073] p-4 fixed top-50 left-0 right-0 z-50">
-                    <div className="relative w-full max-w-xs mb-2">
+                <div className="flex flex-row gap-5 items-center justify-center md:hidden bg-[#182073] p-4  top-0 left-0 right-0 z-50">
+                    <div className="relative w-64 max-w-xs mb-2">
                         <input
                             type="text"
                             placeholder="Search..."
@@ -88,8 +88,8 @@ const Navbar = () => {
                             <FaRegBell size={24} />
                             <span className="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">3</span>
                         </div>
-                        {user?.user?.user?.userName || user?.user?.name || user?.user?.userName ? (
-                        <div className="relative hidden md:flex gap-2 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
+                        {/* {user?.user?.user?.userName || user?.user?.name || user?.user?.userName ? (
+                        <div className="relative hidden md:flex gap-2 ring-4 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group z-50">
                             <span className="bg-[#057FE3] shadow-lg px-4 py-2 rounded-full text-white font-poppins font-bold text-lg">
                                 {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}{" "}
                                 {user?.user?.name?.toLocaleUpperCase()?.charAt(0)}{" "}
@@ -100,7 +100,7 @@ const Navbar = () => {
                         <div className="text-white">
                             <CiUser size={24} />
                         </div>
-                    )}
+                    )} */}
                     </div>
                 </div>
             )}

@@ -7,7 +7,7 @@ import { CiLock, CiUnlock } from "react-icons/ci";
 import { payment } from "../Redux/action/Payment.js";
 import { PiCheckCircleFill, PiVideoFill } from "react-icons/pi";
 import "../home/Home.css";
-import { FaDiagramNext } from "react-icons/fa6";
+
 
 const Recorded = () => {
   const [openAccordionIndex, setOpenAccordionIndex] = useState(0);
@@ -26,7 +26,7 @@ const Recorded = () => {
     JSON.parse(localStorage.getItem(`unlockedModules${courseId}`)) || { 0: true }
   );
   const [completedVideos, setCompletedVideos] = useState({});
-  console.log(completedVideos)
+
 
   const dispatch = useDispatch();
   const courseRefs = useRef([]);
@@ -34,7 +34,7 @@ const Recorded = () => {
   const id = search.get("id");
   const courseState = useSelector((state) => state?.course);
   const courses = courseState?.courses;
-  // console.log("courses:", courses);
+
 
   const router = useRouter();
 
@@ -55,9 +55,8 @@ const Recorded = () => {
   }, [unlockedModules]);
 
   useEffect(() => {
-    console.log("selected options", selectedOptions); // Logs the updated state after every change
+    console.log("selected options", selectedOptions);
   }, [selectedOptions]);
-  console.log("selected options", selectedOptions);
 
   useEffect(() => {
     if (courses && courses[0]?.Curriculum[0]?.subTopic && !selectedSubtopic) {
@@ -115,32 +114,25 @@ const Recorded = () => {
     );
 
     if (!currentCourse || !currentCourse.Curriculum) {
-      console.error("No course or curriculum found.");
       alert("No course or curriculum found.");
       return;
     }
 
-    console.log("Available Curriculums:", currentCourse?.Curriculum);
+
     const currentCurriculum = currentCourse?.Curriculum.find((curriculum) => {
       const subTopicsArray = curriculum?.subTopic
         ?.split(",")
         .map((item) => item.trim());
-      console.log("Subtopics in curriculum:", subTopicsArray);
       return subTopicsArray?.includes(selectedSubtopic);
     });
 
     if (!currentCurriculum) {
-      console.error(
-        "Current curriculum is undefined for the selected subtopic:",
-        selectedSubtopic
-      );
       alert(
         "click on the first topic or previous topic in your current module and continue"
       );
       return;
     }
 
-    console.log("Current Curriculum:", currentCurriculum);
 
     const subTopicsArray = currentCurriculum?.subTopic
       ?.split(",")
@@ -150,9 +142,6 @@ const Recorded = () => {
       .map((item) => item.trim());
 
     if (!subTopicsArray || !subLinksArray) {
-      console.error(
-        "Subtopics or links are missing in the current curriculum."
-      );
       alert("Subtopics or links are missing.");
       return;
     }
@@ -160,15 +149,27 @@ const Recorded = () => {
     const currentSubTopicIndex = subTopicsArray.indexOf(selectedSubtopic);
 
     if (currentSubTopicIndex === -1) {
-      console.error("Selected subtopic not found in the list of subtopics.");
       alert("Selected subtopic not found.");
       return;
     }
 
     const nextSubTopicIndex = currentSubTopicIndex + 1;
     const questionsArray = currentCurriculum?.questions || [];
+
+    const subLink = Array.isArray(currentCurriculum.subLinks)
+    ? currentCurriculum.subLinks
+    : currentCurriculum.subLinks.split(",");
+
+  const completedVideosForModule = JSON.parse(localStorage.getItem(`completedVideos${currentModule}`)) || {};
+
+  const allCompleted = subLink.every((link) =>
+    Object.keys(completedVideosForModule).some((key) =>
+      key.includes(link) && completedVideosForModule[key]
+    )
+  );
+
    
-    if (nextSubTopicIndex >= subTopicsArray?.length && questionsArray.length === 0) {
+    if (nextSubTopicIndex >= subTopicsArray?.length && questionsArray.length === 0 && allCompleted) {
       const nextModuleIndex = currentModule + 1;
     const updatedUnlockedModules = {
       ...unlockedModules,
@@ -176,16 +177,13 @@ const Recorded = () => {
     };
     setUnlockedModules(updatedUnlockedModules);
     localStorage.setItem(`unlockedModules${courseId}`, JSON.stringify(updatedUnlockedModules));
-    alert("Successfully You got second module access!")
+    alert("Successfully You got next module access!")
     }
 
 
     setCurrentSubTopicIndex(nextSubTopicIndex);
     setSelectedSubtopic(subTopicsArray[nextSubTopicIndex]);
     setSubLink(subLinksArray[nextSubTopicIndex]);
-
-    console.log("Next Subtopic:", subTopicsArray[nextSubTopicIndex]);
-    console.log("Next SubLink:", subLinksArray[nextSubTopicIndex]);
   };
 
   const handleVideoEnd = (subLink) => {
@@ -213,13 +211,7 @@ const Recorded = () => {
     setSelectedSubtopic(null);
   };
 
-  const handleInputChange = (key, value) => {
-    console.log(`Updating key ${key} with value ${value}`);
-    setSelectedOptions((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
+ 
 
   const handleQuizSubmit = () => {
     const selectedCourse = courses?.find(
@@ -229,13 +221,6 @@ const Recorded = () => {
     const moduleQuestions =
       selectedCourse?.Curriculum?.[currentModule]?.questions;
     console.log("current module:", currentModule);
-    // console.log("Final selectedOptions before submission:", selectedOptions);
-    // console.log("Module-specific selectedOptions:", selectedOptions[currentModule] || {});
-    // Object.keys(selectedOptions).forEach((key) => {
-    //   console.log(`Extracting answer for ${key}:`, selectedOptions[key]);
-    // });
-
-    // console.log("Module questions:", moduleQuestions);
 
     if (!moduleQuestions || moduleQuestions.length === 0) {
       console.error("No questions found for this module.");
@@ -326,52 +311,6 @@ const Recorded = () => {
     }, 500);
   };
 
-  const noQuiz = () => {
-    const currentModule = openAccordionIndex;
-    const selectedCourse = courses.find((course) => course.courseName === courseId);
-    const currentModuleData = selectedCourse?.Curriculum?.[currentModule];
-  
-    if (!currentModuleData) return;
-  
-    const subTopics = Array.isArray(currentModuleData.subTopic)
-      ? currentModuleData.subTopic
-      : currentModuleData.subTopic.split(",");
-  
-    const completedVideosForModule = JSON.parse(localStorage.getItem(`completedVideos${currentModule}`)) || {};
-
-    // Check if all subtopics have a completed video
-    const allCompleted = subTopics.every((subTopic) => {
-      return Object.keys(completedVideosForModule).some((subLink) =>
-        subLink.includes(subTopic) && completedVideosForModule[subLink]
-      );
-    });
-  
-    console.log("All Completed Status:", allCompleted);
-  
-    if (!allCompleted) {
-      return alert("Please complete all videos before proceeding to the next module.");
-    }
-  
-    const nextModuleIndex = currentModule + 1;
-    const updatedUnlockedModules = {
-      ...unlockedModules,
-      [nextModuleIndex]: true,
-    };
-  
-    setUnlockedModules(updatedUnlockedModules);
-    localStorage.setItem(`unlockedModules${courseId}`, JSON.stringify(updatedUnlockedModules));
-  
-    setTimeout(() => {
-      setOpenAccordionIndex(nextModuleIndex);
-      setSelectedOptions({});
-      setFeedback({});
-    }, 500);
-  };
-  
-  
-  
-
-
   const isCoursePaid = pay?.data?.some(
     (item) =>
       item._id === id &&
@@ -379,7 +318,7 @@ const Recorded = () => {
         (lineItem) => lineItem.name === courseId && item.isActive
       )
   );
-  console.log(isCoursePaid);
+
   return (
     <>
       {isCoursePaid ? (
@@ -393,8 +332,8 @@ const Recorded = () => {
               </div>
             </div>
           )}
-          <div className="flex font-garet">
-            <div className="col-span-9 bg-white p-4 shadow-md rounded-md ml-1/4 w-3/4">
+          <div className="flex flex-col lg:flex-row font-garet">
+            <div className="col-span-12 lg:col-span-9 bg-white p-4  overscroll-none shadow-md rounded-md ml-1/4 w-full lg:w-3/4">
               {showQuiz && openAccordionIndex !== null ? (
                 <div>
                   <h4 className="font-bold text-xl">Quiz</h4>
@@ -622,15 +561,15 @@ const Recorded = () => {
                       </video>
                     </div>
                   ) : (
-                    <p className="font-bold text-lg text-red-500 min-h-screen text-center flex justify-center">
-                      Plesae select your curriculum and watch the videos
+                    <p className="font-bold text-md lg:text-lg text-red-500 lg:min-h-screen text-center flex justify-center items-center">
+                      Please select your curriculum and watch the videos
                     </p>
                   )}
                 </div>
               )}
             </div>
 
-            <div className="col-span-3 h-screen overflow-y-auto p-4 bg-gray-100 w-1/4 sticky top-0">
+            <div className="col-span-12 lg:col-span-3 lg:h-screen  lg:overflow-y-auto p-4 bg-gray-100 w-full lg:w-1/4 lg:sticky top-0">
               <h1 className="text-[#182073] font-bold text-xl sm:text-2xl md:text-3xl font-poppins">
                 Course Curriculum
               </h1>
@@ -688,7 +627,7 @@ const Recorded = () => {
                                       {subTopic.trim()}
 
                                       {completedVideos[subLink] && (
-  <PiCheckCircleFill className="text-green-500 ml-2 w-6 h-6 absolute right-8" />
+  <PiCheckCircleFill className="text-green-500 ml-2 w-6 h-6 relative lg:absolute lg:right-8  right-0" />
 )}
 
                                     </span>
