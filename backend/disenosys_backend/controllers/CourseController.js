@@ -44,7 +44,6 @@ exports.getAllCourses = CatchAsyncError(async(req,res,next)=>{
 exports.getByCategories = CatchAsyncError(async(req,res)=>{
 
     const {category} = req.query
-console.log(req.query)
     const courses = await CourseModel.find({category: {
         $in:[category]
     }})
@@ -59,3 +58,28 @@ const length = courses.length
         courses
     })
 })
+
+
+exports.Reviews = CatchAsyncError(async (req, res) => {
+    const { courseId, name, rating, message,like } = req.body;
+    console.log(req.body)
+    if (!courseId || !rating) {
+      return res.status(400).json({ success: false, message: "Course ID and rating are required" });
+    }
+  
+    const course = await CourseModel.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ success: false, message: "Course not found" });
+    }
+  
+    const newReview = {
+      name: name || "Anonymous",
+      rating,
+      like,
+      message: message || "",
+    };
+    course.reviews.push(newReview);
+    await course.save(); 
+  
+    res.status(200).json({ success: true, message: "Review added successfully", reviews: course.reviews });
+  });

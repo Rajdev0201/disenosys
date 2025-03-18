@@ -18,7 +18,6 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const pay = useSelector((state) => state.payment);
-  console.log(cart)
   useEffect(() => {
     const storedUser = localStorage.getItem("profile");
     if (storedUser) {

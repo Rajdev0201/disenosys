@@ -1,6 +1,6 @@
 
 import Course from "./Recorded.jsx";
-
+import Review from "./Review.jsx"
 
 export default function RecordPage() {
 return(

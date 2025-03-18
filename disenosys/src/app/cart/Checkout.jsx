@@ -35,9 +35,8 @@ const CartModal = () => {
     dispatch(payment());
   }, [dispatch]);
 
-  // const paidCourses = pay?.data
-  //   ?.filter((item) => item?.customerDetails?.name === user?.user?.user?.userName)
-  //   ?.flatMap((item) => item?.lineItems?.map((course) => course?.name)) || [];
+
+
 
   const cartUserName = user?.user?.user?.userName;
 

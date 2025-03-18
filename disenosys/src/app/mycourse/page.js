@@ -4,20 +4,20 @@ import Course from "./Course";
 
 export default function DashboardPage() {
     return (
-        <div className="">
-        <Navbar />
-        <div className="grid grid-cols-12 h-full mt-16">
-          {/* Sidebar with full height */}
-          <div className="col-span-2 bg-[#182073] h-full">
-            <Sidebar />
-          </div>
-      
-          {/* Main content area with full height */}
-          <div className="col-span-10 h-full bg-blue-50">
-            <Course/>
-          </div>
-        </div>
-      </div>
+     
+      <div className="bg-blue-50 min-h-screen flex flex-col">
+     <Navbar />
+  <div className="flex flex-grow mt-16">
+    <div className="w-1/6 h-full bg-white shadow-lg">
+      <Sidebar />
+    </div>
+    <div className="flex-1 p-4">
+      <Course />
+    </div>
+  </div>
+</div>
+
+       
       
     );
 }

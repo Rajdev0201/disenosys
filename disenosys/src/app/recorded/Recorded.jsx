@@ -7,6 +7,7 @@ import { CiLock, CiUnlock } from "react-icons/ci";
 import { payment } from "../Redux/action/Payment.js";
 import { PiCheckCircleFill, PiVideoFill } from "react-icons/pi";
 import "../home/Home.css";
+import Review from "./Review.jsx";
 
 
 const Recorded = () => {
@@ -107,6 +108,86 @@ const Recorded = () => {
     setShowQuiz(false);
   };
 
+  // const nextVideo = () => {
+  //   const currentModule = openAccordionIndex;
+  //   const currentCourse = courses?.find(
+  //     (course) => course?.courseName === courseId
+  //   );
+
+  //   if (!currentCourse || !currentCourse.Curriculum) {
+  //     alert("No course or curriculum found.");
+  //     return;
+  //   }
+
+
+  //   const currentCurriculum = currentCourse?.Curriculum.find((curriculum) => {
+  //     const subTopicsArray = curriculum?.subTopic
+  //       ?.split(",")
+  //       .map((item) => item.trim());
+  //     return subTopicsArray?.includes(selectedSubtopic);
+  //   });
+
+  //   if (!currentCurriculum) {
+  //     alert(
+  //       "click on the first topic or previous topic in your current module and continue"
+  //     );
+  //     return;
+  //   }
+
+
+  //   const subTopicsArray = currentCurriculum?.subTopic
+  //     ?.split(",")
+  //     .map((item) => item.trim());
+  //   const subLinksArray = currentCurriculum?.subLinks
+  //     ?.split(",")
+  //     .map((item) => item.trim());
+
+  //   if (!subTopicsArray || !subLinksArray) {
+  //     alert("Subtopics or links are missing.");
+  //     return;
+  //   }
+
+  //   const currentSubTopicIndex = subTopicsArray.indexOf(selectedSubtopic);
+
+  //   if (currentSubTopicIndex === -1) {
+  //     alert("Selected subtopic not found.");
+  //     return;
+  //   }
+
+  //   const nextSubTopicIndex = currentSubTopicIndex + 1;
+  //   console.log("test",nextSubTopicIndex)
+  //   const questionsArray = currentCurriculum?.questions || [];
+
+  //   const subLink = Array.isArray(currentCurriculum.subLinks)
+  //   ? currentCurriculum.subLinks
+  //   : currentCurriculum.subLinks.split(",");
+
+
+  // const completedVideosForModule = JSON.parse(localStorage.getItem(`completedVideos${currentModule}`)) || {};
+  // const allCompleted = subLink.every((link) =>
+  //   Object.keys(completedVideosForModule).some((key) =>
+  //     key.includes(link) && completedVideosForModule[key]
+  //   )
+  // );
+
+   
+  //   if (nextSubTopicIndex >= subTopicsArray?.length && questionsArray.length === 0 && allCompleted) {
+  //     const nextModuleIndex = currentModule + 1;
+  //   const updatedUnlockedModules = {
+  //     ...unlockedModules,
+  //     [nextModuleIndex]: true,
+  //   };
+  //   setUnlockedModules(updatedUnlockedModules);
+  //   localStorage.setItem(`unlockedModules${courseId}`, JSON.stringify(updatedUnlockedModules));
+  //   alert("Successfully You got next module access!")
+  //   }
+
+
+  //   setCurrentSubTopicIndex(nextSubTopicIndex);
+  //   setSelectedSubtopic(subTopicsArray[nextSubTopicIndex]);
+  //   setSubLink(subLinksArray[nextSubTopicIndex]);
+  // };
+
   const nextVideo = () => {
     const currentModule = openAccordionIndex;
     const currentCourse = courses?.find(
@@ -118,25 +199,21 @@ const Recorded = () => {
       return;
     }
 
-
-    const currentCurriculum = currentCourse?.Curriculum.find((curriculum) => {
-      const subTopicsArray = curriculum?.subTopic
-        ?.split(",")
-        .map((item) => item.trim());
-      return subTopicsArray?.includes(selectedSubtopic);
-    });
+    // ✅ Explicitly find the correct curriculum for the current module
+    const currentCurriculum = currentCourse?.Curriculum.find(
+      (curriculum, index) => index === currentModule
+    );
 
     if (!currentCurriculum) {
-      alert(
-        "click on the first topic or previous topic in your current module and continue"
-      );
+      alert("Click on the first topic or previous topic in your current module and continue.");
       return;
     }
 
-
+    // ✅ Ensure subTopicsArray and subLinksArray are extracted from the correct curriculum
     const subTopicsArray = currentCurriculum?.subTopic
       ?.split(",")
       .map((item) => item.trim());
+
     const subLinksArray = currentCurriculum?.subLinks
       ?.split(",")
       .map((item) => item.trim());
@@ -146,6 +223,7 @@ const Recorded = () => {
       return;
     }
 
+    // ✅ Find the index of the current subtopic in the correct curriculum
     const currentSubTopicIndex = subTopicsArray.indexOf(selectedSubtopic);
 
     if (currentSubTopicIndex === -1) {
@@ -154,38 +232,52 @@ const Recorded = () => {
     }
 
     const nextSubTopicIndex = currentSubTopicIndex + 1;
+    console.log("Next SubTopic Index:", nextSubTopicIndex);
+
     const questionsArray = currentCurriculum?.questions || [];
 
+    // ✅ Ensure correct subLinks array is used
     const subLink = Array.isArray(currentCurriculum.subLinks)
-    ? currentCurriculum.subLinks
-    : currentCurriculum.subLinks.split(",");
+      ? currentCurriculum.subLinks
+      : currentCurriculum.subLinks.split(",");
 
-  const completedVideosForModule = JSON.parse(localStorage.getItem(`completedVideos${currentModule}`)) || {};
+    // ✅ Fetch completed videos for the current module
+    const completedVideosForModule = JSON.parse(localStorage.getItem(`completedVideos${currentModule}`)) || {};
 
-  const allCompleted = subLink.every((link) =>
-    Object.keys(completedVideosForModule).some((key) =>
-      key.includes(link) && completedVideosForModule[key]
-    )
-  );
+    const allCompleted = subLink.every((link) =>
+      Object.keys(completedVideosForModule).some((key) =>
+        key.includes(link) && completedVideosForModule[key]
+      )
+    );
 
-   
-    if (nextSubTopicIndex >= subTopicsArray?.length && questionsArray.length === 0 && allCompleted) {
+    console.log("All Videos Completed:", allCompleted);
+
+    // ✅ Ensure all subtopics are completed before unlocking the next module
+    if (nextSubTopicIndex >= subTopicsArray.length && questionsArray.length === 0 && allCompleted) {
       const nextModuleIndex = currentModule + 1;
-    const updatedUnlockedModules = {
-      ...unlockedModules,
-      [nextModuleIndex]: true,
-    };
-    setUnlockedModules(updatedUnlockedModules);
-    localStorage.setItem(`unlockedModules${courseId}`, JSON.stringify(updatedUnlockedModules));
-    alert("Successfully You got next module access!")
+      const updatedUnlockedModules = {
+        ...unlockedModules,
+        [nextModuleIndex]: true,
+      };
+
+      setUnlockedModules(updatedUnlockedModules);
+      localStorage.setItem(`unlockedModules${courseId}`, JSON.stringify(updatedUnlockedModules));
+
+      alert("Successfully! You got next module access.");
+      return;
     }
 
-
+    // ✅ Ensure state updates correctly with the correct subtopic and sublink
     setCurrentSubTopicIndex(nextSubTopicIndex);
-    setSelectedSubtopic(subTopicsArray[nextSubTopicIndex]);
-    setSubLink(subLinksArray[nextSubTopicIndex]);
-  };
+    setSelectedSubtopic(subTopicsArray[nextSubTopicIndex] || ""); // Prevent undefined
+    setSubLink(subLinksArray[nextSubTopicIndex] || ""); // Prevent undefined
 
+    console.log("Updated Subtopic:", subTopicsArray[nextSubTopicIndex]);
+    console.log("Updated SubLink:", subLinksArray[nextSubTopicIndex]);
+};
+
+
+  
   const handleVideoEnd = (subLink) => {
     if (openAccordionIndex === null || subLink === null) return;
   
@@ -576,6 +668,7 @@ const Recorded = () => {
               {courses
                 ?.filter((course) => course.courseName === courseId)
                 ?.map((course, courseIdx) => (
+                  <>
                   <div key={courseIdx}>
                     {course?.Curriculum?.map((item, idx) => (
                       <div
@@ -627,7 +720,7 @@ const Recorded = () => {
                                       {subTopic.trim()}
 
                                       {completedVideos[subLink] && (
-  <PiCheckCircleFill className="text-green-500 ml-2 w-6 h-6 relative lg:absolute lg:right-8  right-0" />
+  <PiCheckCircleFill className="text-green-500 ml-2 w-6 h-6 relative lg:absolute lg:right-6  right-0" />
 )}
 
                                     </span>
@@ -656,6 +749,8 @@ const Recorded = () => {
                       </div>
                     ))}
                   </div>
+                     <Review courseId={course._id}/>
+                     </>
                 ))}
             </div>
           </div>

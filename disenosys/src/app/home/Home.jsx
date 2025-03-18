@@ -68,11 +68,9 @@ const Home = () => {
           setResult("");
         }, 1000);
       } else {
-        console.log("Error", data);
         setResult(data.message);
       }
     } catch (error) {
-      console.error("Error submitting the form", error);
       setResult("An error occurred. Please try again.");
     }
   };

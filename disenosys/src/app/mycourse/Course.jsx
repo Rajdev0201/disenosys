@@ -34,7 +34,7 @@ const Course = () => {
   
 
   return (
-    <div className="px-6 py-6">
+    <div className="lg:px-6 py-6">
       <h4 className="text-[#182073] font-medium text-xl font-poppins">
         My Course
       </h4>
@@ -52,7 +52,7 @@ const Course = () => {
                     key={`${item._id}-${i}`}
                     className="w-64 h-80 flex flex-col"
                   >
-                    <div className="bg-[#182073] flex rounded-t-md shadow-lg justify-between items-center px-4 py-2">
+                    <div className="bg-[#182073] flex rounded-t-md shadow-lg justify-between items-center px-2 lg:px-4 py-2">
                       <Image
                         src={brand}
                         alt="Brand logo"

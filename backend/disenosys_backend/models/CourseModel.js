@@ -1,9 +1,26 @@
 const mongoose = require("mongoose")
 
+const reviewSchema = new mongoose.Schema({
+    name: {
+      type: String,
+    },
+    rating: {
+      type: String, 
+      min: 1,
+      max: 5,
+    },
+    message: {
+      type: String,
+    },
+    like:{
+        type:String
+    }
+  });
+
 const courseSchema = new mongoose.Schema({
     courseName:{
         type: String,
-        required:[true,"Please Enter CourseName"]
+        // required:[true,"Please Enter CourseName"]
     },
     description:{
         type: String
@@ -11,7 +28,7 @@ const courseSchema = new mongoose.Schema({
     category:[
         {
         type: String,
-        required:[true,"Please Enter Course Category"]
+        // required:[true,"Please Enter Course Category"]
         }
     ],
     members:[
@@ -20,14 +37,10 @@ const courseSchema = new mongoose.Schema({
             ref:"users"
         }
     ],
-    reviews:[
-        {
-   
-        }
-    ],
+    reviews: [reviewSchema],
     price:{
         type: Number,
-        required:[true,"Please Enter price"]
+        // required:[true,"Please Enter price"]
     },
     duration:{
         type: String
@@ -37,7 +50,7 @@ const courseSchema = new mongoose.Schema({
         {
             overview: {
                 type: [String], 
-                required: [true, "Overview is required"]
+                // required: [true, "Overview is required"]
             },
         }
     ],
@@ -46,11 +59,11 @@ const courseSchema = new mongoose.Schema({
         {
             title: {
                 type: String,
-                required: [true, "Please enter the title"]
+                // required: [true, "Please enter the title"]
             },
             subTopics: {
                 type: String,
-                required: [true, "Please enter the subtopics"]
+                // required: [true, "Please enter the subtopics"]
             }
         }
     ],
@@ -89,11 +102,11 @@ const courseSchema = new mongoose.Schema({
     },
     questions: [
         {
-         head:{ type: String, required: true },
-          questionText: { type: String, required: true }, // Question statement
-          type: { type: String, enum: ["input", "mcq", "match", "fill"], required: true }, // Type of question
+         head:{ type: String },
+          questionText: { type: String}, // Question statement
+          type: { type: String, enum: ["input", "mcq", "match", "fill"]}, // Type of question
           options: [{ type: String }], // Options for MCQ
-          correctAnswer: { type: mongoose.Schema.Types.Mixed, required: true }, // Can be a string, array, or object
+          correctAnswer: { type: mongoose.Schema.Types.Mixed }, // Can be a string, array, or object
           matchPairs: [
             {
               left: { type: String },

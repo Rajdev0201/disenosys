@@ -8,7 +8,6 @@ import { useEffect } from "react";
 
 export default function ApplicantsPage() {
   const user = useSelector((state) => state?.user);
-  // console.log(user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,7 +23,7 @@ return(
     <div className="bg-blue-50">
         <Navbar />
         <div className="grid grid-cols-12 h-full mt-16">
-          <div className="col-span-2 bg-[#182073] h-full">
+          <div className="col-span-2  h-full">
             <Sidebar />
           </div>
           <div className="col-span-10 ">
