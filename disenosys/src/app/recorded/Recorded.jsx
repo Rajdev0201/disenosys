@@ -28,7 +28,7 @@ const Recorded = () => {
   );
   const [completedVideos, setCompletedVideos] = useState({});
 
-
+ console.log(completedVideos)
   const dispatch = useDispatch();
   const courseRefs = useRef([]);
   const pay = useSelector((state) => state.payment);
@@ -40,11 +40,13 @@ const Recorded = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const storedData = localStorage.getItem(`completedVideos${openAccordionIndex}`);
-    if (storedData) {
-      setCompletedVideos(JSON.parse(storedData));
+    if (openAccordionIndex !== null) {
+      const storageKey = `completedVideos${openAccordionIndex}`;
+      const storedVideos = JSON.parse(localStorage.getItem(storageKey)) || {};
+      setCompletedVideos(storedVideos); // Load completed videos for the module
     }
-  }, []);
+  }, [openAccordionIndex]); // Runs when module changes
+  
 
   useEffect(() => {
     dispatch(fetchCourse());
@@ -278,23 +280,28 @@ const Recorded = () => {
 
 
   
-  const handleVideoEnd = (subLink) => {
-    if (openAccordionIndex === null || subLink === null) return;
-  
-    setCompletedVideos((prev) => {
-      const updatedVideos = {
-        ...prev,
-        [subLink]: true,  // No need for module index in key
-      };
-      localStorage.setItem(
-        `completedVideos${openAccordionIndex}`,  // Separate storage per module
-        JSON.stringify(updatedVideos)
-      );
-      return updatedVideos;
-    });
-  
-    nextVideo();
-  };
+const handleVideoEnd = (subLink) => {
+  if (openAccordionIndex === null || subLink === null) return;
+
+  const storageKey = `completedVideos${openAccordionIndex}`;
+
+  setCompletedVideos((prev) => {
+    const previousModuleData = JSON.parse(localStorage.getItem(storageKey)) || {};
+
+    const updatedVideos = {
+      ...previousModuleData, // Keep existing completed videos for the module
+      ...prev, // Merge with current state
+      [subLink]: true, // Mark current video as completed
+    };
+
+    localStorage.setItem(storageKey, JSON.stringify(updatedVideos));
+
+    return updatedVideos;
+  });
+
+  nextVideo();
+};
+
   
   
   const showQuizSection = (curriculumIdx) => {
@@ -720,7 +727,7 @@ const Recorded = () => {
                                       {subTopic.trim()}
 
                                       {completedVideos[subLink] && (
-  <PiCheckCircleFill className="text-green-500 ml-2 w-6 h-6 relative lg:absolute lg:right-6  right-0" />
+  <PiCheckCircleFill className="text-green-500 ml-2 w-6 h-6 relative lg:absolute lg:right-3  right-0" />
 )}
 
                                     </span>

@@ -8,7 +8,7 @@ const Review = ({ courseId }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [rating, setRating] = useState(1);
   const [message, setMessage] = useState("");
-  const[like,setLike] = useState("");
+  const [selectedLikes, setSelectedLikes] = useState([]);
   const [loading, setLoading] = useState(false);
   const user = useSelector((state) => state?.user);
   const dispatch = useDispatch();
@@ -20,7 +20,12 @@ const Review = ({ courseId }) => {
     }
   }, [dispatch]);
 
-
+  const toggleSelection = (item) => {
+    setSelectedLikes((prev) =>
+      prev.includes(item) ? prev.filter((like) => like !== item) : [...prev, item] 
+    );
+  };
+  
   const emojiMap = {
     1: "😡", 
     2: "😕", 
@@ -41,7 +46,7 @@ const Review = ({ courseId }) => {
       const response = await fetch("https://disenosys-dkhj.onrender.com/api/v1/postreviews", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ courseId, name: user?.user?.user?.userName, rating, message,like }),
+        body: JSON.stringify({ courseId, name: user?.user?.user?.userName, rating, message,selectedLikes }),
       });
 
       const data = await response.json();
@@ -107,10 +112,17 @@ const Review = ({ courseId }) => {
             )}
             <label className="block text-gray-300 mt-4 mb-2">What Did You like? :</label>
              <div className="grid grid-cols-2 gap-2 text-gray-800">
-                  <button className={` ${like ==="Affordable" ? "bg-blue-500 text-white rounded shadow-inner p-2" : "bg-blue-200 rounded shadow-inner p-2"}`} onClick={() => setLike("Affordable")}>Affordable</button>
-                  <button className={` ${like === "Teaching" ? "bg-blue-500 text-white rounded shadow-inner p-2" : "bg-blue-200 rounded shadow-inner p-2"}`} onClick={() => setLike("Teaching")}>Teaching</button>
-                  <button className={` ${like === "Session" ? "bg-blue-500 text-white rounded shadow-inner p-2" : "bg-blue-200 rounded shadow-inner p-2"}`} onClick={() => setLike("Session")}>Session</button>
-                  <button className={` ${like === "Design" ? "bg-blue-500 text-white rounded shadow-inner p-2" : "bg-blue-200 rounded shadow-inner p-2"}`} onClick={() => setLike("Design")}>Design</button>
+             {["Affordable", "Teaching", "Session", "Design"].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => toggleSelection(item)}
+                  className={`p-2 rounded shadow-inner transition ${
+                    selectedLikes.includes(item) ? "bg-blue-500 text-white" : "bg-blue-200"
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
              </div>
             <label className="block text-gray-300 mt-4 mb-2">Your Feedback :</label>
             <textarea
