@@ -46,13 +46,20 @@ export const Review = ({ Review }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 font-garet mb-28">
         {filteredReviews.length > 0 ? (
           filteredReviews.map((review, index) => (
-            <div key={index} className="px-4 sm:px-6 md:px-12 lg:px-20 xl:px-28">
+            <div key={index} className="px-4 sm:px-6 md:px-12 lg:px-20 xl:px-28 ">
               <div className="flex justify-between">
                 <div className="inline-flex gap-2">
-                  <RxAvatar size={30} />
-                  <p className="text-gray-900 text-lg md:text-xl font-bold">
+                  <RxAvatar size={40} className="mt-0"/>
+                  <div className="flex flex-col">
+                  <p className="text-gray-900 text-lg md:text-xl font-medium">
                     {review.name}
                   </p>
+                  <p className="text-sm font-bold">
+                    {review.createdAt
+                      ? new Date(review.createdAt).toLocaleDateString()
+                      : "N/A"}
+                      </p>
+                      </div>
                 </div>
                 <div className="flex items-center space-x-1">
                   {Array.from({ length: 5 }).map((_, i) =>
@@ -64,7 +71,7 @@ export const Review = ({ Review }) => {
                   )}
                 </div>
               </div>
-              <div className="mt-2">
+              <div className="mt-2 rounded-md border-2 bg-blue-300 shadow-inner bg-white p-2">
                 <p className="text-gray-600">{review.message}</p>
               </div>
             </div>
