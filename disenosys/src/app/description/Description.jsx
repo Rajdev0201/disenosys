@@ -341,9 +341,9 @@ import { useRouter, useSearchParams } from "next/navigation";
                   </div>
                 </dialog>
 
-                <Rating />
+                <Rating Review = {description.reviews}/>
                 <div className="mt-5">
-                  <Review />
+                  <Review Review = {description.reviews} />
                 </div>
               </div>
             </>

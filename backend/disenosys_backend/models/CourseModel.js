@@ -15,7 +15,7 @@ const reviewSchema = new mongoose.Schema({
     like:{
         type:String
     }
-  });
+  },{ timestamps: true });
 
 const courseSchema = new mongoose.Schema({
     courseName:{
