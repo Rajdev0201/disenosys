@@ -46,7 +46,7 @@ const Review = ({ courseId }) => {
       const response = await fetch("https://disenosys-dkhj.onrender.com/api/v1/postreviews", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ courseId, name: user?.user?.user?.userName, rating, message,selectedLikes }),
+        body: JSON.stringify({ courseId, name: user?.user?.user?.userName, rating, message,like:selectedLikes }),
       });
 
       const data = await response.json();

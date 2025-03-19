@@ -13,8 +13,8 @@ export const Rating = ({Review}) => {
   }, {});
   console.log(likeCounts)
   const totalReviews = Review.length;
-  const totalRatingSum = Review.reduce((sum,r) => sum + r.rating,0)
-  const totalRatingPercentage = (totalRatingSum/totalReviews).toFixed(1);
+  const totalRatingSum = Review.reduce((sum, r) => sum + Number(r.rating), 0);
+  const totalRatingPercentage = (totalReviews > 0 ? (totalRatingSum / totalReviews) : 0).toFixed(1);
   const likePercentages = Object.keys(likeCounts).map((like) => ({
     name: like,
     percentage: ((likeCounts[like] / totalReviews) * 100).toFixed(1), 
@@ -23,9 +23,8 @@ export const Rating = ({Review}) => {
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-16 xl:px-28 my-3 border-b border-gray-400 mb-3 font-garet">
       <h1 className="font-bold capitalize text-xl sm:text-2xl">Student Reviews</h1>
-      {Review?.map((rating, index) => (
+   
         <div
-          key={index}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-9 my-3"
         >
           <div className="col-span-1 border-r border-gray-400 pr-4 sm:pr-6">
@@ -63,7 +62,6 @@ export const Rating = ({Review}) => {
           </div>
 
         </div>
-      ))}
     </div>
   );
 };
