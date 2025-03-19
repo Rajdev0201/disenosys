@@ -11,6 +11,7 @@ export const Rating = ({Review}) => {
     acc[curr.like] = (acc[curr.like] || 0) + 1; //dynamic key follow
     return acc;
   }, {});
+  
   console.log(likeCounts)
   const totalReviews = Review.length;
   const totalRatingSum = Review.reduce((sum, r) => sum + Number(r.rating), 0);

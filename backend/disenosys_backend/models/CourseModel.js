@@ -13,7 +13,7 @@ const reviewSchema = new mongoose.Schema({
       type: String,
     },
     like:{
-        type:String
+        type:String,
     }
   },{ timestamps: true });
 
