@@ -71,7 +71,7 @@ export const Review = ({ Review }) => {
           ))
         ) : (
           <p className="text-gray-500 text-center w-full">
-            No reviews found for "{search}".
+            No reviews found for {search}.
           </p>
         )}
       </div>
