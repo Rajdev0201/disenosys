@@ -34,8 +34,9 @@ const Course = () => {
   
 
   return (
-    <div className="lg:px-6 py-6">
-      <h4 className="text-[#182073] font-medium text-xl font-poppins">
+    <div className="py-16 md:px-40 lg:px-6 lg:py-6">
+      <div className="flex flex-col">
+      <h4 className="text-[#182073] font-medium text-xl font-garet">
         My Course
       </h4>
       <div className="grid grid-cols-1 lg:grid-cols-4 container mx-auto mt-10 gap-3">
@@ -50,7 +51,7 @@ const Course = () => {
                 return (
                   <div
                     key={`${item._id}-${i}`}
-                    className="w-64 h-80 flex flex-col"
+                    className="flex flex-col mr-12 lg:mr-0"
                   >
                     <div className="bg-[#182073] flex rounded-t-md shadow-lg justify-between items-center px-2 lg:px-4 py-2">
                       <Image
@@ -58,7 +59,7 @@ const Course = () => {
                         alt="Brand logo"
                         className="w-8 h-8 object-cover"
                       />
-                      <h2 className="text-base font-poppins font-semibold text-white">
+                      <h2 className="text-base font-garet font-semibold text-white">
                         Happy Learning!
                       </h2>
                     </div>
@@ -70,18 +71,18 @@ const Course = () => {
                       }}
                     >
                       <div className="bg-opacity-3 bg-white text-center py-2">
-                        <p className="text-gray-700 text-base font-poppins font-bold">
+                        <p className="text-gray-700 text-base font-garet font-bold">
                           {course.name}
                         </p>
                       </div>
                     </div>
 
                     <div className="bg-[#182073] flex justify-between rounded-b-md shadow-lg items-center px-4 py-2">
-                      <button className="px-4 text-base font-poppins font-semibold text-white">
+                      <button className="px-4 text-base font-garet font-semibold text-white">
                         Info
                       </button>
                       <button
-                        className="bg-white px-6 py-1 text-base font-poppins rounded-sm font-semibold text-[#182073]"
+                        className="bg-white px-6 py-1 text-base font-garet rounded-sm font-semibold text-[#182073]"
                         onClick={() => goTo(course.name,item?._id
                         )}
                       >
@@ -93,14 +94,15 @@ const Course = () => {
               })
             ) : (
               <div key={item._id} className="text-center  mt-6">
-                <p className="text-red-600 font-poppins border rounded bg-white shadow-xl p-2">
+                <p className="text-red-600 font-garet border rounded bg-white shadow-xl p-2">
                   Please wait, you still don&apos;t have admin access.
                 </p>
-                <p className="text-red-600 font-poppins mt-6">Loading...</p>
+                <p className="text-red-600 font-garet mt-6">Loading...</p>
               </div>
             )
           ) : null
         )}
+      </div>
       </div>
     </div>
   );

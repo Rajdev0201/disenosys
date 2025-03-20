@@ -51,7 +51,7 @@ const Sidebar = () => {
       <div
         className={`fixed top-0 left-0 h-full w-64 bg-[#182073] text-white flex flex-col justify-between transition-transform duration-300 transform overflow-y-scroll ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0 md:w-64  z-40`}
+        } md:translate-x-0 md:w-64 z-40`}
       >
         <div className="flex flex-col  px-4 flex-grow space-y-6">
   

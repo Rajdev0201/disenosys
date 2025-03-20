@@ -8,9 +8,9 @@ import Chart2 from "../../component/card/Chart2";
 
 const Home = () => {
   return (
-    <div className='px-2 py-16 lg:px-6 lg:py-6'>
+    <div className=' py-16 lg:px-6 lg:py-6'>
       <div className='flex flex-col w-full'>
-        <h4 className='text-[#182073] font-medium text-xl text-center lg:text-start font-poppins'>My Profile</h4>
+        <h4 className='text-[#182073] font-medium text-xl text-start lg:text-start font-poppins'>My Profile</h4>
         {/* <div className='w-full bg-white shadow-lg flex flex-col mt-10'>
            <div className='bg-dark'>
              <Image src={img} alt='img' className='w-full object-fill text-[#182073] p-6'/>
@@ -18,7 +18,7 @@ const Home = () => {
            <div>
            </div>
         </div> */}
-        <div className='grid grid-cols-12 mt-8'>
+        <div className='grid grid-cols-12 mt-8 gap-2'>
            <div className='col-span-12 lg:col-span-3'>
              <Card No="1" />
            </div>

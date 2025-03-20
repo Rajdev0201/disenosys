@@ -25,7 +25,7 @@ export const Review = ({ Review }) => {
               <input
                 type="text"
                 className="w-full p-1 outline-none text-gray-400"
-                placeholder="Search customer review"
+                placeholder="Search student review"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />

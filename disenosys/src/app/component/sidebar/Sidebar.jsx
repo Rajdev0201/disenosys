@@ -3,9 +3,11 @@ import { LogOut } from '@/app/Redux/features/authSlice.js';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FaCog, FaChartBar, FaSignOutAlt, FaBars, FaHome, FaUser } from 'react-icons/fa';
+import { GiAchievement, GiSecretBook } from "react-icons/gi";
 import {  SiSololearn } from "react-icons/si";
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { BiSupport } from 'react-icons/bi';
 import { IoCreate } from 'react-icons/io5';
 
 const Sidebar = () => {
@@ -17,10 +19,12 @@ const Sidebar = () => {
     { href: '/dashboard', label: 'Dashboard', icon: <FaHome /> },
     // { href: '/profile', label: 'Profile', icon: <FaUser /> },
     // {href:'/portfolioDashboard',label:'Portfolio',icon:<SiSololearn />},
-    {href:'/mycourse',label:'Mycourse',icon:<SiSololearn />},
-    // {href:'/createblog',label:'Create Blog',icon:<IoCreate />},
-    { href: '/settings', label: 'Settings', icon: <FaCog /> },
-    { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
+    {href:'/mycourse',label:'Mycourse',icon:<GiSecretBook />},
+    {href:'/createblog',label:'Create Blog',icon:<IoCreate />},
+    { href: '/achievements', label: 'Achievements', icon: <GiAchievement size={20}/> },
+    { href: '/support', label: 'Support', icon: <BiSupport /> },
+    { href: '/settings', label: 'Settings', icon: <FaCog /> }, 
+    // { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];
 
   const handleLogout = () => {
@@ -30,7 +34,7 @@ const Sidebar = () => {
   return (
     <>
       
-      <nav className="fixed w-full bg-blue-600 text-white shadow-md flex items-center justify-between p-4 z-30 lg:hidden">
+      <nav className="fixed w-full bg-blue-600 text-white shadow-md flex items-center justify-between p-4 z-30 block md:hidden">
         <button
           className="text-white"
           onClick={() => setSidebarOpen(!isSidebarOpen)}
@@ -43,7 +47,7 @@ const Sidebar = () => {
       <div
         className={`fixed top-0 left-0 h-full w-64 bg-[#182073] text-white flex flex-col justify-between transition-transform duration-300 transform ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } md:translate-x-0 md:w-64 z-40`}
+        } md:translate-x-0 md:w-64 font-garet z-40`}
       >
         <div className="flex flex-col mt-20 px-4 flex-grow space-y-6">
   
@@ -57,12 +61,12 @@ const Sidebar = () => {
           ))}
         </div>
 
-        <div className="px-6 py-4">
+        {/* <div className="px-6 py-4">
           <button onClick={handleLogout} className="flex items-center py-3 px-4 rounded-lg bg-red-600 hover:bg-red-700 transition-colors duration-200 w-full">
             <FaSignOutAlt className="mr-3" />
             <span>Logout</span>
           </button>
-        </div>
+        </div> */}
       </div>
 
       {isSidebarOpen && (

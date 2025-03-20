@@ -3,7 +3,7 @@ import React from "react";
 
 export const Rating = ({Review}) => {
  
-  if (!Review || Review.length === 0) return <p>No reviews available.</p>;
+  if (!Review || Review.length === 0) return <p className="text-center font-garet text-red-600">No reviews available.</p>;
 
   // const highestRating = Math.max(...Review.map((r) => r.rating));
 
@@ -20,7 +20,7 @@ export const Rating = ({Review}) => {
     name: like,
     percentage: ((likeCounts[like] / totalReviews) * 100).toFixed(1), 
   }));
-
+ console.log(likePercentages)
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-16 xl:px-28 my-3 border-b border-gray-400 mb-3 font-garet">
       <h1 className="font-bold capitalize text-xl sm:text-2xl">Student Reviews</h1>

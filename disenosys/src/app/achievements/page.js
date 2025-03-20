@@ -1,8 +1,8 @@
 import Navbar from "../dashboard/Navbar";
 import Sidebar from "../component/sidebar/Sidebar";
-import Course from "./Course";
+import Achievement from "./Achievements"
 
-export default function DashboardPage() {
+export default function AchievementPage() {
     return (
      
       <div className="bg-blue-50 min-h-screen flex flex-col">
@@ -12,12 +12,9 @@ export default function DashboardPage() {
       <Sidebar />
     </div>
     <div className="flex-1">
-      <Course />
+      <Achievement />
     </div>
   </div>
-</div>
-
-       
-      
+</div>      
     );
 }
