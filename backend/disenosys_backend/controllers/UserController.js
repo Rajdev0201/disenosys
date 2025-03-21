@@ -33,30 +33,6 @@ exports.RegisterUser = CatchAsyncError(async(req,res,next)=>{
   SendToken(user,res,201)
 })
 
-// exports.LoginUser = CatchAsyncError(async(req,res,next)=>{
-
-//     const {userEmail,userName,password} = req.body
-
-// if(!userEmail && !userName)
-// {
-//     return next(new ErrorHandler("Username or useremail is required",400))
-// }
-
-// const user = await UserModel.findOne({$or:[{userEmail: userEmail},{userName: userName}]}).select("+password")
-
-// if(!user)
-// {
-//     return next(new ErrorHandler("No user Found",401))
-// }
-
-//     if(! await user.isValidatePassword(password))
-//     {
-//         return next(new ErrorHandler("Email or Password is Wrong",401))
-//     }
- 
-
-//   SendToken(user,res,200)
-// })
 
 exports.LoginUser = CatchAsyncError(async (req, res, next) => {
     const { identifier, password } = req.body;
@@ -79,6 +55,110 @@ exports.LoginUser = CatchAsyncError(async (req, res, next) => {
     SendToken(user, res, 200);
   });
   
+
+
+
+  exports.updateProfile = async (req, res, next) => {
+    try {
+      const {mobile, email } = req.body;
+      console.log(req.body)
+  
+      const user = await UserModel.findById(req.user.id);
+      if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+      }
+  
+      user.userEmail = email || user.userEmail;
+      user.mobile = mobile || user.mobile;
+
+      await user.save();
+      const updatedUser = await UserModel.findById(req.user.id).select("-password");
+
+    res.status(200).json({ 
+      success: true, 
+      message: "Profile updated successfully",
+      user: updatedUser 
+    });
+    } catch (error) {
+      next(error);
+      console.error("Update profile error:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  };
+  
+
+  exports.changePassword = async (req, res, next) => {
+    try {
+      const { oldPassword, newPassword, confirmPassword } = req.body;
+  
+      console.log("Received Data:", req.body); // Debugging
+  
+      // Ensure all fields are provided
+      if (!oldPassword || !newPassword || !confirmPassword) {
+        return next(new ErrorHandler("All fields are required", 400));
+      }
+  
+      const user = await UserModel.findById(req.user.id).select("+password");
+  
+      if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+      }
+  
+      console.log("User Password from DB:", user.password); // Debugging
+  
+      // Ensure user has a password stored
+      if (!user.password) {
+        return next(new ErrorHandler("User does not have a password set", 400));
+      }
+  
+      const isMatch = await bcrypt.compare(oldPassword, user.password);
+      if (!isMatch) {
+        return next(new ErrorHandler("Old password is incorrect", 400));
+      }
+  
+      if (newPassword.length < 6) {
+        return next(new ErrorHandler("New password must be at least 6 characters long", 400));
+      }
+  
+      if (oldPassword === newPassword) {
+        return next(new ErrorHandler("New password cannot be the same as the old password", 400));
+      }
+  
+      if (newPassword !== confirmPassword) {
+        return next(new ErrorHandler("New password and confirm password do not match", 400));
+      }
+  
+      // Ensure newPassword is properly passed to bcrypt.hash()
+      console.log("New Password before Hashing:", newPassword); // Debugging
+  
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+      user.password = hashedPassword;
+  
+      await user.save();
+  
+      res.status(200).json({ success: true, message: "Password changed successfully" });
+    } catch (error) {
+      console.error("Error changing password:", error);
+      next(error);
+    }
+  };
+  
+  
+  // Delete Account
+  exports.deleteAccount = async (req, res, next) => {
+    try {
+      const user = await UserModel.findById(req.user.id);
+  
+      if (!user) {
+        return next(new ErrorHandler("User not found", 404));
+      }
+  
+      await user.deleteOne();
+      res.status(200).json({ success: true, message: "Account deleted successfully" });
+    } catch (error) {
+      next(error);
+    }
+  };
 
 exports.ResetLink = CatchAsyncError(async(req,res)=>{
 
@@ -135,7 +215,7 @@ exports.ResetPassword = CatchAsyncError(async(req,res)=>{
     user.resetPasswordTokenExpire = undefined
    await user.save({validateBeforeSave: false})
     res.json({
-        message:"Hello World"
+        message:""
     })
 })
 

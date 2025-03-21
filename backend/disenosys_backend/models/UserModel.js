@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema({
         required:[true,"Please Enter Password"],
         select: false
     },
+    mobile:{
+        type: String,
+        unique:true
+    },
     filePath: { type: String},
       title :{
         type: String, 

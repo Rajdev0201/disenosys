@@ -50,7 +50,7 @@ const BlinkingAlert = () => {
     return item.userName;
 });
 
-const [dropdownVisible, setDropdownVisible] = useState(false); // State to toggle dropdown visibility
+const [dropdownVisible, setDropdownVisible] = useState(false);
 
 
 const toggleDropdown = () => {
@@ -116,7 +116,7 @@ const length = filteredCartItems.length;
         className="text-[#4e6e9f]"
         onClick={() => setCartModalOpen(true)}
       />
-      {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
+      {length > 0 && cartUserName.includes(user?.user?.user?.userName ) ? (
         <span
           className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#0d1039] rounded-full ring-2 ring-white z-50"
           onClick={() => setCartModalOpen(true)}
@@ -147,13 +147,14 @@ const length = filteredCartItems.length;
 
    
     <div className="relative">
-    {user?.user?.user?.userName || user?.user?.name ? (
+    {user?.user?.user?.userName || user?.user?.name || user?.user?.userName  ? (
         <div className="relative flex items-center gap-4 cursor-pointer">
           {/* User Avatar */}
           <div className="flex items-center space-x-2 p-2 rounded-full">
             <div className="bg-[#0d1039] text-white w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">
             {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
             {user?.user?.name?.toLocaleUpperCase()?.charAt(0)}
+            { user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
             </div>
 
             <div onClick={toggleDropdown} className="flex items-center gap-2">
@@ -177,12 +178,13 @@ const length = filteredCartItems.length;
                 <div className="bg-[#0d1039] text-white w-10 h-10 flex items-center justify-center rounded-full font-bold text-lg">
                 {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
                 {user?.user?.name?.toLocaleUpperCase()?.charAt(0)}
+                {user?.user?.userName?.toLocaleUpperCase()?.charAt(0)}
                 </div>
                 <div>
                   <div className="font-semibold text-gray-900">  {user?.user?.user?.userName?.toLocaleUpperCase()}{" "}
-                  {user?.user?.name?.toLocaleUpperCase()}
+                  {user?.user?.name?.toLocaleUpperCase()} {" "} {user?.user?.userName?.toLocaleUpperCase()}{" "}
                   </div>
-                  <div className="text-sm text-gray-500">  {user?.user?.user?.userEmail}{" "}
+                  <div className="text-sm text-gray-500">  {user?.user?.user?.userEmail}{" "}  {user?.user?.userEmail}{" "}
                   {user?.user?.email}</div>
                 </div>
               </div>
@@ -192,7 +194,7 @@ const length = filteredCartItems.length;
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link href="/mycourse">My learning</Link></li>
                 <Link  href='/cart' className="px-4 py-2 flex justify-between hover:bg-gray-100 cursor-pointer">
                   My cart <span className="">
-                  {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
+                  {length > 0 && cartUserName.includes(user?.user?.user?.userName || user?.user?.userName) ? (
         <span
        
           className=" flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#4e6e9f] rounded-full ring-2 ring-white z-50"

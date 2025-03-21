@@ -33,7 +33,7 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
   //   ?.filter((item) => item?.customerDetails?.name === user?.user?.user?.userName)
   //   ?.flatMap((item) => item?.lineItems?.map((course) => course?.name)) || [];
 
-  const cartUserName = user?.user?.user?.userName; 
+  const cartUserName = user?.user?.user?.userName || user?.user?.name || user?.user?.userName; 
 
   useEffect(() => {
     if (cart?.cartItems?.length > 0 && cartUserName) {

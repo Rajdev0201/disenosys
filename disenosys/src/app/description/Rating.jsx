@@ -8,11 +8,10 @@ export const Rating = ({Review}) => {
   // const highestRating = Math.max(...Review.map((r) => r.rating));
 
   const likeCounts = Review.reduce((acc, curr) => {
-    acc[curr.like] = (acc[curr.like] || 0) + 1; //dynamic key follow
+    acc[curr.like] = (acc[curr.like] || 0) + 1;
     return acc;
   }, {});
   
-  console.log(likeCounts)
   const totalReviews = Review.length;
   const totalRatingSum = Review.reduce((sum, r) => sum + Number(r.rating), 0);
   const totalRatingPercentage = (totalReviews > 0 ? (totalRatingSum / totalReviews) : 0).toFixed(1);
@@ -20,7 +19,7 @@ export const Rating = ({Review}) => {
     name: like,
     percentage: ((likeCounts[like] / totalReviews) * 100).toFixed(1), 
   }));
- console.log(likePercentages)
+
   return (
     <div className="px-4 sm:px-6 md:px-10 lg:px-16 xl:px-28 my-3 border-b border-gray-400 mb-3 font-garet">
       <h1 className="font-bold capitalize text-xl sm:text-2xl">Student Reviews</h1>
