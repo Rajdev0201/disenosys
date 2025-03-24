@@ -20,7 +20,7 @@ const Dashboard = () => {
     dispatch(Online());
   }, [dispatch]);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
 
   useEffect(() => {
     const filtered = online?.data?.filter((item) => {
@@ -164,7 +164,7 @@ const Dashboard = () => {
                       <td className="py-2 px-2 text-start text-gray-600 font-medium">
                         <button
                           className="text-blue-600 underline"
-                          onClick={() => setIsOpen(true)}
+                          onClick={() => setSelectedStudent(item._id)}
                         >
                           Click Here
                         </button>
@@ -181,9 +181,9 @@ const Dashboard = () => {
                         )}
                       </td>
                     </tr>
-                    {isOpen && (
-                      <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 font-garet">
-                        <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 ml-44">
+                    {selectedStudent === item._id && (
+                        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50 font-garet">
+                         <div className="bg-white p-6 rounded-lg shadow-lg w-1/3 ml-44">
                           <h2 className="text-xl font-semibold mb-4 text-blue-500">
                             All course
                           </h2>
@@ -202,8 +202,8 @@ const Dashboard = () => {
                               </tr>
                             </thead>
                             <tbody>
-                              {item.subrows?.length > 0 ? (
-                                item.subrows.map((course, index) => (
+                            {Array.isArray(item?.subrows) && item.subrows.length > 0 ? (
+                                item?.subrows?.map((course, index) => (
                                   <tr key={index}>
                                     <td className="py-2 px-4 border text-gray-600">
                                       {startIndex + index + 1}.
@@ -242,7 +242,7 @@ const Dashboard = () => {
                           <div className="flex justify-end">
                             <button
                               className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 "
-                              onClick={() => setIsOpen(false)}
+                              onClick={() => setSelectedStudent(null)}
                             >
                               Close
                             </button>

@@ -18,7 +18,7 @@ const Form = () => {
     cname: "",
     date: "",
     sub: "2000",
-    total:"2500",
+    total: "2500",
   });
 
   const course = useSelector((state) => state.courseLD);
@@ -134,6 +134,13 @@ const Form = () => {
     <>
       <div className="bg-sch-form flex justify-center  min-h-screen">
         <div className="">
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm w-full z-50">
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-center">
+              <h1 className="text-lg font-semibold font-garet">
+                This is not open yet. Please wait for the opening date.
+              </h1>
+            </div>
+          </div>
           <div className="flex justify-center items-center">
             <div className="lg:p-8 flex flex-col justify-center w-3/4">
               <h2 className="text-3xl font-semibold text-center lg:text-center font-garet text-[#0d1039] mb-2">
@@ -226,7 +233,9 @@ const Form = () => {
                   </div>
 
                   <div className="flex flex-col">
-                    <span className="text-sm text-red-600 mt-4 px-3">Select Exam Date *</span>
+                    <span className="text-sm text-red-600 mt-4 px-3">
+                      Select Exam Date *
+                    </span>
                     <input
                       type="date"
                       name="date"
@@ -238,31 +247,31 @@ const Form = () => {
                     />
                   </div>
                   <div className="bg-white rounded-full p-6 flex flex-col mt-4">
-                   <div className="flex gap-2">
-                     <span>Sub Total :</span>
-                     <input
-                      type="text"
-                      name="sub"
-                      value={formData.sub}
-                      onChange={handleChange}
-                      className="rounded-full outline-none"
-                      required
-                    />
-                   </div>
-                   <div className="flex gap-2 items-center">
-                    <div className="flex flex-col">
-                    <span>Total Payable :</span>
-                    <span> (incl.10% GST)</span>
+                    <div className="flex gap-2">
+                      <span>Sub Total :</span>
+                      <input
+                        type="text"
+                        name="sub"
+                        value={formData.sub}
+                        onChange={handleChange}
+                        className="rounded-full outline-none"
+                        required
+                      />
                     </div>
-                     <input
-                      type="text"
-                      name="total"
-                      value={formData.total}
-                      onChange={handleChange}
-                      className="rounded-full outline-none"
-                      required
-                    />
-                   </div>
+                    <div className="flex gap-2 items-center">
+                      <div className="flex flex-col">
+                        <span>Total Payable :</span>
+                        <span> (incl.10% GST)</span>
+                      </div>
+                      <input
+                        type="text"
+                        name="total"
+                        value={formData.total}
+                        onChange={handleChange}
+                        className="rounded-full outline-none"
+                        required
+                      />
+                    </div>
                   </div>
                   <button className="mt-4 w-full text-2xl bg-[#0d1039] text-white py-3 font-garet rounded-md">
                     Proceed

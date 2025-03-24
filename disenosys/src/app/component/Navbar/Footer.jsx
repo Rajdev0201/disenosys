@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { FaFacebookF, FaGithub, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaWhatsapp, FaYoutube } from "react-icons/fa";
 import { AiFillInstagram } from "react-icons/ai";
@@ -7,6 +6,7 @@ import { BsTwitterX } from "react-icons/bs";
 import { MdCall, MdOutlineCopyright, MdOutlineMail } from "react-icons/md";
 import { FiArrowRight } from "react-icons/fi";
 import { FaSquareFacebook, FaXTwitter } from "react-icons/fa6";
+import Link from "next/link";
 
 const Footer = () => {
   return (
@@ -31,19 +31,19 @@ const Footer = () => {
             <h1 className="font-bold text-xl md:text-xl text-white mb-4">
               QUICK LINKS
             </h1>
-            <div className="space-y-3">
-              <p className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
+            <div className="space-y-3 flex flex-col">
+              <Link href="/about" className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
                 About Us
-              </p>
-              <p className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
+              </Link>
+              <Link href="/event" className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
                 Event
-              </p>
-              <p className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
+              </Link>
+              <Link href="/successstory" className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
                 Success Story
-              </p>
-              <p className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
+              </Link>
+              <Link href="/contact" className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
                 Contact
-              </p>
+              </Link>
             </div>
           </div>
 
@@ -51,16 +51,16 @@ const Footer = () => {
             <h1 className="font-bold text-xl md:text-xl text-white mb-4">
               POLICY
             </h1>
-            <div className="space-y-3">
-              <p className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
+            <div className="space-y-3 flex flex-col">
+              <Link href="/privacyandpolicy" className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
                 Privacy Policy
-              </p>
-              <p className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
+              </Link>
+              <Link href="/termsandcondition" className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
                 Terms & Conditions
-              </p>
-              <p className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
+              </Link>
+              <Link href="/faq" className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
                 FAQ
-              </p>
+              </Link>
             </div>
           </div>
 
@@ -68,16 +68,16 @@ const Footer = () => {
             <h1 className="font-bold text-xl md:text-xl text-white mb-4">
               SERVICES
             </h1>
-            <div className="space-y-3">
-              <p className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
+            <div className="space-y-3 flex flex-col">
+              <Link href="/eng&research" className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
                 Engineering & Research
-              </p>
-              <p className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
+              </Link>
+              <Link href="/l&d" className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
                 Learning & Development
-              </p>
-              <p className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
+              </Link>
+              <Link href="/staffing" className="text-base md:text-md text-white hover:text-white transition-colors duration-300 cursor-pointer">
                 Staffing
-              </p>
+              </Link>
             </div>
           </div>
 
@@ -132,10 +132,10 @@ const Footer = () => {
         </div>
       </div> */}
       <div className="px-0 lg:px-28 flex flex-col justify-between md:flex-row">
-          <button className="w-80 mb-6 bg-white hover:bg-blue-200 text-lg font-garet flex justify-center items-center gap-2 text-[#0d1039] rounded shadow-inner px-2 py-4">
+          <Link href="/consultation" className="w-80 mb-6 bg-white hover:bg-blue-200 text-lg font-garet flex justify-center items-center gap-2 text-[#0d1039] rounded shadow-inner px-2 py-4">
             BOOK A CONSULTATION
-            <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12 text-xl" />
-          </button>
+            <FiArrowRight className="transition-transform hover:-rotate-45 group-active:-rotate-12 text-xl" />
+          </Link>
           {/* <h1 className="text-white font-medium text-sm md:text-sm lg:text-md text-end sm:text-left flex justify-center items-center">
             <MdOutlineCopyright size={20} className="pr-1" /> 2025 Disenosys |
             All rights reserved
