@@ -36,7 +36,7 @@ const Terms = () => {
       <p>Effective Date: [Insert Date]</p>
       <p>Last Updated: [Insert Date]</p>
       <p>
-        Welcome to Disenosys ("we," "our," or "us"). By accessing or using our website 
+        Welcome to Disenosys (&apos;we,&apos; &apos;our,&apos; or &apos;us&apos;). By accessing or using our website 
         [www.disenosys.com] and services, you agree to comply with and be bound by the following 
         Terms and Conditions. Please read them carefully before using our platform.
       </p>
@@ -94,7 +94,7 @@ const Terms = () => {
     <div className="font-garet text-lg font-medium text-black">
       <p className="text-xl font-semibold">8. Changes to Terms</p>
       <p>We may update these Terms and Conditions at any time. Changes will be posted on this page with a 
-      revised "Last Updated" date. Continued use of our services implies acceptance of the updated terms.</p>
+      revised &apos;Last Updated&apos; date. Continued use of our services implies acceptance of the updated terms.</p>
     </div>
 
     <div className="font-garet text-lg font-medium text-black">

@@ -23,7 +23,7 @@ const Announce = () => {
             💼 Job Assistance Included! Learn from Industry Experts! 🏆
           </p>
           <p className="text-white text-lg font-medium">
-            🚀 Limited Seats Available! Don't Miss Out! ⏳ 
+            🚀 Limited Seats Available! Don&apos;t Miss Out! ⏳ 
           </p>
         </div>
       </div>

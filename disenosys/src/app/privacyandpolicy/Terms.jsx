@@ -47,7 +47,7 @@ const Terms = () => {
               <p>Effective Date: [Insert Date]</p>
               <p>Last Updated: [Insert Date]</p>
               <p>
-                Welcome to Disenosys ("we," "our," or "us"). Your privacy is
+                Welcome to Disenosys (&apos;we,&apos; &apos;our,&apos; or &apos;us&apos;). Your privacy is
                 important to us, and we are committed to safeguarding your
                 personal information. This Privacy Policy explains how we
                 collect, use, and protect your data when you visit
@@ -129,7 +129,7 @@ const Terms = () => {
             <div className="font-garet text-lg font-medium text-black">
               <p className="text-xl font-semibold">7. Updates to This Policy</p>
               <p>
-              We may update this Privacy Policy periodically. Changes will be posted on this page with a revised "Last Updated" date.
+              We may update this Privacy Policy periodically. Changes will be posted on this page with a revised &apos;Last Updated&apos; date.
               </p>
             </div>
 
