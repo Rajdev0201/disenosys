@@ -33,8 +33,8 @@ const Terms = () => {
   <div className="flex flex-col justify-center items-start lg:justify-start space-y-4 px-1 mt-12 lg:mt-0 leading-7 lg:px-12">
     
     <div className="font-garet text-lg font-medium text-black">
-      <p>Effective Date: [Insert Date]</p>
-      <p>Last Updated: [Insert Date]</p>
+      {/* <p>Effective Date: [Insert Date]</p>
+      <p>Last Updated: [Insert Date]</p> */}
       <p>
         Welcome to Disenosys (&apos;we,&apos; &apos;our,&apos; or &apos;us&apos;). By accessing or using our website 
         [www.disenosys.com] and services, you agree to comply with and be bound by the following 

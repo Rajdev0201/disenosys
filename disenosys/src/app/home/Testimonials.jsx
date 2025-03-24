@@ -9,6 +9,7 @@ import Karthikeyan from "../assests/testimonials/Karthikeyan C.png";
 import ragul from "../assests/testimonials/Raghul Srivatsa.png";
 import rajesh from "../assests/testimonials/Rajesh Deva.png";
 import sheldon from "../assests/testimonials/Sheldon.png";
+import profile from "../assests/profile/testi.jpg";
 import Image from "next/image";
 // import { useSelector } from "react-redux";
 import LoginAlert from "../component/Alert/LoginAlert";
@@ -167,9 +168,9 @@ const Testimonials = ({ setTestimonialsInView }) => {
                       />
                     </>
                   ) : (
-                    <img
+                    <Image
                       alt={testimonial.name}
-                      src="https://images.unsplash.com/photo-1595152772835-219674b2a8a6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1180&q=80"
+                      src={profile}
                       className="w-20 h-20 rounded-full object-cover"
                     />
                   )}
