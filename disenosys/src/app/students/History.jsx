@@ -16,6 +16,7 @@ const History = () => {
   const [showPopup, setShowPopup] = useState(false);
   const course = useSelector((state) => state.courseLD);
   const online = useSelector((state) => state.online);
+  const [isLoading,setLoading] = useState(false);
   console.log(online);
   const dispatch = useDispatch();
   const [showEditPopup, setShowEditPopup] = useState(false);
@@ -54,7 +55,8 @@ const History = () => {
   useEffect(() => {
     dispatch(Online());
     dispatch(courseld());
-  }, [dispatch]);
+    setLoading(true)
+  }, [dispatch,isLoading]);
 
   useEffect(() => {
     const filtered = online?.data?.filter((item) => {
@@ -306,7 +308,7 @@ const History = () => {
       <div className="px-12  font-garet ">
         {paginatedData?.length === 0 ? (
           <p className="text-lg text-red-500 text-center font-semibold">
-            No Students added!.
+            Not found the Student record for this name {search}!.
           </p>
         ) : (
           <div className="w-full overflow-x-auto">
@@ -340,11 +342,12 @@ const History = () => {
                   </th>
                 </tr>
               </thead>
+              {isLoading ? (
               <tbody>
                 {paginatedData?.map((item, index) => (
                   <>
                     {" "}
-                   
+               
                     <tr
                       key={item._id}
                       className={`border-b border-gray-300 ${
@@ -449,6 +452,7 @@ const History = () => {
                         </td>
                       </div>
                     </tr>
+                   
                     {expandedRows[item._id] &&
                       item.subrows?.map((sub, subIndex) => (
                         <tr
@@ -516,6 +520,13 @@ const History = () => {
                   </>
                 ))}
               </tbody>
+               ) : (
+                <div className="flex justify-center p-1 items-center">
+                  <span className="text-lg text-center text-green-500 font-semibold">
+                  Loading ....
+                  </span>
+                  </div>
+              )}
             </table>
           </div>
         )}

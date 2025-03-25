@@ -112,7 +112,7 @@ const QuizScreen = ({ questions }) => {
 
   return (
     <>
-      <div className="mt-20 flex flex-row justify-center gap-2  items-center mb-4 space-y-2">
+      <div className="mt-20 flex flex-row justify-center gap-2  items-center mb-4 space-y-2 ">
         <div className="w-3/4 md:w-3/4 h-1.5 bg-gray-300 rounded-full relative">
           <div
             className="h-1.5 bg-[#182073] rounded-full"
@@ -128,7 +128,7 @@ const QuizScreen = ({ questions }) => {
         </h1>
       </div>
 
-      <div className="bg-blue-100 h-screen flex flex-col items-center pt-20 border-4 border-t-[#182073]">
+      <div className="bg-blue-100 h-screen flex flex-col items-center pt-20 border-4 border-t-[#182073] font-garet">
         <div className="bg-[#E7E8F1] shadow-lg rounded-lg w-11/12 sm:w-3/4 md:w-2/5 lg:w-1/3 p-6">
           <h2 className="text-lg font-semibold text-gray-700 mb-4">
             {questions[currentQuestionIndex].question}

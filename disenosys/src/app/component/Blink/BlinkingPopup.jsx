@@ -220,11 +220,11 @@ const length = filteredCartItems.length;
         </span>
 
                 </li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Account settings</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Payment methods</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Purchase history</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit profile</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Help and support</li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link href ="/settings">Account settings</Link></li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link href="/" >Payment methods</Link> </li> 
+               <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link href="/purchase-history" >Purchase history</Link> </li> 
+               <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"> <Link href="/settings" >Edit profile</Link> </li>
+               <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"> <Link href="/support">Help and support</Link> </li>
               </ul>
 
               {/* Logout Button */}

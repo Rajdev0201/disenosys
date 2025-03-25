@@ -114,7 +114,7 @@ const Form = () => {
   };
 
   return (
-    <div className="bg-blue-100 min-h-screen flex items-center justify-center px-4">
+    <div className="bg-blue-100 min-h-screen flex items-center justify-center px-4 font-garet">
       <div className="bg-white shadow-md rounded-lg w-full max-w-md p-6">
         {load ? 
             <div className="flex justify-center items-center h-screen">

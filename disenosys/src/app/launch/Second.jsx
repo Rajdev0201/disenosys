@@ -54,12 +54,12 @@ import das from "../assests/profile/PD_Logo.png";
   return (
     <>
        {!mcq ? (
-    <div className="bg-[#D0D2E3] min-h-screen  flex items-center justify-center">
+    <div className="bg-[#D0D2E3] min-h-screen  flex items-center justify-center font-garet">
           <div className="bg-white shadow-lg rounded-2xl flex flex-col justify-center items-center w-11/12 md:w-3/4 lg:w-2/4 py-6 mt-24 lg:mt-12">
-            <h1 className="text-3xl font-bold font-poppins text-gray-800 mb-4 px-6">
+            <h1 className="text-3xl font-bold  text-gray-800 mb-4 px-6">
               Product Devlopement
             </h1>
-            <h4 className="text-lg text-gray-600 font-poppins text-center px-6 mb-4">
+            <h4 className="text-lg text-gray-600 text-center px-6 mb-4">
               You are about to start the <b> Product Devlopement</b> section
             </h4>
             <div className="bg-[#E7E8F1] flex flex-col w-full text-center p-6 space-y-2 flex justify-center items-center">
@@ -68,7 +68,7 @@ import das from "../assests/profile/PD_Logo.png";
               <h5 className="font-bold text-lg font-poppins">7.5 mins</h5>
             </div>
             <div className="flex items-center md:px-24 justify-center space-y-6 mt-6">
-              <ul className="list-disc pl-5 space-y-4 text-gray-500 text-md font-semibold">
+              <ul className="list-disc pl-5 space-y-4 text-gray-500 text-md font-medium">
                 <li>
                   The questions in this test may get harder or easier to adapt
                   to your level. Use the progress bar to pace yourself so that

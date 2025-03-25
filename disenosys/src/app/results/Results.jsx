@@ -432,7 +432,7 @@ Take up the mock GPDX exam here: ${link}
         <meta property="og:type" content="website" />
       </Head>
 
-      <div className="min-h-screen bg-blue-100 flex justify-center items-center font-poppins lg:p-4">
+      <div className="min-h-screen bg-blue-100 flex justify-center items-center font-garet lg:p-4">
         <div className="grid lg:grid-cols-2 w-full max-w-4xl">
           <div className="flex flex-col items-center bg-white rounded-md shadow-md lg:ml-24  lg:w-80 lg:h-96">
             <div className="bg-[#182073] w-full p-6 text-center flex flex-col items-center">
@@ -552,9 +552,9 @@ Take up the mock GPDX exam here: ${link}
           </div>
           
           {showPopup && !accessToken && (
-            <div className="fixed inset-0 bg-black bg-opacity-50 font-poppins flex items-center justify-center z-50">
+            <div className="fixed inset-0 bg-black bg-opacity-50 font-garet flex items-center justify-center z-50">
               <div className="bg-white rounded-lg shadow-lg p-8 max-w-sm w-full">
-                <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+                <h2 className="text-2xl font-medium text-gray-800 mb-4">
                   Show Off Your Achievement
                 </h2>
                 <p className="text-gray-600 mb-6">

@@ -14,13 +14,13 @@ const BlogLinks = ({ onSelectBlog }) => {
   }, [dispatch]);
 
   const handleSelectBlog = (link, index) => {
-    setActiveIndex(index); // Set the active index
-    onSelectBlog(link); // Call the parent-provided handler
+    setActiveIndex(index);
+    onSelectBlog(link); 
   };
 
   return (
-    <div className="p-6 bg-gray-50 shadow-md rounded-md">
-      <h2 className="text-2xl font-poppins font-semibold text-gray-800 mb-4">
+    <div className="p-6 bg-gray-50 shadow-md rounded-md font-garet">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
         Trending Now
       </h2>
       <ul className="space-y-3">
@@ -29,8 +29,8 @@ const BlogLinks = ({ onSelectBlog }) => {
             key={index}
             onClick={() => handleSelectBlog(link, index)}
             className={`text-blue-600 hover:cursor-pointer hover:underline ${
-              activeIndex === index ? "font-bold text-green-50 bg-blue-400 px-2 py-1 rounded-md shadow-inner" : ""
-            }`} // Apply active styles conditionally
+              activeIndex === index ? "font-medium text-green-50 bg-blue-400 px-2 py-1 rounded-md shadow-inner" : ""
+            }`} 
           >
             {link?.title} 
           </li>

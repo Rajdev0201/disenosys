@@ -40,14 +40,14 @@ const Banner = ({ selectedBlog }) => {
   
 
   return (
-    <div className="p-2 md:p-6 bg-white shadow-md rounded-md">
+    <div className="p-2 md:p-6 bg-white shadow-md rounded-md font-garet">
       <div className="flex flex-col px-4 md:px-8 lg:px-12">
         <img
           src={selectedBlog?.filePath}
           className="object-cover w-full h-56 sm:h-72 md:h-auto rounded shadow-md"
           alt={selectedBlog?.title || "Blog image"}
         />
-        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold font-poppins text-gray-800 mt-5">
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mt-5">
           {selectedBlog?.title}
         </h1>
 
