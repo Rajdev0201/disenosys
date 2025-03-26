@@ -117,7 +117,7 @@ const Home = () => {
                 <div class="bg-[#0d1039]/50  rounded-2xl mt-10 lg:-mt-0 mr-2 lg:mr-0 hover:border-[#057FE3] transition-all duration-200">
                   <div class="mx-auto flex items-center justify-center space-y-4 py-2 px-6 lg:py-4 lg:px-20 font-semibold text-gray-500 flex-col">
                     {/* <BiSolidCarMechanic size={60} className="text-white" /> */}
-                    <h1 class="text-white w-52 font-bold text-center text-sm lg:text-3xl">
+                    <h1 class="text-white w-52 font-medium text-center text-sm lg:text-3xl font-garet">
                       Book a Demo Class Today!
                     </h1>
                     
@@ -126,7 +126,7 @@ const Home = () => {
                     </label>
    
                     <input
-                      className="p-2 text-white bg-transparent border-2 border-white  rounded-full focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
+                      className="p-2 text-white bg-transparent border-2 border-white  rounded-full focus:border-blue-700 hover:border-blue-500 transition-all duration-200 focus:outline-none"
                       placeholder="Name"
                       type="text"
                       name="name"
@@ -138,7 +138,7 @@ const Home = () => {
                       Email
                     </label>
                     <input
-                      className="p-2 bg-transparent border-2 border-white text-white rounded-full focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
+                      className="p-2 bg-transparent border-2 border-white text-white rounded-full focus:border-blue-700 hover:border-blue-500 transition-all duration-200 focus:outline-none"
                       placeholder="Email"
                       type="email"
                       name="email"
@@ -150,7 +150,7 @@ const Home = () => {
                       Mobile
                     </label>
                     <input
-                      className="p-2  bg-transparent border-2 border-white text-white rounded-full focus:border-blue-700 hover:border-blue-500 transition-all duration-200"
+                      className="p-2  bg-transparent border-2 border-white text-white rounded-full focus:border-blue-700 hover:border-blue-500 transition-all duration-200 focus:outline-none"
                       placeholder="Mobile"
                       type="text"
                       name="mobile"
@@ -159,7 +159,7 @@ const Home = () => {
                     />
 
                     <button
-                      className="px-10 py-2 text-md lg:text-2xl mt-24 font-garet bg-white border-none outline-none text-[#0d1039] rounded-sm font-bold  border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
+                      className="px-10 py-2 text-md lg:text-2xl mt-24 font-garet bg-white border-none outline-none text-[#0d1039] rounded-sm font-medium  border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
                       type="submit"
                       disabled={loading}
                     >
