@@ -15,15 +15,15 @@ const Announce = () => {
      <Marquee speed={80} pauseOnHover={true} direction="left" gradient={false} className="flex items-center">
       <div className="relative w-full overflow-hidden py-2 bg-blue-400">
         <div className="animate-marquee whitespace-nowrap flex items-center gap-12">
-          <p className="text-white text-lg font-medium">
-           New Batch Starting Soon! Enroll Now & Upgrade Your Skills! 📚
+          <p className="text-white text-lg font-medium mx-12">
+          ⏳ New Batch Starting Soon! Enroll Now & Upgrade Your Skills! 📚
           </p>
   
           <p className="text-white text-lg font-medium">
             💼 Job Assistance Included! Learn from Industry Experts! 🏆
           </p>
           <p className="text-white text-lg font-medium">
-            🚀 Limited Seats Available! Don&apos;t Miss Out! ⏳ 
+          ⏳ Limited Seats Available! Don&apos;t Miss Out! 🚀
           </p>
         </div>
       </div>

@@ -28,8 +28,8 @@ const Sidebar = () => {
     { href: '/applicants', label: 'Applicants', icon: <GrScorecard />},
     { href: '/mentors', label: 'Mentors-Profile', icon: <GrScorecard />},
     { href: '/studentsapplied', label: 'Hyper-Drive', icon: <GrScorecard />},
-    { href: '/settings', label: 'Settings', icon: <FaCog /> },
-    { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
+    // { href: '/settings', label: 'Settings', icon: <FaCog /> },
+    // { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];
 
  
@@ -49,7 +49,7 @@ const Sidebar = () => {
 
 
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-[#182073] text-white flex flex-col justify-between transition-transform duration-300 transform overflow-y-scroll ${
+        className={`fixed top-0 left-0 h-full w-64 bg-[#182073] mt-16 text-white flex flex-col justify-between transition-transform duration-300 transform overflow-y-scroll ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 md:w-64 z-40`}
       >
@@ -59,7 +59,7 @@ const Sidebar = () => {
             Admin Panel
           </div> */}
            
-           <div className='mt-20'>
+           <div className='mt-2'>
              <Link href="/dashboard-admin"  className={`flex items-center py-2  px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === "/dashboard-admin" ? 'bg-blue-700' : ''}`}> <MdDashboardCustomize className="mr-3"  />Dashboard</Link>
            </div>
      

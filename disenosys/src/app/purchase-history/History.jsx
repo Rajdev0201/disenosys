@@ -37,9 +37,11 @@ const History = () => {
 
   return (
     <div className='bg-[#FAFBFF] mt-32 lg:px-44 lg:py-32'>
+        {pay?.data?.length < 0 ? (
               <div className='grid grid-cols-12 gap-2 font-garet mx-auto container'>
                <div className='flex flex-col font-garet col-span-12 lg:col-span-9'>
                 <h1 className='text-2xl text-[#0D1039] font-bold text-center lg:text-start'>Purchase History</h1>
+       
                <table className='bg-gray-200 rounded-xl shadow-inner lg:p-6 mt-5 w-full overflow-x-auto'>
                     <thead className='border-b-2 border-white'>
                     <tr className='px-6 py-2'>
@@ -73,7 +75,7 @@ const History = () => {
                     <p className='text-lg text-[#0EAD69] font-bold'>₹{total}</p>
                     <span className='text-sm'>{`as of ${getmonthname}`}</span>
                 </div>
-
+                 
                 {/* <div className='bg-[#F5F6F8] p-4 rounded-lg shadow-inner flex flex-col w-[300px] h-[130px]'>
                     <h1 className='text-xl text-[#0D1039] font-bold'>Pending Purchase</h1>
                     <p className='text-lg text-[#1DB7C2] font-bold'>₹430.00</p>
@@ -82,6 +84,11 @@ const History = () => {
 
               </div>
               </div>
+                  ):(
+                      <div className='flex items-center justify-center bg-red-400 rounded-lg shadow-inner'>
+                        <p className='text-red-600 font-garet p-2 text-white font-bold '>No Purchase history available !</p>
+                      </div>
+                    )}
        </div>
   )
 }

@@ -50,7 +50,7 @@ const Settings = () => {
     try {
       const response = await axios.put(
         "https://disenosys-dkhj.onrender.com/api/v1/update-profile",
-        { email: formData.email,mobile }, 
+        { email: formData.email,mobile:formData.mobile }, 
         {
           headers: {
             "Content-Type": "application/json",

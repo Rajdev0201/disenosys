@@ -131,7 +131,7 @@ useEffect(() => {
         <div className="border shadow-sm rounded-md">
         <h2 className="text-2xl font-semibold p-3 text-gray-700 font-garet">Applied Data</h2>
         </div>
-        <table className="w-full mt-4 bg-white shadow-md rounded-md">
+        <table className="w-full mt-4 bg-white">
       <thead>
         <tr className="font-garet font-medium text-lg">
           <th className="px-4 py-2">S.no</th>

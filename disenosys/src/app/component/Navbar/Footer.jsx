@@ -142,26 +142,34 @@ const Footer = () => {
           </h1> */}
           <div className="flex flex-col sm:flex-row justify-center gap-6 items-center py-4">
         <div className="flex space-x-4 mt-4 sm:mt-0">
+          <a href="https://www.linkedin.com/school/disenosys/">
         <FaLinkedin
             aria-label="Instagram"
             className="text-white hover:text-gray-400 transition-colors duration-300 cursor-pointer"
             size={30}
           />
+          </a>
+          <a href="https://www.facebook.com/disenosysofficial/">
           <FaSquareFacebook
             aria-label="Facebook"
             className="text-white hover:text-gray-400 transition-colors duration-300 cursor-pointer"
             size={30}
           />
+          </a>
+          <a href="https://www.instagram.com/disenosys_official/">
           <FaInstagram
             aria-label="Twitter"
             className="text-white hover:text-gray-400 transition-colors duration-300 cursor-pointer"
             size={30}
           />
+          </a>
+          <a href="https://youtube.com/@disenosysindia?feature=shared"> 
           <FaYoutube 
             aria-label="GitHub"
             className="text-white hover:text-gray-400 transition-colors duration-300 cursor-pointer"
             size={30}
           />
+          </a>
         </div>
         </div> 
         {/* <div className="relative flex items-center justify-center mt-4 md:mt-0 mb-6">

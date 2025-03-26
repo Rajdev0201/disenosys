@@ -16,7 +16,7 @@ const Sidebar = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const links = [
-    { href: '/dashboard', label: 'Dashboard', icon: <FaHome /> },
+    // { href: '/dashboard', label: 'Dashboard', icon: <FaHome /> },
     // { href: '/profile', label: 'Profile', icon: <FaUser /> },
     // {href:'/portfolioDashboard',label:'Portfolio',icon:<SiSololearn />},
     {href:'/mycourse',label:'Mycourse',icon:<GiSecretBook />},
