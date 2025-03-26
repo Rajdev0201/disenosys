@@ -25,9 +25,20 @@ const BlinkingAlert = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const path = usePathname();
+  const cart = useSelector((state) => state?.currentCart);
+  const cartUserName = cart?.cartItems?.map((item) => {
+    return item.userName;
+     });
+const user = useSelector((state) => state?.user);
+const [dropdownVisible, setDropdownVisible] = useState(false);
+const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+const pay = useSelector((state) => state.payment);
+const filteredCartItems = cart?.cartItems?.filter(item => item.userName === user?.user?.user?.userName) || [];
+const length = filteredCartItems.length;
+
   // console.log(path);
 
-  const user = useSelector((state) => state?.user);
+ 
 
   
   useEffect(() => {
@@ -44,29 +55,19 @@ const BlinkingAlert = () => {
     setActiveLink(currentPath === "/" ? "/" : currentPath);
   }, [dispatch, router.pathname]);
 
-  const cart = useSelector((state) => state?.currentCart);
-
-  const cartUserName = cart?.cartItems?.map((item) => {
-    return item.userName;
-});
-
-const [dropdownVisible, setDropdownVisible] = useState(false);
-
 
 const toggleDropdown = () => {
   setDropdownVisible(prevState => !prevState);
 };
 
-const pay = useSelector((state) => state.payment);
+const cancelDropdown = () => {
+  setDropdownVisible(false);
+  setIsDropdownOpen(true)
+}
 
 useEffect(() => {
   dispatch(payment());
 }, [dispatch]);
-
-
-
-const filteredCartItems = cart?.cartItems?.filter(item => item.userName === user?.user?.user?.userName) || [];
-const length = filteredCartItems.length;
 
 
 
@@ -81,7 +82,7 @@ const length = filteredCartItems.length;
   const handleLogout = () => {
     dispatch(LogOut());
   };
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
 
   return (
 
@@ -215,7 +216,7 @@ const length = filteredCartItems.length;
                   Notifications 
                   <span
           className=" flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#4e6e9f] rounded-full ring-2 ring-white z-50"
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
+          onClick={cancelDropdown}>
           1
         </span>
 
