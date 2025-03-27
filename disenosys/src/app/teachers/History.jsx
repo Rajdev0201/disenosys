@@ -12,7 +12,7 @@ import 'react-phone-input-2/lib/style.css';
 
 const History = () => {
   const [showPopup, setShowPopup] = useState(false);
- const course = useSelector((state) => state.courseLD);
+ const {course} = useSelector((state) => state.courseLD);
   const dispatch = useDispatch();
   const [add, setAdd] = useState({
       name: "",

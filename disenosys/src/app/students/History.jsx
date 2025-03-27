@@ -14,10 +14,8 @@ import { BsArrowReturnRight } from "react-icons/bs";
 
 const History = () => {
   const [showPopup, setShowPopup] = useState(false);
-  const course = useSelector((state) => state.courseLD);
-  const online = useSelector((state) => state.online);
-  const [isLoading,setLoading] = useState(false);
-  console.log(online);
+  const {course}= useSelector((state) => state.courseLD);
+  const {online,loading,error}= useSelector((state) => state.online);
   const dispatch = useDispatch();
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [search, setSearch] = useState("");
@@ -55,8 +53,7 @@ const History = () => {
   useEffect(() => {
     dispatch(Online());
     dispatch(courseld());
-    setLoading(true)
-  }, [dispatch,isLoading]);
+  }, [dispatch]);
 
   useEffect(() => {
     const filtered = online?.data?.filter((item) => {
@@ -312,6 +309,7 @@ const History = () => {
           </p>
         ) : (
           <div className="w-full overflow-x-auto">
+          {!loading ? (
             <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
               <thead className="bg-blue-500 text-white font-sans">
                 <tr>
@@ -342,7 +340,6 @@ const History = () => {
                   </th>
                 </tr>
               </thead>
-              {isLoading ? (
               <tbody>
                 {paginatedData?.map((item, index) => (
                   <>
@@ -520,14 +517,12 @@ const History = () => {
                   </>
                 ))}
               </tbody>
-               ) : (
-                <div className="flex justify-center p-1 items-center">
-                  <span className="text-lg text-center text-green-500 font-semibold">
-                  Loading ....
-                  </span>
-                  </div>
-              )}
             </table>
+          ) : (
+            <span className="text-lg flex justify-center min-h-screen text-green-500 font-semibold">
+            Loading ....
+            </span>
+          )}
           </div>
         )}
       </div>

@@ -7,6 +7,16 @@ import { getBlog } from "../Redux/action/Portfolio";
 import Navbar from "../component/Navbar/Navbar";
 import Footer from "../component/Navbar/Footer";
 import Blink from "../component/Blink/BlinkingPopup";
+
+
+
+
+export const metadata = () => { 
+  return{
+    title:"Blog"
+  }
+}
+
 export default function BlogPage() {
   const dispatch = useDispatch();
   const blogs = useSelector((state) => state.blog?.data || []);

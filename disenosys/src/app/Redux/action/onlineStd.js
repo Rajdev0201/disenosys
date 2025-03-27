@@ -6,11 +6,12 @@ import {remove, setOnline, updateOnline} from "../features/onlineStdSlice.js"
 //students-l&d -> admin-panel
 export const Online = () => async (dispatch) => {
     try {
+        dispatch(setOnline({data:[],loading:true}))
         const res = await axios.get("https://disenosys-dkhj.onrender.com/ld/studentget");
         const getData = res.data;
-        dispatch(setOnline(getData));
+        dispatch(setOnline({data:getData,loading:false}));
     } catch (error) {
-        console.error('Error fetch code:', error);
+        dispatch(setOnline({data:[],loading:false,error:error}));
     }
   }
 
@@ -27,8 +28,7 @@ export const Online = () => async (dispatch) => {
 export const editOnline = (Id, updatedData) => async (dispatch) => {
   try {
       const response = await axios.put(`https://disenosys-dkhj.onrender.com/ld/studentedit/${Id}`, updatedData);
-      dispatch(updateOnline(response.data.data)); 
-      dispatch(Online());
+      dispatch(updateOnline(response.data)); 
   } catch (error) {
       console.error('Error updating course:', error);
   }

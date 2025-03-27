@@ -16,11 +16,13 @@ export const fetchCourse = () => async (dispatch) => {
 
   export const courseld = () => async (dispatch) => {
     try {
+        dispatch(setCourse({data:[],loading:true}));
         const res = await axios.get("https://disenosys-dkhj.onrender.com/ld/courseget");
         const getData = res.data;
-        dispatch(setCourse(getData));
+        dispatch(setCourse({data:getData,loading:false}));
+        return Promise.resolve(getData);
     } catch (error) {
-        console.error('Error fetch code:', error);
+        return Promise.reject({data:[],loading:false,error:error});
     }
   }
 
@@ -37,8 +39,7 @@ export const fetchCourse = () => async (dispatch) => {
 export const editCourse = (Id, updatedCourseData) => async (dispatch) => {
   try {
       const response = await axios.put(`https://disenosys-dkhj.onrender.com/ld/courseedit/${Id}`, updatedCourseData);
-      dispatch(updateCourse(response.data.data)); 
-      dispatch(courseld());
+      dispatch(updateCourse(response.data)); 
   } catch (error) {
       console.error('Error updating course:', error);
   }

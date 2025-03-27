@@ -96,8 +96,8 @@ const addCart = (course) => {
       : '  font-garet font-medium text-xl px-4 rounded-md shadow-lg text-white border border-gray-200 py-2 bg-[#0d1039] hover:bg-blue-800';
   };
 
-  const goToDescriptionPage = (courseId,courseName) => {
-    router.push(`/description?courseName=${courseName}?courseId=${courseId}`);
+  const goToDescriptionPage = (courseId) => {
+    router.push(`/description?courseId=${courseId}`);
   };
 
 
@@ -173,17 +173,17 @@ const addCart = (course) => {
                   src={course?.imagePath}
                   alt={course?.courseName}
                   className="object-cover w-full h-full"
-                  onClick={() => goToDescriptionPage(course?._id,course?.courseName)}
+                  onClick={() => goToDescriptionPage(course?._id)}
                 />
               </div>
               <div className="flex flex-col flex-grow font-garet" >
-                <div className="font-medium stroke-2 text-xl mb-2 text-center font-sans" onClick={() => goToDescriptionPage(course?._id,course?.courseName)}>{course?.courseName}</div>
+                <div className="font-medium stroke-2 text-xl mb-2 text-center font-sans" onClick={() => goToDescriptionPage(course?._id)}>{course?.courseName}</div>
                 <p className="text-gray-500 font-medium text-md text-base mb-4 mt-2">{course?.description}</p>
                 <div className="flex justify-between items-center mt-auto">
                   <button className='bg-[#0d1039] text-white px-2 py-2 lg:px-4 lg:py-2 rounded hover:bg-blue-400' onClick={() => addCart(course)}>
                     Add to Cart
                   </button>
-                  <span className="text-base font-medium text-[#182073] flex items-center" onClick={() => goToDescriptionPage(course?._id,course?.courseName)}>More Info</span>
+                  <span className="text-base font-medium text-[#182073] flex items-center" onClick={() => goToDescriptionPage(course?._id)}>More Info</span>
                 </div>
               </div>
         

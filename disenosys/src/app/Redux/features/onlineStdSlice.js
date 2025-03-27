@@ -2,6 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   online: [],
+  loading:false,
+  error:null,
 };
 
 const onlineSlice = createSlice({
@@ -9,7 +11,9 @@ const onlineSlice = createSlice({
   initialState,
   reducers: {
     setOnline: (state, action) => {
-        return action.payload; 
+        state.action = action.payload.loading;
+        state.online = action.payload.data;
+        state.error = action.payload;
       },
       remove: (state, action) => {
         state.online = action.payload;

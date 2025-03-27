@@ -11,10 +11,8 @@ export const teacher = () => async (dispatch) => {
         const res = await axios.get("https://disenosys-dkhj.onrender.com/ld/teacherget");
         const getData = res.data;
         dispatch(setTeacher({data:getData,loading:false}))
-        return Promise.resolve(getData);
     } catch (error) {
        dispatch(setTeacher({data:[],loading:false,error:error}))
-       return Promise.reject(error);
     }
   }
 
@@ -31,8 +29,7 @@ export const teacher = () => async (dispatch) => {
 export const editTeacher = (Id, updatedData) => async (dispatch) => {
   try {
       const response = await axios.put(`https://disenosys-dkhj.onrender.com/ld/teacheredit/${Id}`, updatedData);
-      dispatch(updateTeacher(response.data.data)); 
-      dispatch(teacher());
+      dispatch(updateTeacher(response.data)); 
   } catch (error) {
       console.error('Error updating course:', error);
   }

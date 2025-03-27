@@ -20,9 +20,9 @@ const Home = () => {
   const [add, setAdd] = useState({
     course: "",
   });
-  const course = useSelector((state) => state.courseLD);
-  console.log(course);
-
+  const {course,loading,error} = useSelector((state) => state.courseLD);
+  console.log(course)
+ 
   useEffect(() => {
     const filtered = course?.data?.filter((item) => {
       const courseMatch = item.course
@@ -83,6 +83,7 @@ const Home = () => {
     const confirmSubmit = window.confirm("Do you want to delete the course?");
     if(confirmSubmit){
       dispatch(removeCourse(id))
+      dispatch(courseld());
     }
   }
   const handleEditClick = (id, courseName) => {
@@ -139,6 +140,7 @@ const Home = () => {
   </p>
 ) : (
   <div className="w-full overflow-x-auto">
+       {!loading ? (  
     <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg mb-8">
       <thead className="bg-blue-500 text-white font-sans">
         <tr>
@@ -180,6 +182,11 @@ const Home = () => {
         ))}
       </tbody>
     </table>
+        ) : (
+          <span className="text-lg flex justify-center min-h-screen text-green-500 font-semibold">
+          Loading ....
+          </span>
+        )}
   </div>
 )}
 </div>

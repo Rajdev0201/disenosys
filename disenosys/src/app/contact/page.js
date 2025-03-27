@@ -5,6 +5,14 @@ import Announce from "../home/Announce";
 import Partner from "../home/Partner";
 import { Contact } from "./Contact";
 
+
+
+export const metadata = () => { 
+    return{
+      title:"Contact"
+    }
+  }
+
 export default function home () {
     return(
         <>

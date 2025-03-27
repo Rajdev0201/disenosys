@@ -20,7 +20,15 @@ import Who from './home/Who'
 import Announce from './home/Announce';
 import Check from "./home/CheckCertificate";
 
+
 // import Marquee from "./home/Marquee.jsx";
+
+
+export const metadata = () => { 
+  return{
+    title:"Home"
+  }
+}
 
 export default function Page() {
 

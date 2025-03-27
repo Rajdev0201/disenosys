@@ -6,6 +6,14 @@ import Footer from "../component/Navbar/Footer.jsx"
 import Blink from "../component/Blink/BlinkingPopup";
 import Main from "./Main.jsx"
 import Partner from '../home/Partner.jsx';
+
+
+export const metadata = () => { 
+  return{
+    title:"Course"
+  }
+}
+
 export default function course () {
   return (
     <div>
