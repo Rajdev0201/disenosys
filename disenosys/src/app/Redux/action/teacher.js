@@ -7,11 +7,14 @@ import { remove, setTeacher, updateTeacher } from '../features/teacherSlice';
 
 export const teacher = () => async (dispatch) => {
     try {
+        dispatch(setTeacher({data:[],loading:true}))
         const res = await axios.get("https://disenosys-dkhj.onrender.com/ld/teacherget");
         const getData = res.data;
-        dispatch(setTeacher(getData));
+        dispatch(setTeacher({data:getData,loading:false}))
+        return Promise.resolve(getData);
     } catch (error) {
-        console.error('Error fetch code:', error);
+       dispatch(setTeacher({data:[],loading:false,error:error}))
+       return Promise.reject(error);
     }
   }
 

@@ -33,16 +33,15 @@ const History = () => {
   });
  
    const itemsPerPage = 10;
-    const teach = useSelector((state) => state.teacher);
-    console.log(teach);
+    const {teach,loading,error} = useSelector((state) => state.teacher);
 
-
-    
   useEffect(() => {
     dispatch(teacher());
     dispatch(courseld());
   }, [dispatch]);
 
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>Error: {error}</p>;
   
     useEffect(() => {
       const filtered = teach?.data?.filter((item) => {
@@ -191,6 +190,7 @@ const History = () => {
        </p>
      ) : (
        <div className="w-full overflow-x-auto">
+   {!loading ? (        
          <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
            <thead className="bg-blue-500 text-white font-sans">
              <tr>
@@ -209,6 +209,7 @@ const History = () => {
               </th>
              </tr>
            </thead>
+        
            <tbody>
              {paginatedData?.map((item, index) => (
                <tr
@@ -248,6 +249,11 @@ const History = () => {
              ))}
            </tbody>
          </table>
+            ) : (
+              <span className="text-lg flex justify-center min-h-screen text-green-500 font-semibold">
+              Loading ....
+              </span>
+            )}
        </div>
      )}
                </div>

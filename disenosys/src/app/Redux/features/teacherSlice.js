@@ -1,7 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  teacher: [],
+  teach: [],
+  loading:false,
+  error:null,
 };
 
 const teacherSlice = createSlice({
@@ -9,14 +11,16 @@ const teacherSlice = createSlice({
   initialState,
   reducers: {
     setTeacher: (state, action) => {
-        return action.payload; 
+       state.loading = action.payload.loading;
+        state.teach = action.payload.data;
+        state.error = action.payload.error;
       },
       remove: (state, action) => {
-        state.teacher = action.payload;
+        state.teach = action.payload;
       },
       updateTeacher: (state, action) => {
         const updatedTeacher = action.payload;
-        state.teacher = state?.teacher?.map(teach =>
+        state.teach = state?.teach?.map(teach =>
             teach._id === updatedTeacher._id ? updatedTeacher : teach
         );
     },
