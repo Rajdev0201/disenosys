@@ -11,11 +11,11 @@ import Blink from "../component/Blink/BlinkingPopup";
 
 
 
-export const metadata = () => { 
-  return{
-    title:"Blog"
-  }
-}
+// export const metadata = () => { 
+//   return{
+//     title:"Blog"
+//   }
+// }
 
 export default function BlogPage() {
   const dispatch = useDispatch();
