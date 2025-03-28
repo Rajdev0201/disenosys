@@ -37,10 +37,8 @@ export default function RootLayout({
     <html lang="en">
       <Head>
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Josefin+Sans:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
-
       </Head>
       <body className={inter.className}>
-      {/* <DynamicMetadata />  */}
         <Providers>
           <LoadingWrapper>
             {children}
@@ -48,7 +46,6 @@ export default function RootLayout({
             <ToastContainer />
           </LoadingWrapper>
         </Providers>
-      
       </body>
     </html>
   );

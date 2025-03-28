@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 export default function StudentsPage() {
 
   const user = useSelector((state) => state?.user);
-  const [isLoading,setLoading] = useState(false);
   // console.log(user);
   const dispatch = useDispatch();
 
@@ -18,13 +17,12 @@ export default function StudentsPage() {
     const storedUser = localStorage.getItem("profile");
     if (storedUser) {
       dispatch(setUser(JSON.parse(storedUser)));
-      setLoading(true)
     }
   }, [dispatch]);
 
 return(
   <>
-    {user?.user?.user?.userType === 'L&D' && isLoading?
+    {user?.user?.user?.userType === 'L&D'?
      <div className="">
      <div className="grid grid-cols-12 h-full mt-16">
        <div className="col-span-2 h-full">

@@ -20,9 +20,8 @@ export const fetchCourse = () => async (dispatch) => {
         const res = await axios.get("https://disenosys-dkhj.onrender.com/ld/courseget");
         const getData = res.data;
         dispatch(setCourse({data:getData,loading:false}));
-        return Promise.resolve(getData);
     } catch (error) {
-        return Promise.reject({data:[],loading:false,error:error});
+       dispatch(setCourse({data:[],loading:false,error:error.message}));
     }
   }
 

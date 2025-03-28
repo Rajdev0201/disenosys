@@ -8,7 +8,7 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 import { Pagination } from "../component/Pagination.jsx";
 
 const Dashboard = () => {
-  const{online} = useSelector((state) => state.online);
+  const{online,loading} = useSelector((state) => state.online);
   console.log(online);
   const dispatch = useDispatch();
 
@@ -103,6 +103,8 @@ const Dashboard = () => {
           </p>
         ) : (
           <div className="w-full overflow-x-auto">
+            {!loading ? (
+
             <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
               <thead className="bg-blue-500 text-white font-sans">
                 <tr>
@@ -254,6 +256,11 @@ const Dashboard = () => {
                 ))}
               </tbody>
             </table>
+            ) : (
+              <span className="text-lg flex justify-center min-h-screen text-green-500 font-semibold">
+              Loading ....
+              </span>
+            )}
           </div>
         )}
       </div>

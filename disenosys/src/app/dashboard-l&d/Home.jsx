@@ -14,9 +14,9 @@ const Home = () => {
     const icon1 = <GiNotebook size={44} color='blue'/>;
     const icon2 = <GiTeacher size={44} color='blue' />;
     const icon3 = <MdOutlineMarkChatRead size={44} color='blue'/>
-    const online = useSelector((state) => state.online);
-    const course = useSelector((state) => state.courseLD);
-    const teach = useSelector((state) => state.teacher);
+    const {online} = useSelector((state) => state.online);
+    const {course} = useSelector((state) => state.courseLD);
+    const {teach} = useSelector((state) => state.teacher);
     const dispatch = useDispatch();
 
     useEffect(() => {
