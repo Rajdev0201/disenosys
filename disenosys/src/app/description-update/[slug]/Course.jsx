@@ -8,14 +8,15 @@ import p4 from "../../assests/models/Slide4.PNG";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCourse } from "../../Redux/action/Course.js";
-import { useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 
 const Course = () => {
   const [openAccordionIndex, setOpenAccordionIndex] = useState(null);
   const dispatch = useDispatch();
   const courseRefs = useRef([]);
   const search = useSearchParams();
-  const courseId = search.get("courseId"); 
+  const {slug} = useParams();
+  console.log(slug)
 
   const courseState = useSelector((state) => state?.course);
   const courses = courseState?.courses;
@@ -63,7 +64,7 @@ const Course = () => {
       <div>
         {/* {courses?.map((course, courseIdx) => ( */}
         {courses
-          ?.filter((course) => course._id === courseId)
+          ?.filter((course) => course.courseName === decodeURIComponent(slug))
           ?.map((course, courseIdx) => (
           <div key={courseIdx}>
             {course?.Curriculum?.map((item, idx) => (
