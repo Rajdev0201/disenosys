@@ -54,7 +54,10 @@ const Education  = dynamic(() => import("./home/Education"),{
   loading: () => <p>Loading...</p>,
 })
 
-import Who from './home/Who'
+const Who = dynamic(() => import("./home/Who"),{
+  ssr:false,
+  loading: () => <p>Loading...</p>,
+})
 import Announce from './home/Announce';
 import Check from "./home/CheckCertificate";
 
