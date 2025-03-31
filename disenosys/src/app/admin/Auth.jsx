@@ -5,6 +5,8 @@ import { IoMdAlert } from "react-icons/io";
 import { admin } from "../Redux/action/auth.js";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation.js";
+import Image from "next/image.js";
+import logo from "../assests/profile/logo.jpg"
 
 const Auth = () => {
   const [showAlert, setShowAlert] = useState(true);
@@ -38,20 +40,21 @@ const Auth = () => {
       >
         <div
           id="toast-notification"
-          className="w-full max-w-md max-h-lg bg-white rounded-lg shadow-lg"
+          className="w-full max-w-md max-h-lg bg-white rounded-lg shadow-lg font-garet"
           role="alert"
         >
           <div className="flex items-center justify-between mb-3 p-4 bg-[#182073]">
-            <span className="mb-1 text-xl font-semibold font-poppins text-white">
-              Auth notification
+            <span className="mb-1 text-xl font-semibold text-white">
+             Disenosys
             </span>
+            {/* <Image src={logo} alt="admin-logo" className="object-cover"/> */}
             <button>
               <IoMdAlert size={30} className="text-white" />
             </button>
           </div>
 
           <div className="container mx-auto p-5">
-            <h1 className="font-bold text-center text-[#182073] font-poppins text-2xl">
+            <h1 className="font-medium text-center text-[#182073]  text-2xl">
               Admin Login
             </h1>
             <form onSubmit={handleSignin} className="p-6">
@@ -70,7 +73,7 @@ const Auth = () => {
               <div className="flex justify-end">
                 <button
                   type="submit"
-                  className="bg-[#182073] w-28 mt-4 p-2 text-xl font-semibold text-white flex items-center justify-center rounded"
+                  className="bg-[#182073]  mt-4 px-4 py-2 text-xl font-medium text-white flex items-center justify-center rounded"
                 >
                   Continue
                 </button>

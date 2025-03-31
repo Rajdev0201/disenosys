@@ -1,6 +1,13 @@
 // "use client"
-import Home from './home/Home';
-import Box from "./home/Box";
+const Home = dynamic(() => import('./home/Home'), {
+  ssr: false,
+  loading: () => <p>Loading...</p>,
+})
+const Box = dynamic(() => import('./home/Box'), {
+  ssr: false,
+  loading: () => <p>Loading...</p>,
+})
+
 import WhyChoose from "./home/WhyChoose";
 import Partner from "./home/Partner";
 import Course from "./home/Course";
@@ -19,9 +26,8 @@ import Education from "./home/Education"
 import Who from './home/Who'
 import Announce from './home/Announce';
 import Check from "./home/CheckCertificate";
+import dynamic from 'next/dynamic';
 
-
-// import Marquee from "./home/Marquee.jsx";
 
 
 export const metadata = () => { 

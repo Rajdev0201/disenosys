@@ -1,11 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import home from "../assests/home.jpg";
-// import { useParallax } from "react-scroll-parallax";
 import { FiArrowRight } from "react-icons/fi";
 import { Whatsapp } from "./Whatsapp";
-import { BiSolidCarMechanic } from "react-icons/bi";
 import {
   useMotionTemplate,
   useMotionValue,
@@ -16,9 +12,7 @@ import Link from "next/link";
 
 const COLORS_TOP = ["#057FE3"];
 
-
 const Home = () => {
-  // const [loading, setLoading] = useState(true);
   const color = useMotionValue(COLORS_TOP[0]);
 
   useEffect(() => {
@@ -30,7 +24,6 @@ const Home = () => {
     });
   }, []);
 
-  const backgroundImage = useMotionTemplate`radial-gradient(125% 125% at 50% 0%, #020617 50%, ${color})`;
   const border = useMotionTemplate`1px solid ${color}`;
   const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
 
@@ -76,19 +69,18 @@ const Home = () => {
   };
 
   return (
-    <motion.section
-    >
+    <motion.section>
       <div className="container-2xl bg py-12 lg:py-36  w-full relative">
         <div className="grid grid-cols-1 lg:grid-cols-12">
           <div className="col-span-6 ">
-          <div className="bg-[#0d1039]/50 rounded-3xl shadow-sm p-10 flex justify-center items-center w-full lg:w-3/4 mt-8"> 
-  <h1 className="font-garet text-xl mt-1 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] lg:mt-0 max-w-[250px] lg:max-w-[520px] font-medium sm:text-3xl md:text-6xl lg:text-5xl  text-white">
-    Shaping Industry Ready{" "}
-    <span className="text-white">Engineers</span> for the Future{" "}
-  </h1>
-</div>
-          
-<div className="flex justify-start">
+            <div className="bg-[#0d1039]/50 rounded-3xl shadow-sm p-10 flex justify-center items-center w-full lg:w-3/4 mt-8">
+              <h1 className="font-garet text-xl mt-1 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] lg:mt-0 max-w-[250px] lg:max-w-[520px] font-medium sm:text-3xl md:text-6xl lg:text-5xl  text-white">
+                Shaping Industry Ready{" "}
+                <span className="text-white">Engineers</span> for the Future{" "}
+              </h1>
+            </div>
+
+            <div className="flex justify-start">
               <motion.button
                 style={{
                   border,
@@ -102,7 +94,12 @@ const Home = () => {
                 }}
                 className="group relative flex mx-auto lg:mx-44 text-[#0d1039] items-center -mt-4 gap-1.5 rounded-sm hover:text-white bg-white px-3 py-1  lg:px-4 lg:py-2  hover:bg-[#182073]"
               >
-                <Link href="/quicktest" className="text-sm lg:text-2xl font-garet">Take Test</Link>
+                <Link
+                  href="/quicktest"
+                  className="text-sm lg:text-2xl font-garet"
+                >
+                  Take Test
+                </Link>
 
                 <FiArrowRight className="transition-transform group-hover:-rotate-45 group-active:-rotate-12 text-2xl" />
               </motion.button>
@@ -110,8 +107,6 @@ const Home = () => {
           </div>
 
           <div className="col-span-6 flex justify-center lg:justify-end">
-
-
             <div class="flex items-center justify-center">
               <form onSubmit={onSubmit}>
                 <div class="bg-[#0d1039]/50  rounded-2xl mt-10 lg:-mt-0 mr-2 lg:mr-0 hover:border-[#057FE3] transition-all duration-200">
@@ -120,11 +115,11 @@ const Home = () => {
                     <h1 class="text-white w-52 font-medium text-center text-sm lg:text-3xl font-garet">
                       Book a Demo Class Today!
                     </h1>
-                    
+
                     <label htmlFor="name" className="sr-only">
                       Name
                     </label>
-   
+
                     <input
                       className="p-2 text-white bg-transparent border-2 border-white  rounded-full focus:border-blue-700 hover:border-blue-500 transition-all duration-200 focus:outline-none"
                       placeholder="Name"
@@ -133,7 +128,7 @@ const Home = () => {
                       id="name"
                       required
                     />
-                
+
                     <label htmlFor="email" className="sr-only">
                       Email
                     </label>
