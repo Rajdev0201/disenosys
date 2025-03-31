@@ -9,7 +9,7 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import bg from "../assests/profile/car-1.avif";
+import bg from "../assests/profile/car-1.webp";
 import "../globals.css"
 
 const COLORS_TOP = ["#057FE3"];
@@ -68,10 +68,10 @@ const Home = () => {
     src={bg}
     alt="Background"
     fill
-      loading="lazy"
-  quality={75}
-  className="z-0 py-12 mt-24 lg:mt-36 object-cover"
-  sizes="100vw"
+    priority
+    quality={60} 
+    className="object-cover z-0 py-12 mt-24 lg:mt-36"
+    sizes="100vw"
   />
       <div className="container-2xl py-12 lg:py-36  w-full relative">
         <div className="grid grid-cols-1 lg:grid-cols-12">
