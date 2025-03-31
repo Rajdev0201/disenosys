@@ -69,7 +69,7 @@ const Home = () => {
     alt="Background"
     fill
     priority
-    loading="eager" 
+    // loading="eager" 
     quality={60} 
     className="object-cover z-0 py-12 mt-24 lg:mt-36"
     sizes="100vw"
