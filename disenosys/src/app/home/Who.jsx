@@ -12,7 +12,10 @@ const AboutSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
           <div className="flex justify-center">
             <Image src={who} className="rounded-lg shadow-lg" alt="who-we-are"
-            priority loading="eager" quality={80}
+            width={640} // Reduce width to fit actual layout
+            height={505} // Maintain aspect ratio
+            priority
+            quality={75}
              />
           </div>
 

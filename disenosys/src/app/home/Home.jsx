@@ -9,7 +9,7 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import bg from "../assests/profile/car-1.webp";
+import bg from "../assests/profile/car-1.avif";
 import "../globals.css"
 
 const COLORS_TOP = ["#057FE3"];
@@ -67,11 +67,11 @@ const Home = () => {
        <Image
     src={bg}
     alt="Background"
-    layout="fill"
-    objectFit="cover"
-    quality={100}
-    loading="eager"
-    className="z-0 py-12 mt-24 lg:mt-36"
+    fill
+  priority // Ensures faster loading
+  quality={75} // Reduce file size without losing quality
+  className="z-0 py-12 mt-24 lg:mt-36 object-cover"
+  sizes="100vw"
   />
       <div className="container-2xl py-12 lg:py-36  w-full relative">
         <div className="grid grid-cols-1 lg:grid-cols-12">
