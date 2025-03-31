@@ -9,7 +9,8 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
-import bg from "../assests/profile/car-1.webp"
+import bg from "../assests/profile/car-1.webp";
+import "../globals.css"
 
 const COLORS_TOP = ["#057FE3"];
 
@@ -69,13 +70,14 @@ const Home = () => {
     layout="fill"
     objectFit="cover"
     quality={100}
+    loading="eager"
     className="z-0 py-12 mt-24 lg:mt-36"
   />
       <div className="container-2xl py-12 lg:py-36  w-full relative">
         <div className="grid grid-cols-1 lg:grid-cols-12">
           <div className="col-span-6 ">
             <div className="bg-[#0d1039]/50 rounded-3xl shadow-sm p-10 flex justify-center items-center w-full lg:w-3/4 mt-8">
-              <h1 className="font-garet text-xl mt-1 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] lg:mt-0 max-w-[250px] lg:max-w-[520px] font-medium sm:text-3xl md:text-6xl lg:text-5xl  text-white">
+              <h1 className="garet text-xl mt-1 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] lg:mt-0 max-w-[250px] lg:max-w-[520px] font-medium sm:text-3xl md:text-6xl lg:text-5xl  text-white">
                 Shaping Industry Ready{" "}
                 <span className="text-white">Engineers</span> for the Future{" "}
               </h1>
@@ -97,7 +99,7 @@ const Home = () => {
               >
                 <Link
                   href="/quicktest"
-                  className="text-sm lg:text-2xl font-garet"
+                  className="text-sm lg:text-2xl garet"
                 >
                   Take Test
                 </Link>
@@ -113,7 +115,7 @@ const Home = () => {
                 <div class="bg-[#0d1039]/50  rounded-2xl mt-10 lg:-mt-0 mr-2 lg:mr-0 hover:border-[#057FE3] transition-all duration-200">
                   <div class="mx-auto flex items-center justify-center space-y-4 py-2 px-6 lg:py-4 lg:px-20 font-semibold text-gray-500 flex-col">
                     {/* <BiSolidCarMechanic size={60} className="text-white" /> */}
-                    <h1 class="text-white w-52 font-medium text-center text-sm lg:text-3xl font-garet">
+                    <h1 class="text-white w-52 font-medium text-center text-sm lg:text-3xl garet">
                       Book a Demo Class Today!
                     </h1>
 
@@ -155,7 +157,7 @@ const Home = () => {
                     />
 
                     <button
-                      className="px-10 py-2 text-md lg:text-2xl mt-24 font-garet bg-white border-none outline-none text-[#0d1039] rounded-sm font-medium  border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
+                      className="px-10 py-2 text-md lg:text-2xl mt-24 garet bg-white border-none outline-none text-[#0d1039] rounded-sm font-medium  border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
                       type="submit"
                       disabled={loading}
                     >
