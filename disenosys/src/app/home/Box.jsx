@@ -19,6 +19,11 @@ const WhyChooseUs = () => {
             src={cls}
             alt="100% LIVE INTERACTIVE CLASSES"
             className="rounded w-full h-48 object-cover mb-4"
+            width={250}
+            height={125}
+            priority
+            quality={80}
+            loading="eager"
           />
           <div className="px-4 flex items-center justiy-center lg:justify-start text-4xl text-[#0d1039] mb-4">
           <FaChalkboardTeacher size={40} color="#0d1039" className="icon" />
@@ -36,6 +41,11 @@ const WhyChooseUs = () => {
             src={job}
             alt="100% JOB ASSISTANCE"
             className="rounded w-full h-48 object-cover mb-4"
+            width={250}
+            height={125}
+            priority
+            quality={80}
+            loading="eager"
           />
           <div className="px-4 flex items-center lg:justify-start text-4xl text-[#0d1039] mb-4">
           <FaBriefcase size={40} color="#0d1039" className="icon" />
@@ -53,6 +63,11 @@ const WhyChooseUs = () => {
             src={hands}
             alt="HANDS-ON EXPERIENCE WITH 50+ PROJECTS"
             className="rounded w-full h-48 object-cover mb-4"
+            width={250}
+            height={125}
+            priority
+            quality={80}
+            loading="eager"
           />
           <div className="px-4 flex items-center justify-start text-4xl text-[#0d1039] mb-4">
           <FaProjectDiagram size={40} color="#0d1039" className="icon" />
@@ -70,6 +85,11 @@ const WhyChooseUs = () => {
             src={week}
             alt="WEEKEND CLASSES FOR WORKING PROFESSIONALS"
             className="rounded w-full h-48 object-cover mb-4"
+            width={250}
+            height={125}
+            priority
+            quality={80}
+            loading="eager"
           />
           <div className="px-4 flex items-center justify-start text-4xl text-[#0d1039] mb-4">
           <FaCalendarDay size={40} color="#0d1039" className="icon" />

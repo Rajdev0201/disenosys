@@ -14,7 +14,7 @@ import Image from "next/image";
 // import { useSelector } from "react-redux";
 import LoginAlert from "../component/Alert/LoginAlert";
 
-const Testimonials = ({ setTestimonialsInView }) => {
+const Testimonials = () => {
   const boxRef = useRef(null);
   
   // useEffect(() => {
@@ -46,7 +46,7 @@ const Testimonials = ({ setTestimonialsInView }) => {
   const settings = {
     dots: true,
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: 2, // Change from 3 to 2
     slidesToScroll: 1,
     autoplay: true,
     speed: 800,
@@ -56,7 +56,7 @@ const Testimonials = ({ setTestimonialsInView }) => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: 1, // Change from 2 to 1
           slidesToScroll: 1,
         },
       },
@@ -69,6 +69,7 @@ const Testimonials = ({ setTestimonialsInView }) => {
       },
     ],
   };
+  
 
   const data = [
     {
@@ -157,48 +158,35 @@ const Testimonials = ({ setTestimonialsInView }) => {
         <Slider {...settings}>
           {data.map((testimonial, index) => (
             <div className="p-4 h-full flex" key={index}>
-              <blockquote className="flex flex-col justify-between bg-gray-50 p-6 shadow-sm rounded-lg min-h-[300px] sm:min-h-[350px] lg:min-h-[400px]">
-                <div className="flex items-center gap-4">
-                  {testimonial.pic ? (
-                    <>
-                      <Image
-                        src={testimonial.pic}
-                        alt="students"
-                        className="w-20 h-20 rounded-full object-cover"
-                      />
-                    </>
-                  ) : (
-                    <Image
-                      alt={testimonial.name}
-                      src={profile}
-                      className="w-20 h-20 rounded-full object-cover"
-                    />
-                  )}
-                  <div>
-                    <div className="flex justify-start w-8 h-8 gap-0.5 text-[#0d1039]">
-                     ★★★★★
-                    </div>
-                    <p className="mt-0.5 text-lg font-medium text-gray-900">
-                      {testimonial.name}
-                    </p>
-                    <p className="mt-0.5 text-md font-medium text-gray-900">
-                      {testimonial.company} 
-                      {/* <Image 
-                      src={testimonial.companylogo}
-                      alt="c-logo"
-                      className="w-20 h-20 "
-                      /> */}
-                    </p>
-                    <p className="mt-0.5 text-sm font-medium text-gray-900">
-                      {testimonial.country}
-                    </p>
+            <blockquote className="flex flex-col justify-between bg-gray-50 p-6 shadow-sm rounded-lg min-h-[300px] sm:min-h-[350px] lg:min-h-[300px]">
+              <div className="flex items-center gap-4">
+                <Image
+                  src={testimonial.pic || profile}
+                  alt={testimonial.name}
+                  className="w-20 h-20 rounded-full object-cover"
+                  priority={true}
+                />
+                <div>
+                  <div className="flex text-xl gap-1 text-[#0d1039]">
+                    ★★★★★
                   </div>
+                  <p className="mt-0.5 text-lg font-medium text-gray-900">
+                    {testimonial.name}
+                  </p>
+                  <p className="mt-0.5 text-md font-medium text-gray-900">
+                    {testimonial.company}
+                  </p>
+                  <p className="mt-0.5 text-sm font-medium text-gray-900">
+                    {testimonial.country}
+                  </p>
                 </div>
-                <p className="mt-4 text-gray-700 flex-grow">
-                  {testimonial.des}
-                </p>
-              </blockquote>
-            </div>
+              </div>
+              <p className="mt-4 text-gray-700 flex-grow">
+                {testimonial.des}
+              </p>
+            </blockquote>
+          </div>
+          
           ))}
         </Slider>
       </div>

@@ -93,7 +93,10 @@ useEffect(() => {
         src={logo}
         alt="Logo"
         className="w-48 h-24 object-cover h-auto lg:mt-3"
+        width={250}
+        height={125}
         priority
+        quality={80}
         loading="eager"
       />
     </Link>
