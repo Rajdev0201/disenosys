@@ -115,7 +115,7 @@ const Navbar = () => {
             href="/"
             passHref
             // onClick={() => handleLinkClick('/')}
-            className={`py-2 px-2 font-medium  hover:text-[#057FE3] garet text-md ${
+            className={`py-2 px-2 font-medium  hover:text-[#057FE3] font-garet text-md ${
               path === "/" ? "text-[#057FE3]" : "text-white"
             }`}
           >
@@ -139,7 +139,7 @@ const Navbar = () => {
               href={`/${item.toLowerCase()}`}
               passHref
               // onClick={() => handleLinkClick(`/${item.toLowerCase()}`)}
-              className={`py-2 px-4 garet  hover:text-[#057FE3] font-medium text-md ${
+              className={`py-2 px-4 font-garet  hover:text-[#057FE3] font-medium text-md ${
                 path === `/${item.toLowerCase()}`
                   ? "text-[#057FE3]"
                   : "text-white"
@@ -152,7 +152,7 @@ const Navbar = () => {
             href="/contact"
             passHref
             // onClick={() => handleLinkClick('/')}
-            className={`py-2 px-2 font-medium  hover:text-[#057FE3] garet text-md ${
+            className={`py-2 px-2 font-medium  hover:text-[#057FE3] font-garet text-md ${
               path === "/contact" ? "text-[#057FE3]" : "text-white"
             }`}
           >
@@ -193,7 +193,7 @@ const Navbar = () => {
   {user?.user?.user?.userName || user?.user?.name ? (
     <div className="relative  flex items-center gap-4 ring-4 mx-6 ring-white rounded-full shadow-lg hover:ring-blue-400 hover:cursor-pointer group">
 
-      <span className="bg-[#0d1039] shadow-lg px-4 py-2 rounded-full text-white font-garet font-bold text-lg">
+      <span className="bg-[#0d1039] shadow-lg px-4 py-2 rounded-full text-white font-font-garet font-bold text-lg">
         {user?.user?.user?.userName?.toLocaleUpperCase()?.charAt(0)} 
         {user?.user?.name?.toLocaleUpperCase()?.charAt(0)}
       </span>
@@ -202,13 +202,13 @@ const Navbar = () => {
       <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <div className="relative w-44">
           <div className="bg-[#057FE3] text-white flex flex-col rounded-md px-5 py-3">
-            <div className="text-center text-base font-bold font-garet mt-1">
+            <div className="text-center text-base font-bold font-font-garet mt-1">
               {user?.user?.user?.userName?.toLocaleUpperCase()} {user?.user?.name?.toLocaleUpperCase()}
             </div>
-            <div className="text-center text-base font-bold font-garet mt-1">
+            <div className="text-center text-base font-bold font-font-garet mt-1">
               <Link href="/dashboard">My Profile</Link>
             </div>
-            <div className="max-w-44 flex items-center justify-center text-white text-base font-garet font-bold duration-300 cursor-pointer active:scale-[0.98]">
+            <div className="max-w-44 flex items-center justify-center text-white text-base font-font-garet font-bold duration-300 cursor-pointer active:scale-[0.98]">
               <button className="px-0 py-2 flex items-center" onClick={handleLogout}>
                 <IoMdLogOut size={20} className="mx-0" />
                 <span className="text-center">LOGOUT</span>
