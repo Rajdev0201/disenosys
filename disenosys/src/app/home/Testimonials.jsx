@@ -46,7 +46,7 @@ const Testimonials = () => {
   const settings = {
     dots: true,
     infinite: true,
-    slidesToShow: 2, // Change from 3 to 2
+    slidesToShow: 3, // Change from 3 to 2
     slidesToScroll: 1,
     autoplay: true,
     speed: 800,
@@ -68,6 +68,7 @@ const Testimonials = () => {
         },
       },
     ],
+    lazyLoad: "ondemand",
   };
   
 
@@ -164,7 +165,11 @@ const Testimonials = () => {
                   src={testimonial.pic || profile}
                   alt={testimonial.name}
                   className="w-20 h-20 rounded-full object-cover"
-                  priority={true}
+                  width={250}
+                  height={125}
+                  priority
+                  quality={80}
+                  loading="eager"
                 />
                 <div>
                   <div className="flex text-xl gap-1 text-[#0d1039]">

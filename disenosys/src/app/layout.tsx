@@ -37,6 +37,8 @@ export default function RootLayout({
     <html lang="en">
       <Head>
       <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&family=Josefin+Sans:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet" />
+      <link rel="preload" href="./assests/profile/car-1.webp" as="image"  {...{ fetchpriority: 'high' } as any} />
+
       </Head>
       <body className={inter.className}>
         <Providers>

@@ -174,6 +174,9 @@ const addCart = (course) => {
                   alt={course?.courseName}
                   className="object-cover w-full h-full"
                   onClick={() => goToDescriptionPage(course?.courseName)}
+                  width={250}
+                  height={125}
+                  loading="lazy"
                 />
               </div>
               <div className="flex flex-col flex-grow font-garet" >

@@ -43,7 +43,11 @@ const MarqueeView = () => {
             className="flex w-44 h-48 p-3 flex-col items-center justify-center px-6"
           >
             <div className=" border-2 border-[#182073] shadow-lg rounded-md">
-              <Image src={company.image} alt={company.name} className="object-cover w-full h-full" priority loading="eager" />
+              <Image src={company.image} alt={company.name} className="object-cover w-full h-full" priority loading="eager"   
+            width={250}
+            height={125}
+            quality={80}
+           />
             </div>
           </div>
         ))}

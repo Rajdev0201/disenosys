@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import Link from "next/link";
 
+
 const COLORS_TOP = ["#057FE3"];
 
 const Home = () => {
@@ -70,7 +71,7 @@ const Home = () => {
 
   return (
     <motion.section>
-      <div className="container-2xl bg py-12 lg:py-36  w-full relative">
+      <div className="container-2xl py-12 bg lg:py-36  w-full relative">
         <div className="grid grid-cols-1 lg:grid-cols-12">
           <div className="col-span-6 ">
             <div className="bg-[#0d1039]/50 rounded-3xl shadow-sm p-10 flex justify-center items-center w-full lg:w-3/4 mt-8">
