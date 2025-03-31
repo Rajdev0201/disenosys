@@ -6,24 +6,16 @@ import {
   useMotionTemplate,
   useMotionValue,
   motion,
-  animate,
 } from "framer-motion";
 import Link from "next/link";
-
+import Image from "next/image";
+import bg from "../assests/profile/car-1.webp"
 
 const COLORS_TOP = ["#057FE3"];
 
 const Home = () => {
   const color = useMotionValue(COLORS_TOP[0]);
-
-  useEffect(() => {
-    animate(color, COLORS_TOP, {
-      ease: "easeInOut",
-      duration: 10,
-      repeat: Infinity,
-      repeatType: "mirror",
-    });
-  }, []);
+  
 
   const border = useMotionTemplate`1px solid ${color}`;
   const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
@@ -70,8 +62,16 @@ const Home = () => {
   };
 
   return (
-    <motion.section>
-      <div className="container-2xl py-12 bg lg:py-36  w-full relative">
+    <div className="">
+       <Image
+    src={bg}
+    alt="Background"
+    layout="fill"
+    objectFit="cover"
+    quality={100}
+    className="z-0 py-12 mt-24 lg:mt-36"
+  />
+      <div className="container-2xl py-12 lg:py-36  w-full relative">
         <div className="grid grid-cols-1 lg:grid-cols-12">
           <div className="col-span-6 ">
             <div className="bg-[#0d1039]/50 rounded-3xl shadow-sm p-10 flex justify-center items-center w-full lg:w-3/4 mt-8">
@@ -171,7 +171,7 @@ const Home = () => {
         </div>
       </div>
       <Whatsapp />
-    </motion.section>
+    </div>
   );
 };
 

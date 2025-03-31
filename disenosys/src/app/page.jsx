@@ -10,13 +10,13 @@ import Check from "./home/CheckCertificate";
 
 const Box = dynamic(() => import('./home/Box'), { ssr: false, loading: () => <p>Loading...</p> });
 const Testimonials = dynamic(() => import("./home/Testimonials"), { ssr: false, loading: () => <p>Loading...</p> });
-const WhyChoose = dynamic(() => import("./home/WhyChoose"), { loading: () => <p>Loading...</p> });
+const WhyChoose = dynamic(() => import("./home/WhyChoose"), { ssr: false, loading: () => <p>Loading...</p> });
 const Partner = dynamic(() => import("./home/Partner"), { ssr: false, loading: () => <p>Loading...</p> });
-const Course = dynamic(() => import("./home/Course"), { loading: () => <p>Loading...</p> });
+const Course = dynamic(() => import("./home/Course"), { ssr: false, loading: () => <p>Loading...</p> });
 const Count = dynamic(() => import("./home/Count"), { ssr: false, loading: () => <p>Loading...</p> });
 const Marquee = dynamic(() => import("./home/Marquee"), { ssr: false, loading: () => <p>Loading...</p> });
-const Placement = dynamic(() => import("./home/Placement"), {  loading: () => <p>Loading...</p> });
-const Education = dynamic(() => import("./home/Education"), {  loading: () => <p>Loading...</p> });
+const Placement = dynamic(() => import("./home/Placement"), { ssr: false, loading: () => <p>Loading...</p> });
+const Education = dynamic(() => import("./home/Education"), { ssr: false, loading: () => <p>Loading...</p> });
 const Who = dynamic(() => import("./home/Who"), { ssr: false, loading: () => <p>Loading...</p> });
 
 
