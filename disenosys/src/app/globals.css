@@ -5,13 +5,13 @@
 @tailwind utilities;
 
 /* Font-face declaration */
-@font-face {
+/* @font-face {
   font-family: 'Brush Script MT';
   src: url('/fonts/BrushScriptMT.woff2') format('woff2'),
        url('/fonts/BrushScriptMT.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-}
+} */
 /* 
 .garet{
   font-family: 'Garet', sans-serif;
@@ -21,13 +21,13 @@
 
 
 /* Mont Heavy Demo - Custom Font */
-@font-face {
+/* @font-face {
   font-family: 'Mont Heavy Demo';
   src: url('/fonts/MontHeavyDemo.woff2') format('woff2'),
        url('/fonts/MontHeavyDemo.woff') format('woff');
   font-weight: normal;
   font-style: normal;
-}
+} */
 
 
 /* Classes for Specific Fonts */
