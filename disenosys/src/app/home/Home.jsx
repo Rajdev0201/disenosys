@@ -68,8 +68,8 @@ const Home = () => {
     src={bg}
     alt="Background"
     fill
-  priority // Ensures faster loading
-  quality={75} // Reduce file size without losing quality
+      loading="lazy"
+  quality={75}
   className="z-0 py-12 mt-24 lg:mt-36 object-cover"
   sizes="100vw"
   />

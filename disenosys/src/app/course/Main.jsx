@@ -3,6 +3,7 @@ import { useState } from "react";
 import Course from "../home/Course";
 import plastic from "../assests/profile/c-1.jpg";
 import ma from "../assests/profile/c3.jpg"
+import biw from "../assests/profile/BIW.webp";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 const CoursePopup = () => {
