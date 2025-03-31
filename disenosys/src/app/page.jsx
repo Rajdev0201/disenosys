@@ -1,4 +1,6 @@
 // "use client"
+import dynamic from 'next/dynamic';
+
 const Home = dynamic(() => import('./home/Home'), {
   ssr: false,
   loading: () => <p>Loading...</p>,
@@ -8,25 +10,54 @@ const Box = dynamic(() => import('./home/Box'), {
   loading: () => <p>Loading...</p>,
 })
 
-import WhyChoose from "./home/WhyChoose";
-import Partner from "./home/Partner";
-import Course from "./home/Course";
-import Count from "./home/Count";
-// import { useDispatch, useSelector } from 'react-redux';
-// import { getAllCarts } from './Redux/action/addToCart.js';
-// import { useEffect, useState } from 'react';
-import Testimonials from "./home/Testimonials";
-// import LoginAlert from './component/Alert/LoginAlert';
+const Testimonials = dynamic(() => import("./home/Testimonials"),{
+  ssr:false,
+  loading: () => <p>Loading...</p>,
+})
+
+const  WhyChoose = dynamic(() => import("./home/WhyChoose"),{
+  ssr:false,
+  loading: () => <p>Loading...</p>,
+})
+
+const Partner = dynamic(() => import("./home/Partner"),{
+  ssr:false,
+  loading: () => <p>Loading...</p>,
+})
+
+const Course = dynamic(() => import("./home/Course"),{
+  ssr:false,
+  loading: () => <p>Loading...</p>,
+})
+
+const Count = dynamic(() => import("./home/Count"),{
+  ssr:false,
+  loading: () => <p>Loading...</p>,
+})
+
 import Navbar from "./component/Navbar/Navbar";
 import Footer from "./component/Navbar/Footer";
 import Blink from "./component/Blink/BlinkingPopup";
-import Marquee from "./home/Marquee";
-import Placement from "./home/Placement"
-import Education from "./home/Education"
+
+const Marquee = dynamic(() => import("./home/Marquee"),{
+  ssr:false,
+  loading: () => <p>Loading...</p>,
+})
+
+const Placement = dynamic(() => import("./home/Placement"),{
+  ssr:false,
+  loading: () => <p>Loading...</p>,
+})
+
+const Education  = dynamic(() => import("./home/Education"),{
+  ssr:false,
+  loading: () => <p>Loading...</p>,
+})
+
 import Who from './home/Who'
 import Announce from './home/Announce';
 import Check from "./home/CheckCertificate";
-import dynamic from 'next/dynamic';
+
 
 
 

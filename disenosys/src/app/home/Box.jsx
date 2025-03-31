@@ -1,10 +1,10 @@
 "use client"
 import Image from 'next/image';
 import React from 'react';
-import week from "../assests/profile/week.jpg"
-import cls from "../assests/profile/cls.jpg"
-import job from "../assests/profile/job.jpg"
-import hands from "../assests/profile/exp.jpg"
+import week from "../assests/profile/week.webp"
+import cls from "../assests/profile/cls.webp"
+import job from "../assests/profile/job.webp"
+import hands from "../assests/profile/exp.webp"
 import { FaBriefcase, FaCalendarDay, FaChalkboardTeacher, FaProjectDiagram } from 'react-icons/fa';
 
 const WhyChooseUs = () => {
