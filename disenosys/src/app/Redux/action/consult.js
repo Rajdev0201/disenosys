@@ -109,7 +109,7 @@ export const payment = () => async (dispatch) => {
   
   export const createAmt = (Data ) => async (dispatch) => {
     try{
-      const {data} = await axios.post("http://localhost:8000/consult/create-amount",Data);
+      const {data} = await axios.post("https://disenosys-dkhj.onrender.com/consult/create-amount",Data);
       dispatch(setCrateAmount(data));
       alert("created amount");
     }catch(err){
@@ -119,7 +119,7 @@ export const payment = () => async (dispatch) => {
 
   export const takenAmt = () => async (dispatch) => {
     try{
-      const res = await axios.get("http://localhost:8000/consult/get-amount");
+      const res = await axios.get("https://disenosys-dkhj.onrender.com/consult/get-amount");
       dispatch(setCrateAmount(res.data.data));
     }catch(err){
       console.log(err)
