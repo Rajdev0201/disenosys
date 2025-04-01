@@ -8,7 +8,7 @@ import Image from 'next/image';
 import StudentApplicationForm from './Pdf';
 
 const Details = () => {
-    const online = useSelector((state) => state.online);
+    const {online} = useSelector((state) => state.online);
     const dispatch = useDispatch();
     const search = useSearchParams();
     const courseId = search.get("profileId");
