@@ -12,8 +12,8 @@ exports.createCheckoutSession = async (req, res) => {
     }
 
     const razorpay = new Razorpay({
-        key_id: 'rzp_test_pyzRkKRrWBkgnC',
-        key_secret: 'CIdT8EcotbRTWc4JxdYIhEUn',
+          key_id: process.env.KEY_ID,
+          key_secret: process.env.KEY_SECRET,
     });
 
     try {

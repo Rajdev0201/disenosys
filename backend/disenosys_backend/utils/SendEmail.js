@@ -1,22 +1,22 @@
-const nodemailer = require("nodemailer")
+// const nodemailer = require("nodemailer")
 
-const sendMail =async (Options)=>{
+// const sendMail =async (Options)=>{
 
-    const transport = nodemailer.createTransport({
-        auth:{
-            user:"",
-            pass: ""
-            }
-    })
+//     const transport = nodemailer.createTransport({
+//         auth:{
+//             user:"",
+//             pass: ""
+//             }
+//     })
 
-    const mail = await transport.sendMail(Options)
+//     const mail = await transport.sendMail(Options)
      
-    if(mail)
-    {
-        return true
-    }
+//     if(mail)
+//     {
+//         return true
+//     }
 
-    return false
-}
+//     return false
+// }
 
-module.exports = sendMail
+// module.exports = sendMail

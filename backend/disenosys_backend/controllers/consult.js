@@ -6,7 +6,9 @@ const twilio = require('twilio');
 const msal = require('@azure/msal-node');
 const axios = require('axios');
 const moment = require('moment-timezone');
-const {BlockedEvent} = require('../models/blockedTime.js')
+const {BlockedEvent} = require('../models/blockedTime.js');
+const ConsultAmt = require('../models/ConsultAmount.js');
+
 
 // const { Client } = require('@microsoft/microsoft-graph-client');
 // const { ClientSecretCredential } = require('@azure/identity');
@@ -222,7 +224,7 @@ async function getAccessToken() {
 }
 
 exports.handleRazorpayCallback = async (req, res) => {
-    const { razorpayPaymentId, razorpayOrderId, razorpaySignature } = req.body;
+    const { razorpayOrderId } = req.body;
 
     try {
         const orderData = await CheckoutSession.findOne({ sessionId: razorpayOrderId, isPaid: false });
@@ -248,6 +250,45 @@ exports.handleRazorpayCallback = async (req, res) => {
     }
 };
 
+
+
+exports.createAmount = async (req,res) => {
+    const {name,amt} = req.body;
+    console.log(name)
+    try{
+        let create =  await ConsultAmt.findOne();
+        if(create) {
+            create.name = name;
+            create.amt = amt;
+            await create.save();
+            return res.status(200).json({message:"Updated Amount",create});
+        }else{
+            create = new ConsultAmt({name,amt});
+            await create.save();
+            return res.status(201).json({message:"Created Amount",create});
+        }
+    }catch(err){
+        console.error(err);
+        return res.status(500).json({ message: "Server Error", error: err.message });
+    }
+}
+
+exports.getAmount = async (req,res) => {
+    try{
+      const data = await ConsultAmt.find();
+      if(!data){
+        return res.status(400).json({ error: 'No Data is available' });
+  }
+
+  res.status(200).json({
+      message: 'Consult Amount data is Fetched',
+      data: data,
+    });
+    }catch(err){
+        console.error(err);
+        return res.status(500).json({ message: "Server Error", error: err.message });
+    }
+}
 
 
 
@@ -444,6 +485,4 @@ exports.getBlockTime = async(req,res) => {
             return res.status(500).json({err : "data is not fetched"})
         }
 }
-
-
 

@@ -2,7 +2,7 @@
 import { LogOut } from '@/app/Redux/features/authSlice.js';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FaCog, FaChartBar, FaSignOutAlt, FaChevronDown, FaBars, FaMailBulk, FaRegListAlt } from 'react-icons/fa';
+import {FaChevronDown, FaBars, FaMailBulk, FaRegListAlt } from 'react-icons/fa';
 import { SiAuthentik } from "react-icons/si";
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
@@ -10,6 +10,7 @@ import { PiCertificateBold } from "react-icons/pi";
 import { GrScorecard } from "react-icons/gr";
 import { TfiWrite } from "react-icons/tfi";
 import { MdDashboardCustomize } from 'react-icons/md';
+import { GiDiscussion } from "react-icons/gi";
 
 
 const Sidebar = () => {
@@ -28,6 +29,7 @@ const Sidebar = () => {
     { href: '/applicants', label: 'Applicants', icon: <GrScorecard />},
     { href: '/mentors', label: 'Mentors-Profile', icon: <GrScorecard />},
     { href: '/studentsapplied', label: 'Hyper-Drive', icon: <GrScorecard />},
+    { href: '/create-consultation-amount', label: 'Consultation', icon: <GiDiscussion size={20}/>},
     // { href: '/settings', label: 'Settings', icon: <FaCog /> },
     // { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];

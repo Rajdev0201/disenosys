@@ -41,7 +41,7 @@ const date = search.get("date");
     setUserData({ ...userData, phone });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const data = { userData, cartItems };
     dispatch(CheckOut(data));

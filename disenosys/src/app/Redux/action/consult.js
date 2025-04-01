@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import Razorpay from "razorpay";
 import 'react-toastify/dist/ReactToastify.css';
-import { setBlock, setPayment, setPlaceOrder } from "../features/consultSlice.js";
+import { setBlock, setCrateAmount, setPayment, setPlaceOrder } from "../features/consultSlice.js";
 
 const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
@@ -107,4 +107,23 @@ export const payment = () => async (dispatch) => {
     }
   }
   
-  
+  export const createAmt = (Data ) => async (dispatch) => {
+    try{
+      const {data} = await axios.post("http://localhost:8000/consult/create-amount",Data);
+      dispatch(setCrateAmount(data));
+      alert("created amount");
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+  export const takenAmt = () => async (dispatch) => {
+    try{
+      const res = await axios.get("http://localhost:8000/consult/get-amount");
+      dispatch(setCrateAmount(res.data.data));
+    }catch(err){
+      console.log(err)
+    }
+  }
+
+

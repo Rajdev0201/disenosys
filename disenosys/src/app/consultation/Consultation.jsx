@@ -199,13 +199,13 @@ const Consultation = () => {
     <div className="bg-black h-full">
       <div className="grid grid-cols-1 lg:grid-cols-[700px_600px] px-0 lg:px-24 py-2 lg:py-24 gap-4 mt-16">
         <div className="bg-white rounded-lg shadow-lg h-auto">
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm w-full z-50">
+        {/* <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm w-full z-50">
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-center">
               <h1 className="text-lg font-semibold font-garet">
                 This is not open yet. Please wait for the opening date.
               </h1>
             </div>
-          </div>
+          </div> */}
           <div className="bg-gray-200 rounded-lg shadow-lg flex justify-between items-center p-12">
             <h2 className="text-md lg:text-3xl w-44 lg:w-96 font-bold font-poppins lg:ml-10 text-[#182073]">
               Job Consultation for Freshers in Auto Design

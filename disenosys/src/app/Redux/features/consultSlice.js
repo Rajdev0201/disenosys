@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     checkout: [],
-    block: [],  // Added block state
+    block: [], 
+    amt:[],
 };
 
 const consultSlice = createSlice({
@@ -17,9 +18,12 @@ const consultSlice = createSlice({
         },
         setBlock: (state, action) => {
             state.block = action.payload; // Update block state, not replace the entire state
+        },
+        setCrateAmount: (state,action) => {
+          state.amt =  action.payload;
         }
     }
 });
 
-export const { setPlaceOrder, setPayment, setBlock } = consultSlice.actions;
+export const { setPlaceOrder, setPayment, setBlock ,setCrateAmount } = consultSlice.actions;
 export default consultSlice.reducer;
