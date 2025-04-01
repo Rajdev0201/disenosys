@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image.js';
 
 const SAF = () => {
-    const online = useSelector((state) => state.online);
+    const {online} = useSelector((state) => state.online);
     const dispatch = useDispatch();
     const router = useRouter();
 

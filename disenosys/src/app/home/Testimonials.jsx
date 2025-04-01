@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef} from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
@@ -8,11 +8,10 @@ import kj from "../assests/testimonials/Jayesh KJ.png";
 import Karthikeyan from "../assests/testimonials/Karthikeyan C.png";
 import ragul from "../assests/testimonials/Raghul Srivatsa.png";
 import rajesh from "../assests/testimonials/Rajesh Deva.png";
-import sheldon from "../assests/testimonials/Sheldon.png";
 import profile from "../assests/profile/testi.jpg";
 import Image from "next/image";
 // import { useSelector } from "react-redux";
-import LoginAlert from "../component/Alert/LoginAlert";
+
 
 const Testimonials = () => {
   const boxRef = useRef(null);

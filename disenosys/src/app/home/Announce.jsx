@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Marquee from "react-fast-marquee";
-import { GrAnnounce } from "react-icons/gr";
+
 
 const Announce = () => {
   return (

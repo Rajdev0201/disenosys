@@ -1,10 +1,8 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaIndianRupeeSign } from "react-icons/fa6";
 import { fetchCourse } from "../Redux/action/Course.js";
 import {addProductToCart} from "../Redux/action/addToCart.js"
-import Link from 'next/link.js';
 import { useRouter } from 'next/navigation';
 import { payment } from '../Redux/action/Payment.js';
 import { MdOutlineRocketLaunch } from 'react-icons/md';

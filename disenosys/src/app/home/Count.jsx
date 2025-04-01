@@ -10,7 +10,6 @@ export default function Count() {
             <div className="max-w-7xl  mx-auto px-3 py-9">
             <div class="max-w-md mt-3 text-start">
             <h2 class="text-3xl md:text-4xl lg:text-5xl font-medium px-4 md:px-12 font-garet lg:px-3 text-white mb-8  ">NUMBERS TELL OUR STORY</h2>
-            {/* <div className='border  mt-4'></div> */}
            </div>
 
                 <div className="grid grid-cols-1 gap-8 text-center lg:mt-12 sm:gap-x-28 gap-y-12 md:grid-cols-3">

@@ -349,7 +349,7 @@ const History = () => {
                     <tr
                       key={item._id}
                       className={`border-b border-gray-300 ${
-                        index % 2 !== 0 ? "bg-blue-50" : "bg-white"
+                        index % 2 !== 0 ? "bg-gray-300" : "bg-white"
                       }`}
                     >
                       <td className="py-2 px-2 text-start text-gray-600 font-medium">
