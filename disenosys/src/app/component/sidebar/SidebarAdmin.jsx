@@ -39,7 +39,7 @@ const Sidebar = () => {
   return (
     <>
       
-      <nav className="fixed w-full bg-blue-600 text-white shadow-md flex items-center justify-between p-4 z-50 lg:hidden">
+      <nav className="fixed w-full bg-blue-600 text-white shadow-md flex items-center justify-between p-4 z-50 md:hidden">
         <button
           className="text-white"
           onClick={() => setSidebarOpen(!isSidebarOpen)}

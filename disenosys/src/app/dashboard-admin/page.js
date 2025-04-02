@@ -23,17 +23,17 @@ export default function DashboardPage() {
 return(
   <>
     {user?.user?.user?.userType === 'admin'?
-    <div className="">
+    <>
         <Navbar />
-        <div className="grid grid-cols-12 h-full mt-16">
-          <div className="col-span-2 bg-[#182073] h-full">
+        <div className="grid grid-cols-12 bg-blue-50 min-h-screen">
+          <div className="col-span-2">
             <Sidebar />
           </div>
-          <div className="col-span-10 h-full bg-blue-50">
+          <div className="col-span-10 mt-16">
             <Dashboard />
           </div>
         </div>
-    </div>
+    </>
     :
     <>
     <p className="text-center text-red-600 flex justify-center items-center min-h-screen">Sorry You are not admin!!</p>

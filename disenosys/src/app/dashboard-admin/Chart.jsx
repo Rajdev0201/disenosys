@@ -86,7 +86,7 @@ const Charts = () => {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm lg:h-96">
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
       <div className="border shadow-sm rounded-md">
         <h2 className="text-2xl font-semibold p-3 text-gray-700">Student Payments</h2>
       </div>

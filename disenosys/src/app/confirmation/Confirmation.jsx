@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import {useSearchParams } from 'next/navigation';
 import dayjs from 'dayjs';
-import { CheckOut } from '../Redux/action/consult.js';
-import { useDispatch } from 'react-redux';
+import { CheckOut, freeConsult, takenAmt } from '../Redux/action/consult.js';
+import { useDispatch, useSelector } from 'react-redux';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { useRouter } from 'next/navigation';
@@ -14,6 +14,12 @@ const search = useSearchParams();
 const time = search.get("time");
 const timezone = search.get("timezone");
 const date = search.get("date");
+const consult = useSelector((state) => state?.consult?.amt);
+const dispatch = useDispatch();
+
+useEffect(() => {
+  dispatch(takenAmt())
+},[dispatch])
 
   const formattedDate = date ? dayjs(date).format('MMM D') : '';
 
@@ -26,12 +32,13 @@ const date = search.get("date");
     bookeddate:date,
   });
 
+  const price = consult?.[0]?.amt; 
+  const total = parseInt(price) + 5;
+  console.log(total)
   const [cartItems, setCartItems] = useState([
-    { coursename: "Job Consultation For Freshers In Auto Design", price: 204},
+    { coursename: "Job Consultation For Freshers In Auto Design", price: total},
   ]);
-
-  const [price, setPrice] = useState(199); 
-  const dispatch = useDispatch();
+ 
 
   const handleInputChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -43,8 +50,14 @@ const date = search.get("date");
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if(price > 0){
     const data = { userData, cartItems };
     dispatch(CheckOut(data));
+    }else{
+     const data = {userData,cartItems};
+     dispatch(freeConsult(data));
+     router.push("/")
+    }
   };
  
   const change = () => {
@@ -52,11 +65,12 @@ const date = search.get("date");
   }
  
 
+
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md mt-10">
+    <div className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md mt-10 font-garet">
 
   <div className="flex items-center mb-4">
-    <div className="text-xl text-[#182073] font-poppins font-semibold">
+    <div className="text-xl text-[#182073] font-semibold">
       Job Consultation For Freshers In Auto Design
     </div>
   </div>
@@ -115,7 +129,7 @@ const date = search.get("date");
           />
         </div>
   
-   
+   {price > 0 ? (
   <div className="mt-5 p-4 bg-white shadow-md rounded-md">
   <h4 className="text-lg text-[#182073] font-bold mb-4">Order Summary</h4>
   <table className="w-full border-collapse">
@@ -123,7 +137,7 @@ const date = search.get("date");
  
       <tr className="border-b">
         <td className="py-2 text-sm text-gray-600">1 x Job Consultation for Freshers in Auto Design</td>
-        <td className="py-2 text-sm text-right text-gray-800 font-medium">₹199</td>
+        <td className="py-2 text-sm text-right text-gray-800 font-medium">₹{price}</td>
       </tr>
 
       <tr className="border-b">
@@ -138,14 +152,20 @@ const date = search.get("date");
    
       <tr>
         <td className="py-2 text-lg font-semibold text-[#182073]">Total</td>
-        <td className="py-2 text-lg font-semibold text-right text-[#182073]">₹204</td>
+        <td className="py-2 text-lg font-semibold text-right text-[#182073]">₹{total}</td>
       </tr>
     </tbody>
   </table>
  </div>
-
+   ) : ("") 
+  }
   <div className="sticky bottom-0 bg-white py-4 flex justify-between items-center shadow-lg border-t border-gray-400 mt-6">
-    <div className="text-lg font-semibold">₹204+</div>
+    <div className="text-lg font-semibold">
+      {price > 0 ? (
+       <span>₹{total}</span>
+      ) : <span>Free</span>}
+  
+      </div>
     <button
       type='submit'
       className="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800"

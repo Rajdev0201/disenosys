@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import Razorpay from "razorpay";
 import 'react-toastify/dist/ReactToastify.css';
-import { setBlock, setCrateAmount, setPayment, setPlaceOrder } from "../features/consultSlice.js";
+import { fetchPayment, setBlock, setCrateAmount, setPayment, setPlaceOrder, setzeroPayemnt } from "../features/consultSlice.js";
 
 const loadRazorpayScript = () => {
     return new Promise((resolve, reject) => {
@@ -106,23 +106,53 @@ export const payment = () => async (dispatch) => {
         console.error('Error fetch code:', error);
     }
   }
-  
-  export const createAmt = (Data ) => async (dispatch) => {
+
+  export const takenAmt = () => async (dispatch) => {
     try{
-      const {data} = await axios.post("https://disenosys-dkhj.onrender.com/consult/create-amount",Data);
-      dispatch(setCrateAmount(data));
-      alert("created amount");
+      const res = await axios.get("https://disenosys-dkhj.onrender.com/consult/get-amount");
+      dispatch(fetchPayment(res.data.data));
     }catch(err){
       console.log(err)
     }
   }
 
-  export const takenAmt = () => async (dispatch) => {
+  
+//   export const createAmt = (Data ) => async (dispatch) => {
+//     try{
+//       const {data} = await axios.post("https://disenosys-dkhj.onrender.com/consult/create-amount",Data);
+//       dispatch(setCrateAmount(data));
+//       dispatch(takenAmt())
+//       alert("created amount");
+//     }catch(err){
+//       console.log(err)
+//     }
+//   }
+
+//freeconsult
+
+  export const freeConsult = (Data ) => async (dispatch) => {
     try{
-      const res = await axios.get("https://disenosys-dkhj.onrender.com/consult/get-amount");
-      dispatch(setCrateAmount(res.data.data));
+      const {data} = await axios.post("https://disenosys-dkhj.onrender.com/consult/freeconsult",{
+        userData:Data.userData,
+        cartItems:Data.cartItems
+      });
+      dispatch(setzeroPayemnt(data));
+      toast.info("Booked your slot...");
     }catch(err){
-      console.log(err)
+        if (err.response && err.response.status === 400) {
+            // toast.error(err.response.data.message); 
+            toast.error(err.response.data.message, {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+              });
+        } else {
+            toast.error("Please try again.");
+        }
     }
   }
 

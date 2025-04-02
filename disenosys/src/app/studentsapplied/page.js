@@ -27,17 +27,17 @@ export default function CourseListPage() {
   return(
     <>
       {user?.user?.user?.userType === 'admin'?
-      <div className="">
-          <Navbar />
-          <div className="grid grid-cols-12 h-full mt-16">
-            <div className="col-span-2 bg-[#182073] h-full">
+            <>
+              <Navbar />
+              <div className="grid grid-cols-12 min-h-screen  bg-blue-50">
+              <div className="col-span-2">
               <Sidebar />
-            </div>
-            <div className="col-span-10 h-screen bg-blue-50">
+              </div>
+              <div className="col-span-10 ">
               <SAF />
-            </div>
-          </div>
-      </div>
+              </div>
+              </div>
+          </>
       :
       <>
       <p className="text-center text-red-600 flex justify-center items-center min-h-screen">Sorry You are not admin!!</p>

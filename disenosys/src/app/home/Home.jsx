@@ -77,12 +77,12 @@ const Home = () => {
       <div className="container-2xl py-16 lg:py-36  w-full relative">
         <div className="grid grid-cols-1 lg:grid-cols-12">
           <div className="col-span-6 ">
-            <div className="bg-[#0d1039]/50 rounded-3xl shadow-sm p-10 flex justify-center items-center w-full lg:w-3/4 mt-8">
+            <main className="bg-[#0d1039]/50 rounded-3xl shadow-sm p-10 flex justify-center items-center w-full lg:w-3/4 mt-8">
               <h1 className="garet text-xl -mt-5 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] lg:mt-0 max-w-[250px] lg:max-w-[520px] font-medium sm:text-3xl md:text-6xl lg:text-5xl  text-white">
                 Shaping Industry Ready{" "}
                 <span className="text-white">Engineers</span> for the Future{" "}
               </h1>
-            </div>
+            </main>
 
             <div className="flex justify-start">
               <motion.button

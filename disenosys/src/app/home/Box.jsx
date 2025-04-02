@@ -14,7 +14,7 @@ const WhyChooseUs = () => {
         WHY CHOOSE US?
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-        <div className="flex flex-col items-start justify-start h-full shadow-md rounded-xl shadow-inner">
+        <section className="flex flex-col items-start justify-start h-full shadow-md rounded-xl shadow-inner">
           <Image
             src={cls}
             alt="100% LIVE INTERACTIVE CLASSES"
@@ -34,9 +34,9 @@ const WhyChooseUs = () => {
           <p className="px-4 text-start text-gray-600">
             Engage in live sessions with experts for an immersive learning experience.
           </p>
-        </div>
+        </section>
 
-        <div className="flex flex-col items-start justify-start h-full shadow-md  rounded-xl shadow-inner">
+        <section className="flex flex-col items-start justify-start h-full shadow-md  rounded-xl shadow-inner">
           <Image
             src={job}
             alt="100% JOB ASSISTANCE"
@@ -56,9 +56,9 @@ const WhyChooseUs = () => {
           <p className="px-4 text-start text-gray-600">
             Get job placement support from our expert placement cell to kickstart your career.
           </p>
-        </div>
+        </section>
 
-        <div className="flex flex-col  items-start justify-start shadow-md h-full rounded-xl shadow-inner">
+        <section className="flex flex-col  items-start justify-start shadow-md h-full rounded-xl shadow-inner">
           <Image
             src={hands}
             alt="HANDS-ON EXPERIENCE WITH 50+ PROJECTS"
@@ -78,9 +78,9 @@ const WhyChooseUs = () => {
           <p className=" px-4 text-start text-gray-600">
             Work on industry projects to gain practical experience and build your portfolio.
           </p>
-        </div>
+        </section>
 
-        <div className="flex flex-col items-start justify-start h-full shadow-md rounded-xl shadow-inner mb-4">
+        <section className="flex flex-col items-start justify-start h-full shadow-md rounded-xl shadow-inner mb-4">
           <Image
             src={week}
             alt="WEEKEND CLASSES FOR WORKING PROFESSIONALS"
@@ -100,7 +100,7 @@ const WhyChooseUs = () => {
           <p className="px-4 text-start text-gray-600">
             Flexible weekend classes to accommodate the schedules of working professionals.
           </p>
-        </div>
+        </section>
       </div>
     </div>
   );

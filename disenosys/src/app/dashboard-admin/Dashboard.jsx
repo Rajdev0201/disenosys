@@ -16,7 +16,7 @@ const Dashboard = () => {
 
 const data = useSelector((state) => state.career);
 const Data = useSelector((state) => state.mentor);
-const online = useSelector((state) => state.online);
+const {online} = useSelector((state) => state.online);
 const intern = useSelector((state) => state.intern);
 const course = useSelector((state) => state.coursec);
 const exam = useSelector((state) => state.exam);
@@ -43,7 +43,7 @@ useEffect(() => {
   }, [dispatch]);
 
   return (
-    <div className="px-8 py-0 bg-[#F7F9FF] flex-1">
+    <div className="px-8 py-0 flex-1">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6 font-sans">
         <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm flex justify-between items-center">
         <div className="">
@@ -126,7 +126,7 @@ useEffect(() => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 font-sans">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 font-sans h-auto">
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
         <div className="border shadow-sm rounded-md">
         <h2 className="text-2xl font-semibold p-3 text-gray-700 font-garet">Applied Data</h2>
@@ -146,7 +146,7 @@ useEffect(() => {
             <td className="text-center">{data?.data?.length}</td>
 
         </tr>
-        <tr className="font-garet font-medium text-xl bg-blue-50">
+        <tr className="font-garet font-medium text-xl bg-gray-100">
             <td className="text-center p-6 ">02</td>
             <td className="text-center">Mentor</td>
             <td className="text-center">{mentor?.length}</td>

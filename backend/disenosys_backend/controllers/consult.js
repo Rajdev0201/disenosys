@@ -291,6 +291,49 @@ exports.getAmount = async (req,res) => {
 }
 
 
+exports.freeConsult = async (req,res) => {
+    const { userData, cartItems } = req.body;
+    console.log("Received data:", userData, cartItems);
+
+    if (!cartItems || cartItems.length === 0) {
+        return res.status(400).json({ message: "Cart items are required to create an order." });
+    }
+    try {
+
+        const isConflict = await checkCalendarConflict(userData.bookeddate, userData.bookedtime);
+        console.log(isConflict)
+        if (isConflict) {
+            return res.status(400).json({ 
+                message: `The selected ${userData.bookedtime} slot is already blocked. Please choose a different time.`
+            });
+        }
+
+
+        const checkoutSession = new CheckoutSession({
+            sessionId:"free",
+            lineItems: cartItems,
+            user: userData._id,
+            customerDetails: {
+                name: userData.name,
+                email: userData.email,
+                phone:userData.phone,
+                bookedtime:userData.bookedtime,
+                timeZone:userData.timeZone,
+                bookeddate:userData.bookeddate,
+            },
+            isPaid:true,
+        });
+
+        await checkoutSession.save();
+        createOutlookEvent(userData.bookeddate, userData.bookedtime,userData.name)
+        res.status(200).json({ message:"Created",checkoutSession });
+    } catch (err) {
+        console.log(err)
+        res.status(err.statusCode || 500).json(err.message);
+    }
+};
+
+
 
 
 async function createOutlookEvent(bookingDate, bookingTime, studentName) {

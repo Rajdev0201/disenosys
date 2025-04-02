@@ -14,16 +14,22 @@ const consultSlice = createSlice({
             state.checkout = action.payload;
         },
         setPayment: (state, action) => {
-            state.checkout = action.payload; // Update checkout state, not replace the entire state
+            state.checkout = action.payload; 
         },
         setBlock: (state, action) => {
-            state.block = action.payload; // Update block state, not replace the entire state
+            state.block = action.payload; 
         },
-        setCrateAmount: (state,action) => {
-          state.amt =  action.payload;
-        }
+        // setCrateAmount: (state,action) => {
+        //   state.amt = [action.payload];
+        // },
+        fetchPayment: (state,action) => {
+            state.amt = action.payload;
+        },
+        setzeroPayemnt: (state,action) => {
+          state.checkout = action.payload;
+        },
     }
 });
 
-export const { setPlaceOrder, setPayment, setBlock ,setCrateAmount } = consultSlice.actions;
+export const { setPlaceOrder, setPayment, setBlock ,setCrateAmount,fetchPayment,setzeroPayemnt } = consultSlice.actions;
 export default consultSlice.reducer;

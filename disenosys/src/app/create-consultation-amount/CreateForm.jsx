@@ -1,16 +1,17 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { MdCancel } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../Redux/features/authSlice";
 import { createAmt, takenAmt } from "../Redux/action/consult";
+import { IoIosCloudDone } from "react-icons/io";
+import axios from "axios";
+
 
 const CreateForm = () => {
     const user = useSelector((state) => state?.user);
     const name = user?.user?.user?.userName;
     const dispatch = useDispatch()
     const consult = useSelector((state) => state?.consult?.amt);
-
 
      useEffect(() => {
         const storedUser = localStorage.getItem("profile");
@@ -26,17 +27,28 @@ const CreateForm = () => {
     dispatch(takenAmt())
   },[dispatch])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
     if (!amt) {
-      return setErr("Please Enter the amount");
-    }else{
-        dispatch(createAmt({name,amt}));
+        return setErr("Please Enter the amount");
+    } 
+    
+    try {
+        const res = await axios.post("https://disenosys-dkhj.onrender.com/consult/create-amount", { name, amt });
+
+        if (res.status === 200) {
+            alert(`${res.data.message}`);
+        }
         dispatch(takenAmt());
         setAmt("");
         setErr("");
+    } catch (error) {
+        console.error("Error submitting amount:", error);
+        setErr("Something went wrong. Please try again.");
     }
-  };
+};
+
   return (
     <div className="bg-blue-50  h-screen flex flex-col px-8 py-12 font-garet">
       <h1 className=" text-xl">Create Consultation Amount</h1>
@@ -63,7 +75,7 @@ const CreateForm = () => {
                   <div key={i} className="flex justify-between items-center p-6 bg-white shdaow-md rounded-lg mt-5">
                     <p>{item?.name}</p>
                     <p>{item?.amt}</p>
-                    <MdCancel className="text-white rounded-full bg-red-500 cursor-pointer" size={30}/>
+                    <IoIosCloudDone className="text-white rounded-full bg-blue-500 cursor-pointer p-1 ring-2" size={30}/>
                   </div>
                   ))}
              </div>

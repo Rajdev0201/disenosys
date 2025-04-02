@@ -6,7 +6,7 @@ import { SiGooglemeet } from "react-icons/si";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { block, payment } from "../Redux/action/consult.js";
+import { block, payment, takenAmt } from "../Redux/action/consult.js";
 import { AiOutlineCheck, AiOutlineFileDone } from "react-icons/ai";
 
 const Consultation = () => {
@@ -15,10 +15,16 @@ const Consultation = () => {
   // const [selectedDate, setSelectedDate] = useState(
   //   new Date().toISOString().split("T")[0]
   // );
-
+  const dispatch = useDispatch();
   const today = new Date();
   const todayDate = today.toISOString().split("T")[0];
 
+  useEffect(() => {
+    dispatch(takenAmt())
+  },[dispatch])
+
+  const consult = useSelector((state) => state?.consult?.amt);
+  const price = consult?.[0]?.amt; 
   const daysUntilFriday = (5 - today.getDay() + 7) % 7; 
   const comingFriday = new Date(today);
   comingFriday.setDate(today.getDate() + daysUntilFriday);
@@ -35,7 +41,6 @@ const Consultation = () => {
   const blockDate = paid.block;
   const [bookedSlots, setBookedSlots] = useState([]);
 
-  console.log(blockDate);
 
   blockDate?.data?.map((block) => {
     console.log(
@@ -45,7 +50,7 @@ const Consultation = () => {
     );
   });
 
-  const dispatch = useDispatch();
+
 
   useEffect(() => {
     dispatch(payment());
@@ -110,9 +115,9 @@ const Consultation = () => {
 
     const formattedDate = startTime.toLocaleDateString("en-US");
 
-    console.log(
-      `Blocked Date: ${formattedDate}, Block Start: ${formattedStartTime} - Block End: ${formattedEndTime}`
-    );
+    // console.log(
+    //   `Blocked Date: ${formattedDate}, Block Start: ${formattedStartTime} - Block End: ${formattedEndTime}`
+    // );
   });
 
 
@@ -197,7 +202,7 @@ const Consultation = () => {
 
   return (
     <div className="bg-black h-full">
-      <div className="grid grid-cols-1 lg:grid-cols-[700px_600px] px-0 lg:px-24 py-2 lg:py-24 gap-4 mt-16">
+      <div className="grid grid-cols-1 lg:grid-cols-[700px_600px] px-0 lg:px-24 py-2 lg:py-24 gap-4 mt-16 font-garet">
         <div className="bg-white rounded-lg shadow-lg h-auto">
         {/* <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm w-full z-50">
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-center">
@@ -207,7 +212,7 @@ const Consultation = () => {
             </div>
           </div> */}
           <div className="bg-gray-200 rounded-lg shadow-lg flex justify-between items-center p-12">
-            <h2 className="text-md lg:text-3xl w-44 lg:w-96 font-bold font-poppins lg:ml-10 text-[#182073]">
+            <h2 className="text-md lg:text-3xl w-44 lg:w-96 font-bold  lg:ml-10 text-[#182073]">
               Job Consultation for Freshers in Auto Design
             </h2>
             <Image
@@ -218,20 +223,24 @@ const Consultation = () => {
           </div>
           <div className="flex w-full justify-center border-b-2 items-center">
             <div className="p-4 border-r-2 border-gray-200 rounded w-[300px] text-center">
-              <h2 className="border-2 lg:mr-16 border-gray-700 rounded-full p-2 text-sm font-bold font-poppins">
+              <h2 className="border-2 lg:mr-16 border-gray-700 rounded-full p-2 text-sm font-bold ">
                 <span className="line-through ">₹ 1,999</span>{" "}
-                <b className="text-[#182073] text-lg">₹199+</b>
+                  {price > 0 ? (
+                <b className="text-[#182073] text-lg">₹{price}+</b>
+                  ) : (
+                    <b className="text-[#182073] text-lg">₹{price}</b>
+                  )}
               </h2>
             </div>
             <div className="p-4 w-[260px] text-start lg:text-center">
-              <h2 className="gap-2 rounded-full p-2 text-md lg:text-xl font-bold font-poppins text-[#182073] flex items-center">
+              <h2 className="gap-2 rounded-full p-2 text-md lg:text-xl font-bold  text-[#182073] flex items-center">
                 <SiGooglemeet className="text-[#182073] w-10 h-10 lg:w-6 lg:h-6" />
                 15 mins meeting
               </h2>
             </div>
           </div>
 
-          <div className="px-16 py-4 text-lg font-poppins font-medium text-gray-500 space-y-4">
+          <div className="px-16 py-4 text-lg  font-medium text-gray-500 space-y-4">
             <p>
               Dive headfirst into the dynamic world of Product Design with our
               exclusive session tailored specifically for freshers! Whether
@@ -266,7 +275,7 @@ const Consultation = () => {
         </div>
 
         <div className="bg-white p-8 rounded-lg shadow-lg h-[570px]">
-        <h4 className="text-lg font-bold font-poppins mb-4 text-[#182073]">
+        <h4 className="text-lg font-bold  mb-4 text-[#182073]">
             When should we meet?
           </h4>
 
@@ -280,7 +289,7 @@ const Consultation = () => {
               className="w-full border-2 border-[#182073] rounded-lg p-2"
             />
           </div>
-          <h4 className="text-lg font-bold font-poppins mb-4 mt-4 text-[#182073]">
+          <h4 className="text-lg font-bold  mb-4 mt-4 text-[#182073]">
             Select time of day
           </h4>
 
@@ -358,18 +367,18 @@ const Consultation = () => {
       >
         { isPastTime ? (
           // Completed status for past time
-          <h4 className="flex items-center justify-center gap-2 text-md  text-white font-bold font-poppins">
+          <h4 className="flex items-center justify-center gap-2 text-sm  text-white font-medium ">
             Completed
             <span> <AiOutlineCheck className="text-white w-4 h-4" /></span>
          
           </h4>
         ) : isBooked ? (
-          <h4 className="flex items-center justify-center gap-2 text-white font-bold font-poppins">
+          <h4 className="flex items-center justify-center gap-2 text-sm text-white font-medium">
             Booked{" "}
             <AiOutlineFileDone className="text-white w-6 h-6" />
           </h4>
         ) : isBlocked ? (
-          <h4 className="flex items-center justify-center gap-2 text-white font-bold font-poppins">
+          <h4 className="flex items-center justify-center gap-2 text-sm text-white font-medium">
             Blocked{" "}
             <AiOutlineFileDone className="text-white w-6 h-6" />
           </h4>
@@ -404,7 +413,7 @@ const Consultation = () => {
           </div>
           <button
             onClick={handleConfirm}
-            className="w-full mt-8 bg-[#182073] text-white p-3 rounded-lg text-lg font-bold font-poppins"
+            className="w-full mt-8 bg-[#182073] text-white p-3 rounded-lg text-lg font-bold "
           >
             Confirm Details
           </button>
