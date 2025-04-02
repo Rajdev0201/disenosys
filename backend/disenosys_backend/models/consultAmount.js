@@ -6,5 +6,4 @@ const consultAmount = new mongoose.Schema({
     amt:{type:String,required:true},
 }, { timestamps: true });
 
-const ConsultAmt = mongoose.model("ConsultationAmount",consultAmount);
-module.exports = ConsultAmt;
+module.exports = mongoose.model("ConsultationAmount",consultAmount);
