@@ -13,7 +13,7 @@ const Stepthree = ({
     // setIsChecked,
 }) => {
    
-  const course = useSelector((state) => state.courseLD);
+  const {course} = useSelector((state) => state.courseLD);
  const dispatch = useDispatch();
 
   useEffect(() => {
