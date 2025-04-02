@@ -7,7 +7,7 @@ const msal = require('@azure/msal-node');
 const axios = require('axios');
 const moment = require('moment-timezone');
 const {BlockedEvent} = require('../models/blockedTime.js');
-const ConsultAmt = require('../models/ConsultAmount.js');
+const ConsultAmt = require('../models/changeAmount.js');
 
 
 // const { Client } = require('@microsoft/microsoft-graph-client');
