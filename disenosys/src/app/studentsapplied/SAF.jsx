@@ -3,10 +3,10 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Online} from "../Redux/action/onlineStd.js";
 import { useRouter } from 'next/navigation';
-import Image from 'next/image.js';
+
 
 const SAF = () => {
-    const {online,loading} = useSelector((state) => state.online);
+    const {online} = useSelector((state) => state.online);
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -26,7 +26,7 @@ const SAF = () => {
     {online?.data?.length ? (
       online?.data?.map((data, i) => (
         <div key={i} className="w-full flex justify-center">
-          {!loading ? (
+
             <div className="max-w-lg rounded-xl border-2 border-gray-500 bg-white p-6 shadow-md dark:bg-gray-800 dark:border-gray-700 flex flex-col sm:flex-row items-center">
               <div className="w-full sm:w-1/3 flex flex-col items-center">
                 <img 
@@ -35,8 +35,6 @@ const SAF = () => {
                   alt="profile"
                 />
               </div>
-
-      
               <div className="w-full sm:w-2/3 mt-4 sm:mt-0 sm:pl-2 flex flex-col">
                 <div className="space-y-2 text-gray-600 dark:text-gray-300 font-garet">
                 <h2 className="mt-3 text-xl font-bold text-indigo-600 dark:text-indigo-400 font-garet">
@@ -56,16 +54,11 @@ const SAF = () => {
                 </div>
               </div>
             </div>
-          ) : (
-            <span className="text-2xl font-bold font-garet text-green-500 flex justify-center items-center">
-              Loading....
-            </span>
-          )}
         </div>
       ))
     ) : (
-      <p className="col-span-4 text-center text-red-500 font-bold flex justify-center items-center font-garet">
-        No One Applied !
+      <p className="col-span-4 text-center text-red-500 font-bold flex justify-center items-center min-h-screen font-garet">
+              Loading....
       </p>
     )}
   </div>

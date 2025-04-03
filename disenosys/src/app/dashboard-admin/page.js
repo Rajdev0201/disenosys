@@ -4,7 +4,7 @@ import Navbar from "../adminroute/Navbar";
 import Sidebar from "../component/sidebar/SidebarAdmin";
 import Dashboard from "./Dashboard";
 import { setUser } from "../Redux/features/authSlice";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 
 
 export default function DashboardPage() {
@@ -29,8 +29,12 @@ return(
           <div className="col-span-2">
             <Sidebar />
           </div>
-          <div className="col-span-10 mt-16">
+          <div className="col-span-10 mt-16" >
+          <Suspense fallback = {
+            <p>Loading....</p>
+          }>
             <Dashboard />
+          </Suspense>
           </div>
         </div>
     </>

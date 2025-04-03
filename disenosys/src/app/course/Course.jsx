@@ -1,16 +1,6 @@
 import React from "react";
 import "./Course.css";
 import Image from "next/image";
-import g from "../assests/Group.jpg";
-import { FaPlayCircle } from "react-icons/fa";
-import hand from "../assests/hans.jpg";
-import { FaMedal } from "react-icons/fa";
-import { GrUserExpert } from "react-icons/gr";
-import { BiSolidInstitution } from "react-icons/bi";
-import { IoLogoYoutube } from "react-icons/io5";
-import { GiRibbonMedal } from "react-icons/gi";
-import { ImPriceTag } from "react-icons/im";
-import h from "../assests/100.svg";
 import i from "../assests/profile/ofc.jpg"
 import { IoIosArrowForward } from "react-icons/io";
 export const Course = () => {

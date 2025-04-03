@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Confirmation = () => {
 const router = useRouter();
@@ -16,6 +18,7 @@ const timezone = search.get("timezone");
 const date = search.get("date");
 const consult = useSelector((state) => state?.consult?.amt);
 const dispatch = useDispatch();
+const [load,setLoad] = useState(false);
 
 useEffect(() => {
   dispatch(takenAmt())
@@ -50,12 +53,16 @@ useEffect(() => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoad(true)
+
     if(price > 0){
     const data = { userData, cartItems };
     dispatch(CheckOut(data));
+    setLoad(false)
     }else{
      const data = {userData,cartItems};
      dispatch(freeConsult(data));
+     setLoad(false)
      router.push("/")
     }
   };
@@ -170,7 +177,10 @@ useEffect(() => {
       type='submit'
       className="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-800"
     >
-      Confirm and Pay
+      {price > 0 ? (
+      <span>{!load ? "Confirm and Pay" : "Loading.... " }</span>
+      ) : <span>{!load ? "Book Your Slot" : "Loading.... " }</span>   //!load => true,,, load => false
+      }
     </button>
   </div>
   </form>

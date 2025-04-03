@@ -6,11 +6,13 @@ import { useRouter } from "next/navigation";
 import { BsFiletypeXlsx } from "react-icons/bs";
 import * as XLSX from "xlsx";
 import { MdCancel } from "react-icons/md";
+import { Pagination } from "../component/Pagination";
 
 const Applicants = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.career);
   const [filteredData, setFilteredData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const experience = [
     { label: "Fresher", value: 0 },
     { label: "1 Year", value: 1 },
@@ -361,10 +363,19 @@ const Applicants = () => {
       alert("Failed to export data. Please try again.");
     }
   };
+  const itemsPerPage = 20;
+  const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const paginatedData = filteredData?.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+  const handlePageChange = (page) => setCurrentPage(page);
 
   return (
     <div className="">
-      <div className="px-24 py-12">
+      <div className="px-24 py-8 font-garet">
+      <h1 className="text-2xl font-medium mb-6">Career Page Applicants</h1>
         <div className="grid grid-cols-4 gap-4">
           <div>
                 <select
@@ -507,14 +518,14 @@ const Applicants = () => {
           
           <div className="flex gap-2">
             <button
-              className="flex ring-2 gap-2 py-2 px-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold font-poppins bg-red-600 text-white items-center justify-center "
+              className="flex ring-2 gap-2 py-2 px-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold  bg-red-600 text-white items-center justify-center "
               onClick={handleDownload}
             >
               Download <BsFiletypeXlsx className="" />
             </button>
             
           <button
-              className="flex gap-2 ring-2 p-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold font-poppins bg-stone-600 text-white items-center justify-center"
+              className="flex gap-2 ring-2 p-2 ring-gray-100 shadow-2xl rounded-md text-xl font-bold  bg-stone-600 text-white items-center justify-center"
               onClick={handleReset}
            >
              Reset <MdCancel className="" />
@@ -525,8 +536,8 @@ const Applicants = () => {
         </div>
 
         <div className="grid grid-cols-4 gap-4">
-          {filteredData?.length ? (
-            filteredData.map((profile, index) => (
+          {paginatedData?.length ? (
+            paginatedData.map((profile, index) => (
               <div key={index} className="px-1 mt-12">
                <div className="w-64 min-h-[250px] flex flex-col justify-between rounded-lg border-2 border-indigo-500 bg-transparent p-4 text-center shadow-lg dark:bg-gray-800">
   <div>
@@ -553,15 +564,32 @@ const Applicants = () => {
     </p>
   </div>
 
-  <div className="mt-auto flex items-center justify-center space-x-4">
-    <button
-      className="rounded-full bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 dark:bg-indigo-400 dark:hover:bg-indigo-500"
-      onClick={() => goTo(profile?._id)}
+  <div className="mt-auto flex items-center justify-between space-x-4">
+         <div class="tooltip-container">
+  <div class="relative">
+    <div class="group peer relative z-10 p-1">
+      <svg
+        class="duration-500 group-hover:rotate-[360deg] group-hover:scale-110"
+        height="30"
+        width="30"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22c-5.518 0-10-4.482-10-10s4.482-10 10-10 10 4.482 10 10-4.482 10-10 10zm-1-16h2v6h-2zm0 8h2v2h-2z"
+        ></path>
+      </svg>
+    </div>
+    <div
+      class="absolute left-1/2 w-40 -translate-x-1/2 rounded bg-gray-400 p-3 text-sm opacity-0 before:absolute before:-bottom-2 before:left-1/2 before:size-4 before:-translate-x-1/2 before:rotate-45 before:bg-gray-400 peer-hover:bottom-[3.3rem] peer-hover:opacity-100 peer-hover:duration-500"
     >
-      Contact
-    </button>
+      <p class="text-center text-white">Click portfolio and get more details...</p>
+    </div>
+  </div>
+        </div>
+
     <button
-      className="rounded-full bg-gray-300 px-4 py-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600"
+      className="rounded-full bg-blue-500 text-white px-4 py-2 hover:bg-gray-400 dark:bg-gray-700 dark:hover:bg-gray-600"
       onClick={() => goTo(profile?._id)}
     >
       Portfolio
@@ -572,12 +600,21 @@ const Applicants = () => {
               </div>
             ))
           ) : (
-            <p className="col-span-4 text-center text-gray-500 mt-12">
-              No matching profiles found.
+            <p className="flex justify-center items-center min-h-screen text-center text-green-500 font-bold mt-12 ">
+              Loading ...
             </p>
           )}
         </div>
       </div>
+        {paginatedData?.length > 0 && (
+                    <div className="w-full mt-4 flex justify-center">
+                      <Pagination
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                      />
+                    </div>
+                  )}
     </div>
   );
 };

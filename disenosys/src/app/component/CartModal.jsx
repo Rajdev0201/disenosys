@@ -102,13 +102,13 @@ const handleDecrementQuantityChange = (cartId) => {
             animate={{ scale: 1, rotate: "0deg" }}
             exit={{ scale: 0, rotate: "0deg" }}
             onClick={(e) => e.stopPropagation()}
-            className="bg-[#0d1039] text-white p-4 sm:p-6 md:p-8 rounded-lg w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl shadow-xl cursor-default relative overflow-hidden "
+            className="bg-white text-[#0d1039] p-4 sm:p-6 md:p-8 rounded-lg w-full max-w-xs sm:max-w-md md:max-w-lg lg:max-w-xl shadow-xl cursor-default relative overflow-hidden "
           >
-            <FiShoppingCart className="text-white/10 rotate-12 text-[100px] sm:text-[150px] md:text-[200px] absolute z-0 -top-12 sm:-top-16 md:-top-24 -left-10 sm:-left-16 md:-left-24" />
+            <FiShoppingCart className="text-[#0d1039] rotate-12 text-[100px] sm:text-[150px] md:text-[200px] absolute z-0 -top-12 sm:-top-16 md:-top-24 -left-10 sm:-left-16 md:-left-24" />
              
-            <div className="relative z-10">
-              <div className="bg-white w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 mb-2 rounded-full text-xl sm:text-2xl md:text-3xl text-indigo-600 grid place-items-center mx-auto">
-                <FiShoppingCart className='text-[#182073]' />
+            <div className="relative z-10 font-garet">
+              <div className="bg-blue-500 w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 mb-2 rounded-full text-xl sm:text-2xl md:text-3xl text-indigo-600 grid place-items-center mx-auto">
+                <FiShoppingCart className='text-white' />
               </div>
               <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-center mb-4">Cart</h3>
              
@@ -119,9 +119,9 @@ const handleDecrementQuantityChange = (cartId) => {
       .map((item) => (
                       <div key={item._id} className="flex flex-col space-x-2 sm:flex-row justify-between items-center py-2 border-b text-sm sm:text-md md:text-lg">
                         <img src={item.img} className='w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 object-cover' alt={item.name} />
-                        <span className="flex-1 text-center sm:text-left font-bold">{item.name}</span>
-                        <span className='text-lg font-semibold font-poppins'>₹{item.price}</span>
-                        {/* <span className='text-lg font-semibold font-poppins'>quantity: {item.quantity}</span> */}
+                        <span className="flex-1 text-center sm:text-left font-medium text-sm">{item.name}</span>
+                        <span className='text-sm font-medium'>₹{item.price}</span>
+                        {/* <span className='text-lg font-semibold '>quantity: {item.quantity}</span> */}
                         <div className="flex items-center">
                 <button 
                   className="bg-blue-500 text-white rounded px-2 py-1 mr-2" 
@@ -130,7 +130,7 @@ const handleDecrementQuantityChange = (cartId) => {
                 >
                   -
                 </button>
-                <span className='text-lg font-semibold font-poppins'>Quantity: {item.quantity}</span>
+                <span className='text-sm font-medium'>Quantity: {item.quantity}</span>
                 <button 
                   className="bg-blue-500 text-white rounded px-2 py-1 ml-2" 
                   onClick={() => handleIncrementQuantityChange(item._id)} 
@@ -148,13 +148,13 @@ const handleDecrementQuantityChange = (cartId) => {
                       </div>
                     ))
                 ) : (
-                  <p className="text-white">Your cart is empty.</p>
+                  <p className="text-[#0d1039]">Your cart is empty.</p>
                 )}
               </div>
 
               <div className='flex justify-end items-end mb-4'>
                 {totalPrice > 0 ? (
-                  <span className='bg-blue-600 p-3 text-white rounded font-bold font-poppins'>Total: ₹{totalPrice}</span>
+                  <span className='bg-blue-600 p-3 text-white rounded font-bold '>Total: ₹{totalPrice}</span>
                 ) : (
                   <span className='bg-blue-600 p-2 rounded text-white'>Total: 0</span>
                 )}
@@ -162,13 +162,13 @@ const handleDecrementQuantityChange = (cartId) => {
               <div className="flex flex-col sm:flex-row gap-2">
                 <button
                   onClick={handleClose}
-                  className="bg-transparent hover:bg-white/10 transition-colors text-white font-semibold w-full py-2 rounded"
+                  className="bg-transparent hover:bg-white/10 transition-colors text-[#0d1039] font-semibold w-full py-2 rounded"
                 >
                   Close
                 </button>
                 {totalPrice > 0 && (
                   <button
-                    className="bg-[#182073] hover:opacity-90 transition-opacity text-white font-semibold w-full py-2 rounded"
+                    className="bg-[#0d1039] hover:opacity-90 transition-opacity text-white font-semibold w-full py-2 rounded"
                     onClick={handlePlaceOrder}
                   >
                     Checkout
@@ -178,7 +178,7 @@ const handleDecrementQuantityChange = (cartId) => {
               <FiX
                 size={28}
                 onClick={handleClose}
-                className="absolute -top-5 ring-2 font-bold text-xl p-1 ring-white rounded-full -right-5 cursor-pointer text-[#fffff]"
+                className="absolute -top-5 ring-2 font-bold text-xl p-1 bg-red-500 ring-white rounded-full -right-5 cursor-pointer text-white"
               />
             </div>
           </motion.div>

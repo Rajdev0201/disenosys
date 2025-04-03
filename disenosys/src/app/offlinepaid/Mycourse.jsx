@@ -166,7 +166,7 @@ const MyCourse = () => {
   return (
     <div className="p-6 flex flex-col w-full mt-12">
       <h2 className="text-[#182073] font-bold text-2xl text-center mb-1">
-        Offline Payments
+        Offline Payments List
       </h2>
 
       <div className="flex flex-col md:flex-row justify-between items-center p-5">

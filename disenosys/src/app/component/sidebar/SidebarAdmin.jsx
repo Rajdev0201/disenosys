@@ -51,7 +51,7 @@ const Sidebar = () => {
 
 
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-[#182073] mt-16 text-white flex flex-col justify-between transition-transform duration-300 transform overflow-y-scroll ${
+        className={`fixed top-0 left-0 h-full w-64 bg-[#182073] font-garet mt-16 text-white flex flex-col justify-between transition-transform duration-300 transform overflow-y-scroll ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 md:w-64 z-40`}
       >
@@ -62,13 +62,13 @@ const Sidebar = () => {
           </div> */}
            
            <div className='mt-2'>
-             <Link href="/dashboard-admin"  className={`flex items-center py-2  px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === "/dashboard-admin" ? 'bg-blue-700' : ''}`}> <MdDashboardCustomize className="mr-3"  />Dashboard</Link>
+             <Link href="/dashboard-admin"  className={`flex items-center text-sm py-2  px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === "/dashboard-admin" ? 'bg-blue-700' : ''}`}> <MdDashboardCustomize className="mr-3"  />Dashboard</Link>
            </div>
      
           <div className=''>
             <button
               onClick={() => setUniversityDropdownOpen(!isUniversityDropdownOpen)}
-              className={`flex items-center w-full py-2 px-4  lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
+              className={`flex items-center text-sm w-full py-2 px-4  lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
                 path.startsWith('/historycode') || path.startsWith('/externalcode') ? 'bg-blue-700' : ''
               }`}
             >
@@ -79,19 +79,19 @@ const Sidebar = () => {
 
             {isUniversityDropdownOpen && (
               <div className="ml-8 mt-2 space-y-2">
-                  <Link href="/uploadquestion" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/uploadquestion' ? 'bg-blue-700' : ''}`}>
+                  <Link href="/uploadquestion" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/uploadquestion' ? 'bg-blue-700' : ''}`}>
                   <SiAuthentik className="mr-3" />
                   Upload-Question
                 </Link>
-                <Link href="/historycode" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/historycode' ? 'bg-blue-700' : ''}`}>
+                <Link href="/historycode" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/historycode' ? 'bg-blue-700' : ''}`}>
                   <SiAuthentik className="mr-3" />
                   University-List
                 </Link>
-                <Link href="/externalcode" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/externalcode' ? 'bg-blue-700' : ''}`}>
+                <Link href="/externalcode" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/externalcode' ? 'bg-blue-700' : ''}`}>
                   <SiAuthentik className="mr-3" />
                   External-List
                 </Link>
-                <Link href="/companycode" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/companycode' ? 'bg-blue-700' : ''}`}>
+                <Link href="/companycode" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/companycode' ? 'bg-blue-700' : ''}`}>
                   <SiAuthentik className="mr-3" />
                   Company-List
                 </Link>
@@ -101,7 +101,7 @@ const Sidebar = () => {
           <div>
             <button
               onClick={() => setCertificate(!certificate)}
-              className={`flex items-center w-full px-4 py-2  mt-12 lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
+              className={`flex items-center w-full text-sm px-4 py-2  mt-12 lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
                 path.startsWith('/examcertficate') || path.startsWith('/certificate') || path.startsWith('/coursecerificate') || path.startsWith('/gpdxcerificate') ? 'bg-blue-700' : ''
               }`}
             >
@@ -112,19 +112,19 @@ const Sidebar = () => {
 
             {certificate && (
               <div className="ml-8 mt-2 space-y-2">
-                <Link href="/certificate" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/certificate' ? 'bg-blue-700' : ''}`}>
+                <Link href="/certificate" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/certificate' ? 'bg-blue-700' : ''}`}>
                   <PiCertificateBold className="mr-3" />
                   Internship
                 </Link>
-                <Link href="/examcertficate" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/examcertficate' ? 'bg-blue-700' : ''}`}>
+                <Link href="/examcertficate" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/examcertficate' ? 'bg-blue-700' : ''}`}>
                   <PiCertificateBold className="mr-3" />
                   Exam
                 </Link>
-                <Link href="/coursecerificate" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/coursecerificate' ? 'bg-blue-700' : ''}`}>
-                  <PiCertificateBold className="mr-3" />
+                <Link href="/coursecerificate" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/coursecerificate' ? 'bg-blue-700' : ''}`}>
+                  <PiCertificateBold className="mr-3" /> 
                   Course
                 </Link>
-                <Link href="/gpdxcerificate" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/gpdxcerificate' ? 'bg-blue-700' : ''}`}>
+                <Link href="/gpdxcerificate" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/gpdxcerificate' ? 'bg-blue-700' : ''}`}>
                   <PiCertificateBold className="mr-3" />
                   GPDX
                 </Link>
@@ -135,7 +135,7 @@ const Sidebar = () => {
           <div>
             <button
               onClick={() => setCertificateList(!certificateList)}
-              className={`flex items-center w-full px-4 py-2  mt-12 lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
+              className={`flex items-center w-full text-sm px-4 py-2  mt-12 lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
                 path.startsWith('/course-c-list') || path.startsWith('/intern-c-list') || path.startsWith('/gpdx-c-list') || path.startsWith('/exam-c-list') ? 'bg-blue-700' : ''
               }`}
             >
@@ -146,22 +146,22 @@ const Sidebar = () => {
 
             {certificateList && (
               <div className="ml-8 mt-2 space-y-2"> 
-              <Link href="/intern-c-list" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/intern-c-list' ? 'bg-blue-700' : ''}`}>
+              <Link href="/intern-c-list" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/intern-c-list' ? 'bg-blue-700' : ''}`}>
               <PiCertificateBold className="mr-3" />
                    Intern List
                 </Link>
 
-                <Link href="/exam-c-list" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/exam-c-list' ? 'bg-blue-700' : ''}`}>
+                <Link href="/exam-c-list" className={`flex items-centertext-sm  py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/exam-c-list' ? 'bg-blue-700' : ''}`}>
                   <PiCertificateBold className="mr-3" />
                   Exam List
                 </Link>
 
-                <Link href="/course-c-list" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/course-c-list' ? 'bg-blue-700' : ''}`}>
+                <Link href="/course-c-list" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/course-c-list' ? 'bg-blue-700' : ''}`}>
                   <PiCertificateBold className="mr-3" />
                   Course List
                 </Link>
 
-                <Link href="/gpdx-c-list" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/gpdx-c-list' ? 'bg-blue-700' : ''}`}>
+                <Link href="/gpdx-c-list" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/gpdx-c-list' ? 'bg-blue-700' : ''}`}>
                   <PiCertificateBold className="mr-3" />
                   Gpdx List
                 </Link>
@@ -172,7 +172,7 @@ const Sidebar = () => {
           <div>
             <button
               onClick={() => setIsCourse(!isCourse)}
-              className={`flex items-center w-full py-2 px-4  lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
+              className={`flex items-center w-full py-2 px-4 text-sm lg:mt-0 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${
                 path.startsWith('/courselist') || path.startsWith('/offlinepaid') ? 'bg-blue-700' : ''
               }`}
             >
@@ -183,11 +183,11 @@ const Sidebar = () => {
 
             {isCourse && (
               <div className="ml-8 mt-2 space-y-2">
-                  <Link href="/courselist" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/courselist' ? 'bg-blue-700' : ''}`}>
+                  <Link href="/courselist" className={`flex items-center text-sm  py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/courselist' ? 'bg-blue-700' : ''}`}>
                   <SiAuthentik className="mr-3" />
                   Online-Paid
                 </Link>
-                <Link href="/offlinepaid" className={`flex items-center py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/offlinepaid' ? 'bg-blue-700' : ''}`}>
+                <Link href="/offlinepaid" className={`flex items-center text-sm py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === '/offlinepaid' ? 'bg-blue-700' : ''}`}>
                   <SiAuthentik className="mr-3" />
                   Offline-Paid
                 </Link>
@@ -195,7 +195,7 @@ const Sidebar = () => {
             )}
           </div>
           {links.map((link) => (
-            <Link href={link.href} key={link.label} className={`flex items-center py-2  px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === link.href ? 'bg-blue-700' : ''}`}>
+            <Link href={link.href} key={link.label} className={`flex items-center py-2 text-sm px-4 rounded-lg hover:bg-blue-600 transition-colors duration-200 ${path === link.href ? 'bg-blue-700' : ''}`}>
               <span className="mr-3">{link.icon}</span>
               <span>{link.label}</span>
             </Link>

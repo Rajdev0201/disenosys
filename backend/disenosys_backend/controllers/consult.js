@@ -308,9 +308,34 @@ exports.freeConsult = async (req,res) => {
             });
         }
 
+        const existingBooking = await CheckoutSession.findOne({
+            $or: [
+                { "customerDetails.email": userData.email },
+                { "customerDetails.phone": userData.phone }
+            ]
+        });
+
+        if (existingBooking) {
+            return res.status(400).json({
+                message: "You have already booked a slot with this email or phone number."
+            });
+        }
+          
+        const lastSession = await CheckoutSession.findOne({ sessionId: /^freeuser\d+$/ })
+        .sort({ sessionId: -1 })
+        .collation({ locale: "en", numericOrdering: true }); 
+
+    let newSessionId = "freeuser1"; 
+
+    if (lastSession) {
+        const lastNumber = parseInt(lastSession.sessionId.replace("freeuser", ""), 10);
+        newSessionId = `freeuser${lastNumber + 1}`;
+    }
+
+  
 
         const checkoutSession = new CheckoutSession({
-            sessionId:"free",
+            sessionId:newSessionId,
             lineItems: cartItems,
             user: userData._id,
             customerDetails: {

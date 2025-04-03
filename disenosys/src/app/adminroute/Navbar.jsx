@@ -47,12 +47,12 @@ const Navbar = () => {
             menuOpen ? "flex" : "hidden"
           } md:flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-7 w-full md:w-auto`}
         >
-          <div className="text-white relative">
+          {/* <div className="text-white relative">
             <FaRegBell size={24} />
             <span className="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
               3
             </span>
-          </div>
+          </div> */}
 
           {user?.user?.user?.userName ||
           user?.user?.name ||

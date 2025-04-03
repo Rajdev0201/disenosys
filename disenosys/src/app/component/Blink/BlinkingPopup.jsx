@@ -9,23 +9,25 @@ import { LogOut, setUser } from '@/app/Redux/features/authSlice';
 import { getAllCarts } from '@/app/Redux/action/addToCart';
 import { payment } from '@/app/Redux/action/Payment';
 import { CiSearch } from 'react-icons/ci';
-import { IoCartSharp } from 'react-icons/io5';
 import CartModal from '../CartModal';
 import MyModal from '../Modal';
 import { IoMdLogOut } from 'react-icons/io';
 import { FaBell, FaCaretDown, FaCaretUp } from 'react-icons/fa';
 import NotificationDropdown from '../../component/Alert';
-import { BsCart2, BsCart3 } from 'react-icons/bs';
+import { BsCart3 } from 'react-icons/bs';
 
 const BlinkingAlert = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeLink, setActiveLink] = useState("");
   const [cartModalOpen, setCartModalOpen] = useState(false);
+  const [search ,setSearch ] = useState("");
+  const [filteredData, setFilteredData] = useState([]);  
   const dispatch = useDispatch();
   const router = useRouter();
   const path = usePathname();
   const cart = useSelector((state) => state?.currentCart);
+  const courses = useSelector((state) => state?.course?.courses);
   const cartUserName = cart?.cartItems?.map((item) => {
     return item.userName;
      });
@@ -36,15 +38,9 @@ const pay = useSelector((state) => state.payment);
 const filteredCartItems = cart?.cartItems?.filter(item => item.userName === user?.user?.user?.userName) || [];
 const length = filteredCartItems.length;
 
-  // console.log(path);
-
- 
-
-  
   useEffect(() => {
     const storedUser = localStorage.getItem("profile");
     if (storedUser) {
-      // Dispatch action to update Redux with localStorage data
       dispatch(setUser(JSON.parse(storedUser)));
     }
   }, [dispatch]);
@@ -68,19 +64,54 @@ const cancelDropdown = () => {
 useEffect(() => {
   dispatch(payment());
 }, [dispatch]);
-
-
-
-  const handleLinkClick = (link) => {
-    setActiveLink(link);
-    setMobileMenuOpen(false);
-    if (link !== "/company") {
-      setDropdownOpen(false);
-    }
-  };
+  // const handleLinkClick = (link) => {
+  //   setActiveLink(link);
+  //   setMobileMenuOpen(false);
+  //   if (link !== "/company") {
+  //     setDropdownOpen(false);
+  //   }
+  // };
 
   const handleLogout = () => {
     dispatch(LogOut());
+  };
+ 
+  //search course
+  
+  const specificCourses = [
+    "CATIA Foundations for Automotive Designers",
+    "Advanced CATIA Surface",
+    "Fundamentals Of BIW in Automotive Design",
+    "Fundamentals of Plastic Trims",
+    "Solid Model Remastering",
+    "Automotive B-Pillar Assembly",
+    "Bracket And Reinforcement",
+    "Automotive Close Volume & Feature Creation",
+    "Surface Remastering for Automotive Designers"
+  ];
+
+  const filteredCourses = courses?.filter(course => {
+    const isInSpecificCourses = specificCourses.includes(course?.courseName);
+    return isInSpecificCourses;
+  });
+
+
+  const [isOpen,setIsOpen] = useState(false);
+
+  const handleSearch = (e) => {
+   setSearch(e.target.value);
+   setIsOpen(e.target.value.length > 0);
+  }
+  useEffect(() => {
+    const filtered =  filteredCourses?.filter((course) => {
+      const c = course.courseName?.toLowerCase().includes(search.toLowerCase());
+      return c;
+    })
+    setFilteredData(filtered)
+  },[search])
+
+  const goToDescriptionPage = (slug) => {
+    router.push(`/description-update/${encodeURIComponent(slug)}`);
   };
 
 
@@ -106,14 +137,56 @@ useEffect(() => {
     <div className="flex relative">
       <input
         type="text"
-        placeholder="Search..."
-        className="border-2 border-[#0d1039] rounded-lg pr-10 w-36 p-1 text-[#0d1039]"
+        placeholder="Search Course"
+        value={search}
+        onChange={handleSearch}
+        className="border-2 border-[#0d1039] text-sm rounded-lg pr-10 w-36 px-1 py-2 text-[#0d1039]"
       />
       <CiSearch
         size={24}
         className="text-[#0d1039] hover:text-[#057FE3] absolute top-1/2 right-3 transform -translate-y-1/2"
       />
     </div>
+
+    {isOpen && search && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-xl w-[500px] relative font-garet">
+            {/* Cancel Button */}
+            <button
+              className="absolute top-2 right-3 bg-red-500 hover:bg-white ring-2 text-white rounded-full ring-gray-300 text-gray-600 hover:text-red-500 text-xl px-3 py-1"
+              onClick={() => setIsOpen(false)}
+            >
+              ✖
+            </button>
+
+            {/* Heading */}
+            <h2 className="text-xl font-medium mb-4 text-center">
+              Are you searching for this course? <br />
+              <span className="text-blue-600 font-bold">{search}</span>
+            </h2>
+
+            {/* Course List */}
+            <ul className="space-y-2">
+              {filteredData?.length > 0 ? (
+                filteredData?.map((course, index) => (
+                  <li
+                    key={index}
+                    className="flex justify-between items-center bg-gray-100 p-3 rounded-md shadow-sm hover:bg-gray-200"
+                  >
+                    <span className="text-gray-800 text-sm font-medium w-56">{course.courseName}</span>
+                    <button className="px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700" onClick={() => goToDescriptionPage(course.courseName)}>
+                      View Course
+                    </button>
+                  </li>
+                ))
+              ) : (
+                <p className="text-gray-500 text-center">No courses found.</p>
+              )}
+            </ul>
+          </div>
+        </div>
+      )}
+
     <div className="relative flex items-center gap-4 hover:cursor-pointer">
     <BsCart3
         size={40}
@@ -122,14 +195,14 @@ useEffect(() => {
       />
       {length > 0 && cartUserName.includes(user?.user?.user?.userName ) ? (
         <span
-          className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#0d1039] rounded-full ring-2 ring-white z-50"
+          className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#0d1039] rounded-full ring-2 ring-white z-40"
           onClick={() => setCartModalOpen(true)}
         >
           {length}
         </span>
       ) : (
         <span
-          className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#0d1039] rounded-full ring-2 ring-gray-400 z-50"
+          className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#0d1039] rounded-full ring-2 ring-gray-400 z-40"
           onClick={() => setCartModalOpen(true)}
         >
           0
@@ -141,7 +214,7 @@ useEffect(() => {
       <FaBell  size={35}
         className="text-[#0d1039]"/>
       <span
-          className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#0d1039] rounded-full ring-2 ring-white z-50"
+          className="absolute -top-2 -right-2 flex items-center justify-center w-6 h-6 text-white text-xs font-bold bg-[#0d1039] rounded-full ring-2 ring-white z-40"
         >
           1
         </span>

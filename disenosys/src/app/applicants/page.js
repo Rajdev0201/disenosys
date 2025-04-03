@@ -23,7 +23,7 @@ return(
     <div className="bg-blue-50">
         <Navbar />
         <div className="grid grid-cols-12 h-full mt-16">
-          <div className="col-span-2  h-full">
+          <div className="col-span-2">
             <Sidebar />
           </div>
           <div className="col-span-10 ">
