@@ -113,7 +113,7 @@ const Details = () => {
       {loading && <div className='font-bold text-red-500 flex items-center justify-center font-garet'>Loading...</div>}
         {online?.data?.filter((data) => data._id === courseId)?.map((data,i) => (
           <>
-       <h1 className='text-2xl font-garet font-bold text-white mb-4'>Documents</h1>
+       <h1 className='text-2xl font-garet font-bold text-gray-800 mb-4'>Documents</h1>
           {data.isIndia === "yes" ? (
             <div key={i} className='grid grid-cols-4 border-2 border-gray-200 shadow-md p-4 gap-x-4 gap-y-3 rounded-3xl'>
                   <button
