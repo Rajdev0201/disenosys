@@ -8,7 +8,7 @@ import Image from 'next/image';
 import StudentApplicationForm from './Pdf';
 
 const Details = () => {
-    const {online} = useSelector((state) => state.online);
+    const {online,loading} = useSelector((state) => state.online);
     const dispatch = useDispatch();
     const search = useSearchParams();
     const courseId = search.get("profileId");
@@ -109,13 +109,13 @@ const Details = () => {
       }, [dispatch])
     
   return (
-    <div className='px-24 py-12'>
-        <h1 className='text-2xl font-garet font-bold text-gray-800'>Documents:</h1>
+    <div className='px-24 py-12 flex justify-center items-center mx-auto flex-col min-h-screen'>
+      {loading && <div className='font-bold text-red-500 flex items-center justify-center font-garet'>Loading...</div>}
         {online?.data?.filter((data) => data._id === courseId)?.map((data,i) => (
           <>
+       <h1 className='text-2xl font-garet font-bold text-white mb-4'>Documents</h1>
           {data.isIndia === "yes" ? (
-            <div key={i} className='grid grid-cols-4 border-gray-200 shadow-md p-4 gap-x-4 gap-y-3 rounded-md'>
-
+            <div key={i} className='grid grid-cols-4 border-2 border-gray-200 shadow-md p-4 gap-x-4 gap-y-3 rounded-3xl'>
                   <button
           className="mt-2 text-white bg-[#182073] px-2 py-1 flex justify-center items-center gap-2 rounded-md shadow-inner w-44"
           onClick={openModal}
@@ -135,18 +135,22 @@ const Details = () => {
         >
           12th <FaEye className="text-white w-4 h-4"/>
         </button>
+        {data?.Edu === "Bachelor's Degree" && 
         <button
           className="mt-2 text-white bg-[#182073] px-2 py-1 flex justify-center items-center gap-2 rounded-md shadow-inner w-44"
           onClick={openModal3}
         >
           UG <FaEye className="text-white w-4 h-4"/>
         </button>
+          }
+        {data?.Edu === "Master's Degree" &&
         <button
           className="mt-2 text-white bg-[#182073] px-2 py-1 flex justify-center items-center gap-2 rounded-md shadow-inner w-44"
           onClick={openModal4}
         >
           PG <FaEye className="text-white w-4 h-4"/>
         </button>
+          }
         <button
           className="mt-2 text-white bg-[#182073] px-2 py-1 flex justify-center items-center gap-2 rounded-md shadow-inner w-44"
           onClick={openModal5}
@@ -166,7 +170,6 @@ const Details = () => {
           PAN <FaEye className="text-white w-4 h-4"/>
         </button>
       
-         
                  {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
           <div className="relative w-full h-full flex items-center justify-center">
@@ -514,7 +517,6 @@ const Details = () => {
             <StudentApplicationForm data = {data} isPdf={isPdf} openModalPdf={openModalPdf} closeModalPdf={closeModalPdf}/>
           </>
         ))}
-        
     </div>
   )
 }

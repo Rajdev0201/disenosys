@@ -1,11 +1,8 @@
 "use client";
 import React from "react";
-import { FaFacebookF, FaGithub, FaInstagram, FaLinkedin, FaMapMarkerAlt, FaWhatsapp, FaYoutube } from "react-icons/fa";
-import { AiFillInstagram } from "react-icons/ai";
-import { BsTwitterX } from "react-icons/bs";
+import { FaInstagram, FaLinkedin, FaMapMarkerAlt, FaYoutube } from "react-icons/fa";
 import { MdCall, MdOutlineCopyright, MdOutlineMail } from "react-icons/md";
-import { FiArrowRight } from "react-icons/fi";
-import { FaSquareFacebook, FaXTwitter } from "react-icons/fa6";
+import { FaSquareFacebook } from "react-icons/fa6";
 import Link from "next/link";
 
 const Footer = () => {
@@ -14,7 +11,6 @@ const Footer = () => {
     <div className="bg-[#0d1039] font-poppins">
       <div className="container mx-auto px-10 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 space-x-0  space-y-4 md:space-y-0 sm:space-x-0 lg:space-x-12">
-          {/* Unique First Column */}
           <div className="col-span-1">
             <h1 className="font-bold text-xl md:text-xl text-white mb-4">
               DISENOSYS
@@ -132,9 +128,27 @@ const Footer = () => {
         </div>
       </div> */}
       <div className="px-0 lg:px-28 flex flex-col justify-between md:flex-row">
-          <Link href="/consultation" className="w-80 mb-6 bg-white hover:bg-blue-200 text-lg font-garet flex justify-center items-center gap-2 text-[#0d1039] rounded shadow-inner px-2 py-4">
-            BOOK A CONSULTATION
+          {/* <Link href="/consultation" className="w-80 mb-6 bg-white hover:bg-blue-200 text-lg font-garet flex justify-center items-center gap-2 text-[#0d1039] rounded shadow-inner px-2 py-4">
+         
             <FiArrowRight className="transition-transform hover:-rotate-45 group-active:-rotate-12 text-xl" />
+          </Link> */}
+          <Link href="/consultation" class="relative bg-[#4b48ff] font-garet w-44 lg:w-80  text-white font-medium text-xl px-4 py-[0.35em] pl-5 h-[2.8em] rounded-[0.9em] flex items-center overflow-hidden cursor-pointer shadow-[inset_0_0_1.6em_-0.6em_#714da6] group mb-5">
+            <span class="mr-10"> BOOK A CONSULTATION</span>
+            <div class="absolute right-[0.3em] bg-white h-[2.2em] w-[2.2em] rounded-[0.7em] flex items-center justify-center transition-all duration-300 group-hover:w-[calc(100%-0.6em)] shadow-[0.1em_0.1em_0.6em_0.2em_#7b52b9] active:scale-95">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                class="w-[1.1em] transition-transform duration-300 text-[#7b52b9] group-hover:translate-x-[0.1em]"
+              >
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path
+                  fill="currentColor"
+                  d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z"
+                ></path>
+              </svg>
+            </div>
           </Link>
           {/* <h1 className="text-white font-medium text-sm md:text-sm lg:text-md text-end sm:text-left flex justify-center items-center">
             <MdOutlineCopyright size={20} className="pr-1" /> 2025 Disenosys |

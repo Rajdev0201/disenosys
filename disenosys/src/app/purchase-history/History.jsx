@@ -6,9 +6,10 @@ import { setUser } from '../Redux/features/authSlice';
 
 const History = () => {
     const pay = useSelector((state) => state.payment);
+
     const dispatch = useDispatch();
     let startindex = 1;
-   console.log(pay)
+
     useEffect(() => {
         dispatch(payment());
       }, [dispatch]);
@@ -37,7 +38,7 @@ const History = () => {
 
   return (
     <div className='bg-[#FAFBFF] mt-32 lg:px-44 lg:py-32'>
-        {pay?.data?.length < 0 ? (
+        {pay?.data?.length > 0 ? (
               <div className='grid grid-cols-12 gap-2 font-garet mx-auto container'>
                <div className='flex flex-col font-garet col-span-12 lg:col-span-9'>
                 <h1 className='text-2xl text-[#0D1039] font-bold text-center lg:text-start'>Purchase History</h1>
@@ -55,7 +56,7 @@ const History = () => {
                     {pay.data?.map((item, index) => (
                         item.customerDetails.name ===  user?.user?.user?.userName && (
                         item.lineItems.map((item,ind) => (
-                    <tr key={ind} className='border-b-2 border-white hover:bg-white'>
+                    <tr key={index} className='border-b-2 border-white hover:bg-white'>
                         <td className='px-2 py-2 text-md font-medium text-center  border-r-2 border-white'>{startindex ++}</td>
                         <td className='px-2 lg:px-12 py-2 text-md font-medium text-start  border-r-2 border-white'>{item.name}</td>
                         <td className='px-2 py-2 text-md font-medium text-center  border-r-2 border-white'>{item.price}</td>

@@ -58,8 +58,8 @@ import html2canvas from "html2canvas";
   
     return (
         <>
-        <div className=' border-gray-200 shadow-md p-4 gap-x-4 gap-y-3 rounded-md mt-6 w-1/4 flex flex-col justify-center'>
-        <h1 className='text-2xl font-garet font-bold text-gray-800 text-center'>SAF FORM:</h1>
+        <div className=' border-gray-200 bg-white shadow-md p-4 gap-x-4 gap-y-3 rounded-md mt-6 w-1/4 flex flex-col justify-center items-center'>
+        <h1 className='text-2xl font-garet font-bold text-gray-800 text-center'>SAF FORM</h1>
         <div className='flex gap-2'>
         <button
         onClick={openModalPdf}

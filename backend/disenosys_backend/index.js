@@ -584,14 +584,26 @@ let newSid = `DSST${newSidNumber}`;
 });
 app.get('/mentordata', async (req, res) => {
   try {
-    const data = await mentor.find();
-
-    if (!data) {
-      return res.status(400).json({ error: 'No Data is available' });
-    }
+    const data = await mentor.aggregate([
+      {
+        $sort: { createdAt: -1 } // Step 1: Sort all records by newest first
+      },
+      {
+        $group: {
+          _id: "$name", // Step 2: Group by unique user (email or userId)
+          latestApplication: { $first: "$$ROOT" } // Step 3: Keep the latest application
+        }
+      },
+      {
+        $replaceRoot: { newRoot: "$latestApplication" } // Step 4: Replace the root to show only filtered data
+      },
+      {
+        $sort: { createdAt: -1 } // Step 5: Sort again to maintain order
+      }
+    ]);
 
     res.status(200).json({
-      message: 'Career data retrieved successfully',
+      message: 'Mentor data retrieved successfully',
       data: data,
     });
   } catch (err) {

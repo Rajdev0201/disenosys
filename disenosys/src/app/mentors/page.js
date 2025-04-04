@@ -23,11 +23,11 @@ return(
   {user?.user?.user?.userType === 'admin'?
     <div className="">
         <Navbar />
-        <div className="grid grid-cols-12 h-full mt-16">
-          <div className="col-span-2 bg-[#182073] h-full">
+        <div className="grid grid-cols-12 h-full mt-16 bg-blue-50">
+          <div className="col-span-2">
             <Sidebar />
           </div>
-          <div className="col-span-10 h-full bg-blue-50">
+          <div className="col-span-10">
             <Profile/>
           </div>
         </div>

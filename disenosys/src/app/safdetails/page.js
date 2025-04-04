@@ -5,7 +5,7 @@ import Details from "./Details"
 
 export default function SAFDetails () {
     return(
-        <div>
+        <div className="bg-black">
         <Details/>
         </div>
     )
