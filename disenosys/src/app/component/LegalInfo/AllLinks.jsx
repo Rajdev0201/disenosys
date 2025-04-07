@@ -13,7 +13,7 @@ const AllLinks = () => {
     </h4>
     <Link
       href="/termsandcondition"
-      className={`border bg-gray-400 shadow-inner rounded-3xl gap-2 flex items-start justify-center w-64 text-center text-xl p-2 text-white font-garet mt-6 ${path === "/termsandcondition" ? "bg-blue-500 text-white" : ""}`}
+      className={`border shadow-inner rounded-3xl gap-2 flex items-start justify-center w-64 text-center text-xl p-2 text-white font-garet mt-6 ${path === "/termsandcondition" ? "bg-blue-500 text-white" : " bg-gray-400 "}`}
     >
       <span className="text-center"> Terms & Conditions </span>
     </Link>
@@ -25,7 +25,7 @@ const AllLinks = () => {
     </Link>
     <Link
       href="/faq"
-      className={`border bg-gray-400 shadow-inner rounded-3xl flex items-center justify-center w-64 text-center text-xl p-2 text-white font-garet ${path === "/faq" ? "bg-blue-500 text-white" : " bg-gray-400 "}`}
+      className={`border  shadow-inner rounded-3xl flex items-center justify-center w-64 text-center text-xl p-2 text-white font-garet ${path === "/faq" ? "bg-blue-500 text-white" : " bg-gray-400 "}`}
     >
       FAQ
     </Link>
