@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FiArrowRight } from "react-icons/fi";
 import { Whatsapp } from "./Whatsapp";
 import {
@@ -8,8 +8,6 @@ import {
   motion,
 } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
-import bg from "../assests/profile/car-1.webp";
 import "../globals.css"
 
 const COLORS_TOP = ["#057FE3"];

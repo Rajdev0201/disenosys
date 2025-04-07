@@ -132,7 +132,7 @@ const Footer = () => {
          
             <FiArrowRight className="transition-transform hover:-rotate-45 group-active:-rotate-12 text-xl" />
           </Link> */}
-          <Link href="/consultation" class="relative bg-[#4b48ff] font-garet w-44 lg:w-80  text-white font-medium text-xl px-4 py-[0.35em] pl-5 h-[2.8em] rounded-[0.9em] flex items-center overflow-hidden cursor-pointer shadow-[inset_0_0_1.6em_-0.6em_#714da6] group mb-5">
+          <Link href="/consultation" class="relative bg-[#4b48ff] font-garet w-64 lg:w-80  text-white font-medium text-sm lg:text-xl px-4 py-[0.35em] pl-5 h-[2.8em] rounded-[0.9em] flex items-center overflow-hidden cursor-pointer shadow-[inset_0_0_1.6em_-0.6em_#714da6] group mb-5">
             <span class="mr-10"> BOOK A CONSULTATION</span>
             <div class="absolute right-[0.3em] bg-white h-[2.2em] w-[2.2em] rounded-[0.7em] flex items-center justify-center transition-all duration-300 group-hover:w-[calc(100%-0.6em)] shadow-[0.1em_0.1em_0.6em_0.2em_#7b52b9] active:scale-95">
               <svg
