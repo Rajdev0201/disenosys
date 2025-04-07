@@ -9,7 +9,7 @@ const AboutSection = () => {
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium text-[#0d1039] text-center mb-8 font-garet">
           WHO WE ARE
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 items-center">
           <div className="flex justify-center">
             <Image src={who} className="rounded-lg shadow-lg" alt="who-we-are"
             width={640} // Reduce width to fit actual layout

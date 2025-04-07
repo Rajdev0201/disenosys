@@ -63,22 +63,12 @@ const Home = () => {
   };
 
   return (
-    <div className="">
-       <Image
-    src={bg}
-    alt="Background"
-    fill
-    priority
-    // loading="eager" 
-    quality={60} 
-    className="object-cover z-0 py-12 mt-24 lg:mt-36"
-    sizes="100vw"
-  />
-      <div className="container-2xl py-16 lg:py-36  w-full relative">
-        <div className="grid grid-cols-1 lg:grid-cols-12">
-          <div className="col-span-6 ">
-            <main className="bg-[#0d1039]/50 rounded-3xl shadow-sm p-10 flex justify-center items-center w-full lg:w-3/4 mt-8">
-              <h1 className="garet text-xl -mt-5 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] lg:mt-0 max-w-[250px] lg:max-w-[520px] font-medium sm:text-3xl md:text-6xl lg:text-5xl  text-white">
+    <div className="bg">
+      <div className="container-2xl lg:py-32 2xl:py-44 w-full relative">
+        <div className="grid grid-cols-1 md:grid-cols-12">
+          <div className="col-span-6">
+            <main className="bg-[#0d1039]/50 rounded-3xl shadow-sm p-10 flex justify-center items-center w-full xl:w-3/4 mt-8">
+              <h1 className="garet text-xl -mt-5 md:mt-6 leading-relaxed md:leading-loose lg:leading-[1.3] xl:leading-[1.4] lg:mt-0 max-w-[250px] lg:max-w-[420px] xl:max-w-[520px] font-medium sm:text-3xl md:text-2xl lg:text-3xl xl:text-5xl  text-white">
                 Shaping Industry Ready{" "}
                 <span className="text-white">Engineers</span> for the Future{" "}
               </h1>
@@ -100,7 +90,7 @@ const Home = () => {
               >
                 <Link
                   href="/quicktest"
-                  className="text-sm lg:text-2xl garet"
+                  className="text-sm lg:text-xl xl:text-2xl garet"
                 >
                   Take Test
                 </Link>
@@ -116,7 +106,7 @@ const Home = () => {
                 <div class="bg-[#0d1039]/50  rounded-2xl mt-10 lg:-mt-0 mr-2 lg:mr-0 hover:border-[#057FE3] transition-all duration-200">
                   <div class="mx-auto flex items-center justify-center space-y-4 py-2 px-6 lg:py-4 lg:px-20 font-semibold text-gray-500 flex-col">
                     {/* <BiSolidCarMechanic size={60} className="text-white" /> */}
-                    <h1 class="text-white w-52 font-medium text-center text-sm lg:text-3xl garet">
+                    <h1 class="text-white w-52 font-medium text-center text-sm md:text-2xl lg:text-3xl garet">
                       Book a Demo Class Today!
                     </h1>
 
@@ -158,7 +148,7 @@ const Home = () => {
                     />
 
                     <button
-                      className="px-10 py-2 text-md lg:text-2xl mt-24 garet bg-white border-none outline-none text-[#0d1039] rounded-sm font-medium  border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
+                      className="px-10 py-2 text-md lg:text-xl xl:text-24 mt-24 garet bg-white border-none outline-none text-[#0d1039] rounded-sm font-medium  border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
                       type="submit"
                       disabled={loading}
                     >

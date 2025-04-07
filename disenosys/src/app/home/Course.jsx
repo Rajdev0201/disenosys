@@ -90,8 +90,8 @@ const addCart = (course) => {
 
   const getButtonClass = (category) => {
     return selectedCategory === category
-      ? 'text-[#0d1039]  font-garet font-medium text-xl px-4 rounded-md shadow-lg py-2 bg-gray-300 hover:bg-blue-800'
-      : '  font-garet font-medium text-xl px-4 rounded-md shadow-lg text-white border border-gray-200 py-2 bg-[#0d1039] hover:bg-blue-800';
+      ? 'text-[#0d1039]  font-garet font-medium text-lg xl:text-xl px-4 rounded-md shadow-lg py-2 bg-gray-300 hover:bg-blue-800'
+      : '  font-garet font-medium text-md xl:text-xl px-4 rounded-md shadow-lg text-white border border-gray-200 py-2 bg-[#0d1039] hover:bg-blue-800';
   };
 
   const goToDescriptionPage = (slug) => {
@@ -106,7 +106,7 @@ const addCart = (course) => {
         {name}
         </h1>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 px-12 py-6">
+      <div className="grid grid-cols-1 md:grid-cols-4  xl:grid-cols-4 gap-8 px-12 py-6">
   {/* First row of buttons */}
   <button
     className={getButtonClass("All")}
@@ -135,7 +135,7 @@ const addCart = (course) => {
 
   {/* Second row of buttons */}
   <div className="md:col-span-3 lg:col-span-4 flex justify-center">
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-8">
       <button
         className={getButtonClass("BIW")}
         onClick={() => handleCategoryChange("BIW")}
@@ -160,8 +160,8 @@ const addCart = (course) => {
 </div>
 
 
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8 lg:p-12 bg-white">
-        <div className='col-span-1 md:col-span-2 lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8'>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:p-12 bg-white">
+        <div className='col-span-1 md:col-span-2 lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-8'>
           {filteredCourses?.map((course) => (
             
             <div key={course?._id} className="flex flex-col justify-between bg-white rounded-lg shadow-lg overflow-hidden p-4 border border-gray-200" >

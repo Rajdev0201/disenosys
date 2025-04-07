@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { CheckOut, payment } from "../Redux/action/Payment.js";
 import { useRouter } from 'next/navigation';
 import { MdDelete } from 'react-icons/md';
-import { setUser } from '../Redux/features/authSlice.js';
+import { setUser } from '../Redux/features/authSlice.js'; 
 
 const CartModal = ({ isOpen, setIsOpen, cart }) => {
   const [totalPrice, setTotalPrice] = useState(0);

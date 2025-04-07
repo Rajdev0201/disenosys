@@ -55,8 +55,8 @@ const Testimonials = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 1, // Change from 2 to 1
-          slidesToScroll: 1,
+          slidesToShow: 3, // Change from 2 to 1
+          slidesToScroll: 3,
         },
       },
       {
