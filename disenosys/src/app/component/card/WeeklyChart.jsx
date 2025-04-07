@@ -7,7 +7,7 @@ import { Online } from "@/app/Redux/action/onlineStd";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ChartsMonth = () => {
-  const online = useSelector((state) => state.online); // Get data from Redux
+  const {online} = useSelector((state) => state.online); // Get data from Redux
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -27,7 +27,7 @@ const Program = () => {
   <div className="absolute inset-0 bg-1 opacity-50 rounded-lg pointer-events-none"></div>
 
   <div className="relative flex-grow flex flex-col items-center justify-center px-6 py-8 sm:p-10 sm:pb-6">
-    <h2 className="text-xl font-bold tracking-tighter text-[#0d1039] text-center lg:text-2xl leading-relaxed tracking-tighter">
+    <h2 className="text-xl font-bold tracking-tighter text-[#0d1039] text-center lg:text-3xl leading-relaxed tracking-tighter">
       <span>PG Diploma in Plastic</span> 
       <br/>
       <span>Trims Design</span>

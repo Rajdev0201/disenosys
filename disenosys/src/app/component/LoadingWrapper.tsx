@@ -1,5 +1,4 @@
 "use client";
-
 import { useState, useEffect } from "react";
 import LoadingSpinner from "./Loading";
 
@@ -11,7 +10,7 @@ const LoadingWrapper = ({ children }: LoadingWrapperProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1500);
+    const timer = setTimeout(() => setLoading(false), 500);
     return () => clearTimeout(timer);
   }, []);
 

@@ -19,7 +19,7 @@ const BlogLinks = ({ onSelectBlog }) => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 shadow-md rounded-md font-garet">
+    <div className="p-6 bg-white shadow-md rounded-md font-garet">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">
         Trending Now
       </h2>

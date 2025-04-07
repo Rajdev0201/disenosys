@@ -348,7 +348,7 @@ const History = () => {
                
                     <tr
                       key={item._id}
-                      className={`border-b border-gray-300 ${
+                      className={`border-b border-gray-300 text-sm ${
                         index % 2 !== 0 ? "bg-gray-300" : "bg-white"
                       }`}
                     >
@@ -437,7 +437,7 @@ const History = () => {
                           )}
                         </td> */}
                         <td>
-                        {search && (
+                        {/* {search && ( */}
                       <div className="mt-2">
                         <button
                           className="bg-blue-500 text-white px-2 py-1 rounded-md"
@@ -446,7 +446,7 @@ const History = () => {
                           <FaPlus />
                         </button>
                       </div>
-                    )}
+                    {/* )} */}
                         </td>
                       </div>
                     </tr>

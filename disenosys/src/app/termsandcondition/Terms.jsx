@@ -3,6 +3,7 @@ import React from 'react'
 import "../home/Home.css";
 import { MdPolicy } from 'react-icons/md';
 import Link from 'next/link';
+import AllLinks from '../component/LegalInfo/AllLinks';
 
 
 const Terms = () => {
@@ -16,18 +17,7 @@ const Terms = () => {
     </div>
     <div className='grid lg:grid-cols-12  mt-24'> 
     <div className='col-span-12 lg:col-span-3 px-16 lg:px-12'>
-      <div className='flex flex-col justify-center space-y-3'>
-        <h4 className='text-[#0d1039] font-semibold text-xl lg:text-2xl font-garet px-6 lg:px-4 mb-4'>Legal Information</h4>
-         <Link href="/termsandcondition" className='border bg-gray-400 shadow-inner rounded-3xl gap-2 flex items-start justify-center w-64 text-center text-xl p-2 text-white font-garet mt-6'>
-      <span className='text-center'> Terms & Conditions </span>
-         </Link>
-         <Link href="/privacyandpolicy" className='border bg-gray-400 shadow-inner rounded-3xl gap-2 flex items-start justify-center w-64 text-center text-xl py-2 text-white font-garet'>
-         <span className='text-center'> Privacy & Policy </span>
-         </Link>
-         <Link href="/faq" className='border bg-gray-400 shadow-inner rounded-3xl flex items-center justify-center w-64 text-center text-xl p-2 text-white font-garet'>
-          FAQ
-         </Link>
-      </div>
+         <AllLinks/>
     </div>
     <div className="col-span-12 lg:col-span-9 mb-8">
   <div className="flex flex-col justify-center items-start lg:justify-start space-y-4 px-1 mt-12 lg:mt-0 leading-7 lg:px-12">
