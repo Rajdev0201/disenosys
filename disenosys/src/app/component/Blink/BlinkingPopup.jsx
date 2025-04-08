@@ -114,6 +114,10 @@ useEffect(() => {
     router.push(`/description-update/${encodeURIComponent(slug)}`);
   };
 
+  const closePopup = () => { 
+    setIsOpen(false);
+    setSearch("");
+  }
 
   return (
 
@@ -154,7 +158,7 @@ useEffect(() => {
             {/* Cancel Button */}
             <button
               className="absolute top-2 right-3 bg-red-500 hover:bg-white ring-2 text-white rounded-full ring-gray-300 text-gray-600 hover:text-red-500 text-xl px-3 py-1"
-              onClick={() => setIsOpen(false)}
+              onClick={closePopup}
             >
               ✖
             </button>

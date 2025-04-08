@@ -14,7 +14,7 @@ const WhyChooseUs = () => {
         WHY CHOOSE US?
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-        <section className="flex flex-col items-start justify-start h-full shadow-md rounded-xl shadow-inner">
+        <section className="flex flex-col items-start justify-start h-full shadow-md rounded-xl shadow-inner transition duratuion-100 ease-in-out transform hover:zoom-in hover:border-2 hover:border-gary-500 hover:scale-105">
           <Image
             src={cls}
             alt="100% LIVE INTERACTIVE CLASSES"
@@ -36,7 +36,7 @@ const WhyChooseUs = () => {
           </p>
         </section>
 
-        <section className="flex flex-col items-start justify-start h-full shadow-md  rounded-xl shadow-inner">
+        <section className="flex flex-col items-start justify-start h-full shadow-md  rounded-xl shadow-inner transition duratuion-100 ease-in-out transform hover:zoom-in hover:border-2 hover:border-gary-500 hover:scale-105">
           <Image
             src={job}
             alt="100% JOB ASSISTANCE"
@@ -58,7 +58,7 @@ const WhyChooseUs = () => {
           </p>
         </section>
 
-        <section className="flex flex-col  items-start justify-start shadow-md h-full rounded-xl shadow-inner">
+        <section className="flex flex-col  items-start justify-start shadow-md h-full rounded-xl shadow-inner transition duratuion-100 ease-in-out transform hover:zoom-in hover:border-2 hover:border-gary-500 hover:scale-105">
           <Image
             src={hands}
             alt="HANDS-ON EXPERIENCE WITH 50+ PROJECTS"
@@ -80,7 +80,7 @@ const WhyChooseUs = () => {
           </p>
         </section>
 
-        <section className="flex flex-col items-start justify-start h-full shadow-md rounded-xl shadow-inner mb-4">
+        <section className="flex flex-col items-start justify-start h-full shadow-md rounded-xl shadow-inner mb-4 transition duratuion-100 ease-in-out transform hover:zoom-in hover:border-2 hover:border-gary-500 hover:scale-105">
           <Image
             src={week}
             alt="WEEKEND CLASSES FOR WORKING PROFESSIONALS"

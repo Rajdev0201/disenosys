@@ -455,7 +455,8 @@ const History = () => {
                       item.subrows?.map((sub, subIndex) => (
                         <tr
                           key={subIndex}
-                          className="bg-gray-100 border-b border-gray-300"
+                          className="bg-gray-100 border-b border-gray-300 text-sm
+                          "
                         >
                           <td className="py-2 px-2 text-start text-gray-600 font-medium">
                             {/* Sub-{subIndex + 1}. */}
