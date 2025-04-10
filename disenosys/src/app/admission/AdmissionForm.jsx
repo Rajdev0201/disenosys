@@ -48,18 +48,14 @@ const AdmissionForm = () => {
           />
         ))}
 
-        <select
+        <input
           name="course"
           value={form.course}
           onChange={handleChange}
           required
           className="border border-gray-300 px-4 py-3 rounded"
-        >
-          <option value="">Select a course</option>
-          <option value="mern">MERN Stack</option>
-          <option value="python">Python & AI</option>
-          <option value="ds">Data Science</option>
-        </select>
+        />
+         
 
         <button
           type="submit"
