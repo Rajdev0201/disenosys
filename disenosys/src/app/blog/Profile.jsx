@@ -1,7 +1,9 @@
 import React from 'react'
 
 const Profile = ({name,designation}) => {
-  return (
+  return ( 
+  <>
+  {name ? (
 <div class="flex items-center p-3 w-68 h-32 bg-white rounded-md shadow-sm">
   <section class="flex justify-center items-center w-14 h-14 rounded-full shadow-md bg-gradient-to-r from-[#F9C97C] to-[#A2E9C1] hover:from-[#C9A9E9] hover:to-[#7EE7FC] hover:cursor-pointer hover:scale-110 duration-300">
     <svg viewBox="0 0 15 15" class="w-7 h-7 fill-gray-700">
@@ -36,6 +38,12 @@ const Profile = ({name,designation}) => {
     </div>
   </section>
 </div>
+  ) : (
+      <div className="flex items-center justify-center h-full">
+      <p className="text-gray-500">Please Select the link and read the blog</p>
+    </div>
+  )}
+</>
   )
 }
 

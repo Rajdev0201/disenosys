@@ -131,7 +131,7 @@ const Navbar = () => {
             "Course",
             "Portfolio",
             "Gallery",
-            "Admissions",
+            "Admission",
             "Blog",
           ].map((item) => (
             <Link

@@ -13,35 +13,15 @@ const Banner = ({ selectedBlog }) => {
     dispatch(getBlog());
   }, [dispatch]);
 
-  const processDescription = (text) => {
-    const lines = text.split('\n');
-    let result = '';
-    let inList = false;
-  
-    lines.forEach((line) => {
-      if (line.trim().startsWith('-')) {
-        if (!inList) {
-          result += '<ul>';
-          inList = true;
-        }
-        result += `<li>${line.replace('-', '').trim()}</li>`;
-      } else {
-        if (inList) {
-          result += '</ul>';
-          inList = false;
-        }
-        result += `<p>${line.trim()}</p>`;
-      }
-    });
-  
-    if (inList) result += '</ul>';
-    return result;
-  };
+
   
 
   return (
     <div className="p-2 md:p-6 bg-white shadow-md rounded-md font-garet">
+      {selectedBlog && (
       <div className="flex flex-col px-4 md:px-8 lg:px-12">
+        {selectedBlog?.filePath && (
+          <>
         <img
           src={selectedBlog?.filePath}
           className="object-cover w-full h-56 sm:h-72 md:h-auto rounded shadow-md"
@@ -50,7 +30,8 @@ const Banner = ({ selectedBlog }) => {
         <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mt-5">
           {selectedBlog?.title}
         </h1>
-
+        </>
+        )}
         <Profile name={selectedBlog?.name} designation={selectedBlog?.designation} />
         <span className="text-sm font-medium mt-1">
           {new Date(selectedBlog?.updatedAt).toLocaleDateString("en-US", {
@@ -59,7 +40,7 @@ const Banner = ({ selectedBlog }) => {
             day: "2-digit",
           })}
         </span>
-     
+        
         <p
   className="mt-4 text-gray-800 font-medium text-sm sm:text-base md:text-md"
   dangerouslySetInnerHTML={{
@@ -83,6 +64,13 @@ const Banner = ({ selectedBlog }) => {
 
 
       </div>
+      )}
+      
+      {!selectedBlog && (
+          <div className="flex items-center justify-center h-full">
+          <p className="text-gray-500">Please Select the link and read the blog</p>
+        </div>
+      )}
     </div>
   );
 };

@@ -28,7 +28,7 @@ export default function BlogPage() {
 
   useEffect(() => {
     if (blogs.length > 0) {
-      setSelectedBlog(blogs[0]);
+      setSelectedBlog(blogs);
     }
   }, [blogs]);
 
