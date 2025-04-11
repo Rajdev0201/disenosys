@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCourse } from "../Redux/action/Course.js";
 import { IoIosArrowForward } from "react-icons/io";
 import Image from "next/image.js";
-import t from "../assests/profile/f.png";
+import t from "../assests/profile/mentor.png";
 import i from "../assests/profile/ofc.jpg";
 
 const Placement = () => {
