@@ -35,7 +35,7 @@ const AdmissionForm = () => {
         )}
       <h2 className="text-3xl font-bold text-blue-500 mb-6 text-center">Admission Form</h2>
       <form onSubmit={handleSubmit} className="grid gap-6">
-        {["name", "email", "phone", "dob"].map((field) => (
+        {["name", "email", "phone", "dob","course"].map((field) => (
           <input
             key={field}
             type={field === "dob" ? "date" : "text"}
@@ -48,13 +48,7 @@ const AdmissionForm = () => {
           />
         ))}
 
-        <input
-          name="course"
-          value={form.course}
-          onChange={handleChange}
-          required
-          className="border border-gray-300 px-4 py-3 rounded"
-        />
+  
          
 
         <button

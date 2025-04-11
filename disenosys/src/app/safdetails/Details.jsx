@@ -135,13 +135,21 @@ const Details = () => {
         >
           12th <FaEye className="text-white w-4 h-4"/>
         </button>
-        {data?.Edu === "Bachelor's Degree" && 
+        {data?.Edu === "Bachelor's Degree" || data?.Edu === "Master's Degree" ?(
         <button
           className="mt-2 text-white bg-[#182073] px-2 py-1 flex justify-center items-center gap-2 rounded-md shadow-inner w-44"
           onClick={openModal3}
         >
           UG <FaEye className="text-white w-4 h-4"/>
         </button>
+        ):(
+          <button
+          className="mt-2 text-white bg-[#182073] px-2 py-1 flex justify-center items-center gap-2 rounded-md shadow-inner w-44"
+          onClick={openModal3}
+        >
+          UG <FaEye className="text-white w-4 h-4"/>
+        </button>
+        )
           }
         {data?.Edu === "Master's Degree" &&
         <button
