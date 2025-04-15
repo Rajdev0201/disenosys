@@ -600,8 +600,8 @@ const Applicants = () => {
               </div>
             ))
           ) : (
-            <p className="flex justify-center items-center min-h-screen text-center text-green-500 font-bold mt-12 ">
-              Loading ...
+            <p className="flex text-red-500 text-center ">
+              No Data Found
             </p>
           )}
         </div>

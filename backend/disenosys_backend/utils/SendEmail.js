@@ -1,22 +1,34 @@
-// const nodemailer = require("nodemailer")
+const nodemailer = require("nodemailer")
 
-// const sendMail =async (Options)=>{
+const sendMail =async (options)=>{
 
-//     const transport = nodemailer.createTransport({
-//         auth:{
-//             user:"",
-//             pass: ""
-//             }
-//     })
+    // const transporter = nodemailer.createTransport({
+    
+    //         host: 'smtp.office365.com', 
+    //        port: 587,                 
+    //        secure: false,   
+    //        auth: {
+    //         user: 'classes@disenosys.com',
+    //         pass: 'xnccsypkfhfpymwg',
+    //       }
+    //        });
 
-//     const mail = await transport.sendMail(Options)
-     
-//     if(mail)
-//     {
-//         return true
-//     }
+      const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'rajkumarprjpm@gmail.com',
+                pass: 'eztbnuzrbwxocizk',
+            }
+        });
+           
+           const mailOptions = {
+            from: 'rajkumarprjpm@gmail.com',
+            to: options.to,
+            subject: options.subject,
+            text: options.text,
+        };
+    
+        await transporter.sendMail(mailOptions);
+    };
 
-//     return false
-// }
-
-// module.exports = sendMail
+module.exports = sendMail

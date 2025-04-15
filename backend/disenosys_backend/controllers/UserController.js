@@ -160,64 +160,77 @@ exports.LoginUser = CatchAsyncError(async (req, res, next) => {
     }
   };
 
-exports.ResetLink = CatchAsyncError(async(req,res)=>{
+  exports.ResetLink = CatchAsyncError(async (req, res, next) => {
+    const { userEmail } = req.body;
 
-    const {userEmail} = req.body
+    const user = await UserModel.findOne({ userEmail });
 
-        const user = await UserModel.findOne({userEmail : userEmail})
-        console.log(user)
-        if(!user)
-            {
-                return next(new ErrorHandler("Not a valid user",401))
-            }
-        const token = await user.getresetPasswordToken()
-    
-        await user.save({validateBeforeSave: false})
-    
-        const resetUrl = `http://localhost:8000/api/v1/forgotPassword/${token}`;
-       
-    
-          const message = {
-              from: "sandbox.smtp.mailtrap.io",
-              to: "",
-              subject: "Reset Password",
-              text: resetUrl
-          }
-      
-        //  await SendEmail(message)
-        
-        res.json({resetUrl})
-    
-})
+    if (!user) {
+        return next(new ErrorHandler("Not a valid user", 401));
+    }
 
-exports.ResetPassword = CatchAsyncError(async(req,res)=>{
+    const token = user.getresetPasswordToken();
+    await user.save({ validateBeforeSave: false });
 
-        const resetPasswordToken = crypto.createHash('sha256').update(req.query.token).digest('hex')
-    
-    const user = await UserModel.findOne({
-        resetPasswordToken,
-        resetPasswordTokenExpire: {
-            $gt : Date.now()
-        }
-    })
-    if(!user)
-        {
-            return next(new ErrorHandler("Your token is expired",400))
-        }
+    const resetUrl = `https://www.disenosys.com/reset-password?token=${token}`; // frontend route
 
-    if(req.body.password != req.body.confirmPassword)
-        {
-            return next(new ErrorHandler("Password and Confirm Password Not Matched",400))
-        }
-    const hash = await bcrypt.hash(req.body.password,10)
-    user.password = hash
-    user.resetPasswordToken = undefined
-    user.resetPasswordTokenExpire = undefined
-   await user.save({validateBeforeSave: false})
-    res.json({
-        message:""
-    })
-})
+    const message = {
+        to: userEmail,
+        subject: "Reset Password Link",
+        text: `Click here to reset your password: ${resetUrl}`,
+    };
+
+    // SendEmail is a utility that uses nodemailer/mailtrap/etc.
+    await SendEmail(message);
+
+    res.status(200).json({
+        success: true,
+        message: `Reset password link has been sent to ${userEmail}`,
+    });
+});
+
+
+exports.ResetPassword = CatchAsyncError(async (req, res, next) => {
+  const resetPasswordToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  const user = await UserModel.findOne({
+    resetPasswordToken,
+    resetPasswordTokenExpire: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return next(new ErrorHandler("Your token has expired or is invalid", 400));
+  }
+
+  const { password, confirmPassword } = req.body;
+
+
+  if (!password || password.length < 6) {
+    return next(new ErrorHandler("Password must be at least 6 characters", 400));
+  }
+
+
+  if (password !== confirmPassword) {
+    return next(new ErrorHandler("Passwords do not match", 400));
+  }
+
+  const hash = await bcrypt.hash(password, 10);
+  user.password = hash;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordTokenExpire = undefined;
+
+  await user.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+    message: "Password has been reset successfully",
+  });
+});
+
+
 
 
 exports.google = CatchAsyncError(async(req,res)=> {

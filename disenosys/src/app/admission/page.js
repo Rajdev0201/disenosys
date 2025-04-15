@@ -8,6 +8,13 @@ import Popup from "./Popup";
 import MarqueeView from "../home/Marquee";
 import Partner from "../home/Partner";
 
+
+export const metadata = () => { 
+  return{
+    title:"Admission"
+  }
+}
+
 export default function AdmissionPage () {
   return (
     <div className="bg-gray-50 text-gray-800 relative">
