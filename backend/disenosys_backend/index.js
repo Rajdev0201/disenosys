@@ -116,7 +116,7 @@ const InternC = require('./models/internship.js');
 const CourseC = require('./models/coursecertificate.js');
 const gpdxC = require('./models/Gpdxcertificate.js');
 const GpdxC = require("./models/Gpdxcertificate.js")
-
+const enroll = require("./routes/enroll.js")
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
 app.use("/api/v1",addCart);
@@ -137,6 +137,7 @@ app.use('/scholar',scholar);
 app.use("/ld",course);
 app.use("/ld",teacher)
 app.use("/ld",onlineStd)
+app.use("/enroll",enroll)
 
 app.get("/",(req,res) => {
  res.send("hi")
