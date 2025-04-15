@@ -177,22 +177,22 @@ exports.LoginUser = CatchAsyncError(async (req, res, next) => {
     const message = {
         to: userEmail,
           subject: "Reset Your Password - Disenosys",
-          html: `
+          text: `
               <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
-      <div style="max-width: 600px; margin: auto; background-color: #fff; border-radius: 8px; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
-        <h2 style="color: #1e3a8a; text-align: center;">Disenosys - Password Reset</h2>
-        <p>Hi there,</p>
-        <p>We received a request to reset your password for your Disenosys account.</p>
-        <p style="text-align: center; margin: 30px 0;">
-          <a href="${resetUrl}" style="background-color: #1e3a8a; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Reset Password</a>
-        </p>
-        <p>If you didn’t request this, you can safely ignore this email.</p>
-        <hr style="margin: 30px 0;" />
-        <p style="text-align: center; font-size: 12px; color: #777;">
-          &copy; ${new Date().getFullYear()} Disenosys. All rights reserved.
-        </p>
-      </div>
-    </div>
+               <div style="max-width: 600px; margin: auto; background-color: #fff; border-radius: 8px; padding: 30px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+               <h2 style="color: #1e3a8a; text-align: center;">Disenosys - Password Reset</h2>
+                 <p>Hi there,</p>
+                <p>We received a request to reset your password for your Disenosys account.</p>
+                <p style="text-align: center; margin: 30px 0;">
+                <a href="${resetUrl}" style="background-color: #1e3a8a; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">Reset Password</a>
+                </p>
+                <p>If you didn’t request this, you can safely ignore this email.</p>
+                <hr style="margin: 30px 0;" />
+               <p style="text-align: center; font-size: 12px; color: #777;">
+                &copy; ${new Date().getFullYear()} Disenosys. All rights reserved.
+              </p>
+             </div>
+             </div>
           
           `,
         };
