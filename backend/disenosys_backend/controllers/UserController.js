@@ -176,9 +176,70 @@ exports.LoginUser = CatchAsyncError(async (req, res, next) => {
 
     const message = {
         to: userEmail,
-        subject: "Reset Password Link",
-        text: `Click here to reset your password: ${resetUrl}`,
-    };
+          subject: "Reset Your Password - Disenosys",
+          html: `
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <meta charset="UTF-8" />
+                <title>Reset Your Password</title>
+                <style>
+                  body {
+                    font-family: Arial, sans-serif;
+                    background-color: #f4f4f4;
+                    margin: 0;
+                    padding: 0;
+                  }
+                  .container {
+                    background-color: #ffffff;
+                    margin: 40px auto;
+                    padding: 30px;
+                    border-radius: 8px;
+                    max-width: 600px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                  }
+                  .header {
+                    text-align: center;
+                    color: #1e3a8a; /* Disenosys Blue */
+                    font-size: 24px;
+                    margin-bottom: 20px;
+                  }
+                  .button {
+                    display: inline-block;
+                    padding: 12px 24px;
+                    margin-top: 20px;
+                    font-size: 16px;
+                    color: #ffffff;
+                    background-color: #1e3a8a;
+                    text-decoration: none;
+                    border-radius: 6px;
+                  }
+                  .footer {
+                    margin-top: 30px;
+                    font-size: 12px;
+                    color: #666666;
+                    text-align: center;
+                  }
+                </style>
+              </head>
+              <body>
+                <div class="container">
+                  <div class="header">Disenosys - Password Reset</div>
+                  <p>Hi there,</p>
+                  <p>We received a request to reset your password for your Disenosys account.</p>
+                  <p>Click the button below to reset your password:</p>
+                  <a href="${resetUrl}" class="button">Reset Password</a>
+                  <p>If you didn’t request this, you can safely ignore this email.</p>
+                  <div class="footer">
+                    &copy; ${new Date().getFullYear()} Disenosys. All rights reserved.
+                  </div>
+                </div>
+              </body>
+            </html>
+          `,
+        };
+        
+    
 
     // SendEmail is a utility that uses nodemailer/mailtrap/etc.
     await SendEmail(message);

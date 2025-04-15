@@ -536,7 +536,7 @@ const Applicants = () => {
         </div>
 
         <div className="grid grid-cols-4 gap-4">
-          {paginatedData?.length ? (
+          {paginatedData?.length > 0  ? (
             paginatedData.map((profile, index) => (
               <div key={index} className="px-1 mt-12">
                <div className="w-64 min-h-[250px] flex flex-col justify-between rounded-lg border-2 border-indigo-500 bg-transparent p-4 text-center shadow-lg dark:bg-gray-800">
@@ -601,7 +601,7 @@ const Applicants = () => {
             ))
           ) : (
             <p className="flex text-red-500 text-center ">
-              No Data Found
+              Loading
             </p>
           )}
         </div>
