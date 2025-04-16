@@ -1,0 +1,47 @@
+import JobDetailCard from "../../../components/FindJob/JobDetailsCard";
+import JobSidebar from "../../../components/FindJob/SideBar";
+import RelatedJobCard from "../../../components/FindJob/RelatedJob";
+import Footer from "../../../components/FindJob/Footer";
+
+const relatedJobs = [
+  { title: "Technical Support Specialist", type: "PART-TIME", company: "Google Inc.", location: "Dhaka, Bangladesh", salary: "$20,000 - $25,000" },
+  { title: "Senior UX Designer", type: "FULL-TIME", company: "Google Inc.", location: "Dhaka, Bangladesh", salary: "$20,000 - $25,000" },
+  { title: "Marketing Officer", type: "INTERNSHIP", company: "Google Inc.", location: "Dhaka, Bangladesh", salary: "$20,000 - $25,000" },
+  // ...more jobs
+];
+
+const JobDetails = () => {
+  return (
+    <div className="flex flex-col min-h-screen font-garet">
+      <div className="flex justify-between items-center mb-2 bg-blue-400 p-2">
+        <h1 className="text-md lg:text-3xl text-white font-medium mx-auto">Job Details - UI/UX Designer</h1>
+        {/* <Image src={logo} alt="logo" className="w-44 object-cover" /> */}
+      </div>
+
+      <div className="flex flex-col lg:flex-row px-6 lg:px-20 py-8 gap-10 flex-grow">
+        {/* Main Content */}
+        <div className="w-full lg:w-2/3">
+          <JobDetailCard />
+        </div>
+
+        {/* Sidebar */}
+        <div className="w-full lg:w-1/3">
+          <JobSidebar />
+        </div>
+      </div>
+
+      {/* Related Jobs */}
+      <section className="px-6 lg:px-20 pb-12">
+        <h3 className="text-xl font-semibold mb-6">Related Jobs</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {relatedJobs.map((job, index) => (
+            <RelatedJobCard key={index} {...job} />
+          ))}
+        </div>
+      </section>
+      <Footer />
+    </div>
+  );
+};
+
+export default JobDetails;
