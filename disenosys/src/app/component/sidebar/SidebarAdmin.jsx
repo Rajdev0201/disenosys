@@ -11,6 +11,7 @@ import { GrScorecard } from "react-icons/gr";
 import { TfiWrite } from "react-icons/tfi";
 import { MdDashboardCustomize } from 'react-icons/md';
 import { GiDiscussion } from "react-icons/gi";
+import { BsPostcard } from 'react-icons/bs';
 
 
 const Sidebar = () => {
@@ -30,6 +31,7 @@ const Sidebar = () => {
     { href: '/mentors', label: 'Mentors-Profile', icon: <GrScorecard />},
     { href: '/studentsapplied', label: 'Hyper-Drive', icon: <GrScorecard />},
     { href: '/create-consultation-amount', label: 'Consultation', icon: <GiDiscussion size={20}/>},
+    {href : '/create-job', label: 'Create-Job', icon: <BsPostcard />},
     // { href: '/settings', label: 'Settings', icon: <FaCog /> },
     // { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];

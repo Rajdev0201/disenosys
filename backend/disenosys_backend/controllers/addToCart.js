@@ -5,9 +5,8 @@ const ErrorHandler = require("../utils/ErrorHandler");
 
 exports.postCart = CatchAsyncError(async (req, res, next) => {
   const { courseId, name, price, quantity, img, userName } = req.body;
-  console.log("Received request body:", req.body);  // Log the incoming data
+  console.log("Received request body:", req.body); 
 
-  // Validate input data
   if (!courseId || !name || !price || !quantity || !img || !userName) {
     return res.status(400).json({
       success: false,
@@ -16,17 +15,14 @@ exports.postCart = CatchAsyncError(async (req, res, next) => {
   }
 
   try {
-    // Check if the course already exists in the cart for the user
     const existingItem = await Cart.findOne({ courseId, userName });
 
     let cartItem;
 
     if (existingItem) {
-      // If the course already exists, update the quantity
       existingItem.quantity += quantity;
       cartItem = await existingItem.save();
     } else {
-      // Otherwise, create a new cart item
       cartItem = await Cart.create({
         courseId,
         name,

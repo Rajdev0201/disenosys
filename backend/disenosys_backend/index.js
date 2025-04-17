@@ -117,6 +117,8 @@ const CourseC = require('./models/coursecertificate.js');
 const gpdxC = require('./models/Gpdxcertificate.js');
 const GpdxC = require("./models/Gpdxcertificate.js")
 const enroll = require("./routes/enroll.js")
+const FindJob = require("./routes/findJob.js")
+
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
 app.use("/api/v1",addCart);
@@ -138,6 +140,7 @@ app.use("/ld",course);
 app.use("/ld",teacher)
 app.use("/ld",onlineStd)
 app.use("/enroll",enroll)
+app.use("/Jobs",FindJob)
 
 app.get("/",(req,res) => {
  res.send("hi")

@@ -4,7 +4,64 @@ import { PiLinkSimpleBold } from "react-icons/pi";
 import { SiLevelsdotfyi } from "react-icons/si";
 import { TfiTimer } from "react-icons/tfi";
 
-const JobSidebar = () => {
+const JobSidebar = ({ 
+  title,
+  type,
+  level,
+  companyName,
+  location,
+  salary,
+  load,}) => {
+
+    const formatSalaryRangeAfterTax = (salaryString) => {
+      const match = salaryString.match(/(\d+(\.\d+)?)\s*lakh/i);
+      if (!match) return salaryString;
+  
+      const annualSalary = parseFloat(match[1]) * 100000;
+  
+      // Simple tax calculation (New Regime FY 2024–25)
+      const calculateTax = (income) => {
+        let tax = 0;
+  
+        const slabs = [
+          { limit: 300000, rate: 0 },
+          { limit: 600000, rate: 0.05 },
+          { limit: 900000, rate: 0.1 },
+          { limit: 1200000, rate: 0.15 },
+          { limit: 1500000, rate: 0.2 },
+          { limit: Infinity, rate: 0.3 },
+        ];
+  
+        let previousLimit = 0;
+        for (const slab of slabs) {
+          if (income > slab.limit) {
+            tax += (slab.limit - previousLimit) * slab.rate; // 3lakh - 0 * 0 = 0 , 5>6
+            previousLimit = slab.limit;
+          } else {
+            tax += (income - previousLimit) * slab.rate; // 5 - 3 * 0.5
+            break;
+          }
+        }
+  
+        return tax;
+      };
+  
+      const annualTax = calculateTax(annualSalary);
+      const annualInHand = annualSalary - annualTax;
+      const lowMonthly = Math.round((annualInHand / 12) * 0.9);
+      const highMonthly = Math.round(annualInHand / 12);
+  
+      const formatINR = (amount) =>
+        new Intl.NumberFormat("en-IN", {
+          style: "currency",
+          currency: "INR",
+          maximumFractionDigits: 0,
+        }).format(amount);
+  
+      return `${formatINR(lowMonthly)} - ${formatINR(highMonthly)}`;
+    };
+
+
     return (
       <div className="bg-white p-6 shadow-md border-2 border-gray-200 rounded-md space-y-4 lg:sticky top-12">
         <a href="#" className="block w-full text-center bg-blue-600 text-white py-2 rounded-md font-medium">Apply Now</a>
@@ -12,13 +69,13 @@ const JobSidebar = () => {
         <div className="grid grid-cols-2 gap-4 text-sm ">
           <div className="border-r-2 border-r-gray-200 space-y-1 flex flex-col items-center">
             <p className="text-gray-400">Salary (USD)</p>
-            <p className="font-semibold text-green-600">$100,000 - $120,000</p>
+            <p className="font-semibold text-green-600">{salary}</p>
             <p className="text-gray-400">Yearly salary</p>
           </div>
           <div className="space-y-1 flex flex-col items-center">
           <FaRegMap size={30} color="blue"/>
             <p className="text-gray-400">Job Location</p>
-            <p>Dhaka, Bangladesh</p>
+            <p>{location}</p>
           </div>
         </div>
   
@@ -38,12 +95,12 @@ const JobSidebar = () => {
             <div className="flex flex-col items-start">
             <SiLevelsdotfyi size={30} color="blue" />
             <p className="text-gray-400">JOB LEVEL:</p>
-            <p className="text-gray-800">Entry Level</p>
+            <p className="text-gray-800">{level}</p>
             </div>
             <div className="flex flex-col items-start"> 
             <FaWallet  size={30} color="blue"/>
             <p className="text-gray-400">EXPERIENCE:</p>
-            <p className="text-gray-800">$50k-80k/month</p>
+            <p className="text-gray-800">{formatSalaryRangeAfterTax(salary)}</p>
             </div>
           </div>
         </div>
