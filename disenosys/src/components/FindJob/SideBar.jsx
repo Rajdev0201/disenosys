@@ -1,17 +1,21 @@
+import { CheckOut } from "@/app/Redux/action/createJob";
+import { useState } from "react";
 import { CiCalendar } from "react-icons/ci";
 import { FaFacebookF, FaLinkedinIn, FaRegMap, FaTwitter, FaWallet } from "react-icons/fa";
+import { IoRemoveCircle } from "react-icons/io5";
 import { PiLinkSimpleBold } from "react-icons/pi";
 import { SiLevelsdotfyi } from "react-icons/si";
 import { TfiTimer } from "react-icons/tfi";
+import { useDispatch } from "react-redux";
 
 const JobSidebar = ({ 
   title,
-  type,
   level,
-  companyName,
+  jobPosted,
+  jobExpire,
   location,
   salary,
-  load,}) => {
+  }) => {
 
     const formatSalaryRangeAfterTax = (salaryString) => {
       const match = salaryString.match(/(\d+(\.\d+)?)\s*lakh/i);
@@ -60,12 +64,70 @@ const JobSidebar = ({
   
       return `${formatINR(lowMonthly)} - ${formatINR(highMonthly)}`;
     };
+    const dispatch  = useDispatch();
+    const [userData, setUserData] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [tempUserData, setTempUserData] = useState({ name: '', email: '' });
+    const amount = 4000;
 
+  const handleApplyNow = () => {
+    if (!userData) {
+      setModalOpen(true);
+      return;
+    }
 
+    const Data = {
+      userData,
+      cartItems: {title,amount}
+    };
+
+    dispatch(CheckOut(Data));
+  };
+
+  const handleModalSubmit = () => {
+    if (tempUserData.name && tempUserData.email) {
+      setUserData(tempUserData);
+      setModalOpen(false);
+      dispatch(CheckOut({
+        userData: tempUserData,
+        cartItems: {title,amount},
+      }));
+    }
+  };
+  
     return (
       <div className="bg-white p-6 shadow-md border-2 border-gray-200 rounded-md space-y-4 lg:sticky top-12">
-        <a href="#" className="block w-full text-center bg-blue-600 text-white py-2 rounded-md font-medium">Apply Now</a>
-  
+        <button className="block w-full text-center bg-blue-600 text-white py-2 rounded-md font-medium" onClick={handleApplyNow}>Apply Now</button>
+        {modalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-80 space-y-4">
+            <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold">Enter Your Details</h2>
+            <button onClick={() => setModalOpen(false)}><IoRemoveCircle size={20} className="text-red-500"/></button>
+            </div>
+            <input
+              type="text"
+              placeholder="Name"
+              value={tempUserData.name}
+              onChange={(e) => setTempUserData({ ...tempUserData, name: e.target.value })}
+              className="w-full p-2 border rounded-md"
+            />
+            <input
+              type="mail"
+              placeholder="Email"
+              value={tempUserData.email}
+              onChange={(e) => setTempUserData({ ...tempUserData, email: e.target.value })}
+              className="w-full p-2 border rounded-md"
+            />
+            <button
+              onClick={handleModalSubmit}
+              className="w-full bg-blue-600 text-white py-2 rounded-md"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      )}
         <div className="grid grid-cols-2 gap-4 text-sm ">
           <div className="border-r-2 border-r-gray-200 space-y-1 flex flex-col items-center">
             <p className="text-gray-400">Salary (USD)</p>
@@ -85,12 +147,12 @@ const JobSidebar = ({
            <div className="flex flex-col items-start"> 
            <CiCalendar size={30} color="blue"/>
             <p className="text-gray-400">JOB POSTED:</p>
-            <p className="text-gray-800">14 Jan, 2024</p>
+            <p className="text-gray-800">{jobPosted}</p>
             </div>
             <div className="flex flex-col items-start"> 
             <TfiTimer size={30} color="blue"/>
             <p className="text-gray-400">JOB EXPIRE IN:</p>
-            <p className="text-gray-800">14 Jan, 2024</p>
+            <p className="text-gray-800">{jobExpire}</p>
             </div>
             <div className="flex flex-col items-start">
             <SiLevelsdotfyi size={30} color="blue" />

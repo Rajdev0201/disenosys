@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     jobs:[],
+    payment:[],
     loading:false,
     error:null
 }
@@ -19,11 +20,14 @@ const createJobSlice = createSlice({
         },
         postJob:(state,action) => {
             state.jobs.push(action.payload);
+        },
+        postPayment:(state,action) => {
+            state.payment.push(action.payload);
         }
-
+         
     }
 })
 
 
-export const {setJob,postJob} = createJobSlice.actions;
+export const {setJob,postJob,postPayment} = createJobSlice.actions;
 export default createJobSlice.reducer;

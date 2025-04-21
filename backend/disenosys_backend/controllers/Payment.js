@@ -147,12 +147,12 @@ exports.getPlaceOrder = async(req,res) => {
     try{
         const DataList = await CheckoutSession.find({ isPaid: true });
         res.status(200).json({
-            message: 'External code has deleted',
+            message: 'The data is fetched successfully',
             data: DataList,
           });
         }catch(err){
             console.log(err);
-            return res.status(500).json({err : "data is not deleted"})
+            return res.status(500).json({err : "There was an issue fetching the data"})
         }
 }
 

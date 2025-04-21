@@ -10,7 +10,7 @@ const Success = () => {
   const orderId = search.get("orderId");
   const amount = search.get("amount");
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-green-50 to-green-100 px-6">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-green-50 to-green-100 px-6 font-garet">
       <div className="text-center">
       <div className="flex justify-center mb-4">
           <FiCheckCircle className="text-green-500 text-6xl" />
