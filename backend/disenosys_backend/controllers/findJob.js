@@ -2,6 +2,7 @@ const findJob = require("../models/findJob.js");
 const Razorpay = require('razorpay');
 const SendEmail = require("../utils/SendEmail")
 const CheckoutSession = require("../models/jobPayments.js");
+const PremiumJobList = require('../models/premiumJobUsers.js'); 
 
 exports.postJob = async (req,res) => {
     const { title, description, companyName, type, location, experience, level, salary, jobPosted, jobExpire } = req.body;
@@ -131,7 +132,7 @@ exports.handleRazorpayCallback = async (req, res) => {
 const sendPayment = async (studentEmail, studentName, lineItems) => {
 
     const itemRows = lineItems
-        .map(item => `<tr><td style="padding: 10px; border: 1px solid #ddd; text-align: left;">${item.name}</td><td style="padding: 10px; border: 1px solid #ddd; text-align: right;">₹${item.totalPrice}</td></tr>`)
+        .map(item => `<tr><td style="padding: 10px; border: 1px solid #ddd; text-align: left;">${item.title}</td><td style="padding: 10px; border: 1px solid #ddd; text-align: right;">₹${item.amount}</td></tr>`)
         .join('');
 
     const mailOptions = {
@@ -200,3 +201,80 @@ exports.getPlaceOrder = async(req,res) => {
             return res.status(500).json({err : "There was an issue fetching the data"})
         }
 }
+
+
+
+
+exports.postPremiumJobUser = async (req, res) => {
+  try {
+    const {
+      name,
+      phone,
+      dob,
+      gender,
+      linkedin,
+      portfolio,
+      qualification,
+      specialization,
+      college,
+      yearOfPassing,
+      currentJob,
+      experience,
+      previousCompany,
+      currentCTC,
+      expectedCTC,
+      noticePeriod,
+      preferredLocation,
+      email,
+      native,
+      message,
+    } = req.body;
+
+    const resume = req.file.path;
+    //    const existingUser = await PremiumJobList.findOne({ 
+    //        $or: [{ email }, { name }] 
+    //      });
+     
+    //      if (existingUser) {
+    //        return res.status(409).json({ error: 'Your data already exists!' }); 
+    //      }
+    const newJob = new PremiumJobList({
+      name,
+      phone,
+      dob,
+      gender,
+      linkedin,
+      portfolio,
+      qualification,
+      specialization,
+      college,
+      yearOfPassing,
+      currentJob,
+      experience,
+      previousCompany,
+      currentCTC,
+      expectedCTC,
+      noticePeriod,
+      preferredLocation,
+      resume,
+      email,
+      native,
+      message,
+    });
+
+    await newJob.save();
+
+    res.status(201).json({
+      success: true,
+      message: "Premium job user created successfully.",
+      newJob,
+    });
+  } catch (error) {
+    console.error("Error saving to the database:", error);
+    return res.status(500).json({
+      success: false,
+      message: "There was an issue saving the job.",
+    });
+  }
+};
+

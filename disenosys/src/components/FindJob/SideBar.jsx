@@ -161,7 +161,7 @@ const JobSidebar = ({
             </div>
             <div className="flex flex-col items-start"> 
             <FaWallet  size={30} color="blue"/>
-            <p className="text-gray-400">EXPERIENCE:</p>
+            <p className="text-gray-400">Pay:</p>
             <p className="text-gray-800">{formatSalaryRangeAfterTax(salary)}</p>
             </div>
           </div>

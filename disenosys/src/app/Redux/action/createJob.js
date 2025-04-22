@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { postJob, postPayment, setJob } from '../features/cretaeJobSlice';
+import { postJob, postPayment, postPremiumUsers, setJob, setPayment } from '../features/cretaeJobSlice';
 
 
 
@@ -89,7 +89,7 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
                     dispatch(postPayment(captureResponse.data));
                     toast.success("Payment successful!");
                     setTimeout(() => {
-                        window.location.href = `/success?orderId=${orderId}&paymentId=${response.razorpay_payment_id}&amount=${amount / 100}`;
+                        window.location.href = `/premium-form?orderId=${orderId}&paymentId=${response.razorpay_payment_id}&amount=${amount / 100}`;
                     }, 1000);
                 } catch (err) {
                     console.error("Error during callback:", err);
@@ -115,13 +115,45 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
 };
 
 
-// export const payment = () => async (dispatch) => {
-//     try {
-//         const res = await axios.get("https://disenosys-dkhj.onrender.com/course/getPlaceOrder");
-//         const getData = res.data;
-//         dispatch(setPayment(getData));
-//     } catch (error) {
-//         console.error('Error fetch code:', error);
-//     }
-//   }
+export const Payment = () => async (dispatch) => {
+    dispatch(setPayment({payment:[],loading:true,error:false}))
+    try {
+        const res = await axios.get("https://disenosys-dkhj.onrender.com/Jobs/getPlaceOrder");
+        const getData = res.data.data;
+        dispatch(setPayment(getData));
+        dispatch(setPayment({payment:getData,loading:false,error:false}))
+    } catch (error) {
+        console.error('Error fetch code:', error);
+    }
+  }
   
+
+  export const createPremiumList = (data,router) => async (dispatch) => {
+    const createJobPromise = axios.post("http://localhost:8000/Jobs/postPremium", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+  
+    try {
+      const res = await toast.promise(
+        createJobPromise,
+        {
+          pending: 'Posting Your Application...',
+          success: 'Application Submitted successfully!',
+          error: 'Failed to post job.',
+        },
+        {
+          position: 'top-right',
+          autoClose: 3000,
+        }
+      );
+  
+      const jobData = res.data.data; //res structue -> data{ data: {} ,message,success}
+      dispatch(postPremiumUsers(jobData));
+      router.push("/applied");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
