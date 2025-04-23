@@ -33,10 +33,15 @@ const createJobSlice = createSlice({
         postPremiumUsers:(state,action) => {
             state.premium.push(action.payload);
         },
+        setPremiumUser : (state, action) => {
+            state.loading = action.payload.loading;
+            state.premium= action.payload.premium;
+            state.error = action.payload.error;
+          },
          
     }
 })
 
 
-export const {setJob,postJob,postPayment,setPayment,postPremiumUsers} = createJobSlice.actions;
+export const {setJob,postJob,postPayment,setPayment,postPremiumUsers,setPremiumUser} = createJobSlice.actions;
 export default createJobSlice.reducer;

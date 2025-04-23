@@ -40,21 +40,35 @@ exports.postJob = async (req,res) => {
 
 
 
-exports.getJob = async (req,res) => {
+exports.getJob = async (req, res) => {
     try {
-        const jobs = await findJob.find();
-        res.status(200).json({
-            success: true,
-            jobs
-        });
+      const page = parseInt(req.query.page) || 1; // default to page 1
+      const limit = parseInt(req.query.limit) || 9; // default to 9 jobs per page
+      const skip = (page - 1) * limit; // calculate the number of jobs to skip
+  
+      const jobs = await findJob.find().skip(skip).limit(limit); //its based on how many docs to skip before fetch data ex => Page 1 → skip = (1-1) * 6 = 0 → fetch from beginning
+      const total = await findJob.countDocuments();
+  
+      res.status(200).json({
+        success: true,
+        jobs,
+        total,//total document
+        page,//current page
+        pages: Math.ceil(total / limit), //count total pages
+      });
     } catch (error) {
-        console.error("Error fetching jobs:", error);
-        return res.status(500).json({
-            success: false,
-            message: "There was an issue fetching the jobs."
-        });
+      console.error("Error fetching jobs:", error);
+      return res.status(500).json({
+        success: false,
+        message: "There was an issue fetching the jobs.",
+
+
+
+      });
     }
-}
+  };
+  
+
 
 
 exports.createCheckoutSession = async (req, res) => {
@@ -99,6 +113,7 @@ exports.createCheckoutSession = async (req, res) => {
         res.status(500).json(err.message);
     }
 };
+
 
 
 
@@ -240,6 +255,7 @@ exports.postPremiumJobUser = async (req, res) => {
     //      }
     const newJob = new PremiumJobList({
       name,
+      title,
       phone,
       dob,
       gender,
@@ -277,4 +293,18 @@ exports.postPremiumJobUser = async (req, res) => {
     });
   }
 };
+
+
+exports.getPremiumJobsList = async(req,res) => {
+    try{
+        const DataList = await PremiumJobList.find();
+        res.status(200).json({
+            message: 'Applicants Job paid Data',
+            data: DataList,
+          });
+        }catch(err){
+            console.log(err);
+            return res.status(500).json({err : "There was an issue fetching the data"})
+        }
+}
 

@@ -1,5 +1,5 @@
 const express = require("express")
-const { postJob, getJob, createCheckoutSession, handleRazorpayCallback, getPlaceOrder, postPremiumJobUser } = require("../controllers/findJob.js")
+const { postJob, getJob, createCheckoutSession, handleRazorpayCallback, getPlaceOrder, postPremiumJobUser, getPremiumJobsList } = require("../controllers/findJob.js")
 const router = express.Router()
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
@@ -42,5 +42,5 @@ router.get("/getPlaceOrder",getPlaceOrder)
 
 
 router.post("/postPremium",uploadPremiumJobList.single('resume'),postPremiumJobUser)
-
+router.get("/getpremiumlist",getPremiumJobsList)
 module.exports = router;

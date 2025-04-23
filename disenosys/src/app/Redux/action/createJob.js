@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { postJob, postPayment, postPremiumUsers, setJob, setPayment } from '../features/cretaeJobSlice';
+import { postJob, postPayment, postPremiumUsers, setJob, setPayment, setPremiumUser } from '../features/cretaeJobSlice';
 
 
 
@@ -36,10 +36,10 @@ export const createJob = (data) => async (dispatch) => {
   };
 
 
-export const getJob = () => async (dispatch) => {
-    dispatch(setJob({jobs:[],loading:true,error:false}))
+export const getJob = (page=1) => async (dispatch) => {
     try{
-       const res = await axios.get("https://disenosys-dkhj.onrender.com/Jobs/getjob");
+       dispatch(setJob({jobs:[],loading:true,error:false}))
+       const res = await axios.get(`https://disenosys-dkhj.onrender.com/Jobs/getjob?page=${page}&limit=9`);
        const data = res.data;
        dispatch(setJob({jobs:data,loading:false,error:false}))
     }catch(err){
@@ -157,3 +157,17 @@ export const Payment = () => async (dispatch) => {
     }
   };
 
+
+
+
+export const PremiumList = () => async (dispatch) => {
+  dispatch(setPremiumUser({premium:[],loading:true,error:false}))
+  try {
+      const res = await axios.get("https://disenosys-dkhj.onrender.com/Jobs/getpremiumlist");
+      const getData = res.data.data;
+      dispatch(setPremiumUser(getData));
+      dispatch(setPremiumUser({premium:getData,loading:false,error:false}))
+  } catch (error) {
+      console.error('Error fetch code:', error);
+  }
+}

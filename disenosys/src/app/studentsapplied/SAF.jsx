@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 
 const SAF = () => {
     const {online,loading} = useSelector((state) => state.online);
+    console.log(loading)
     const dispatch = useDispatch();
     const router = useRouter();
 
@@ -22,9 +23,9 @@ const SAF = () => {
 
   return (
     <div className="px-6 md:px-12 mt-20">
+      {!loading ? (
   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    {!loading ? (
-      online?.data?.map((data, i) => (
+      {online?.data?.map((data, i) => (
         <div key={i} className="w-full flex justify-center">
 
             <div className="max-w-lg rounded-xl border-2 border-gray-500 bg-white p-6 shadow-md dark:bg-gray-800 dark:border-gray-700 flex flex-col sm:flex-row items-center">
@@ -55,13 +56,13 @@ const SAF = () => {
               </div>
             </div>
         </div>
-      ))
-    ) : (
-      <p className="col-span-4 text-center text-red-500 font-bold flex justify-center items-center min-h-screen font-garet">
-              Loading....
-      </p>
-    )}
+      ))}
   </div>
+      ): (
+        <p className="col-span-4 text-center text-red-500 font-bold flex justify-center items-center min-h-screen font-garet">
+                Loading....
+        </p>
+      )}
 </div>
 
 

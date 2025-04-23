@@ -10,7 +10,6 @@ const JobCard = ({
   salary,
   logo,
   fun,
-  load,
 }) => {
   const formatSalaryRangeAfterTax = (salaryString) => {
     const match = salaryString.match(/(\d+(\.\d+)?)\s*lakh/i);
@@ -62,7 +61,6 @@ const JobCard = ({
 
   return (
     <>
-    {!load ? (
     <div
       className="bg-white border-2 border-gray-200 shadow-md p-4 rounded-md flex flex-col gap-2 hover:shadow-lg transition-shadow duration-300 cursor-pointer"
       onClick={() => fun(title)}
@@ -99,9 +97,7 @@ const JobCard = ({
         <MdAdsClick className="cursor-pointer text-gray-400 hover:text-gray-700" />
       </div>
     </div>
-    ) : (
-       <span className="text-red-500 text-lg font-bold">Loading...</span>
-    )}
+    
     </>
   );
 };

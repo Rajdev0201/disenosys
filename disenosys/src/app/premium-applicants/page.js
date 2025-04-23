@@ -1,15 +1,15 @@
+
 "use client"
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../adminroute/Navbar";
 import Sidebar from "../component/sidebar/SidebarAdmin";
-import CreateForm from "./CreateForm";
 import { useEffect } from "react";
 import { setUser } from "../Redux/features/authSlice";
+import List from "./Applicants"
 
 
 
-
-export default function CreateAmountPage () {
+export default function PremiumApplicantsPage () {
     const user = useSelector((state) => state?.user);
     const dispatch = useDispatch()
 
@@ -31,7 +31,7 @@ export default function CreateAmountPage () {
                 <Sidebar />
               </div>
               <div className="col-span-10">
-                <CreateForm/>
+               <List/>
               </div>
             </div>
         </div>

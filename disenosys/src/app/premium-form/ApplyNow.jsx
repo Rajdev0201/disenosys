@@ -6,8 +6,18 @@ import { Payment } from '../Redux/action/createJob';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FiUserCheck } from 'react-icons/fi';
 const ApplyNow = () => {
+  const {payment,loading} = useSelector((state) => state.jobs);
+  const search = useSearchParams("");
+  const sessionId = search.get('orderId');
+  const title = payment.filter((data,i) => (
+    data.sessionId === sessionId)).map((data) => (
+     data.lineItems.map((item) => {
+      return item.title
+     })
+    ))
+
   const [formData, setFormData] = useState({
-    title: '',
+    title: title.toString(),
     name: '',
     phone: '',
     dob: '',
@@ -30,12 +40,7 @@ const ApplyNow = () => {
     native: '',
     message: ''
   });
-  const {payment,loading} = useSelector((state) => state.jobs);
   const router = useRouter();
-  const search = useSearchParams("");
-  const sessionId = search.get('orderId');
-  console.log(sessionId)
-  console.log(payment);
   const dispatch = useDispatch();
 
   useEffect(() => {

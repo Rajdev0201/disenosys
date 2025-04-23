@@ -96,10 +96,10 @@ const JobSidebar = ({
   };
   
     return (
-      <div className="bg-white p-6 shadow-md border-2 border-gray-200 rounded-md space-y-4 lg:sticky top-12">
+      <div className="bg-white p-6 shadow-md border-2 border-gray-200 rounded-md space-y-4 lg:sticky top-0">
         <button className="block w-full text-center bg-blue-600 text-white py-2 rounded-md font-medium" onClick={handleApplyNow}>Apply Now</button>
         {modalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div className="fixed inset-0 top-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm w-full z-50">
           <div className="bg-white p-6 rounded-lg w-80 space-y-4">
             <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Enter Your Details</h2>

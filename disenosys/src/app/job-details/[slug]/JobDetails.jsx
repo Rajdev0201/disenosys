@@ -8,22 +8,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { getJob } from "@/app/Redux/action/createJob";
 import { useEffect } from "react";
 
-const relatedJobs = [
-  { title: "Technical Support Specialist", type: "PART-TIME", company: "Google Inc.", location: "Dhaka, Bangladesh", salary: "$20,000 - $25,000" },
-  { title: "Senior UX Designer", type: "FULL-TIME", company: "Google Inc.", location: "Dhaka, Bangladesh", salary: "$20,000 - $25,000" },
-  { title: "Marketing Officer", type: "INTERNSHIP", company: "Google Inc.", location: "Dhaka, Bangladesh", salary: "$20,000 - $25,000" },
-  // ...more jobs
-];
 
 const JobDetails = () => {
   const {slug} = useParams();
   const {jobs,loading} = useSelector((state) => state.jobs); 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect(() => { 
     dispatch(getJob())
   },[dispatch]);
 
+  const RealtedJob  = jobs?.jobs?.filter((job) => job.title !== decodeURIComponent(slug));
+  const data = RealtedJob?.slice(0,3);
   return (
     <div className="flex flex-col min-h-screen font-garet">
       <div className="flex justify-between items-center mb-2 bg-blue-400 p-2">
@@ -48,7 +44,7 @@ const JobDetails = () => {
       <section className="px-6 lg:px-20 pb-12">
         <h3 className="text-xl font-semibold mb-6">Related Jobs</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {relatedJobs.map((job, index) => (
+          {data.map((job, index) => (
             <RelatedJobCard key={index} {...job} />
           ))}
         </div>

@@ -32,6 +32,7 @@ const Sidebar = () => {
     { href: '/studentsapplied', label: 'Hyper-Drive', icon: <GrScorecard />},
     { href: '/create-consultation-amount', label: 'Consultation', icon: <GiDiscussion size={20}/>},
     {href : '/create-job', label: 'Create-Job', icon: <BsPostcard />},
+    {href : '/premium-applicants', label: 'Premium-Applicants', icon: <GrScorecard />},
     // { href: '/settings', label: 'Settings', icon: <FaCog /> },
     // { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];
@@ -53,11 +54,11 @@ const Sidebar = () => {
 
 
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-[#182073] font-garet mt-16 text-white flex flex-col justify-between transition-transform duration-300 transform overflow-y-scroll ${
+        className={`fixed top-0 left-0 h-full w-64 bg-[#182073] font-garet mt-16 text-white flex flex-col justify-between transition-transform duration-300 transform  ${
           isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
         } md:translate-x-0 md:w-64 z-40`}
       >
-        <div className="flex flex-col  px-4 flex-grow space-y-6">
+        <div className="flex flex-col  px-4 flex-grow space-y-3">
   
           {/* <div className="text-center mt-20 text-2xl font-semibold  md:block hidden">
             Admin Panel

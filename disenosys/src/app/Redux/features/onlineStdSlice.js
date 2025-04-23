@@ -11,9 +11,9 @@ const onlineSlice = createSlice({
   initialState,
   reducers: {
     setOnline: (state, action) => {
-        state.action = action.payload.loading;
+        state.loading = action.payload.loading;
         state.online = action.payload.data;
-        state.error = action.payload;
+        state.error = action.payload.error;
       },
       remove: (state, action) => {
         state.online = action.payload;
