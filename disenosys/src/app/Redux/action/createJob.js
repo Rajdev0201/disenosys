@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { postJob, postPayment, postPremiumUsers, setJob, setPayment, setPremiumUser } from '../features/cretaeJobSlice';
+import { postJob, postPayment, postPremiumUsers, removeJob, setJob, setPayment, setPremiumUser, updateJob } from '../features/cretaeJobSlice';
 
 
 
@@ -46,6 +46,39 @@ export const getJob = (page=1) => async (dispatch) => {
         console.log(err)
     }
 }
+
+
+export const remove = (Id) => async (dispatch) => {
+  try {
+      await axios.delete(`https://disenosys-dkhj.onrender.com/Jobs/deleteJob/${Id}`);
+      dispatch(removeJob(Id));
+      dispatch(getJob())
+  } catch (error) {
+      console.error('Error removing for jobs:', error);
+  }
+};
+
+export const editJob = (Id, updatedData) => async (dispatch) => {
+const response = await axios.put(`https://disenosys-dkhj.onrender.com/Jobs/editJob/${Id}`, updatedData);
+try {
+    const res = await toast.promise(
+      response,
+      {
+        pending: 'Updating job...',
+        success: 'Updated Job posted successfully!',
+        error: 'Failed to updated job.',
+      },
+      {
+        position: 'top-right',
+        autoClose: 3000,
+      }
+    );
+    dispatch(updateJob(res.data)); 
+    dispatch(getJob())
+} catch (error) {
+    console.error('Error updating jobs:', error);
+}
+};
 
 
 const loadRazorpayScript = () => {
@@ -171,3 +204,4 @@ export const PremiumList = () => async (dispatch) => {
       console.error('Error fetch code:', error);
   }
 }
+

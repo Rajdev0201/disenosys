@@ -1,5 +1,5 @@
 const express = require("express")
-const { postJob, getJob, createCheckoutSession, handleRazorpayCallback, getPlaceOrder, postPremiumJobUser, getPremiumJobsList } = require("../controllers/findJob.js")
+const { postJob, getJob, createCheckoutSession, handleRazorpayCallback, getPlaceOrder, postPremiumJobUser, getPremiumJobsList, editJob, deleteJob } = require("../controllers/findJob.js")
 const router = express.Router()
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
@@ -35,6 +35,8 @@ const uploadPremiumJobList = multer({ storage: storageP });
 
 router.post("/postJob", upload.single('logo'), postJob);
 router.get("/getJob",getJob)
+router.put("/updateJob/:id",editJob)
+router.delete("/deleteJob/:id",deleteJob)
 
 router.post("/checkout-order",createCheckoutSession)
 router.post('/handle-razorpay-callback', handleRazorpayCallback);

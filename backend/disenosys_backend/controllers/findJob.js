@@ -68,7 +68,40 @@ exports.getJob = async (req, res) => {
     }
   };
   
+exports.editJob = async (req,res) => {
+      const { id } = req.params;
+      const updatedData = req.body; 
+      try {
+          const updatedJob = await findJob.findByIdAndUpdate(id, updatedData, { new: true });
+    
+          if (!updatedJob) {
+              return res.status(404).json({ message: 'Job not found' });
+          }
+    
+          res.status(200).json({
+              message: 'Job data has been updated',
+              data: updatedJob,
+          });
+      } catch (err) {
+          console.log(err);
+          return res.status(500).json({ err: 'Failed to update course data' });
+      }
+}
 
+exports.deleteJob = async (req,res) => {
+        const { id } = req.params;
+        try{
+        const fixed = await findJob.findByIdAndDelete(id);
+    
+        res.status(200).json({
+            message: 'Job data has deleted',
+            data: fixed,
+          });
+        }catch(err){
+            console.log(err);
+            return res.status(500).json({err : "data is not deleted"})
+        }
+}
 
 
 exports.createCheckoutSession = async (req, res) => {

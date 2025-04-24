@@ -38,10 +38,19 @@ const createJobSlice = createSlice({
             state.premium= action.payload.premium;
             state.error = action.payload.error;
           },
+          removeJob: (state, action) => {
+            state.jobs = action.payload;
+          },
+          updateJob: (state, action) => {
+            const updated = action.payload;
+            state.jobs = state?.jobs?.map(job =>
+                job._id === updated._id ? updated : job
+            );
+        },
          
     }
 })
 
 
-export const {setJob,postJob,postPayment,setPayment,postPremiumUsers,setPremiumUser} = createJobSlice.actions;
+export const {setJob,postJob,postPayment,setPayment,postPremiumUsers,setPremiumUser,removeJob,updateJob} = createJobSlice.actions;
 export default createJobSlice.reducer;

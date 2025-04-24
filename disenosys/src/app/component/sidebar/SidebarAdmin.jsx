@@ -33,6 +33,7 @@ const Sidebar = () => {
     { href: '/create-consultation-amount', label: 'Consultation', icon: <GiDiscussion size={20}/>},
     {href : '/create-job', label: 'Create-Job', icon: <BsPostcard />},
     {href : '/premium-applicants', label: 'Premium-Applicants', icon: <GrScorecard />},
+    {href : '/edit-job', label: 'Edit-Job', icon: <GrScorecard />},
     // { href: '/settings', label: 'Settings', icon: <FaCog /> },
     // { href: '/reports', label: 'Reports', icon: <FaChartBar /> },
   ];
