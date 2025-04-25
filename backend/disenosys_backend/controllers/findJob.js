@@ -6,6 +6,7 @@ const PremiumJobList = require('../models/premiumJobUsers.js');
 
 exports.postJob = async (req,res) => {
     const { title, description, companyName, type, location, experience, level, salary, jobPosted, jobExpire } = req.body;
+    console.log(req.body)
     const logo = req.file.path;
 
     try {
@@ -33,7 +34,8 @@ exports.postJob = async (req,res) => {
         console.error("Error saving to the database:", error);
         return res.status(500).json({
             success: false,
-            message: "There was an issue saving the job."
+            message: "There was an issue saving the job.",
+            error:error.message
         });
     }
 }
@@ -256,8 +258,10 @@ exports.getPlaceOrder = async(req,res) => {
 exports.postPremiumJobUser = async (req, res) => {
   try {
     const {
+      title,
       name,
       phone,
+      jobs,
       dob,
       gender,
       linkedin,
@@ -279,6 +283,7 @@ exports.postPremiumJobUser = async (req, res) => {
     } = req.body;
 
     const resume = req.file.path;
+    console.log(req.body)
     //    const existingUser = await PremiumJobList.findOne({ 
     //        $or: [{ email }, { name }] 
     //      });
@@ -288,8 +293,8 @@ exports.postPremiumJobUser = async (req, res) => {
     //      }
     const newJob = new PremiumJobList({
       name,
-      title,
       phone,
+      jobs,
       dob,
       gender,
       linkedin,

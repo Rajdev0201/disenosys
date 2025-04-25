@@ -9,17 +9,16 @@ const ApplyNow = () => {
   const {payment,loading} = useSelector((state) => state.jobs);
   const search = useSearchParams("");
   const sessionId = search.get('orderId');
-  const title = payment.filter((data,i) => (
-    data.sessionId === sessionId)).map((data) => (
-     data.lineItems.map((item) => {
-      return item.title
-     })
-    ))
+
+  const jobIds = payment
+  .filter((data) => data.sessionId === sessionId)
+  .map((data) => data._id)
+  console.log(jobIds.toString())
 
   const [formData, setFormData] = useState({
-    title: title.toString(),
     name: '',
     phone: '',
+    jobs:jobIds.toString(),
     dob: '',
     gender: '',
     linkedin: '',
@@ -40,6 +39,7 @@ const ApplyNow = () => {
     native: '',
     message: ''
   });
+  console.log(formData.resume)
   const router = useRouter();
   const dispatch = useDispatch();
 

@@ -70,10 +70,10 @@ const Edit = () => {
     setShowEditPopup(false);
   };
   return (
-    <div>
-      <div className="flex flex-col md:flex-row justify-between items-center px-12 py-20 gap-4 font-garet mt-12">
+    <div className="px-20 py-16 flex flex-col w-full mt-12">
+      <div className="flex flex-col md:flex-row justify-between items-center font-garet">
         <div className="flex items-center">
-          <div className="flex items-center bg-blue-500 justify-center w-10  rounded-tl-lg rounded-bl-lg border-r border-gray-200 p-3">
+          <div className="flex items-center bg-[#182073] justify-center w-10  rounded-tl-lg rounded-bl-lg border-r border-gray-200 p-3">
             <svg
               viewBox="0 0 20 20"
               aria-hidden="true"
@@ -84,26 +84,26 @@ const Edit = () => {
           </div>
           <input
             type="text"
-            className="bg-gray-300 pl-2 text-base font-medium outline-0 p-2  rounded-tr-lg rounded-br-lg "
+            className="bg-white pl-2 text-base font-medium outline-0 p-2  rounded-tr-lg rounded-br-lg "
             placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
         <Link href="/create-job"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
+          className="bg-[#182073] text-white px-4 py-2 rounded"
         >
           createJob
         </Link>
       </div>
 
-        <div className="px-24  font-garet ">
+        <div className="font-garet ">
       {paginatedData?.length === 0 ? (
   <p className="text-lg text-red-500 text-center font-semibold">
     No Jobs Added!.
   </p>
 ) : (
-  <div className="w-full overflow-x-auto">
+  <div className="w-full overflow-x-auto mt-4">
        {!loading ? (  
          <table className="min-w-full bg-white border border-gray-200">
             <thead className="bg-slate-200 border-b border-gray-300 text-[#182073]">

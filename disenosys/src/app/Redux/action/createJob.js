@@ -161,7 +161,7 @@ export const Payment = () => async (dispatch) => {
   }
   
 
-  export const createPremiumList = (data,router) => async (dispatch) => {
+ export const createPremiumList = (data,router) => async (dispatch) => {
     const createJobPromise = axios.post("https://disenosys-dkhj.onrender.com/Jobs/postPremium", data, {
       headers: {
         "Content-Type": "multipart/form-data",

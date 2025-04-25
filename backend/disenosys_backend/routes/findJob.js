@@ -25,7 +25,7 @@ const storageP = new CloudinaryStorage({
   params: {
     folder: 'Upload_Resume_Premium_Users',
     format: async (req, file) => 'pdf', 
-    public_id: (req, file) => `${Date.now()}-${file.originalname}`, 
+    public_id: (req, file) => `${Date.now()}-${file.originalname.split('.')[0]}`, 
   },
 });
 

@@ -5,9 +5,9 @@ const premiumUserJobs = new mongoose.Schema({
     type: String,
     required: true,
   },
-  title: {
-    type: String,
-    required: true,
+  jobs:{
+      type: mongoose.Types.ObjectId,
+       ref: "jobPayment"
   },
   phone: {
     type: String,

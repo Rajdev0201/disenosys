@@ -2,15 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from '../component/Pagination.jsx';
-import { InternList } from '../Redux/action/internCertificate.js';
-import { PremiumList } from '../Redux/action/createJob.js';
+import { Payment, PremiumList } from '../Redux/action/createJob.js';
 import { BsViewList } from 'react-icons/bs';
 
 
 const MyCourse = () => {
   const dispatch = useDispatch();
-  const {premium,loading} = useSelector((state) => state.jobs); 
-  console.log(premium)
+  const {premium,loading,payment} = useSelector((state) => state.jobs); 
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
@@ -18,11 +16,16 @@ const MyCourse = () => {
   const [viewModal, setViewModal] = useState(false);
   const [resumeModal, setResumeModal] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  
+  const getId = premium.map((data) => data.jobs);
+  const getTitle = payment
+  .filter((data) => data._id === getId.toString())
+  .map((data) => data.lineItems);
 
+  console.log(getTitle)
   
     useEffect(() => { 
       dispatch(PremiumList())
+      dispatch(Payment())
     },[dispatch]);
 
 
@@ -48,9 +51,9 @@ const MyCourse = () => {
 
 
   return (
-    <div className="p-6 flex flex-col w-full mt-12">
-      <div className="flex flex-col md:flex-row justify-between items-center p-5">
-        <div className="p-2 flex-grow">
+    <div className="px-20 py-16 flex flex-col w-full mt-12">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-garet ">
+        <div className="flex-grow">
         <div className="flex items-center">
             <div className="flex items-center bg-[#182073] justify-center w-10  rounded-tl-lg rounded-bl-lg border-r border-gray-200 p-3">
               <svg
@@ -76,7 +79,7 @@ const MyCourse = () => {
       {paginatedData?.length === 0 ? (
         <p className="text-lg text-red-400 text-center">No Data Available.</p>
       ) : (
-        <div className="w-full overflow-x-auto">
+        <div className="w-full overflow-x-auto mt-4">
           <table className="min-w-full bg-white border border-gray-200">
             <thead className="bg-slate-200 border-b border-gray-300 text-[#182073]">
               <tr>
@@ -95,7 +98,13 @@ const MyCourse = () => {
         <td className="py-3 px-4 text-center text-gray-400">{startIndex + index + 1}</td>
         <td className="py-3 px-4 text-center text-gray-400 w-44">{item.name}</td>
         <td className="py-3 px-4 text-center text-gray-400 w-44">{item.email}</td>
-        <td className="py-3 px-4 text-center text-gray-400 w-44">{item.title}</td>
+        <td className="py-3 px-4 text-center text-gray-400 w-44">{getTitle? (
+          getTitle.flat().map((data,i) => (
+            <span key={i} className="text-red-500">{data.title}</span>
+          ))
+        ) : (
+          <span className="text-red-500">Not Found</span>
+        )}</td>
         <td className="py-3 px-4 text-center text-gray-400">
           {new Date(item.createdAt).toLocaleDateString()}
         </td>
