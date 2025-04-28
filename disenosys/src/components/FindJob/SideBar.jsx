@@ -1,7 +1,10 @@
 import { CheckOut } from "@/app/Redux/action/createJob";
 import { useState } from "react";
 import { CiCalendar } from "react-icons/ci";
-import { FaFacebookF, FaLinkedinIn, FaRegMap, FaTwitter, FaWallet } from "react-icons/fa";
+import { FaFacebookF, FaLinkedinIn, FaRegMap, FaWallet, FaWhatsapp } from "react-icons/fa";
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { FaXTwitter } from "react-icons/fa6";
 import { IoRemoveCircle } from "react-icons/io5";
 import { PiLinkSimpleBold } from "react-icons/pi";
 import { SiLevelsdotfyi } from "react-icons/si";
@@ -94,7 +97,34 @@ const JobSidebar = ({
       }));
     }
   };
+  const handleCopyLink = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success('Link copied to clipboard!');
+  };
   
+  const jobUrl = window.location.href;
+  const handleShare = (platform) => {
+    let shareUrl = '';
+
+    switch (platform) {
+      case 'facebook':
+        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(jobUrl)}`;
+        break;
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(jobUrl)}`;
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(jobUrl)}`;
+        break;
+      case 'whatsapp':
+        shareUrl = `https://wa.me/?text=${encodeURIComponent(jobUrl)}`;
+        break;
+      default:
+        break;
+    }
+
+    window.open(shareUrl, '_blank', 'noopener,noreferrer');
+  };
     return (
       <div className="bg-white p-6 shadow-md border-2 border-gray-200 rounded-md space-y-4 lg:sticky top-0">
         <button className="block w-full text-center bg-blue-600 text-white py-2 rounded-md font-medium" onClick={handleApplyNow}>Apply Now</button>
@@ -168,27 +198,50 @@ const JobSidebar = ({
         </div>
   
         <div className="pt-4 border-t">
-          <p className="text-gray-500 text-sm mb-2">Share this job:</p>
-          <div className="flex gap-4 items-center">
-      <button className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-blue-400/20 border border-blue-500 text-blue-600 hover:bg-blue-50 transition duration-150">
-        <PiLinkSimpleBold size={18} />
-        <span className="text-sm font-semibold">Copy Link</span>
-      </button>
+      <p className="text-gray-500 text-sm mb-2">Share this job:</p>
 
-      {/* Social Buttons */}
-      <div className="flex gap-2">
-        <button className="p-2 rounded-full bg-blue-500/10 hover:bg-blue-500/20 transition">
-          <FaFacebookF size={14} className="text-blue-500" />
+      <div className="flex gap-4 items-center">
+        {/* Copy Link */}
+        <button 
+          onClick={handleCopyLink}
+          className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-blue-400/20 border border-blue-500 text-blue-600 hover:bg-blue-50 transition duration-150"
+        >
+          <PiLinkSimpleBold size={18} />
+          <span className="text-sm font-semibold">Copy Link</span>
         </button>
-        <button className="p-2 rounded-full bg-sky-500/10 hover:bg-sky-500/20 transition">
-          <FaTwitter size={14} className="text-sky-500" />
-        </button>
-        <button className="p-2 rounded-full bg-blue-700/10 hover:bg-blue-700/20 transition">
-          <FaLinkedinIn size={14} className="text-blue-700" />
-        </button>
+
+        {/* Social Buttons */}
+        <div className="flex gap-2">
+          <button 
+            onClick={() => handleShare('facebook')}
+            className="p-2 rounded-full bg-blue-500/10 hover:bg-blue-500/20 transition"
+          >
+            <FaFacebookF size={14} className="text-blue-500" />
+          </button>
+
+          <button 
+            onClick={() => handleShare('twitter')}
+            className="p-2 rounded-full bg-sky-500/10 hover:bg-sky-500/20 transition"
+          >
+            <FaXTwitter size={14} className="text-sky-500" />
+          </button>
+
+          <button 
+            onClick={() => handleShare('linkedin')}
+            className="p-2 rounded-full bg-blue-700/10 hover:bg-blue-700/20 transition"
+          >
+            <FaLinkedinIn size={14} className="text-blue-700" />
+          </button>
+
+          <button 
+            onClick={() => handleShare('whatsapp')}
+            className="p-2 rounded-full bg-green-500/10 hover:bg-green-500/20 transition"
+          >
+            <FaWhatsapp size={14} className="text-green-500" />
+          </button>
+        </div>
       </div>
     </div>
-        </div>
       </div>
     );
   };
