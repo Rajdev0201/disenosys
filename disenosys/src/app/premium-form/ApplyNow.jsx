@@ -1,24 +1,20 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createPremiumList } from '../Redux/action/createJob';
 import { useDispatch, useSelector } from 'react-redux';
 import { Payment } from '../Redux/action/createJob';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { FiUserCheck } from 'react-icons/fi';
 const ApplyNow = () => {
-  const {payment,loading} = useSelector((state) => state.jobs);
+  const {payment} = useSelector((state) => state.jobs);
   const search = useSearchParams("");
   const sessionId = search.get('orderId');
-
-  const jobIds = payment
-  .filter((data) => data.sessionId === sessionId)
-  .map((data) => data._id)
-  console.log(jobIds.toString())
-
-  const [formData, setFormData] = useState({
+  const fileInputRef = useRef(null);
+  const initialState ={
     name: '',
     phone: '',
-    jobs:jobIds.toString(),
+    jobs:'',
+    sessionId: '',
     dob: '',
     gender: '',
     linkedin: '',
@@ -38,15 +34,38 @@ const ApplyNow = () => {
     email: '',
     native: '',
     message: ''
-  });
-  console.log(formData.resume)
+  }
+  const [formData, setFormData] = useState(initialState);
   const router = useRouter();
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(Payment())
   },[dispatch])
+ 
+  useEffect(() => {
+    const jobIds = payment
+      .filter((data) => data.sessionId === sessionId)
+      .map((data) => data._id);
 
+      if (jobIds.length > 0) {
+        setFormData((prev) => ({
+          ...prev,
+          jobs: jobIds[0], // set the actual jobId after getting it
+        }));
+      }
+  
+    const findName =  payment
+    .filter((data) => data.sessionId === sessionId)
+    .map((data) => data.customerDetails.name);
+
+    setFormData((prev) => ({
+      ...prev,
+      name: findName[0] ,
+      sessionId: sessionId,
+  }))
+
+  }, [payment, sessionId]);
 
  
   const handleChange = (e) => {
@@ -72,32 +91,11 @@ const ApplyNow = () => {
     dispatch(createPremiumList(data,router))
 
     // Reset form
-    setFormData({
-      title: '',
-      name: '',
-      phone: '',
-      dob: '',
-      gender: '',
-      linkedin: '',
-      portfolio: '',
-      qualification: '',
-      specialization: '',
-      college: '',
-      yearOfPassing: '',
-      currentJob: '',
-      experience: '',
-      previousCompany: '',
-      currentCTC: '',
-      expectedCTC: '',
-      noticePeriod: '',
-      preferredLocation: '',
-      resume: null,
-      email: '',
-      native: '',
-      message: ''
-    });
-  };
-
+    setFormData(initialState);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    } 
+  }
   return (
     <div className="bg-[#FBFBFB] min-h-screen font-garet">
       {payment?.filter((data,i) => (
@@ -116,7 +114,7 @@ const ApplyNow = () => {
       <div className="flex flex-col gap-4">
 
     <label className="font-semibold">Full Name</label>
-    <input type="text" name="name" value={formData.name} onChange={handleChange} required className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+    <input type="text" name="name" value={data.customerDetails.name} required placeholder={data.customerDetails.name}   disabled className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-not-allowed" />
 
     <label className="font-semibold">Phone</label>
     <input type="text" name="phone" value={formData.phone} onChange={handleChange}  required className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -182,7 +180,8 @@ const ApplyNow = () => {
     <input type="text" name="preferredLocation" value={formData.preferredLocation} onChange={handleChange} className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
 
     <label className="font-semibold">Upload Resume (PDF)</label>
-    <input type="file" name="resume" accept="application/pdf" onChange={handleChange} className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 p-1" required />
+    <input type="file" name="resume" accept="application/pdf"  onChange={handleChange} ref={fileInputRef}
+     className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 p-1file:mr-4 file:py-2 file:px-4 file:rounded file:border file:border-gray-300 file:text-sm file:font-medium file:bg-gray-100 hover:file:bg-gray-200 " required />
 
     <label className="font-semibold">Additional Message</label>
     <textarea name="message" value={formData.message} onChange={handleChange} rows="3" className="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Any message for the recruiter..."></textarea>

@@ -187,6 +187,7 @@ export const Payment = () => async (dispatch) => {
       router.push("/applied");
     } catch (err) {
       console.error(err);
+      toast.error(`Error while creating apply-${err?.response?.data?.error}`);
     }
   };
 

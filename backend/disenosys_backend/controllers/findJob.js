@@ -258,10 +258,10 @@ exports.getPlaceOrder = async(req,res) => {
 exports.postPremiumJobUser = async (req, res) => {
   try {
     const {
-      title,
       name,
       phone,
       jobs,
+      sessionId,
       dob,
       gender,
       linkedin,
@@ -284,17 +284,17 @@ exports.postPremiumJobUser = async (req, res) => {
 
     const resume = req.file.path;
     console.log(req.body)
-    //    const existingUser = await PremiumJobList.findOne({ 
-    //        $or: [{ email }, { name }] 
-    //      });
+       const existingUser = await PremiumJobList.findOne({ sessionId 
+         });
      
-    //      if (existingUser) {
-    //        return res.status(409).json({ error: 'Your data already exists!' }); 
-    //      }
+         if (existingUser) {
+           return res.status(409).json({ error: 'Your data already exists!' }); 
+         }
     const newJob = new PremiumJobList({
       name,
       phone,
       jobs,
+      sessionId,
       dob,
       gender,
       linkedin,

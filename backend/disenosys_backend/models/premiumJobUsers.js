@@ -9,6 +9,10 @@ const premiumUserJobs = new mongoose.Schema({
       type: mongoose.Types.ObjectId,
        ref: "jobPayment"
   },
+  sessionId:{
+      type: String,
+      
+  },
   phone: {
     type: String,
     required: true,
