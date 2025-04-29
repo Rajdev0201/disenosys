@@ -23,8 +23,9 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
             userData: Data.userData,
             cartItems: Data.cartItems,
         });
-        const { orderId, amount, currency } = res.data;
-
+        const { amount } = Data;
+        const { orderId, currency } = res.data;
+         console.log("Amount received from backend:", amount);
         await loadRazorpayScript(); 
 
         const options = {

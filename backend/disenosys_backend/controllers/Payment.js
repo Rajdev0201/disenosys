@@ -4,7 +4,7 @@ const CheckoutSession = require('../models/Payment.js');
 const nodemailer = require('nodemailer');
 
 exports.createCheckoutSession = async (req, res) => {
-    const { userData, cartItems } = req.body;
+    const { userData, cartItems,amount } = req.body;
     console.log("Received data:", userData, cartItems);
 
     if (!cartItems || cartItems.length === 0) {
@@ -17,9 +17,9 @@ exports.createCheckoutSession = async (req, res) => {
     });
 
     try {
-        const amount = cartItems.reduce((total, item) => total + item.price * item.quantity, 0) * 100;
+        const fixedAmount = amount * 100;
         const options = {
-            amount: amount,
+            amount: fixedAmount, // amount in smallest currency unit
             currency: "INR",
             receipt: `receipt_order_${Date.now()}`,
             payment_capture: 1,

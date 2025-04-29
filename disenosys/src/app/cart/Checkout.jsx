@@ -15,8 +15,10 @@ import { setUser } from "../Redux/features/authSlice.js";
 import { getAllCarts } from "@/app/Redux/action/addToCart.js";
 
 const CartModal = () => {
-  const [totalPrice, setTotalPrice] = useState(0);
+  let [totalPrice, setTotalPrice] = useState(0);
   const [checkoutSuccess, setCheckoutSuccess] = useState(false);
+  const [couponCode, setCouponCode] = useState("");
+  const [coupenTotal,setCouponTotal]= useState(0);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -67,12 +69,15 @@ const CartModal = () => {
 
   const handlePlaceOrder = async () => {
     if (cart?.cartItems?.length > 0) {
+      const finalAmount = coupenTotal > 0 ? coupenTotal : totalPrice;
       const UserData = {
         userData: user?.user?.user,
         cartItems: cart.cartItems.filter(
           (item) => item.userName === cartUserName
         ),
+        amount: finalAmount,
       };
+      console.log(UserData);
       await dispatch(CheckOut(UserData, router));
       setCheckoutSuccess(true);
     } else {
@@ -83,14 +88,33 @@ const CartModal = () => {
       });
     }
   };
+  const Coupon = "DISENO10"; // Example coupon code
+  const applyCoupon = (coupon) => {
+    if(coupon == Coupon){
+      const total = totalPrice - (totalPrice * 0.6);
+      setCouponTotal(total);
+      console.log(total)
+       toast.success("Coupon applied successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "light",
+      });
+      setCouponCode("");
+    }else{
+      toast.error("Invalid coupon code!", {
+        position: "top-right",
+        autoClose: 5000,
+        theme: "light",
+      });
+    }
+  }
+  // const handleIncrementQuantityChange = (cartId) => {
+  //   dispatch(increaseQuantity(cartId));
+  // };
 
-  const handleIncrementQuantityChange = (cartId) => {
-    dispatch(increaseQuantity(cartId));
-  };
-
-  const handleDecrementQuantityChange = (cartId) => {
-    dispatch(decreaseQuantity(cartId));
-  };
+  // const handleDecrementQuantityChange = (cartId) => {
+  //   dispatch(decreaseQuantity(cartId));
+  // };
 
   return (
     <div className="container mx-auto px-4 md:px-8 py-6 mt-16 lg:mt-40">
@@ -138,16 +162,24 @@ const CartModal = () => {
       {/* Checkout Section */}
       <div className="w-full md:w-1/3 p-4 rounded-md space-y-2">
         <h3 className="text-xl font-semibold mb-2 font-sans">Total:</h3>
-        <p className="text-3xl font-bold font-garet">₹ {totalPrice.toLocaleString()}</p>
-        <p className="text-gray-500 line-through text-xl font-garet">₹{(totalPrice * 2.5).toLocaleString()}</p>
+        <p className="text-3xl font-bold font-garet">{coupenTotal ? (
+          <span className="text-green-600">₹ {coupenTotal.toLocaleString()}</span>
+        ):(
+          <span className="text-green-600">₹ {totalPrice.toLocaleString()}</span>
+        )}
+          </p>
+
         <p className="text-green-600 font-semibold font-garet text-md">60% off</p>
+        <p className="text-green-500 line-through text-sm font-garet">Your saved Amount ₹{(totalPrice * 0.6).toLocaleString()}</p>
         <div className="mt-2 flex flex-row justify-start gap-2 items-center mb-12">
           <input
             type="text"
+            value={couponCode}
+            onChange={(e) => setCouponCode(e.target.value)}
             placeholder="Coupon code"
             className="px-3 py-2 border rounded-xl bg-gray-100 focus:outline-none"
           />
-          <button className="px-2 py-1 lg:px-6 bg-[#0d1039] text-white lg:py-1 rounded shadow-inner text-lg font-garet">
+          <button className="px-2 py-1 lg:px-6 bg-[#0d1039] text-white lg:py-1 rounded shadow-inner text-lg font-garet" onClick={() => applyCoupon(couponCode)}>
             Apply
           </button>
         </div>
