@@ -306,14 +306,13 @@ const Stepthree = ({
           </div>
 
           <div>
-          <span className='text-sm text-red-500'>Accadmic Proof PG*</span>
+          <span className='text-sm text-gray-500'>Accadmic Proof PG</span>
            <input 
             type='file'
           name='pg'
           onChange={handlePg}
            className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
           placeholder='pg'
-          required
           />
           </div>
 

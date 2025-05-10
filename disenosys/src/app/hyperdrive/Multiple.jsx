@@ -255,7 +255,7 @@ const Multiple = () => {
           }
       
           if (isIndia === "yes") {
-            if (!profile || !ten || !plustwo || !ug || !pg || !afile || !pan || !voter) {
+            if (!profile || !ten || !plustwo || !ug  || !afile || !pan || !voter) {
               alert("Error: All documents are required for Indian applicants.");
               return;
             }
