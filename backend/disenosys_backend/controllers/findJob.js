@@ -109,48 +109,65 @@ exports.deleteJob = async (req,res) => {
 exports.createCheckoutSession = async (req, res) => {
     const { userData, cartItems } = req.body;
     console.log("Received data:", userData, cartItems);
-
+  
     if (!cartItems || cartItems.length === 0) {
-        return res.status(400).json({ message: "Cart items are required to create an order." });
+      return res.status(400).json({ message: "Cart items are required to create an order." });
     }
-
+  
     const razorpay = new Razorpay({
-        //   key_id: process.env.KEY_ID,
-        //   key_secret: process.env.KEY_SECRET,
-        key_id: 'rzp_test_pyzRkKRrWBkgnC',
-        key_secret: 'CIdT8EcotbRTWc4JxdYIhEUn',
+      key_id: 'rzp_test_pyzRkKRrWBkgnC',
+      key_secret: 'CIdT8EcotbRTWc4JxdYIhEUn',
     });
-
+  
     try {
-        const options = {
-            amount: cartItems.amount*100,
-            currency: "INR",
-            receipt: `receipt_order_${Date.now()}`,
-            payment_capture: 1,
-        };
-
-        const order = await razorpay.orders.create(options);
-
+      const options = {
+        amount: cartItems.amount * 100,
+        currency: "INR",
+        receipt: `receipt_order_${Date.now()}`,
+        payment_capture: 1,
+      };
+  
+      const order = await razorpay.orders.create(options);
+      
+      // Check if user already exists
+      const existingSession = await CheckoutSession.findOne({
+        "customerDetails.email": userData.email,
+        "customerDetails.name": userData.name,
+      });
+      
+      
+      if (existingSession) {
+        // Update existing session (optionally reset appliedCount to 0 if it's a new payment)
+        existingSession.sessionId = order.id;
+        existingSession.lineItems = cartItems;
+        existingSession.appliedCount = 0; // Reset because it's a new payment
+        existingSession.expiredAt = false;
+        await existingSession.save();
+      } else {
         const checkoutSession = new CheckoutSession({
-            sessionId: order.id,
-            lineItems: cartItems,
-            customerDetails: {
-                name: userData.name,
-                email: userData.email,
-            },
+          sessionId: order.id,
+          lineItems: cartItems,
+          customerDetails: {
+            name: userData.name,
+            email: userData.email,
+          },
+          appliedCount: 0,
         });
-
+  
         await checkoutSession.save();
-
-        res.status(200).json({ orderId: order.id, amount: order.amount, currency: order.currency });
+      }
+  
+      res.status(200).json({ orderId: order.id, amount: order.amount, currency: order.currency });
     } catch (err) {
-        console.log(err)
-        res.status(500).json(err.message);
+      console.log(err);
+      res.status(500).json(err.message);
     }
-};
+  };
+  
 
 
-
+  
+  
 
 
 exports.handleRazorpayCallback = async (req, res) => {
@@ -253,8 +270,6 @@ exports.getPlaceOrder = async(req,res) => {
 }
 
 
-
-
 exports.postPremiumJobUser = async (req, res) => {
   try {
     const {
@@ -283,13 +298,44 @@ exports.postPremiumJobUser = async (req, res) => {
     } = req.body;
 
     const resume = req.file.path;
-    console.log(req.body)
-       const existingUser = await PremiumJobList.findOne({ sessionId 
-         });
-     
-         if (existingUser) {
-           return res.status(409).json({ error: 'Your data already exists!' }); 
-         }
+
+    const session = await CheckoutSession.findOne({
+      "customerDetails.email": email,
+      "customerDetails.name": name,
+    });
+
+    if (!session) {
+      return res.status(404).json({ error: "Payment session not found." });
+    }
+
+    if (session.appliedCount >= 5) {
+      return res.status(400).json({ error: "Application limit reached. Please pay again." });
+    }
+
+    if (session.expiredAt) {
+      const createdDate = new Date(session.createdAt); 
+      const today = new Date();
+      const diffInDays = Math.floor((today - createdDate) / (1000 * 60 * 60 * 24));
+    
+      if (diffInDays >= 30) {
+        session.expiredAt = true;
+        await session.save();
+    
+        return res.status(400).json({ 
+          error: "Your subscription has expired. Please renew to apply again." 
+        });
+      }
+    }
+    const existingCount = await PremiumJobList.countDocuments({ sessionId });
+
+    if (existingCount >= 5) {
+      return res.status(400).json({ error: 'Limit reached. Please make a new payment to apply again.' });
+    }
+
+
+    session.appliedCount += 1;
+    await session.save();
+
     const newJob = new PremiumJobList({
       name,
       phone,
@@ -331,6 +377,7 @@ exports.postPremiumJobUser = async (req, res) => {
     });
   }
 };
+
 
 
 exports.getPremiumJobsList = async(req,res) => {

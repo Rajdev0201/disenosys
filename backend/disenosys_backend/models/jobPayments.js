@@ -25,6 +25,14 @@ const jobPaymentSchema = new mongoose.Schema({
       type: Date,
       default: Date.now,
     },
+    expiredAt: {
+      type:Boolean,
+      default: false,
+    },
+    appliedCount:{
+      type:Number,
+      default:0,
+    },
     isPaid: {
       type: Boolean,
       default: false,

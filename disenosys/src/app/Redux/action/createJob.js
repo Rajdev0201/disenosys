@@ -93,7 +93,7 @@ const loadRazorpayScript = () => {
 
 export const CheckOut = (Data, nav) => async (dispatch) => {
     try {
-        const res = await axios.post("https://disenosys-dkhj.onrender.com/jobs/checkout-order", {
+        const res = await axios.post("http://localhost:8000/jobs/checkout-order", {
             userData: Data.userData,
             cartItems: Data.cartItems,
         });
@@ -113,7 +113,7 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
             handler: async (response) => {
                 try {
                     // Send payment details to callback endpoint
-                    const captureResponse = await axios.post("https://disenosys-dkhj.onrender.com/jobs/handle-razorpay-callback", {
+                    const captureResponse = await axios.post("http://localhost:8000/jobs/handle-razorpay-callback", {
                         razorpayPaymentId: response.razorpay_payment_id,
                         razorpayOrderId: response.razorpay_order_id,
                         razorpaySignature: response.razorpay_signature,
@@ -121,8 +121,9 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
 
                     dispatch(postPayment(captureResponse.data));
                     toast.success("Payment successful!");
+                    localStorage.setItem("premium-applied", Data.userData.name);
                     setTimeout(() => {
-                        window.location.href = `/premium-form?orderId=${orderId}&paymentId=${response.razorpay_payment_id}&amount=${amount / 100}`;
+                        window.location.href = `/premium-form?orderId=${orderId}`;
                     }, 1000);
                 } catch (err) {
                     console.error("Error during callback:", err);
@@ -162,7 +163,7 @@ export const Payment = () => async (dispatch) => {
   
 
  export const createPremiumList = (data,router) => async (dispatch) => {
-    const createJobPromise = axios.post("https://disenosys-dkhj.onrender.com/Jobs/postPremium", data, {
+    const createJobPromise = axios.post("http://localhost:8000/Jobs/postPremium", data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
