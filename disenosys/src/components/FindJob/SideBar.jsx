@@ -19,7 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
 const JobSidebar = ({
-  title,
   level,
   jobPosted,
   jobExpire,
@@ -74,6 +73,7 @@ const JobSidebar = ({
     return `${formatINR(lowMonthly)} - ${formatINR(highMonthly)}`;
   };
   const dispatch = useDispatch();
+  const title = "Job Application";
   const [userData, setUserData] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [subscripeModel,setSubscripeModel] = useState(false)
@@ -119,11 +119,14 @@ const JobSidebar = ({
       const appliedCount = matchedUser?.appliedCount || 0;
   
       // ✅ Redirect directly if already paid and eligible
-      if (appliedCount <= 5) {
+      if (appliedCount < 5) {
         const sessionID = matchedUser?.sessionId || matchedUser?._id;
         toast.success("Redirecting to job form.");
         router.push(`/premium-form?orderId=${sessionID}`);
         return;
+      }else{
+        toast.warning("You have already applied for 5 jobs.");
+        toast.info("Please subscribe to apply for more jobs.");
       }
     }
   
@@ -268,7 +271,7 @@ const JobSidebar = ({
             <div class="rounded-2xl shadow-lg p-3 bg-indigo-500 text-gray-600 max-w-xs">
               <div class="relative flex flex-col items-center p-5 pt-10 bg-blue-100 rounded-xl">
                 <span class="mt-[-12px] absolute top-0 right-0 flex items-center bg-indigo-500 rounded-l-full py-2 px-3 text-xl font-semibold text-amber-100">
-                  $200 <small class="text-xs ml-1 text-white">/ month</small>
+                 ₹200 <small class="text-xs ml-1 text-white">/ month</small>
                 </span>
                 <p class="text-xl font-semibold text-blue-800 bg-indigo-200 px-2 py-1 rounded-lg">
                   Professional

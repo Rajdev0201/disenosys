@@ -5,7 +5,7 @@ import Link from "next/link";
 const Scholarship = () => {
   return (
     <div className="">
-      <div className="bg-sch p-64 mt-16 lg:mt-32"></div>
+      <div className="bg-sch p-20 lg:p-64 mt-16 lg:mt-32"></div>
       <div className="flex flex-col px-2 lg:px-24 space-y-6">
         <h1 className="lg:text-4xl text-xl font-bold font-garet text-center lg:text-start mt-8 text-[#0d1039]">
           Disenosys Scholarship Program

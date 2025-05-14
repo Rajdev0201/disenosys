@@ -142,6 +142,7 @@ exports.createCheckoutSession = async (req, res) => {
         existingSession.lineItems = cartItems;
         existingSession.appliedCount = 0; // Reset because it's a new payment
         existingSession.expiredAt = false;
+        existingSession.isPaid = false;
         await existingSession.save();
       } else {
         const checkoutSession = new CheckoutSession({
@@ -152,6 +153,8 @@ exports.createCheckoutSession = async (req, res) => {
             email: userData.email,
           },
           appliedCount: 0,
+          expiredAt:false,
+          isPaid: false,
         });
   
         await checkoutSession.save();
@@ -165,14 +168,9 @@ exports.createCheckoutSession = async (req, res) => {
   };
   
 
-
-  
-  
-
-
 exports.handleRazorpayCallback = async (req, res) => {
     const { razorpayPaymentId, razorpayOrderId, razorpaySignature } = req.body;
-
+   console.log(req.body)
     try {
         const orderData = await CheckoutSession.findOne({ sessionId: razorpayOrderId, isPaid: false });
 
@@ -181,7 +179,7 @@ exports.handleRazorpayCallback = async (req, res) => {
         }
 
         const { customerDetails, lineItems } = orderData;
-
+        console.log(orderData)
         console.log("User Data:", customerDetails);
         console.log("Cart Items:", lineItems);
 
