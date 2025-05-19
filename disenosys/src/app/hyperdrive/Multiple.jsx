@@ -339,7 +339,7 @@ const Multiple = () => {
           setFormData(initialFormData);
         } catch (error) {
           console.error("Error submitting career:", error);
-          alert("An error occurred. Please try again later.");
+          alert("Something went wrong. Please try again later.");
         }
         setLoad(false);
       };

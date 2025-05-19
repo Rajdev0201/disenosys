@@ -276,9 +276,8 @@ const JobSidebar = ({
                 <p class="text-xl font-semibold text-blue-800 bg-indigo-200 px-2 py-1 rounded-lg">
                   Professional
                 </p>
-                <p class="text-center mt-3">
-                  This plan is for those who have a team already and running a
-                  large business.
+                <p class="text-center mt-3 text-sm">
+                  Welcome to Subscription-Based Job Application
                 </p>
                 <ul class="flex flex-col space-y-3 mt-4">
                   <li class="flex items-center space-x-2">
@@ -297,12 +296,12 @@ const JobSidebar = ({
                       </svg>
                     </span>
                     <span>
-                      <strong class="font-semibold text-gray-800">20</strong>{" "}
-                      team members
+                      <strong class="font-semibold text-gray-800">30</strong>{" "}
+                      days valid only
                     </span>
                   </li>
                   <li class="flex items-center space-x-2">
-                    <span class="flex items-center justify-center w-5 h-5 bg-teal-500 text-white rounded-full">
+                    <span class="flex items-center justify-center w-6 h-5 bg-teal-500 text-white rounded-full">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24"
@@ -316,10 +315,10 @@ const JobSidebar = ({
                         ></path>
                       </svg>
                     </span>
-                    <span>
-                      Plan
-                      <strong class="font-semibold text-gray-800">
-                        team meetings
+                    <span className="">
+                       One time paid, 
+                      <strong class="font-semibold text-gray-800 gap-2">
+                       5 times apply
                       </strong>
                     </span>
                   </li>
@@ -338,7 +337,7 @@ const JobSidebar = ({
                         ></path>
                       </svg>
                     </span>
-                    <span>File sharing</span>
+                    <span>Easy to apply</span>
                   </li>
                 </ul>
               </div>

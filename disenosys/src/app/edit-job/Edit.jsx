@@ -50,25 +50,33 @@ const Edit = () => {
   }
   const handleEditClick = (id, data) => {
     seteditData({ id, title: data.title,location:data.location,salary:data.salary,type:data.type });
+    console.log(editData)
     setShowEditPopup(true);
   };
 
   const handleEditChange = (e) => {
     const {name, value} = e.target;
-    const confirmSubmit = window.confirm("Do you want to edit job?");
-    if(confirmSubmit){
-        seteditData({ ...editData, [name]: value });
-    }
+    seteditData({ ...editData, [name]: value });
   };
 
   const handleUpdate = (e) => {
-    e.preventDefault();
-    const confirmSubmit = window.confirm("Do you want to update job?");
-    if (confirmSubmit) {
-        dispatch(editJob(editData.id, { title: editData.title ,location: editData.location,salary:editData.salary,type:editData.type}));
-    }
+  e.preventDefault();
+  const confirmSubmit = window.confirm("Do you want to update job?");
+  console.log(editData);
+  if (confirmSubmit) {
+    dispatch(
+      editJob(editData.id, {
+        title: editData.title,
+        location: editData.location,
+        salary: editData.salary,
+        type: editData.type
+      })
+    );
     setShowEditPopup(false);
-  };
+  }
+};
+
+
   return (
     <div className="px-20 py-16 flex flex-col w-full mt-12">
       <div className="flex flex-col md:flex-row justify-between items-center font-garet">
@@ -161,10 +169,10 @@ const Edit = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-50">
           <div className="bg-white p-6 rounded-lg  w-[500px] space-y-2">
             <h2 className="text-xl font-bold mb-4">Edit Job</h2>
-            <input type="text" value={editData.title} onChange={handleEditChange} className="border p-2 w-full rounded" />
-            <input type="text" value={editData.location} onChange={handleEditChange} className="border p-2 w-full rounded" />
-            <input type="text" value={editData.salary} onChange={handleEditChange} className="border p-2 w-full rounded" />
-            <input type="text" value={editData.type} onChange={handleEditChange} className="border p-2 w-full rounded" />
+            <input type="text" name="title" value={editData.title} onChange={handleEditChange} className="border p-2 w-full rounded" />
+            <input type="text"name="location" value={editData.location} onChange={handleEditChange}  className="border p-2 w-full rounded" />
+            <input type="text" name="salary" value={editData.salary}  onChange={handleEditChange} className="border p-2 w-full rounded" />
+            <input type="text" name="type" value={editData.type}   onChange={handleEditChange} className="border p-2 w-full rounded" />
             <div className="flex justify-between mt-4">
                 <button
                   type="button"
@@ -173,7 +181,7 @@ const Edit = () => {
                 >
                   Cancel
                 </button>
-            <button className="bg-blue-500 rounded text-white px-4 py-2 mt-4" onClick={handleUpdate}>
+            <button className="bg-blue-500 rounded text-white px-4 py-2 mt-4"  onClick={handleUpdate}>
               Update Course
             </button>
             </div>

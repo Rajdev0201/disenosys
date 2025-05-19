@@ -41,12 +41,18 @@ const createJobSlice = createSlice({
           removeJob: (state, action) => {
             state.jobs = action.payload;
           },
-          updateJob: (state, action) => {
-            const updated = action.payload;
-            state.jobs = state?.jobs?.map(job =>
-                job._id === updated._id ? updated : job
-            );
-        },
+         updateJob: (state, action) => {
+             if (Array.isArray(state.jobs)) {
+            state.jobs = state.jobs?.map(job =>
+           job._id === action.payload._id ? action.payload : job
+        );
+      } else {
+       console.warn("Expected jobs to be an array, got:", state.jobs);
+    // Optionally reset it to an array
+       state.jobs = [action.payload];
+  }
+},
+
          
     }
 })

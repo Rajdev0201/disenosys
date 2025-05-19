@@ -59,24 +59,15 @@ export const remove = (Id) => async (dispatch) => {
 };
 
 export const editJob = (Id, updatedData) => async (dispatch) => {
-const response = await axios.put(`https://disenosys-dkhj.onrender.com/Jobs/editJob/${Id}`, updatedData);
 try {
-    const res = await toast.promise(
-      response,
-      {
-        pending: 'Updating job...',
-        success: 'Updated Job posted successfully!',
-        error: 'Failed to updated job.',
-      },
-      {
-        position: 'top-right',
-        autoClose: 3000,
-      }
-    );
-    dispatch(updateJob(res.data)); 
+    const response = await axios.put(`https://disenosys-dkhj.onrender.com/Jobs/updateJob/${Id}`, updatedData);
+    console.log(response.data)
+    dispatch(updateJob(response.data.data)); 
     dispatch(getJob())
+    toast.success("Updated successfully....!")
 } catch (error) {
     console.error('Error updating jobs:', error);
+    toast.error("Something went wrong...")
 }
 };
 
@@ -159,7 +150,7 @@ export const Payment = () => async (dispatch) => {
     } catch (error) {
         console.error('Error fetch code:', error);
     }
-  }
+  };
   
 
  export const createPremiumList = (data,router) => async (dispatch) => {
@@ -189,10 +180,7 @@ export const Payment = () => async (dispatch) => {
     } catch (err) {
       console.error(err);
       toast.error(`Error while creating apply-${err?.response?.data?.error}`);
-    }
-  };
-
-
+  }};
 
 
 export const PremiumList = () => async (dispatch) => {
@@ -205,5 +193,5 @@ export const PremiumList = () => async (dispatch) => {
   } catch (error) {
       console.error('Error fetch code:', error);
   }
-}
+};
 
