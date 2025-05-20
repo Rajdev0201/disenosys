@@ -13,9 +13,9 @@ router.post("/teacheradd", async (req, res) => {
       console.error("Error saving contact:", error);
       res.status(500).json({ success: false, message: "Server error!" });
     }
-  });
+ });
 
-  router.get("/teacherget" ,async (req,res) => {
+router.get("/teacherget" ,async (req,res) => {
     try{
         const course = await teacher.find();
     
@@ -31,11 +31,9 @@ router.post("/teacheradd", async (req, res) => {
             console.log(err);
             return res.status(500).json({err : "data is not fetched"})
         }
-  })
+ })
 
-
-
-  router.delete('/teacherdelete/:id', async (req,res) => {
+router.delete('/teacherdelete/:id', async (req,res) => {
     const { id } = req.params;
     try{
     const fixed = await teacher.findByIdAndDelete(id);
@@ -48,7 +46,7 @@ router.post("/teacheradd", async (req, res) => {
         console.log(err);
         return res.status(500).json({err : "data is not deleted"})
     }
-})
+ })
 
 router.put('/teacheredit/:id', async (req, res) => {
   const { id } = req.params;

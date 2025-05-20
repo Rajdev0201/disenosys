@@ -3,13 +3,11 @@ const UserModel = require("../models/UserModel")
 const bcrypt = require("bcrypt")
 const ErrorHandler = require("../utils/ErrorHandler")
 const SendToken = require("../utils/SendToken")
-const nodemailer = require("nodemailer")
+
 const SendEmail = require("../utils/SendEmail")
 const crypto = require("crypto")
-
-const passport = require('passport');
 const linkedin = require("../models/linkedin")
-const LinkedInStrategy = require('passport-linkedin-oauth2').Strategy;
+
 
 
 exports.RegisterUser = CatchAsyncError(async(req,res,next)=>{
@@ -72,12 +70,11 @@ exports.LoginUser = CatchAsyncError(async (req, res, next) => {
       user.mobile = mobile || user.mobile;
 
       await user.save();
-      const updatedUser = await UserModel.findById(req.user.id).select("-password");
-
+  
     res.status(200).json({ 
       success: true, 
       message: "Profile updated successfully",
-      user: updatedUser 
+      user: user 
     });
     } catch (error) {
       next(error);

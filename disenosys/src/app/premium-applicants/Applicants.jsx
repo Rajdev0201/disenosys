@@ -20,8 +20,6 @@ const MyCourse = () => {
   const getTitle = payment
   .filter((data) => data._id === getId.toString())
   .map((data) => data.lineItems);
-
-  console.log(getTitle)
   
     useEffect(() => { 
       dispatch(PremiumList())

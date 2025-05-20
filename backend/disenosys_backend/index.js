@@ -282,7 +282,6 @@ app.post('/career', uploadCareer.single('file'), async (req, res) => {
   if (!req.file) {
     return res.status(400).send('No file uploaded.');
   }
-  console.log(req.file)
   try {
 
     const existingCareer = await career.findOne({ 
@@ -504,7 +503,7 @@ app.post("/studentadd",uploadSPA, async (req, res) => {
   const pan = req?.files?.['pan']?.[0] || null;
   
 
-    console.log("Uploaded files:", req?.files);
+console.log("Uploaded files:", req?.files);
 console.log("Request body:", req?.body);
 
   try {
@@ -586,6 +585,8 @@ let newSid = `DSST${newSidNumber}`;
     res.status(500).json({ success: false, message: "Server error!" });
   }
 });
+
+
 app.get('/mentordata', async (req, res) => {
   try {
     const data = await mentor.aggregate([

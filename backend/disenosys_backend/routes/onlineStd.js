@@ -77,7 +77,7 @@ router.post("/subrows/:id", async (req, res) => {
 router.put("/subrows/:parentId/:subrowId", async (req, res) => {
   try {
     const { cname, start, end } = req.body;
-    const updatedEntry = await students.findOneAndUpdate(
+    const updatedEntry = await students.findOneAndUpdate( //updateone students
       { _id: req.params.parentId, "subrows._id": req.params.subrowId },
       {
         $set: {
