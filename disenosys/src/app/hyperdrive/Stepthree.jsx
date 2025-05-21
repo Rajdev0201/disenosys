@@ -53,7 +53,7 @@ const Stepthree = ({
       
         // Validation for file type
         const fileType = profile.type;
-        if (fileType.startsWith('application/pdf') || fileType.startsWith('image/') )  {
+        if (fileType.startsWith('image/'))  {
           setFormData((prev) => ({ ...prev, profile })); 
         } else {
           alert("Unsupported file type. Please upload a PDF file or Png file.")

@@ -4,7 +4,7 @@ const students = require('../models/onlineStd.js');
 
 
 
-  router.get("/studentget" ,async (req,res) => {
+router.get("/studentget" ,async (req,res) => {
     try{
         const course = await students.find();
     
