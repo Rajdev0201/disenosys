@@ -1,11 +1,16 @@
 "use client";
 import React, { useState } from "react";
+import DatePicker from "react-multi-date-picker";
 
 const Steptow = ({ nextStep, prevStep, formData, setFormData }) => {
   const [errors, setErrors] = useState({
     pannoError: "",
     aadharnoError: "",
   });
+
+  const handleDate = (ndob) => {
+    setFormData(({...formData,ndob}))
+  }
 
   const handlePanChange = (e) => {
     const value = e.target.value;
@@ -277,17 +282,23 @@ const Steptow = ({ nextStep, prevStep, formData, setFormData }) => {
           </div>
           <div className="lg:-mt-0">
             <span className="text-sm text-red-500">Nominee Date Of Birth*</span>
-            <input
-              type="date"
-              name="ndob"
-              value={formData.ndob}
-              onChange={(e) =>
-                setFormData({ ...formData, ndob: e.target.value })
-              }
-              className="w-full h-12 rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500"
-              placeholder="Nominee DOB"
-              required
-            />
+             <div className="w-full h-12 rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500"
+                          >
+                         <DatePicker
+                                name="ndob"
+                                value={formData.ndob}
+                                selected={formData.ndob}
+                                onChange={handleDate}
+                                dateFormat="MM/dd/yyyy"
+                                placeholder="yyyy/MM/dd"
+                                className="border-blue-400 border-2"
+                                style={{color:'blue',background:'none', padding:"5px",border:"none"}}
+                                showYearDropdown
+                                showMonthDropdown
+                                dropdownMode="select"
+                              />
+                              </div>
+
           </div>
           <div>
           <span className="text-sm text-red-500">Nominee Relationship *</span>

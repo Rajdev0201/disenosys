@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { courseld } from '../Redux/action/Course';
+import DatePicker from "react-multi-date-picker";
 
 const Stepthree = ({
     formData,
@@ -13,8 +14,17 @@ const Stepthree = ({
     // setIsChecked,
 }) => {
    
-  const {course} = useSelector((state) => state.courseLD);
+ const {course} = useSelector((state) => state.courseLD);
  const dispatch = useDispatch();
+
+   const handleRegisterDate = (rdate) => {
+    setFormData(({...formData,rdate}))
+  }
+  
+    const handleJoningDate = (cdate) => {
+    setFormData(({...formData,cdate}))
+  }
+
 
   useEffect(() => {
     dispatch(courseld());
@@ -30,7 +40,7 @@ const Stepthree = ({
           setFormData((prev) => ({ ...prev, file }));
         } else {
           alert("Unsupported file type. Please upload a PDF file.")
-          setError("Unsupported file type. Please upload a PDF file.");
+          // setError("Unsupported file type. Please upload a PDF file.");
         }
       };
       
@@ -43,7 +53,7 @@ const Stepthree = ({
           setFormData((prev) => ({ ...prev, idProof}));
         } else {
           alert("Unsupported file type. Please upload a PDF file.")
-          setError("Unsupported file type. Please upload a PDF file.");
+          // setError("Unsupported file type. Please upload a PDF file.");
         }
       };
       
@@ -56,8 +66,8 @@ const Stepthree = ({
         if (fileType.startsWith('image/'))  {
           setFormData((prev) => ({ ...prev, profile })); 
         } else {
-          alert("Unsupported file type. Please upload a PDF file or Png file.")
-          setError('Unsupported file type. Please upload an image.');
+          alert("Unsupported file type. Please upload a Png file.")
+          // setError('Unsupported file type. Please upload an image.');
         }
       };
 
@@ -71,7 +81,7 @@ const Stepthree = ({
           setFormData((prev) => ({ ...prev,  ten})); 
         } else {
           alert("Unsupported file type. Please upload a PDF file.")
-          setError('Unsupported file type. Please upload an image.');
+          // setError('Unsupported file type. Please upload an image.');
         }
       };
 
@@ -85,7 +95,7 @@ const Stepthree = ({
           setFormData((prev) => ({ ...prev,  ug})); 
         } else {
           alert("Unsupported file type. Please upload a PDF file.")
-          setError('Unsupported file type. Please upload an image.');
+          // setError('Unsupported file type. Please upload an image.');
         }
       };
 
@@ -99,7 +109,7 @@ const Stepthree = ({
           setFormData((prev) => ({ ...prev,  pg})); // Assign the file to `formData.filePic`
         } else {
           alert("Unsupported file type. Please upload a PDF file.")
-          setError('Unsupported file type. Please upload an image.');
+          // setError('Unsupported file type. Please upload an image.');
         }
       };
       const handlePlus = (e) => {
@@ -112,7 +122,7 @@ const Stepthree = ({
           setFormData((prev) => ({ ...prev,  plustwo})); // Assign the file to `formData.filePic`
         } else {
           alert("Unsupported file type. Please upload a PDF file.")
-          setError('Unsupported file type. Please upload an image.');
+          // setError('Unsupported file type. Please upload an image.');
         }
       };
       const handleAfile = (e) => {
@@ -125,7 +135,7 @@ const Stepthree = ({
           setFormData((prev) => ({ ...prev,  afile})); // Assign the file to `formData.filePic`
         } else {
           alert("Unsupported file type. Please upload a PDF file.")
-          setError('Unsupported file type. Please upload an image.');
+          // setError('Unsupported file type. Please upload an image.');
         }
       };
       const handleVoter = (e) => {
@@ -138,7 +148,7 @@ const Stepthree = ({
           setFormData((prev) => ({ ...prev,  voter})); // Assign the file to `formData.filePic`
         } else {
           alert("Unsupported file type. Please upload a PDF file.")
-          setError('Unsupported file type. Please upload an image.');
+          // setError('Unsupported file type. Please upload an image.');
         }
       };
 
@@ -153,7 +163,7 @@ const Stepthree = ({
           setFormData((prev) => ({ ...prev,  pan})); // Assign the file to `formData.filePic`
         } else {
           alert("Unsupported file type. Please upload a PDF file.")
-          setError('Unsupported file type. Please upload an image.');
+          // setError('Unsupported file type. Please upload an image.');
         }
       };
   
@@ -384,27 +394,42 @@ const Stepthree = ({
           <div className='grid lg:grid-cols-2 gap-2'>
             <div>
             <span className='text-sm text-red-500'>Registration Date*</span>
-          <input 
-          type='date'
-          name='rdate'      
-          value={formData.rdate}
-         onChange={(e) => setFormData({ ...formData, rdate: e.target.value })}
-          className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
-          placeholder='Registration Date'
-          required
-          />
+         <div className="w-full h-12 rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500"
+              >
+            <DatePicker
+                              name="rdate"
+                              value={formData.rdate}
+                              selected={formData.rdate}
+                              onChange={handleRegisterDate}
+                              dateFormat="MM/dd/yyyy"
+                              placeholder="yyyy/MM/dd"
+                              className="border-blue-400 border-2"
+                              style={{color:'blue',background:'none', padding:"5px",border:"none"}}
+                              showYearDropdown
+                              showMonthDropdown
+                              dropdownMode="select"
+                            />
+             </div>
         </div>
         <div>
         <span className='text-sm text-red-500'>Course Joining Date*</span>
-           <input 
-            type='date'
-          name='cdate'
-          value={formData.cdate}
-          onChange={(e) => setFormData({ ...formData, cdate: e.target.value })}
-           className='w-full rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500'
-          placeholder='Course Joining Date'
-          required
-          />
+        
+            <div className="w-full h-12 rounded-lg p-3  bg-blue-100 shadow-inner text-gray-700 text-base  focus:border-none outline-none focus:outline-purple-500"
+              >
+            <DatePicker
+                              name="cdate"
+                              value={formData.cdate}
+                              selected={formData.cdate}
+                              onChange={handleJoningDate}
+                              dateFormat="MM/dd/yyyy"
+                              placeholder="yyyy/MM/dd"
+                              className="border-blue-400 border-2"
+                              style={{color:'blue',background:'none', padding:"5px",border:"none"}}
+                              showYearDropdown
+                              showMonthDropdown
+                              dropdownMode="select"
+                            />
+             </div>
            </div>
            <div>
   <label className="text-sm text-red-500">Course Name*</label>

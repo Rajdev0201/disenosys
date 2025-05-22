@@ -14,7 +14,7 @@ const Multiple = () => {
       const initialFormData = {
         fname: "",
         lname:"",
-        dob:"",
+        dob: new Date(),
         gender:"",
         permanent:"",
         communication:"",
@@ -29,7 +29,7 @@ const Multiple = () => {
         mother:"",
         marital:"",
         n1:"",
-        ndob:"",
+        ndob: new Date(),
         nrealtion:"",
         naddress:"",
         bank:"",
@@ -50,8 +50,8 @@ const Multiple = () => {
         afile:null,
         voter:null,
         pan:null,
-        rdate:"",
-        cdate:"",
+        rdate:new Date(),
+        cdate: new Date(),
         cname:"",
         mode:"",
         sid:"",
@@ -117,7 +117,7 @@ const Multiple = () => {
             return;
           }
         
-          if (!dob.trim()) {
+          if (!dob) {
             alert("Error: dob is required.");
             return;
           }
@@ -188,7 +188,7 @@ const Multiple = () => {
             return;
           }
 
-          if (!ndob.trim()) {
+          if (!ndob) {
             alert("Error: Nominee DOB is required.");
             return;
           }
@@ -266,15 +266,15 @@ const Multiple = () => {
             }
           }
                
-          if (!rdate.trim()) {
+          if (!rdate) {
             alert("Error: Registration Date is required.");
             return;
           } 
-          if (!cdate.trim()) {
+          if (!cdate) {
             alert("Error: Course join Date is required.");
             return;
           }
-          if (!cname.trim()) {
+          if (!cname) {
             alert("Error: Course name is required.");
             return;
           }
@@ -339,7 +339,7 @@ const Multiple = () => {
           setFormData(initialFormData);
         } catch (error) {
           console.error("Error submitting career:", error);
-          alert("Something went wrong. Please try again later.");
+          alert("Error" + error.response.data.message);
         }
         setLoad(false);
       };

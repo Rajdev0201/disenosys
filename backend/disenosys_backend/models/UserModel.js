@@ -8,16 +8,16 @@ const userSchema = new mongoose.Schema({
     userName:{
         type: String,
         unique: true,
-        required:[true,"Please Enter UserName"]
+        required:true
     },
     userEmail:{
         type: String,
         unique: true,
-        required:[true,"Please Enter UserEmail"]
+        required:true
     },
     password:{
         type: String,
-        required:[true,"Please Enter Password"],
+        required:true,
         select: false
     },
     mobile:{
@@ -34,10 +34,6 @@ const userSchema = new mongoose.Schema({
     resetPasswordTokenExpire:{
        type: Date
     },
-    reviews:{
-        type: mongoose.Types.ObjectId,
-        ref: "reviews"
-    }
 })
 
 

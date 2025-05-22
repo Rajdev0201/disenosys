@@ -5,11 +5,15 @@ const nodemailer = require('nodemailer');
 
 exports.createCheckoutSession = async (req, res) => {
     const { userData, cartItems,amount } = req.body;
-    console.log("Received data:", userData, cartItems);
+     console.log(amount)
 
     if (!cartItems || cartItems.length === 0) {
         return res.status(400).json({ message: "Cart items are required to create an order." });
     }
+
+    if (!amount || isNaN(amount)) {
+    return res.status(400).json({ message: "Valid amount is required." });
+  }
 
     const razorpay = new Razorpay({
           key_id: process.env.KEY_ID,
@@ -18,6 +22,7 @@ exports.createCheckoutSession = async (req, res) => {
 
     try {
         const fixedAmount = amount * 100;
+        console.log("Fixed Amount:", fixedAmount);
         const options = {
             amount: fixedAmount, // amount in smallest currency unit
             currency: "INR",
@@ -26,7 +31,7 @@ exports.createCheckoutSession = async (req, res) => {
         };
 
         const order = await razorpay.orders.create(options);
-
+         console.log("Order created:", order);
         const checkoutSession = new CheckoutSession({
             sessionId: order.id,
             lineItems: cartItems,
@@ -41,6 +46,7 @@ exports.createCheckoutSession = async (req, res) => {
 
         res.status(200).json({ orderId: order.id, amount: order.amount, currency: order.currency });
     } catch (err) {
+        console.log(err)
         res.status(err.statusCode || 500).json(err.message);
     }
 };

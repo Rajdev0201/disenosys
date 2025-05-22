@@ -93,15 +93,20 @@ const JobListPage = () => {
           >
             &lt;
           </li>
-          {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => ( 
+            //Create one object: { length: 3 } 
+            //That tells JavaScript: “Make an array with 3 empty slots.”
+            //{ length: totalPages } → creates an empty array of that size
+            //(_, i) => i + 1 → fills it with numbers starting from 1
+            //The map function iterates over the array and returns a new array with the page numbers.
             <li
               key={num}
               onClick={() => handlePageClick(num)}
-              className={`px-3 py-1 rounded-full cursor-pointer ${
+              className={`px-3 py-1 rounded-full cursor-pointer ${ 
                 num === page ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-200"
               }`}
             >
-              {num < 10 ? `0${num}` : num}
+              {num < 10 ? `0${num}` : num} 
             </li>
           ))}
           <li
