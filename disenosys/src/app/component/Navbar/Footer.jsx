@@ -8,7 +8,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <>
-    <div className="bg-[#0d1039] font-poppins">
+    <div className="bg-[#0d1039] font-garet ">
       <div className="container mx-auto px-10 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 space-x-0  space-y-4 md:space-y-0 sm:space-x-0 lg:space-x-12">
           <div className="col-span-1">

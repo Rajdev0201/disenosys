@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Pagination } from '../component/Pagination.jsx';
-import { Payment, PremiumList } from '../Redux/action/createJob.js';
+import { getJob, Payment, PremiumList } from '../Redux/action/createJob.js';
 import { BsViewList } from 'react-icons/bs';
 
 
 const MyCourse = () => {
   const dispatch = useDispatch();
-  const {premium,loading,payment} = useSelector((state) => state.jobs); 
+  const {premium,loading,payment,jobs} = useSelector((state) => state.jobs); 
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
@@ -20,10 +20,10 @@ const MyCourse = () => {
   const getTitle = payment
   .filter((data) => data._id === getId.toString())
   .map((data) => data.lineItems);
-  
     useEffect(() => { 
       dispatch(PremiumList())
       dispatch(Payment())
+      dispatch(getJob())
     },[dispatch]);
 
 
