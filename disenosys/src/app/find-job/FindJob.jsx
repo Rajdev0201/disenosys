@@ -12,6 +12,7 @@ import { FaSearchengin } from "react-icons/fa";
 
 const JobListPage = () => {
   const {jobs,loading} = useSelector((state) => state.jobs); 
+  console.log(jobs)
   const router = useRouter();
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);

@@ -4,23 +4,49 @@ const students = require('../models/onlineStd.js');
 
 
 
-router.get("/studentget" ,async (req,res) => {
-    try{
-        const course = await students.find();
-    
-        if(!course){
-              return res.status(400).json({ error: 'No Data is available' });
-        }
-    
-        res.status(200).json({
-            message: 'student data is saved',
-            data: course,
-          });
-        }catch(err){
-            console.log(err);
-            return res.status(500).json({err : "data is not fetched"})
-        }
-  })
+router.get("/studentget", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 8;
+    const search = req.query.search || "";
+
+    const skip = (page - 1) * limit;
+
+    // Build search filter
+    let filter = {};
+    if (search) {
+      // Search in fname or email, case-insensitive
+      filter = {
+        $or: [
+          { fname: { $regex: search, $options: "i" } },
+          { email: { $regex: search, $options: "i" } },
+        ],
+      };
+    }
+
+    const total = await students.countDocuments(filter);
+    const studentsData = await students
+      .find(filter)
+      .skip(skip)
+      .limit(limit);
+
+    if (!studentsData) {
+      return res.status(400).json({ error: "No Data is available" });
+    }
+
+    res.status(200).json({
+      message: "student data is fetched",
+      data: studentsData,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+    });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ err: "data is not fetched" });
+  }
+});
+
 
 
 

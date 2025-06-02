@@ -15,8 +15,7 @@ import { BsArrowReturnRight } from "react-icons/bs";
 const History = () => {
   const [showPopup, setShowPopup] = useState(false);
   const {course}= useSelector((state) => state.courseLD);
-  const {online,loading,error}= useSelector((state) => state.online);
-  console.log(loading)
+  const {online,loading}= useSelector((state) => state.online);
   const dispatch = useDispatch();
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [search, setSearch] = useState("");

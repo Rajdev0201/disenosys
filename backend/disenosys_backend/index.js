@@ -13,15 +13,7 @@ const XLSX = require('xlsx');
 const nodemailer = require('nodemailer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary')
-const { OpenAI } = require('openai'); 
-const pdfParse = require('pdf-parse');
 
-// const fileUpload = require('express-fileupload');
-
-
-// const ejs = require("ejs")
-// require('dotenv').config();
-// require('./config/passport-set.js');
 
 const CLIENT_ID = "86xiq0kdd6l43i";
 const CLIENT_SECRET = "WPL_AP1.ojibLusdShatmsUq.07+vuQ==";
@@ -48,14 +40,6 @@ mongoose.connect(process.env.MONGO_URI,{
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-// app.use(session({
-//   secret:"1234n",
-//   resave: false,
-//   saveUninitialized: true,
-// }));
-
-// app.use(passport.initialize());
-// app.use(passport.session());
 app.use(cors())
 app.use(
   cors({
@@ -198,49 +182,6 @@ cloudinary.config({
   api_key: '247445749891881',
   api_secret: 'aGTYn8CLmtagTL45f2SKdjiX3A8',
 });
-
-
-const storage = new CloudinaryStorage({
-  cloudinary: cloudinary,
-  params: {
-    folder: 'blog_images', // Cloudinary folder
-    format: async (req, file) => 'png', // Format to save the file
-    public_id: (req, file) => `${Date.now()}-${file.originalname}`, // File name
-  },
-});
-
-const uploadBlog = multer({ storage });
-
-app.post('/blog', uploadBlog.single('file'), async (req, res) => {
-  const { name, designation, title, description } = req.body;
-
-  if (!req.file) {
-    return res.status(400).send('No file uploaded.');
-  }
-  console.log('Uploaded file details:', req.file);
-
-  try {
-    const newBlog = new Blog({
-      filePath: req.file.path, 
-      name,
-      designation,
-      title,
-      description,
-    });
-
-    await newBlog.save();
-
-    return res.status(201).json({
-      message: 'Blog uploaded successfully',
-      filePath: req.file.path,
-    });
-  } catch (error) {
-    console.error('Error saving blog:', error);
-    return res.status(500).send('Internal server error');
-  }
-});
-
-
 
 
 const storageC = new CloudinaryStorage({
@@ -617,33 +558,6 @@ app.get('/mentordata', async (req, res) => {
   }
 });
 
-// app.get('/careerdata', async (req, res) => {
-//   try {
-//     const data = await career.aggregate([
-//       {
-//         $group: {
-//           _id: "$name", 
-//           data: { $first: "$$ROOT" } 
-//         }
-//       },
-//       {
-//         $replaceRoot: { newRoot: "$data" } 
-//       }
-//     ]);
-
-//     if (!data.length) {
-//       return res.status(400).json({ error: 'No Data is available' });
-//     }
-
-//     res.status(200).json({
-//       message: 'Career data retrieved successfully',
-//       data: data,
-//     });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(500).json({ error: 'Data could not be fetched' });
-//   }
-// });
 
 app.get('/careerdata', async (req, res) => {
   try {
@@ -812,81 +726,6 @@ app.delete('/delete/:id', async (req, res) => {
   }
 });
 
-
-// app.post('/linkedin-login', async (req, res) => {
-//   const { code } = req.body;
-//   console.log(code);
-
-//   if (!code) {
-//     return res.status(400).json({ error: 'Authorization code is missing' });
-//   }
-
-//   try {
-//     // Step 1: Exchange code for access token
-//     const response = await axios.post('https://www.linkedin.com/oauth/v2/accessToken', null, {
-//       params: {
-//         grant_type: "authorization_code",
-//         code,
-//         redirect_uri: LINKEDIN_CALLBACK_URL,
-//         client_id: LINKEDIN_CLIENT_ID,
-//         client_secret: LINKEDIN_CLIENT_SECRET,
-//       },
-//       headers: {
-//         'Content-Type': 'application/x-www-form-urlencoded',
-//       },
-//     });
-
-//     const tokenData = response.data;
-
-//     if (!tokenData.access_token) {
-//       return res.status(400).json({ error: tokenData.error_description || 'Failed to fetch access token' });
-//     }
-
-//     const accessToken = tokenData.access_token;
-
-//     // Step 2: Fetch user profile information
-//     const profileResponse = await axios.get('https://api.linkedin.com/v2/userinfo', {
-//       headers: {
-//         Authorization: `Bearer ${accessToken}`,
-//       },
-//     });
-
-//     const userProfile = profileResponse.data;
-//     console.log('User Profile:', userProfile);
-
-//     // Step 3: Extract relevant fields
-//     const name = userProfile.name; // Full name
-//     const email = userProfile.email; // Email address
-//     // const picture = userProfile.picture; // Profile picture URL
-
-//     // Step 4: Save or update user in your database
-//     let user = await linkedin.findOne({ email }); // Search by email
-
-//     if (!user) {
-//       // Create a new user if it doesn't exist
-//       user = await linkedin.create({
-//         name,
-//         email,
-//         // picture, // Store profile picture URL
-//       });
-//     } else {
-//       // Update existing user if they are already in the database
-//       user.name = name;
-//       // user.picture = picture; // Update profile picture URL if needed
-//       await user.save();
-//     }
-
-//     // Step 5: Respond with the user data
-//     res.status(200).json({
-//       success: true,
-//       user,
-//     });
-
-//   } catch (error) {
-//     console.error('Error during LinkedIn OAuth process:', error.response ? error.response.data : error.message);
-//     res.status(500).json({ error: 'LinkedIn OAuth failed', details: error.response ? error.response.data : error.message });
-//   }
-// });
 
 
 app.get("/auth", (req, res) => {
