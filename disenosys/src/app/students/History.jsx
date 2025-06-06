@@ -49,11 +49,23 @@ const History = () => {
     start: "",
     end: "",
   });
+    const [page, setPage] = useState(1);
+    const totalPages = online?.pages || 1;
 
   useEffect(() => {
-    dispatch(Online());
+    dispatch(Online(page, search));
     dispatch(courseld());
-  }, [dispatch]);
+  }, [page,search,dispatch]);
+
+   useEffect(() => {
+      setPage(1);
+    }, [search]);
+  
+    const handlePageClick = (newPage) => {
+      if (newPage > 0 && newPage <= totalPages) {
+        setPage(newPage);
+      }
+    };
 
   useEffect(() => {
     const filtered = online?.data?.filter((item) => {
@@ -177,15 +189,7 @@ const History = () => {
     }
   };
 
-  const itemsPerPage = 10;
-  const totalPages = Math.ceil(filteredData?.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const paginatedData = filteredData?.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
-  const handlePageChange = (page) => setCurrentPage(page);
-
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setAdd((prev) => ({
@@ -680,7 +684,7 @@ const History = () => {
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
-            onPageChange={handlePageChange}
+            onPageChange={handlePageClick}
           />
         </div>
       )}

@@ -6,12 +6,21 @@ import { useRouter } from "next/navigation.js";
 import { BsFiletypeXlsx } from "react-icons/bs";
 import { MdCancel } from "react-icons/md";
 import * as XLSX from "xlsx";
+import { Pagination } from "../component/Pagination.jsx";
 
 const Profile = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.mentor);
   const router = useRouter();
   const [filteredData, setFilteredData] = useState([]);
+
+    const [page, setPage] = useState(1);
+    const totalPages = data?.totalPage || 1;
+
+      useEffect(() => {
+    dispatch(getMentor(page,filteredData));
+  }, [page,filteredData]);
+
 
   const exp = [
     { label: "Fresher", value: 0 },
@@ -95,9 +104,15 @@ const Profile = () => {
     applyFilters();
   }, [filters, data]);
 
-  useEffect(() => {
-    dispatch(getMentor());
-  }, [dispatch]);
+    useEffect(() => {
+    setPage(1);
+  }, [filteredData]);
+
+    const handlePageClick = (newPage) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      setPage(newPage);
+    }
+  };
 
   const goTo = (id) => {
     router.push(`/mentordetails?profileId=${id}`);
@@ -307,6 +322,13 @@ const Profile = () => {
           </p>
         )}
       </div>
+         <div className="w-full mt-4 flex justify-center">
+                  <Pagination
+                    totalPages={totalPages}
+                    currentPage={page}
+                    onPageChange={handlePageClick}
+                  />
+                </div>
     </div>
   );
 };

@@ -67,9 +67,9 @@ export const getPortfolioOne = () => async (dispatch) => {
   }
 
   
-  export const getMentor = () => async (dispatch) => {
+  export const getMentor = (page,search) => async (dispatch) => {
     try{
-      const res = await axios.get("https://disenosys-dkhj.onrender.com/mentordata");
+      const res = await axios.get(`http://localhost:8000/mentordata?page=${page}?search=${search}`);
       const getData = res.data;
       dispatch(getmentorData(getData));
     }catch(error){

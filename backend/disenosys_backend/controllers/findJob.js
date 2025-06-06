@@ -2,7 +2,7 @@ const findJob = require("../models/findJob.js");
 const Razorpay = require('razorpay');
 const SendEmail = require("../utils/SendEmail")
 const CheckoutSession = require("../models/jobPayments.js");
-const PremiumJobList = require('../models/premiumJobUsers.js'); 
+
 
 exports.postJob = async (req,res) => {
     const { title, description, companyName, type, location, experience, level, salary, jobPosted, jobExpire } = req.body;
@@ -38,9 +38,7 @@ exports.postJob = async (req,res) => {
             error:error.message
         });
     }
-}
-
-
+};
 
 exports.getJob = async (req, res) => {
     try {
@@ -68,7 +66,7 @@ exports.getJob = async (req, res) => {
 
       });
     }
-  };
+};
   
 exports.editJob = async (req,res) => {
       const { id } = req.params;
@@ -88,7 +86,7 @@ exports.editJob = async (req,res) => {
           console.log(err);
           return res.status(500).json({ err: 'Failed to update course data' });
       }
-}
+};
 
 exports.deleteJob = async (req,res) => {
         const { id } = req.params;
@@ -103,8 +101,7 @@ exports.deleteJob = async (req,res) => {
             console.log(err);
             return res.status(500).json({err : "data is not deleted"})
         }
-}
-
+};
 
 exports.createCheckoutSession = async (req, res) => {
     const { userData, cartItems } = req.body;
@@ -165,9 +162,8 @@ exports.createCheckoutSession = async (req, res) => {
       console.log(err);
       res.status(500).json(err.message);
     }
-  };
+};
   
-
 exports.handleRazorpayCallback = async (req, res) => {
     const { razorpayPaymentId, razorpayOrderId, razorpaySignature } = req.body;
    console.log(req.body)
@@ -252,8 +248,6 @@ const sendPayment = async (studentEmail, studentName, lineItems) => {
     }
 };
 
-
-
 exports.getPlaceOrder = async(req,res) => {
     try{
         const DataList = await CheckoutSession.find({ isPaid: true });
@@ -266,7 +260,6 @@ exports.getPlaceOrder = async(req,res) => {
             return res.status(500).json({err : "There was an issue fetching the data"})
         }
 }
-
 
 exports.postPremiumJobUser = async (req, res) => {
   try {

@@ -529,7 +529,24 @@ let newSid = `DSST${newSidNumber}`;
 
 
 app.get('/mentordata', async (req, res) => {
+
+  const page = parseInt(req.query.page) || 1; 
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page -1) * limit;
+  const search = req.query.search || "";
   try {
+
+      let filter = {};
+    if (search) {
+      // Search in fname or email, case-insensitive
+      filter = {
+        $or: [
+          { automotive : { $regex: search, $options: "i" } },
+          { exp: { $regex: search, $options: "i" } },
+        ],
+      };
+    }
+
     const data = await mentor.aggregate([
       {
         $sort: { createdAt: -1 } // Step 1: Sort all records by newest first
@@ -546,11 +563,13 @@ app.get('/mentordata', async (req, res) => {
       {
         $sort: { createdAt: -1 } // Step 5: Sort again to maintain order
       }
-    ]);
+    ]).skip(skip).limit(limit);
 
     res.status(200).json({
       message: 'Mentor data retrieved successfully',
       data: data,
+      page:page,
+      totalPage: Math.ceil(await mentor.countDocuments() / limit),
     });
   } catch (err) {
     console.log(err);

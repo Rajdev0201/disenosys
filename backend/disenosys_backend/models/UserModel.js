@@ -28,6 +28,9 @@ const userSchema = new mongoose.Schema({
       title :{
         type: String, 
       },
+     about:{
+        type: String,
+     },
     resetPasswordToken:{
         type: String,
     },

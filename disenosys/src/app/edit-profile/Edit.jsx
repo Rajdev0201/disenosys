@@ -18,6 +18,7 @@ const EditProfile = () => {
         email: "",
         mobile: "999999999",
         location: "India",
+        about:"",
       });
       
       useEffect(() => {
@@ -73,7 +74,6 @@ const EditProfile = () => {
           }
         );
         localStorage.setItem("profile", JSON.stringify({ ...user, user: response.data.data }));
-        console.log("API Response:", response.data); // Debugging
   
         if (response.data.success && response.data.user) { 
           const updatedUser = response.data.user;
@@ -100,8 +100,8 @@ const EditProfile = () => {
     }
   return (
     <div className="min-h-screen flex justify-center items-center bg-[#FAFBFF] p-4 font-garet">
-      <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-lg h-full relative ">
-
+      <div className=" grid lg:grid-cols-2 gap-10">
+      <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-xl h-full relative">
         <button className="absolute top-4 right-4 text-white hover:text-gray-800 bg-red-500 rounded-full shadow-2xl p-2 transition" onClick={handleCancel}>
           <IoClose size={20} />
         </button>
@@ -114,16 +114,16 @@ const EditProfile = () => {
                 alt="Profile"
                 className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
               />
-              <div className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow-md">
+              {/* <div className="absolute bottom-0 right-0 bg-white p-1 rounded-full shadow-md">
                 <FiEdit2 size={14} className="text-gray-600" />
-              </div>
+              </div> */}
             </label>
-            <input
+            {/* <input
               type="file"
               id="profilePic"
               className="hidden"
               onChange={handleImageChange}
-            />
+            /> */}
           </div>
 
           <div>
@@ -143,7 +143,7 @@ const EditProfile = () => {
               />
             </div>
 
-          {["email", "mobile", "location"].map((field, index) => (
+          {["email", "mobile", "location","about"].map((field, index) => (
             <div key={index} className="flex justify-between items-center border-b pb-2 p-2">
               <label className="text-gray-500 capitalize">{field.replace("_", " ")}</label>
               <input
@@ -162,6 +162,23 @@ const EditProfile = () => {
           Save Change
         </button>
         </form>
+      </div>
+
+
+       <div className="bg-black p-6 rounded-xl shadow-lg w-full max-w-xl h-full relative">
+           <div className="flex items-center justify-center flex-col border-b border-gray-300">
+            <Image src ={avatar} alt="Profile" className="w-28 h-28 rounded-xl ull object-cover border-2 border-gray-300 mb-4" />
+            <h2 className="text-lg font-semibold text-white mb-2">{formData.name.toUpperCase()}</h2>
+           </div>
+
+           <div className="flex flex-col space-y-4 mt-12 px-12">
+         <p className="text-gray-400">Email: <span className="text-white">{formData.email}</span></p>
+         <p className="text-gray-400">Mobile: <span className="text-white">{formData.mobile}</span></p>
+         <p className="text-gray-400">Location: <span className="text-white">{formData.location}</span></p>
+         <p className="text-gray-400">About: <span className="text-white">{formData.about || "waiting to fill it"}.</span></p>
+           </div>
+           <div className="absolute bottom-0 left-0 right-0 bg-blue-500 w-full text-white p-6 rounded-t-lg  font-semibold text-center text-lg">Disenosys</div>
+        </div>
       </div>
     </div>
   );

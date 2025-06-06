@@ -12,8 +12,9 @@ import { gpdxList } from '../Redux/action/gpdx.js';
 import { ExamList } from '../Redux/action/examCertificate.js';
 import { payment } from "../Redux/action/Payment";
 import { PiStudentBold } from "react-icons/pi";
-const Dashboard = () => {
 
+
+const Dashboard = () => {
 const data = useSelector((state) => state.career);
 const Data = useSelector((state) => state.mentor);
 const {online} = useSelector((state) => state.online);
@@ -28,6 +29,8 @@ const pay = useSelector((state) => state.payment);
 const mentor = Data?.data;
 const dispatch = useDispatch();
 
+
+
 useEffect(() => {
     dispatch(getCareer());
     dispatch(getMentor());
@@ -40,7 +43,7 @@ useEffect(() => {
     dispatch(gpdxList());
     dispatch(ExamList());
     dispatch(payment());
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="px-8 py-0 flex-1">
@@ -50,6 +53,7 @@ useEffect(() => {
         <GrCertificate className="w-12 h-12 text-blue-600"/>
           </div>
           <div className="flex flex-col items-end">
+          {!intern.data && <div className="text-gray-500 text-md">Loading</div>}
           <p className="text-2xl font-bold">{intern?.data?.length}</p>
           <h2 className="text-md font-medium text-gray-500">Internship</h2>
           </div>
@@ -60,6 +64,8 @@ useEffect(() => {
         <GrCertificate className="w-12 h-12 text-blue-600"/>
           </div>
           <div className="flex flex-col items-end">
+               
+               {!exam.data && <div className="text-gray-500 text-md">Loading</div>}
           <p className="text-2xl font-bold">{exam?.data?.length}</p>
           <h2 className="text-md font-medium text-gray-500">Exam</h2>
           </div>
@@ -70,6 +76,7 @@ useEffect(() => {
         <GrCertificate className="w-12 h-12 text-blue-600"/>
           </div>
           <div className="flex flex-col items-end">
+               {!course.data && <div className="text-gray-500 text-md">Loading</div>}
           <p className="text-2xl font-bold">{course?.data?.length}</p>
           <h2 className="text-md font-medium text-gray-500">Course</h2>
           </div>
@@ -80,6 +87,7 @@ useEffect(() => {
         <GrCertificate className="w-12 h-12 text-blue-600"/>
           </div>
           <div className="flex flex-col items-end">
+               {!gpdx.data && <div className="text-gray-500 text-md">Loading</div>}
           <p className="text-2xl font-bold">{gpdx?.data?.length}</p>
           <h2 className="text-md font-medium text-gray-500">Gpdx</h2>
           </div>
@@ -90,6 +98,7 @@ useEffect(() => {
         <GrScorecard className="w-12 h-12 text-blue-600"/>
           </div>
           <div className="flex flex-col items-end">
+               {!University.data && <div className="text-gray-500 text-md">Loading</div>}
           <p className="text-2xl font-bold">{University?.data?.length}</p>
           <h2 className="text-md font-medium text-gray-500">University List</h2>
           </div>
@@ -100,6 +109,7 @@ useEffect(() => {
         <GrScorecard className="w-12 h-12 text-blue-600"/>
           </div>
           <div className="flex flex-col items-end">
+          {!external.data && <div className="text-gray-500 text-md">Loading</div>}
           <p className="text-2xl font-bold">{external?.data?.length}</p>
           <h2 className="text-md font-medium text-gray-500">External List</h2>
           </div>
@@ -110,6 +120,7 @@ useEffect(() => {
         <GrScorecard className="w-12 h-12 text-blue-600"/>
           </div>
           <div className="flex flex-col items-end">
+          {!student.data && <div className="text-gray-500 text-md">Loading</div>}
           <p className="text-2xl font-bold">{student?.data?.length}</p>
           <h2 className="text-md font-medium text-gray-500">Company List</h2>
           </div>
@@ -120,6 +131,7 @@ useEffect(() => {
         <PiStudentBold className="w-12 h-12 text-blue-600"/>
           </div>
           <div className="flex flex-col items-end">
+          {!pay.data && <div className="text-gray-500 text-md">Loading</div>}
           <p className="text-2xl font-bold">{pay?.data?.length}</p>
           <h2 className="text-md font-medium text-gray-500">Course Joined</h2>
           </div>
@@ -143,18 +155,21 @@ useEffect(() => {
         <tr className="font-garet font-medium text-xl">
             <td className="text-center p-6 ">01</td>
             <td className="text-center">Career</td>
+         {!data.data && <td className="text-gray-500 text-sm">Loading</td>}
             <td className="text-center">{data?.data?.length}</td>
 
         </tr>
         <tr className="font-garet font-medium text-xl bg-gray-100">
             <td className="text-center p-6 ">02</td>
             <td className="text-center">Mentor</td>
+           {!mentor && <td className="text-gray-500 text-md">Loading</td>}
             <td className="text-center">{mentor?.length}</td>
 
         </tr>
         <tr className="font-garet font-medium text-xl">
             <td className="text-center p-6 ">03</td>
             <td className="text-center">SAF</td>
+           {!online.data && <td className="text-gray-500 text-md">Loading</td>}
             <td className="text-center">{online?.data?.length === 0 ? (
                     <button className="bg-red-200 text-garet text-red-800 font-medium p-2 rounded-2xl text-md">Not Applied</button> 
             ) : (

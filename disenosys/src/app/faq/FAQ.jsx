@@ -6,10 +6,7 @@ import Link from 'next/link';
 import AllLinks from '../component/LegalInfo/AllLinks';
 
 
-const FAQ = () => {
-    const [activeIndex, setActiveIndex] = useState(null);
-
-    const faqs = [
+   const faqs = [
         {
           question: "What services does your company offer?",
           answer:
@@ -71,8 +68,9 @@ const FAQ = () => {
             "Yes, we serve clients globally. Our remote capabilities allow us to work with businesses worldwide.",
         },
       ];
-      
-  
+
+const FAQ = () => {
+    const [activeIndex, setActiveIndex] = useState(null);
     const toggleFAQ = (index) => {
       setActiveIndex(activeIndex === index ? null : index);
     };
