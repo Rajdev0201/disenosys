@@ -345,7 +345,7 @@ const History = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedData?.map((item, index) => (
+                {online?.data?.map((item, index) => (
                   <>
                     {" "}
                
