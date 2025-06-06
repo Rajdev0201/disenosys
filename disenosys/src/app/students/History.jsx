@@ -51,7 +51,7 @@ const History = () => {
   });
     const [page, setPage] = useState(1);
     const totalPages = online?.pages || 1;
-
+    const startIndex = (page - 1) * 8; // Assuming 8 items per page
   useEffect(() => {
     dispatch(Online(page, search));
     dispatch(courseld());
