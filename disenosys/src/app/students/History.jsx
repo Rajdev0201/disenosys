@@ -307,7 +307,7 @@ const History = () => {
         </div>
       </div>
       <div className="px-12  font-garet ">
-        {paginatedData?.length === 0 ? (
+        {online?.data?.length === 0 ? (
           <p className="text-lg text-red-500 text-center font-semibold">
             Not found the Student record for this name {search}!.
           </p>
@@ -679,7 +679,7 @@ const History = () => {
           </div>
         </div>
       )}
-      {paginatedData?.length > 0 && (
+      {online?.data?.length > 0 && (
         <div className="w-full mt-4 flex justify-center">
           <Pagination
             totalPages={totalPages}
