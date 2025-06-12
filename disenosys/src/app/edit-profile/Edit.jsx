@@ -177,7 +177,7 @@ const EditProfile = () => {
          <p className="text-gray-400">Location: <span className="text-white">{formData.location}</span></p>
          <p className="text-gray-400">About: <span className="text-white">{formData.about || "waiting to fill it"}.</span></p>
            </div>
-           <div className="absolute bottom-0 left-0 right-0 bg-blue-500 w-full text-white p-6 rounded-t-lg  font-semibold text-center text-lg">Disenosys</div>
+           <div className="lg:absolute bottom-0 left-0 right-0 bg-blue-500 w-full text-white p-6 rounded-t-lg  font-semibold text-center text-lg">Disenosys</div>
         </div>
       </div>
     </div>

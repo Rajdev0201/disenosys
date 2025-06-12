@@ -7,6 +7,7 @@ import { Pagination } from "../component/Pagination.jsx";
 
 const SAF = () => {
   const { online, loading } = useSelector((state) => state.online);
+  console.log("Online Students Data:", online);
   const dispatch = useDispatch();
   const router = useRouter();
 

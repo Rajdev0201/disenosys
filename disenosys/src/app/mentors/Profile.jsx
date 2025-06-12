@@ -13,13 +13,17 @@ const Profile = () => {
   const data = useSelector((state) => state.mentor);
   const router = useRouter();
   const [filteredData, setFilteredData] = useState([]);
+    const [filters, setFilters] = useState({
+    exp: "",
+    automotive: "",
+  });
 
     const [page, setPage] = useState(1);
     const totalPages = data?.totalPage || 1;
 
       useEffect(() => {
-    dispatch(getMentor(page,filteredData));
-  }, [page,filteredData]);
+    dispatch(getMentor(page,filters));
+  }, [page,filters]);
 
 
   const exp = [
@@ -70,10 +74,7 @@ const Profile = () => {
     "Electric Vehicle (EV) Specific Components",
   ];
 
-  const [filters, setFilters] = useState({
-    exp: "",
-    automotive: "",
-  });
+
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
@@ -106,7 +107,7 @@ const Profile = () => {
 
     useEffect(() => {
     setPage(1);
-  }, [filteredData]);
+  }, [filters]);
 
     const handlePageClick = (newPage) => {
     if (newPage > 0 && newPage <= totalPages) {

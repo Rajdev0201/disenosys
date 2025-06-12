@@ -529,51 +529,39 @@ let newSid = `DSST${newSidNumber}`;
 
 
 app.get('/mentordata', async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 8;
+  const skip = (page - 1) * limit;
 
-  const page = parseInt(req.query.page) || 1; 
-  const limit = parseInt(req.query.limit) || 10;
-  const skip = (page -1) * limit;
-  const search = req.query.search || "";
+  const exp = req.query.exp;
+  const automotive = req.query.automotive;
+
+  let filter = {};
+
+  if (exp) {
+    filter.exp = parseInt(exp);
+  }
+  if (automotive) {
+    filter.automotive = { $regex: automotive, $options: "i" };
+  }
+
   try {
-
-      let filter = {};
-    if (search) {
-      // Search in fname or email, case-insensitive
-      filter = {
-        $or: [
-          { automotive : { $regex: search, $options: "i" } },
-          { exp: { $regex: search, $options: "i" } },
-        ],
-      };
-    }
-
-    const data = await mentor.aggregate([
-      {
-        $sort: { createdAt: -1 } // Step 1: Sort all records by newest first
-      },
-      {
-        $group: {
-          _id: "$name", // Step 2: Group by unique user (email or userId)
-          latestApplication: { $first: "$$ROOT" } // Step 3: Keep the latest application
-        }
-      },
-      {
-        $replaceRoot: { newRoot: "$latestApplication" } // Step 4: Replace the root to show only filtered data
-      },
-      {
-        $sort: { createdAt: -1 } // Step 5: Sort again to maintain order
-      }
-    ]).skip(skip).limit(limit);
+    const totalMentors = await mentor.countDocuments(filter);
+    const data = await mentor
+      .find(filter)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
 
     res.status(200).json({
-      message: 'Mentor data retrieved successfully',
-      data: data,
-      page:page,
-      totalPage: Math.ceil(await mentor.countDocuments() / limit),
+      message: 'Mentor data retrieved',
+      data,
+      page,
+      totalPage: Math.ceil(totalMentors / limit),
     });
   } catch (err) {
-    console.log(err);
-    return res.status(500).json({ error: 'Data could not be fetched' });
+    console.error(err);
+    res.status(500).json({ error: 'Data fetch failed' });
   }
 });
 
@@ -925,7 +913,6 @@ app.post("/send-certificate-exam", uploadcertificateExam.none(), async(req, res)
       console.error("Error sending email:", error);
       return res.status(500).send("Error sending email");
     }
-    res.status(200).send("Certificate sent successfully");
   });
   const newExam = new ExamC({
     name:name,
@@ -1505,7 +1492,6 @@ auth: {
       console.error("Error sending email:", error);
       return res.status(500).send("Error sending email");
     }
-    res.status(200).send("Certificate sent successfully");
   });
 
   const newIntern = new InternC({
@@ -1565,7 +1551,6 @@ app.post("/send-single-certificate", uploadsingle.none(),async (req, res) => {
         return res.status(500).send("Error sending email");
       }
       console.log("Email sent: " + info.response);
-      res.send("Certificate sent successfully");
     });
     const newIntern = new InternC({
       name:name,
@@ -1586,7 +1571,7 @@ app.post("/send-single-certificate", uploadsingle.none(),async (req, res) => {
 const upload = multer({ dest: 'uploadsquiz/' });
 
 
-app.post('/quiz', upload.single('file'), async (req, res) => {
+app.post('/quiz', upload.none(), async (req, res) => {
   try {
       const workbook = XLSX.readFile(req.file.path);
       const sheetName = workbook.SheetNames[0];
@@ -1635,7 +1620,7 @@ app.post('/quiz', upload.single('file'), async (req, res) => {
   }
 });
 
-app.post('/biw', upload.single('file'), async (req, res) => {
+app.post('/biw', upload.none(), async (req, res) => {
   try {
     const { examname, createdBy } = req.body;
 
@@ -1710,7 +1695,7 @@ app.post('/biw', upload.single('file'), async (req, res) => {
 
 
 const catia = multer({ dest: 'uploadsquiz/' });
-app.post('/catia', catia.single('file'), async (req, res) => {
+app.post('/catia', catia.none(), async (req, res) => {
   try {
       const workbook = XLSX.readFile(req.file.path);
       const sheetName = workbook.SheetNames[0];
@@ -1762,7 +1747,7 @@ app.post('/catia', catia.single('file'), async (req, res) => {
 
 
 const product = multer({ dest: 'uploadsquiz/' });
-app.post('/product', product.single('file'), async (req, res) => {
+app.post('/product', product.none(), async (req, res) => {
   try {
       const workbook = XLSX.readFile(req.file.path);
       const sheetName = workbook.SheetNames[0];

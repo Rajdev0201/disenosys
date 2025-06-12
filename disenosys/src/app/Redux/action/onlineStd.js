@@ -4,10 +4,10 @@ import axios from 'axios'
 import {remove, setOnline, updateOnline} from "../features/onlineStdSlice.js"
 
 //students-l&d -> admin-panel
-export const Online = (page = 1,search = "") => async (dispatch) => {
+export const Online = (page,search = "") => async (dispatch) => {
     try {
         dispatch(setOnline({data:[],loading:true}))
-        const res = await axios.get(`https://disenosys-dkhj.onrender.com/ld/studentget?page=${page}&limit=8&search=${encodeURIComponent(search)}`);
+        const res = await axios.get(`https://disenosys-dkhj.onrender.com/ld/studentget?page=${page}&limit=20&search=${encodeURIComponent(search)}`);
         const getData = res.data;
         dispatch(setOnline({data:getData,loading:false}));
     } catch (error) {

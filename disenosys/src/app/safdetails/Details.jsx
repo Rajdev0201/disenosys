@@ -9,6 +9,7 @@ import StudentApplicationForm from './Pdf';
 
 const Details = () => {
     const {online,loading} = useSelector((state) => state.online);
+    console.log("deatils show page wise",online)
     const dispatch = useDispatch();
     const search = useSearchParams();
     const courseId = search.get("profileId");

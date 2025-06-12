@@ -2,7 +2,6 @@
 "use client";
 import axios from "axios";
 import { toast } from 'react-toastify';
-import Razorpay from "razorpay";
 import 'react-toastify/dist/ReactToastify.css';
 import { setPayment, setPlaceOrder } from "../features/PaymentSlice.js";
 
@@ -19,7 +18,7 @@ const loadRazorpayScript = () => {
 export const CheckOut = (Data, nav) => async (dispatch) => {
     try {
         console.log("Data sent to backend:", Data);
-        const res = await axios.post("http://localhost:8000/course/checkout-order", {
+        const res = await axios.post("https://disenosys-dkhj.onrender.com/course/checkout-order", {
             userData: Data.userData,
             cartItems: Data.cartItems,
             amount: Data.amount,
@@ -39,7 +38,7 @@ export const CheckOut = (Data, nav) => async (dispatch) => {
             handler: async (response) => {
                 try {
                     // Send payment details to callback endpoint
-                    const captureResponse = await axios.post("http://localhost:8000/course/handle-razorpay-callback", {
+                    const captureResponse = await axios.post("https://disenosys-dkhj.onrender.com/course/handle-razorpay-callback", {
                         razorpayPaymentId: response.razorpay_payment_id,
                         razorpayOrderId: response.razorpay_order_id,
                         razorpaySignature: response.razorpay_signature,

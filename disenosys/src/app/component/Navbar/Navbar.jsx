@@ -13,18 +13,16 @@ import "../../globals.css";
 //   FiShare,
 //   FiPlusSquare,
 // } from "react-icons/fi";
-import { IoCartSharp } from "react-icons/io5";
+
 import { motion } from "framer-motion";
 import Link from "next/link";
 import CartModal from "../CartModal";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCarts } from "@/app/Redux/action/addToCart.js";
 import Modal from "../Modal.jsx";
-import { ShiftingDropDown } from "../Dropdown.jsx";
 import { usePathname } from "next/navigation";
 import { LogOut, setUser } from "@/app/Redux/features/authSlice.js";
 import { IoMdLogOut } from "react-icons/io";
-import LinkedInSocialLogin from "@/app/auth/LinkedIn";
 import { payment } from "@/app/Redux/action/Payment";
 import NotificationDropdown from "../../component/Alert";
 import { FaBell, FaCaretDown, FaCaretUp, FaTimes } from "react-icons/fa";
@@ -332,7 +330,7 @@ const Navbar = () => {
 
           {/* Dropdown Menu */}
           {dropdownVisible && (
-            <div className="absolute -top-96 right-0 mt-2 w-56 bg-white shadow-lg rounded-md z-50 border border-gray-200">
+            <div className="absolute -top-96 right-0  mt-2 w-64 bg-white shadow-lg rounded-md z-50 border border-gray-200">
               {/* User Info */}
               <div className="px-2 py-3 border-b-2 flex items-center gap-3">
                 <div className="bg-[#0d1039] text-white w-10 h-10 flex items-center justify-center rounded-full text-lg font-bold">
@@ -346,13 +344,13 @@ const Navbar = () => {
                   <div className="text-sm text-gray-500">  {user?.user?.user?.userEmail}{" "}
                   {user?.user?.email}</div>
                 </div>
-                 <FaTimes className="text-gray-500 flex flex-end hover:text-red-600 cursor-pointer" onClick={() => toggleDropdown(false)} />
+                 <FaTimes className="text-gray-500 flex flex-end  hover:text-red-600 cursor-pointer" onClick={() => toggleDropdown(false)} />
               </div>
 
               {/* Dropdown Links */}
               <ul className="py-2 text-gray-800">
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">My learning</li>
-                <li className="px-4 py-2 flex justify-between hover:bg-gray-100 cursor-pointer">
+                <Link href="/mycourse" className="px-4 py-2 hover:bg-gray-100 cursor-pointer">My learning</Link>
+                <Link href="/cart" className="px-4 py-2 flex justify-between hover:bg-gray-100 cursor-pointer">
                   My cart <span className="">
                   {length > 0 && cartUserName.includes(user?.user?.user?.userName) ? (
         <span
@@ -370,7 +368,7 @@ const Navbar = () => {
         </span>
       )}
                   </span>
-                </li>
+                </Link>
                 <li className="px-4 py-2 flex justify-between hover:bg-gray-100 cursor-pointer">
                   Notifications 
                   <span
@@ -380,11 +378,11 @@ const Navbar = () => {
         </span>
 
                 </li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Account settings</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Payment methods</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Purchase history</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit profile</li>
-                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">Help and support</li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link href ="/settings">Account settings</Link></li>
+                <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link href="/payment-methods" >Payment methods</Link> </li> 
+               <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link href="/purchase-history" >Purchase history</Link> </li> 
+               <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"> <Link href="/edit-profile" >Edit profile</Link> </li>
+               <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"> <Link href="/support">Help and support</Link> </li>
               </ul>
 
               {/* Logout Button */}
