@@ -71,7 +71,7 @@ export const getPortfolioOne = () => async (dispatch) => {
     const { exp, automotive } = filters;
    //https://disenosys-dkhj.onrender.com
     const res = await axios.get(
-      `http://localhost:8000/mentordata?page=${page}&exp=${exp}&automotive=${automotive}`
+      `https://disenosys-dkhj.onrender.com/mentordata?page=${page}&exp=${exp}&automotive=${automotive}`
     );
 
     dispatch(getmentorData(res.data));
