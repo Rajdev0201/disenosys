@@ -13,7 +13,6 @@ const linkedin = require("../models/linkedin")
 exports.RegisterUser = CatchAsyncError(async(req,res,next)=>{
 
     const {userName,userEmail,password} = req.body;
-    console.log(req.body);
 
     const hPassword = await bcrypt.hash(password,10)
 

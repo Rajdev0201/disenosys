@@ -85,8 +85,8 @@ const Profile = () => {
     const { exp, automotive } = filters;
 
     const filtered = data?.data?.filter((profile) => {
-      const profileExperience = parseInt(profile.exp) || 0;
-      const component = profile.automotive || "";
+      const profileExperience = parseInt(profile?.exp) || 0;
+      const component = profile?.automotive || "";
 
       const matchesExperience =
         exp !== "" ? profileExperience === parseInt(exp) : true;

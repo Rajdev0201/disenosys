@@ -69,6 +69,7 @@ export const getPortfolioOne = () => async (dispatch) => {
  export const getMentor = (page, filters) => async (dispatch) => {
   try {
     const { exp, automotive } = filters;
+    console.log(filters)
    //https://disenosys-dkhj.onrender.com
     const res = await axios.get(
       `https://disenosys-dkhj.onrender.com/mentordata?page=${page}&exp=${exp}&automotive=${automotive}`

@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
     resetPasswordTokenExpire:{
        type: Date
     },
-})
+},{timestamps:true})
 
 
 userSchema.methods.isValidatePassword = function(enPassword){

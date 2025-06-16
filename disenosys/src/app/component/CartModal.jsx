@@ -62,23 +62,28 @@ const CartModal = ({ isOpen, setIsOpen, cart }) => {
 
   const handleClose = () => setIsOpen(false);
 
+  // const handlePlaceOrder = async () => {
+  //   if (cart?.cartItems?.length > 0) {
+  //     const UserData = {
+  //       userData: user?.user?.user,
+  //       cartItems: cart.cartItems.filter(item => item.userName === cartUserName)
+  //     };
+  //     await dispatch(CheckOut(UserData, router));
+  //     setCheckoutSuccess(true); 
+  //   } else {
+  //     toast.dark('Your cart is empty, please choose an item', {
+  //       position: "top-right",
+  //       autoClose: 5000,
+  //       theme: "light",
+  //     });
+  //   }
+  // };
+
   const handlePlaceOrder = async () => {
     if (cart?.cartItems?.length > 0) {
-      const UserData = {
-        userData: user?.user?.user,
-        cartItems: cart.cartItems.filter(item => item.userName === cartUserName)
-      };
-      await dispatch(CheckOut(UserData, router));
-      setCheckoutSuccess(true); 
-    } else {
-      toast.dark('Your cart is empty, please choose an item', {
-        position: "top-right",
-        autoClose: 5000,
-        theme: "light",
-      });
-    }
-  };
-
+      router.push('/cart');
+  }
+}
 const handleIncrementQuantityChange = (cartId) => {
       dispatch(increaseQuantity(cartId))
 }
@@ -171,7 +176,7 @@ const handleDecrementQuantityChange = (cartId) => {
                     className="bg-[#0d1039] hover:opacity-90 transition-opacity text-white font-semibold w-full py-2 rounded"
                     onClick={handlePlaceOrder}
                   >
-                    Checkout
+                   Continue to Checkout
                   </button>
                 )}
               </div>

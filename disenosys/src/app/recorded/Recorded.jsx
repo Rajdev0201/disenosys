@@ -34,7 +34,6 @@ const [isCoursePaid, setIsCoursePaid] = useState(false);
   );
   const [completedVideos, setCompletedVideos] = useState({});
 
-  console.log(completedVideos);
   const dispatch = useDispatch();
   const courseRefs = useRef([]);
   const pay = useSelector((state) => state.payment);
@@ -65,7 +64,6 @@ const [isCoursePaid, setIsCoursePaid] = useState(false);
   }, [unlockedModules]);
 
   useEffect(() => {
-    console.log("selected options", selectedOptions);
   }, [selectedOptions]);
 
   useEffect(() => {
@@ -109,8 +107,6 @@ const [isCoursePaid, setIsCoursePaid] = useState(false);
   };
 
   const handlesubTopicelect = (subTopic, subLink, index) => {
-    console.log("Selected subTopic:", subTopic);
-    console.log("Selected subLink:", subLink);
     setSelectedSubtopic(subTopic);
     setCurrentSubTopicIndex(index);
     setSubLink(subLink);
@@ -238,7 +234,6 @@ const [isCoursePaid, setIsCoursePaid] = useState(false);
     }
 
     const nextSubTopicIndex = currentSubTopicIndex + 1;
-    console.log("Next SubTopic Index:", nextSubTopicIndex);
 
     const questionsArray = currentCurriculum?.questions || [];
 
@@ -257,7 +252,6 @@ const [isCoursePaid, setIsCoursePaid] = useState(false);
       )
     );
 
-    console.log("All Videos Completed:", allCompleted);
 
     // ✅ Ensure all subtopics are completed before unlocking the next module
     if (
@@ -285,9 +279,6 @@ const [isCoursePaid, setIsCoursePaid] = useState(false);
     setCurrentSubTopicIndex(nextSubTopicIndex);
     setSelectedSubtopic(subTopicsArray[nextSubTopicIndex] || ""); // Prevent undefined
     setSubLink(subLinksArray[nextSubTopicIndex] || ""); // Prevent undefined
-
-    console.log("Updated Subtopic:", subTopicsArray[nextSubTopicIndex]);
-    console.log("Updated SubLink:", subLinksArray[nextSubTopicIndex]);
   };
 
   const handleVideoEnd = (subLink) => {
@@ -326,12 +317,6 @@ const [isCoursePaid, setIsCoursePaid] = useState(false);
     const currentModule = openAccordionIndex;
     const moduleQuestions =
       selectedCourse?.Curriculum?.[currentModule]?.questions;
-    console.log("current module:", currentModule);
-
-    if (!moduleQuestions || moduleQuestions.length === 0) {
-      console.error("No questions found for this module.");
-      return;
-    }
 
     const newFeedback = {};
     let allCorrect = true;
@@ -340,18 +325,11 @@ const [isCoursePaid, setIsCoursePaid] = useState(false);
       let userAnswerArray = [];
 
       if (question.type === "input") {
-        console.log(`Question type: ${question.type}`);
-
         question.questionText.split(",").forEach((sentence, sentenceIdx) => {
           sentence.split("input").forEach((_, index) => {
             const selectedKey = `${courseId}-${currentModule}-${questionIndex}-${sentenceIdx}-${index}`;
             const userInput = selectedOptions[selectedKey]?.trim() || "";
-            // console.log("Extracting user answers...");
-            // console.log("Selected Key:", selectedKey);
-            console.log(
-              `Extracting Answer for Key: ${selectedKey} =>`,
-              userInput
-            );
+        
 
             if (userInput) {
               userAnswerArray.push(userInput);
@@ -360,22 +338,12 @@ const [isCoursePaid, setIsCoursePaid] = useState(false);
         });
       }
 
-      console.log(
-        `User Answer for Question ${questionIndex}:`,
-        userAnswerArray
-      );
-
       const correctAnswerArray = Array.isArray(question.correctAnswer)
         ? question.correctAnswer.map((item) => item.trim().toLowerCase())
         : [];
 
-      console.log(
-        `Correct Answer for Question ${questionIndex}:`,
-        correctAnswerArray
-      );
 
       if (userAnswerArray.length !== correctAnswerArray.length) {
-        console.warn("Please answer all input fields.");
         allCorrect = false;
       }
 
@@ -396,8 +364,6 @@ const [isCoursePaid, setIsCoursePaid] = useState(false);
       alert("Please answer all questions correctly to proceed.");
       return;
     }
-
-    console.log("All answers are correct. Unlocking next module...");
     const nextModuleIndex = currentModule + 1;
     const updatedUnlockedModules = {
       ...unlockedModules,

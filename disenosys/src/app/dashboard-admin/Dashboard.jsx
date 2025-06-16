@@ -32,18 +32,19 @@ const dispatch = useDispatch();
 
 
 useEffect(() => {
-    dispatch(getCareer());
-    dispatch(getMentor());
-    dispatch(Online());
-    dispatch(studentCode());
-    dispatch(externalCode());
-    dispatch(companyCode());
-    dispatch(CourseList());
-    dispatch(InternList());
-    dispatch(gpdxList());
-    dispatch(ExamList());
-    dispatch(payment());
-  }, []);
+    dispatch(getCareer())
+    dispatch(getMentor())
+    dispatch(Online())
+    dispatch(studentCode())
+    dispatch(externalCode())
+    dispatch(companyCode())
+    dispatch(CourseList())
+    dispatch(InternList())
+    dispatch(gpdxList())
+    dispatch(ExamList())
+    dispatch(payment())
+}, [dispatch]);
+
 
   return (
     <div className="px-8 py-0 flex-1">
