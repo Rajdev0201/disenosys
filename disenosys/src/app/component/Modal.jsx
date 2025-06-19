@@ -50,6 +50,6 @@ const MyModal = () => {
        <Login/>
       </Modal>
     </div>
-  );
+  ); 
 };
 export default MyModal;

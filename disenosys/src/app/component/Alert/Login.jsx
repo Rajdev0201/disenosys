@@ -7,7 +7,7 @@ import { IoMdAlert } from "react-icons/io";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { login, SignupData } from "@/app/Redux/action/auth.js";
-import Glogin from "../../auth/Glogin.jsx";
+import Glogin from "../../auth/Glogin.jsx"; 
 import LinkedInLogin from "../../auth/LinkedIn.jsx";
 import axios from "axios";
 
@@ -128,10 +128,10 @@ const LoginAlert = () => {
         >
           <div class="flex items-center justify-between mb-3 p-4 bg-[#0d1039] ">
             <span class="mb-1 text-xl font-semibold  text-white">
-              Auth notification
+             DISENOSYS
             </span>
             <button>
-              <IoMdAlert size={30} className="text-white" />
+              <IoMdAlert size={30} className="text-white cursor-not-allowed" />
             </button>
           </div>
 
@@ -140,7 +140,7 @@ const LoginAlert = () => {
               <>
                 <div className="container mx-auto pt-5">
                   <h1 className="font-bold text-center text-[#0d1039]  text-2xl">
-                    First login or register!
+                    LOGIN!
                   </h1>
                   <form onSubmit={handleSignin} className="p-6">
                     <input
@@ -235,7 +235,7 @@ const LoginAlert = () => {
             <>
               <div className="container mx-auto pt-5 ">
                 <h1 className="font-bold text-center text-[#0d1039]  text-2xl">
-                  First login or register!
+                  REGISTER!
                 </h1>
                 <form
                   action=""

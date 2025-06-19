@@ -299,7 +299,6 @@ useEffect(() => {
           onClick={cancelDropdown}>
           1
         </span>
-
                 </li>
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link href ="/settings">Account settings</Link></li>
                 <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer"><Link href="/payment-methods" >Payment methods</Link> </li> 

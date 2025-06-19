@@ -41,9 +41,7 @@ const userSchema = new mongoose.Schema({
 
 
 userSchema.methods.isValidatePassword = function(enPassword){
-
     return  bcrypt.compare(enPassword,this.password)
-  
 }
 
 userSchema.methods.getJwtToken = function (){
