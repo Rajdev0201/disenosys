@@ -1,7 +1,5 @@
 "use client"
-
 import React, { useEffect, useState } from "react";
-import { FiEdit2 } from "react-icons/fi";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../Redux/features/authSlice";
@@ -24,8 +22,8 @@ const EditProfile = () => {
       useEffect(() => {
         if (user?.user) {
           setFormData({
-            name: user?.user?.user?.userName || user?.user?.name || user?.user?.userName || "",
-            email: user?.user?.user?.userEmail || user?.user?.email || user?.user?.userEmail || "",
+            name: user?.user?.user?.userName || user?.user?.name  || "",
+            email: user?.user?.user?.userEmail || user?.user?.email || "",
             mobile: "999999999",
             location: "India",
           });
@@ -46,13 +44,13 @@ const EditProfile = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setProfileImage(imageUrl);
-    }
-  };
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     const imageUrl = URL.createObjectURL(file);
+  //     setProfileImage(imageUrl);
+  //   }
+  // };
 
   const handleProfileUpdate = async (e) => {
       e.preventDefault();
@@ -98,6 +96,7 @@ const EditProfile = () => {
     const handleCancel = () => {
         router.push("/");
     }
+
   return (
     <div className="min-h-screen flex justify-center items-center bg-[#FAFBFF] p-4 font-garet">
       <div className=" grid lg:grid-cols-2 gap-10">

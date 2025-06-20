@@ -36,13 +36,21 @@ const Course = () => {
   return (
     <div className="py-16 md:px-40 lg:px-6 lg:py-6">
       <div className="flex flex-col">
-      <h4 className="text-[#182073] font-medium text-xl font-garet">
+      <h4 className="font-garet text-2xl font-bold text-gray-900 mb-6">
         My Course
       </h4>
-      <div className="grid grid-cols-1 lg:grid-cols-4 container mx-auto mt-10 gap-3">
-        {pay?.data?.map((item) =>
-          item.customerDetails.name === user?.user?.user?.userName ? (
-            item.isActive ? (
+       <div className="grid grid-cols-1 lg:grid-cols-4 container mx-auto mt-10 gap-3">
+  {pay?.data && pay.data.length > 0 ? (
+    pay.data.filter(
+      (item) =>
+        item.customerDetails.name === user?.user?.user?.userName &&
+        item.isActive &&
+        item.lineItems.length > 0
+    ).length > 0 ? (
+      pay.data.map((item) =>
+        item.customerDetails.name === user?.user?.user?.userName ? (
+          item.isActive ? (
+            item.lineItems.length > 0 ? (
               item.lineItems.map((course, i) => {
                 const matchedCourse = courses?.find(
                   (c) => c.courseName === course.name
@@ -83,8 +91,7 @@ const Course = () => {
                       </button>
                       <button
                         className="bg-white px-6 py-1 text-base font-garet rounded-sm font-semibold text-[#182073]"
-                        onClick={() => goTo(course.name,item?._id
-                        )}
+                        onClick={() => goTo(course.name, item?._id)}
                       >
                         Start
                       </button>
@@ -92,17 +99,29 @@ const Course = () => {
                   </div>
                 );
               })
-            ) : (
-              <div key={item._id} className="text-center  mt-6">
-                <p className="text-red-600 font-garet border rounded bg-white shadow-xl p-2">
-                  Please wait, you still don&apos;t have admin access.
-                </p>
-                <p className="text-red-600 font-garet mt-6">Loading...</p>
-              </div>
-            )
-          ) : null
-        )}
-      </div>
+            ) : null
+          ) : (
+            <div key={item._id} className="text-center mt-6 col-span-1">
+              <p className="text-red-600 font-garet border rounded bg-white shadow-xl p-2">
+                Please wait, you still don&apos;t have admin access.
+              </p>
+              <p className="text-red-600 font-garet mt-6">Loading...</p>
+            </div>
+          )
+        ) : null
+      )
+    ) : (
+      <p className="text-center col-span-4 mt-6 text-gray-600 font-garet text-lg border bg-white shadow-sm p-4">
+        No course available.
+      </p>
+    )
+  ) : (
+    <p className="text-center col-span-4 mt-6 text-gray-500 animate-pulse">
+      Loading courses...
+    </p>
+  )}
+</div>
+
       </div>
     </div>
   );

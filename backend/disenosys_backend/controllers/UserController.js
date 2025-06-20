@@ -3,7 +3,6 @@ const UserModel = require("../models/UserModel")
 const bcrypt = require("bcrypt")
 const ErrorHandler = require("../utils/ErrorHandler")
 const SendToken = require("../utils/SendToken")
-
 const SendEmail = require("../utils/SendEmail")
 const crypto = require("crypto")
 const linkedin = require("../models/linkedin")
@@ -50,12 +49,10 @@ exports.LoginUser = CatchAsyncError(async (req, res, next) => {
     }
   
     SendToken(user, res, 200);
-  });
+});
   
 
-
-
-  exports.updateProfile = async (req, res, next) => {
+exports.updateProfile = async (req, res, next) => {
     try {
       const {mobile, email } = req.body;
       console.log(req.body)
@@ -80,10 +77,9 @@ exports.LoginUser = CatchAsyncError(async (req, res, next) => {
       console.error("Update profile error:", error);
       res.status(500).json({ success: false, message: "Internal server error" });
     }
-  };
+ };
   
-
-  exports.changePassword = async (req, res, next) => {
+exports.changePassword = async (req, res, next) => {
     try {
       const { oldPassword, newPassword, confirmPassword } = req.body;
   
@@ -137,7 +133,7 @@ exports.LoginUser = CatchAsyncError(async (req, res, next) => {
       console.error("Error changing password:", error);
       next(error);
     }
-  };
+};
   
   
   // Delete Account

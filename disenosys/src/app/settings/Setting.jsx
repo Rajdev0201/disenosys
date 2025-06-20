@@ -10,7 +10,6 @@ import axios from "axios";
 const Settings = () => {
   const user = useSelector((state) => state?.user);
   const dispatch = useDispatch();
-  const [menuOpen, setMenuOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: user?.user?.user?.userName || user?.user?.name || user?.user?.userName ,
     email: user?.user?.user?.userEmail || user?.user?.email || user?.user?.userEmail ,
@@ -59,7 +58,6 @@ const Settings = () => {
         }
       );
       localStorage.setItem("profile", JSON.stringify({ ...user, user: response.data.data }));
-      console.log("API Response:", response.data); // Debugging
 
       if (response.data.success && response.data.user) { 
         const updatedUser = response.data.user;
@@ -111,7 +109,6 @@ const Settings = () => {
         setFormData({ oldPassword: "", newPassword: "", confirmPassword: "" }); // Reset form
       }
     } catch (error) {
-      console.error("Error changing password", error);
       alert(error.response?.data?.message || "Something went wrong!");
     }
   };
@@ -163,8 +160,9 @@ const Settings = () => {
               <input
                 type="email"
                 name="email"
+                value={user?.user?.user?.userEmail || user?.user?.Email ||  ""}
                 onChange={handleChange}
-                className="mt-1 p-2 w-full border rounded-md"
+                className="mt-1 p-2 w-full border rounded-md bg-gray-100 cursor-not-allowed"
               />
             </div>
 
