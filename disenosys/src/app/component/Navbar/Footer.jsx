@@ -88,7 +88,7 @@ const Footer = () => {
   </p>
   <p className="text-base md:text-md text-white flex items-center justify-start gap-2 hover:text-white transition-colors duration-300 cursor-pointer">
     <MdCall className="text-white w-6 h-6" />
-    <span>+91 90803 68892</span>
+    <span>+91-9944303400</span>
   </p>
   <p className="text-base md:text-md text-white flex items-center justify-start gap-2 hover:text-white transition-colors duration-300 cursor-pointer">
   <MdOutlineMail className="text-white w-6 h-6" />

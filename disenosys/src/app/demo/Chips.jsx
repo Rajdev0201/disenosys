@@ -34,6 +34,7 @@ const Chips = () => {
                     <p>{data.skill}</p>
                     <p onClick={() => cancelSkills(data.id)}>cancel</p>
                 </div>
+                
             ))
         }
      </div>

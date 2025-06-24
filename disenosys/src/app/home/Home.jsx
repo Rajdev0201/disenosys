@@ -20,7 +20,7 @@ const Home = () => {
   const boxShadow = useMotionTemplate`0px 4px 24px ${color}`;
 
   const [result, setResult] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -148,9 +148,8 @@ const Home = () => {
                     <button
                       className="px-10 py-2 text-md lg:text-xl xl:text-24 mt-24 garet bg-white border-none outline-none text-[#0d1039] rounded-sm font-medium  border-[4px] border-gray-700 hover:border-blue-500 transition-all duration-200"
                       type="submit"
-                      disabled={loading}
                     >
-                      {loading ? "Sending..." : "Submit"}
+                       Submit
                     </button>
 
                     {result && <p className="text-white mt-4">{result}</p>}

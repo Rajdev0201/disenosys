@@ -10,8 +10,8 @@ import { CiCircleChevDown, CiCircleChevUp } from "react-icons/ci";
     },
     {
       id:"02",
-      qn:"Is the courses prerecorded, and can I watch it at my own pace?",
-      ans:"Yes, Our courses consists of prerecorded sessions, allowing you to learn at your own pace. You can access the content whenever it suits you.",
+      qn:"Is the courses prerecorded, and can I watch it at my own space?",
+      ans:"Yes, Our courses consists of prerecorded sessions, allowing you to learn at your own space. You can access the content whenever it suits you.",
     },
     {
       id:"03",

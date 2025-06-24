@@ -69,13 +69,22 @@ const CreateBlog = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-100 py-10 px-4 sm:px-6 lg:px-8 font-garet">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
-        <h1 className="text-2xl font-bold text-gray-800 mb-6">Create Blog</h1>
+        {/* <h1 className="text-2xl font-bold text-gray-800 mb-6">Share Your Thoughts 🚀</h1> */}
+         <h4 className="text-2xl font-bold text-yellow-500 mb-4 text-center">💡Benefits of Writing a Blog!</h4>
+           <ul className="text-gray-700 mb-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
+            <li>✅ Helps you build your brand as well as your portfolio.</li>
+            <li>✅ You may solidify your knowledge by teaching others.</li>
+            <li>✅ Gain worldwide visibility, among the like-minded people.</li>
+            <li>✅ Blogging is a tool for boosting confidence and personal growth.</li>
+            </div>
+           </ul>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-bold text-gray-700">
                 Author Name
               </label>
               <input
@@ -87,7 +96,7 @@ const CreateBlog = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-bold text-gray-700">
                 Designation
               </label>
               <input
@@ -101,7 +110,7 @@ const CreateBlog = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-bold text-gray-700">
               Blog Title
             </label>
             <input
@@ -114,7 +123,7 @@ const CreateBlog = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-bold text-gray-700">
               Blog Description
             </label>
             <ReactQuill
@@ -145,7 +154,7 @@ const CreateBlog = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-bold text-gray-700">
               Banner Image
             </label>
             <input
@@ -161,7 +170,7 @@ const CreateBlog = () => {
               type="submit"
               className="w-full text-lg font-semibold bg-indigo-600 text-white py-2 px-4 rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              {load ? "Loading..." : "Create Blog"}
+              {load ? "Loading..." : "Share Your Thoughts 🚀"}
             </button>
           </div>
         </form>
