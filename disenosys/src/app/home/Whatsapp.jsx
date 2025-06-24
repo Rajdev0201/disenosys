@@ -5,7 +5,7 @@ export const Whatsapp = () => {
 
   const sendWhatsAppMessage = () => {
     if (typeof window !== 'undefined') { // Check if window is defined
-      const phoneNumber = '9944478700';
+      const phoneNumber = '9150023820';
       const message = 'I’m interested in the courses offered at Disenosys. Could you please share more details? Thanks!';
       const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
       window.open(url, '_blank');

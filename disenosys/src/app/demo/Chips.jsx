@@ -1,13 +1,16 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Chips = () => {
     const [skill,setSkill] = useState([]);
     const [input,setInput] = useState("");
     const [count,setCount] = useState(1);
 
-    console.log(skill)
- 
+    useEffect(() => {
+           console.log(count)
+    },[count])
+   
+    console.log("check")
     const onKeyPress = (e) => {
          if(e.key === "Enter" && input.trim() !== ""){
              const newSkills = {
@@ -43,3 +46,5 @@ const Chips = () => {
 }
 
 export default Chips
+
+
