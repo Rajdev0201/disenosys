@@ -1,3 +1,4 @@
+
 const express = require("express");
 const { postCart, getCart, increament, decreament, removeCart } = require("../controllers/addToCart");
 const router = express.Router();
@@ -7,5 +8,4 @@ router.get("/getCart", getCart);
 router.put("/cart/:id/increament", increament);
 router.put("/cart/:id/decreament", decreament);
 router.delete("/cart/:id", removeCart);
-
 module.exports = router;
