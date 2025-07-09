@@ -6,7 +6,6 @@ import html2pdf from "html2pdf.js";
 import "../../home/Home.css";
 import Image from "next/image";
 import logo from "../../assests/profile/l.jpg";
-import s from "../../assests/profile/Signature.png";
 import "../../globals.css";
 import SingleCertificate from "./SingleStudent.jsx"
 
@@ -304,7 +303,9 @@ const CertificateComponent = () => {
               <p className="text-3xl mt-8  font-berlin font-light text-gray-800 ml-52 w-[480px]">
                   This certifies that
                 </p>
-                <p className="text-[#cc1919] font-medium text-6xl font-sans ml-52 w-[480px] font-brush cname mb-6">
+                <p className={`text-[#cc1919] font-medium font-sans ml-52 w-[480px] font-brush cname mb-6 ${
+                singleStudent.name.length > 10 ? "text-3xl" : "text-5xl"
+              }`}>
                   {student.name}
                 </p>
 

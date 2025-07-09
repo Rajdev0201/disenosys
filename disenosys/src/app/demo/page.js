@@ -1,10 +1,14 @@
-import Chips from "./Chips";
-import Flitercard from "./Filtercard";
+//import Chips from "./Chips";
+//import Flitercard from "./Filtercard";
 
+// import Age from "./Age";
+import Theme from "./MainTheme";
 
 export default function Demo () {
    return(
    //  <Chips/>
-   <Flitercard />
+   // <Flitercard />
+   // <Age/>
+   <Theme/>
    )
 }

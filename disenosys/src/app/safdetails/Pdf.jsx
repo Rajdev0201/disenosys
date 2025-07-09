@@ -49,7 +49,7 @@ import html2canvas from "html2canvas";
           generatePage(index + 1); // Process the next page
         });
       };
-  
+      alert("Pdf successfully downloaded!!..")
       generatePage(0); // Start generating pages
     }, 500);
     setShow(false)

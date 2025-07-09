@@ -22,7 +22,7 @@ const MyCourse = () => {
   useEffect(() => {
       const filtered = course?.data?.filter((item) => {
         const name = item.name?.toLowerCase().includes(search.toLowerCase());
-        const email = item.email?.toLowerCase().includes(search.toLowerCase());
+        //const email = item.email?.toLowerCase().includes(search.toLowerCase());
         const udin = item.Udin?.toLowerCase().includes(search.toLowerCase());
         const course = item.course?.toLowerCase().includes(search.toLowerCase());
  
