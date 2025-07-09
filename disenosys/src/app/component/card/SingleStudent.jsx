@@ -285,7 +285,7 @@ const CertificateSingle = () => {
           <div className="flex flex-col justify-end items-end mt-3 mr-16">
             {/* <Image src={s} alt="signature" className="text-blue-600 w-40 h-20" /> */}
             {/* <div className="border border-b-2 border-gray-900 w-40"></div> */}
-            <p className="text-lg font-bold text-blue-900 mt-24">
+            <p className="text-lg font-bold text-blue-900 mt-28">
               PRAVEEN KUMAR S
             </p>
             <p className="text-gray-700 text-center mr-5">CEO, Disenosys</p>
