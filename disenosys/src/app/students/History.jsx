@@ -26,14 +26,16 @@ const History = () => {
   const [expandedRows, setExpandedRows] = useState({});
   const [subRows, setSubRows] = useState({});
   const [add, setAdd] = useState({
-    name: "",
+    fname: "",
     email: "",
     phone: "",
-    course: "",
+    cname: "",
     start: "",
     end: "Not Completed",
     status: "In-progress",
   });
+
+
   const [editStudent, setEditStudent] = useState({
     id: "",
     fname: "",
@@ -201,7 +203,6 @@ const History = () => {
     const confirmSubmit = window.confirm("Do you want to delete?");
     if (confirmSubmit) {
       dispatch(removeOnline(id));
-      dispatch(Online());
     }
   };
 
@@ -236,7 +237,7 @@ const History = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://disenosys-dkhj.onrender.com/ld/studentadd",
+        "https://disenosys-dkhj.onrender.com/studentadd",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -291,7 +292,13 @@ const History = () => {
         >
           Add Students
         </button> */}
-        <div className="">
+        <div className="flex flex-wrap gap-2">
+          <div>
+          <button className="rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600 flex items-center gap-2 mt-4"  onClick={() => setShowPopup(true)}>
+            Add Student
+          </button>
+          </div>
+          <div className="">
           <button
             className="rounded bg-blue-500 px-4 py-2 text-white transition hover:bg-blue-600 flex items-center gap-2 mt-4"
             onClick={() => {
@@ -301,9 +308,11 @@ const History = () => {
           >
             Copy Link <FaRegCopy className="w-5 h-5 text-white" />
           </button>
+{/*         
           <h5 className="text-red-500 w-52 text-sm">
             Quickly copy and share the student application form*
-          </h5>
+          </h5> */}
+            </div>
         </div>
       </div>
       <div className="px-12  font-garet ">
@@ -548,7 +557,7 @@ const History = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <input
                 type="text"
-                name="name"
+                name="fname"
                 placeholder="Enter FullName"
                 required
                 className="border p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -573,7 +582,7 @@ const History = () => {
               />
 
               <select
-                name="course"
+                name="cname"
                 value={add.course}
                 onChange={handleChange}
                 className="border p-2 w-full text-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

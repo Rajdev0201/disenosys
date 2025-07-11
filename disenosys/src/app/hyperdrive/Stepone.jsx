@@ -178,7 +178,7 @@ const Stepone = ({ nextStep, formData, setFormData }) => {
                       />
           </div>
           <div>
-            <span className="text-sm text-gray-800">Personal Mobile 2</span>
+            <span className="text-sm text-red-500">Whatsapp Number*</span>
              <PhoneInput
                         country={'in'}
                         name="no2"
