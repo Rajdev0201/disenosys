@@ -44,34 +44,67 @@ const Attendance = () => {
     dispatch(getBatchName());
   }, [dispatch, selectBatch]);
 
-  const handleChange = (sid, field, value) => {
-    setUpdateBatch((prev) => ({
-      ...prev,
-      [sid]: {
-        ...prev[sid],
-        [field]: value,
-      },
+  // const handleChange = (sid, field, value) => {
+  //   setUpdateBatch((prev) => ({
+  //     ...prev,
+  //     [sid]: {
+  //       ...prev[sid],
+  //       [field]: value,
+  //     },
+  //   }));
+  // };
+
+ const handleChange = (sid, field, value, name) => {
+  setUpdateBatch((prev) => ({
+    ...prev,
+    [sid]: {
+      ...(prev[sid] || {}),
+      [field]: value,
+      name: name,
+    },
+  }));
+};
+
+
+  // const handleSubmit = async (name, sid, topic) => {
+  //   console.log(name, sid);
+  //   const studentUpdate = updateBatch[sid];
+  //   const payload = {
+  //     batch: selectBatch,
+  //     student: {
+  //       name,
+  //       sid,
+  //       topic,
+  //       status: studentUpdate?.status || false,
+  //       date: studentUpdate?.date || "",
+  //     },
+  //   };
+
+  //   console.log("Submit Payload", payload);
+
+  //   // TODO: Call API here to update backend
+  // };
+
+  const handleSubmitAll = async () => {
+    const cleanedStudents = Object.entries(updateBatch)
+    .filter(([sid]) => sid.startsWith("DSST"))
+    .map(([sid, data]) => ({
+      sid,
+      name: data.name,
+      status: data.status,
+      date: data.date,
     }));
+
+  const payload = {
+    batch: selectBatch,
+    students: cleanedStudents,
   };
 
-  const handleSubmit = async (name, sid, topic) => {
-    console.log(name, sid);
-    const studentUpdate = updateBatch[sid];
-    const payload = {
-      batch: selectBatch,
-      student: {
-        name,
-        sid,
-        topic,
-        status: studentUpdate?.status || false,
-        date: studentUpdate?.date || "",
-      },
-    };
+  console.log("Final Payload", payload);
 
-    console.log("Submit Payload", payload);
-
-    // TODO: Call API here to update backend
-  };
+  // POST to your API
+  // await axios.post("/api/update-batch", payload);
+};
 
   return (
     <div className="px-6 py-4 bg-gray-50 min-h-screen font-garet">
@@ -161,15 +194,12 @@ const Attendance = () => {
                   <th className="py-2 px-2 text-centers border-r border-gray-300">
                     Date
                   </th>
-                  <th className="py-2 px-2 text-centers border-r border-gray-300">
-                    Action
-                  </th>
                 </tr>
               </thead>
-              {batch.students.map((std, i) => (
+              {batch.students.map((std) => (
                 <tbody>
                   <>
-                    <tr key={i}>
+                    <tr key={std.sid}>
                       <td className="py-2 px-2 text-start text-gray-600 font-medium gap-3">
                         {std.name}
                       </td>
@@ -188,7 +218,8 @@ const Attendance = () => {
                             handleChange(
                               std.sid,
                               "status",
-                              !updateBatch[std.sid]?.status
+                              !updateBatch[std.sid]?.status,
+                              std.name
                             )
                           }
                         >
@@ -207,13 +238,13 @@ const Attendance = () => {
                           type="date"
                           value={updateBatch[std.sid]?.date || ""}
                           onChange={(e) =>
-                            handleChange(std.sid, "date", e.target.value)
+                            handleChange(std.sid, "date", e.target.value,std.name)
                           }
                           className="bg-gray-400 text-black rounded-md p-2 shadow-inner"
                         />
                       </td>
 
-                      <td className="flex justify-center">
+                      {/* <td className="flex justify-center">
                         <button
                           className="bg-blue-500 text-center px-6 py-2 rounded-md shadow-inner text-white"
                           onClick={() =>
@@ -222,12 +253,21 @@ const Attendance = () => {
                         >
                           Submit
                         </button>
-                      </td>
+                      </td> */}
                     </tr>
                   </>
                 </tbody>
               ))}
             </table>
+            <div className="text-center mt-4">
+  <button
+    onClick={handleSubmitAll}
+    className="bg-green-600 text-white px-6 py-2 rounded-md"
+  >
+    Submit All Updates
+  </button>
+</div>
+
           </>
         ))
       ) : (
