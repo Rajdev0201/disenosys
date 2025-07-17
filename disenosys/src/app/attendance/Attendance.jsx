@@ -197,9 +197,9 @@ const Attendance = () => {
                 </tr>
               </thead>
               {batch.students.map((std) => (
-                <tbody>
+                <tbody key={std.sid}>
                   <>
-                    <tr key={std.sid}>
+                    <tr>
                       <td className="py-2 px-2 text-start text-gray-600 font-medium gap-3">
                         {std.name}
                       </td>
