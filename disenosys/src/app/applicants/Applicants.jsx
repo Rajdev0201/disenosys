@@ -151,8 +151,6 @@ const Applicants = () => {
         matchesExperience && matchesNotice && matchesExpmonths && matchesCompany
       );
     });
-
-    // const extractedData = filtered.map((profile) => ({
     //   name: profile.name || "N/A",
     //   email: profile.email || "N/A",
     //   phone: profile.phone || "N/A",

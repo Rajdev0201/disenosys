@@ -126,6 +126,18 @@ const Sidebar = () => {
           </span>
           <span>Dashboard</span>
         </Link>
+
+         <Link
+          href="/attendance"
+          className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
+            path === "/attendance" ? "bg-white rounded" : ""
+          }`}
+        >
+          <span className="pl-4 mr-3">
+            <MdCastForEducation />
+          </span>
+          <span>Attendance</span>
+        </Link>
       </div>
     )}
   </div>

@@ -27,6 +27,7 @@ import intern from "./features/internshipCertificate.js";
 import gpdx from "./features/gpdxSlice.js";
 import exam from "./features/examCertificateSlice.js";
 import jobs from "./features/cretaeJobSlice.js";
+import batch from "./features/batchSlice.js";
 
 export default configureStore({
   reducer: {
@@ -57,5 +58,6 @@ export default configureStore({
     gpdx:gpdx,
     exam:exam,
     jobs:jobs,
+    batch:batch
   },
 });

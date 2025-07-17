@@ -245,17 +245,6 @@ const CareerForm = () => {
     }
   };
 
-  // const handleSkillChange = (e) => {
-  //   setSkillInput(e.target.value);
-  // };
-
-  // const handleSkillAdd = (e) => {
-  //   e.preventDefault();
-  //   if (skillInput && !skills.includes(skillInput.trim())) {
-  //     setSkills([...skills, skillInput.trim()]);
-  //     setSkillInput("");
-  //   }
-  // };
 
   const handleFileUpload = (e) => {
     const file = e.target.files[0];
