@@ -27,7 +27,7 @@ const DynamicGreetings = () => {
    
 
    const getsH = getgreeting(time.getHours())
-   const formatedTimes = time.toLocaleTimeString()
+  //  const formatedTimes = time.toLocaleTimeString()
   return (
     <div>
        {formatedTimes} grettings- {getsH}

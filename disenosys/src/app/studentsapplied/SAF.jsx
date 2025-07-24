@@ -16,6 +16,7 @@ const SAF = () => {
 
   // total pages from backend response
   const totalPages = online?.pages || 1;
+   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
   // const itemsPerPage = 8;
 
   // Fetch data with search and page params
@@ -101,13 +102,13 @@ const SAF = () => {
               </div>
             ))}
           </div>
-          <div className="w-full mt-4 flex justify-center">
+          {/* <div className="w-full mt-4 flex justify-center">
             <Pagination
               totalPages={totalPages}
               currentPage={page}
               onPageChange={handlePageClick}
             />
-          </div>
+          </div> */}
         </>
       ) : (
         <p className="col-span-4 text-center text-red-500 font-bold flex justify-center items-center min-h-screen font-garet">

@@ -138,6 +138,18 @@ const Sidebar = () => {
           </span>
           <span>Attendance</span>
         </Link>
+
+          <Link
+          href="/attendance-analytics"
+          className={`w-full flex items-center text-black font-garet font-medium py-2 rounded-md hover:bg-gray-400 transition-colors duration-200 ${
+            path === "/attendance-analytics" ? "bg-white rounded" : ""
+          }`}
+        >
+          <span className="pl-4 mr-3">
+            <MdCastForEducation />
+          </span>
+          <span>Reports</span>
+        </Link>
       </div>
     )}
   </div>

@@ -30,7 +30,7 @@ const History = () => {
     email: "",
     phone: "",
     cname: "",
-    start: "",
+    cdate: "",
     end: "Not Completed",
     status: "In-progress",
   });
@@ -237,7 +237,7 @@ const History = () => {
     e.preventDefault();
     try {
       const response = await fetch(
-        "https://disenosys-dkhj.onrender.com/studentadd",
+        "http://localhost:8000/studentadd",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -267,7 +267,7 @@ const History = () => {
       <h2 className="text-[#0d1039] font-medium text-4xl text-center font-garet mb-1 mt-5">
         Students Application Form
       </h2>
-      <div className="flex flex-col md:flex-row justify-between items-center px-12 py-20 gap-4  font-garet ">
+      <div className="flex flex-col md:flex-row justify-between items-center px-12 py-6 gap-4  font-garet ">
         <div className="flex items-center">
           <div className="flex items-center bg-blue-500 justify-center w-10  rounded-tl-lg rounded-bl-lg border-r border-gray-200 p-3">
             <svg
@@ -326,6 +326,9 @@ const History = () => {
             <table className="min-w-full bg-white border border-gray-300 shadow-md rounded-lg">
               <thead className="bg-blue-500 text-white font-sans">
                 <tr>
+                  <th className="py-0 px-0 text-start border-r border-gray-300">
+                    {" "}
+                  </th>
                   <th className="py-2 px-2 text-start border-r border-gray-300">
                     S.No
                   </th>
@@ -365,21 +368,23 @@ const History = () => {
                       }`}
                     >
                       <td className="py-2 px-2 text-start text-gray-600 font-medium">
-                        {startIndex + index + 1}.
-                        <>
+                          <>
                           {item.subrows?.length > 0 && (
                             <button
-                              className="w-6 ml-2 ring-2 rounded-full bg-blue-500 p-1"
+                              className=""
                               onClick={() => toggleRow(item._id)}
                             >
                               {expandedRows[item._id] ? (
-                                <FaChevronUp className="text-white" />
+                                <FaChevronUp className="text-white ring-2 rounded-full bg-blue-500 p-1" size={20} />
                               ) : (
-                                <FaChevronDown className="text-white" />
+                                <FaChevronDown  className="text-white ring-2 rounded-full bg-blue-500 p-1" size={20}/>
                               )}
                             </button>
                           )}
                         </>
+                      </td>
+                      <td className="py-2 px-2 text-start text-gray-600 font-medium">
+                        {startIndex + index + 1}.
                       </td>
                       <td className="py-2 px-2  text-start text-gray-600 font-medium">
                         {item.sid}
@@ -470,6 +475,9 @@ const History = () => {
                           className="bg-gray-100 border-b border-gray-300 text-sm
                           "
                         >
+                          <td>
+                            {" "}
+                          </td>
                           <td className="py-2 px-2 text-start text-gray-600 font-medium">
                             {/* Sub-{subIndex + 1}. */}
                             <BsArrowReturnRight className="text-blue-500 " />
@@ -599,7 +607,7 @@ const History = () => {
 
               <input
                 type="date"
-                name="start"
+                name="cdate"
                 placeholder="Total Year of Experience"
                 required
                 className="border p-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"

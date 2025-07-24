@@ -99,10 +99,11 @@ const ExamC = require('./models/certificatesave.js');
 const InternC = require('./models/internship.js');
 const CourseC = require('./models/coursecertificate.js');
 const gpdxC = require('./models/Gpdxcertificate.js');
-const GpdxC = require("./models/Gpdxcertificate.js")
-const enroll = require("./routes/enroll.js")
-const FindJob = require("./routes/findJob.js")
-const batch = require("./routes/batch.js")
+const GpdxC = require("./models/Gpdxcertificate.js");
+const enroll = require("./routes/enroll.js");
+const FindJob = require("./routes/findJob.js");
+const batch = require("./routes/batch.js");
+const attendance = require("./routes/attendance.js");
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
@@ -127,6 +128,7 @@ app.use("/ld",onlineStd)
 app.use("/enroll",enroll)
 app.use("/Jobs",FindJob)
 app.use("/",batch)
+app.use("/",attendance)
 
 app.get("/",(req,res) => {
  res.send("hi")
@@ -444,25 +446,59 @@ app.post("/studentadd",uploadSPA, async (req, res) => {
   const afile = req?.files?.['afile']?.[0] || null;
   const voter = req?.files?.['voter']?.[0] || null;
   const pan = req?.files?.['pan']?.[0] || null;
-  
-
-console.log("Uploaded files:", req?.files);
-console.log("Request body:", req?.body);
 
   try {
     const lastEntry = await spa.findOne().sort({ sid: -1 });
     let newSidNumber = 110; 
 
-if (lastEntry && lastEntry.sid) {
+     if (lastEntry && lastEntry.sid) {
   const lastNumber = parseInt(lastEntry.sid.replace(/\D/g, ""), 10);
   if (!isNaN(lastNumber)) {
     newSidNumber = lastNumber + 1;
   }
-}
+       }
+       
+    const c1 = "PGDBW - PG DIPLOMA (BODY IN WHITE - BIW)";
+    const c2 = "PGDPT - PG DIPLOMA (PLASTIC TRIMS)";
+    const c3 = "MNPDB - AUTOMOTIVE PRODUCT DEVELOPMENT - BODY MASTERS";
 
-let newSid = `DSST${newSidNumber}`;
+    let subrowsToAdd = [];
 
+    if (cname === c1) {
+      subrowsToAdd = [
+        { cname: "DSST01 - CATIA Foundations for Automotive Designers", start: "", end: "" },
+        { cname: "DSST02 - Advanced CATIA Surfacing for Automotive Designers", start: "", end: "" },
+        { cname: "DSPT04 - Surface Remastering for Automotive Designers", start: "", end: "" },
+        { cname: "DSBW01 - Fundamentals of Automotive Body in White (BIW)", start: "", end: "" },
+        { cname: "DSBW02 - Automtotive BIW Product Development - BIW BRACKETS & REINFORCEMENTS", start: "", end: "" },
+      ];
+    }else if(cname === c2){
+       subrowsToAdd = [
+        { cname: "DSST01 - CATIA Foundations for Automotive Designers", start: "", end: "" },
+        { cname: "DSST02 - Advanced CATIA Surfacing for Automotive Designers", start: "", end: "" },
+        { cname: "DSPT01 - Fundamentals of Automotive Plastic Trims", start: "", end: "" },
+        { cname: "DSPT04 - Surface Remastering for Automotive Designers", start: "", end: "" },
+        { cname: "DSPT02 - Close Volume and Engineering Features for Automotive Designers", start: "", end: "" },
+      ];    
+    }else if(cname === c3){
+        subrowsToAdd = [
+        { cname: "DSST01 - CATIA Foundations for Automotive Designers", start: "", end: "" },
+        { cname: "DSST02 - Advanced CATIA Surfacing for Automotive Designers", start: "", end: "" },
+        { cname: "DSPT01 - Fundamentals of Automotive Plastic Trims", start: "", end: "" },
+        { cname: "DSPT03 - Solid Remastering for Automotive Designers", start: "", end: "" },
+        { cname: "DSPT04 - Surface Remastering for Automotive Designers", start: "", end: "" },
+        { cname: "DSBW01 - Fundamentals of Automotive Body in White (BIW)", start: "", end: "" },
+        { cname: "DSCD01 - Automotive concept Design and master sections", start: "", end: "" },
+        { cname: "DSBW02 - Automtotive BIW Product Development - BIW BRACKETS & REINFORCEMENTS", start: "", end: "" },
+        { cname: "DSPT02 - Close Volume and Engineering Features for Automotive Designers", start: "", end: "" },
+      ];  
+    }else {
+      subrowsToAdd = [{ cname, start, end }];
+    }
 
+    const updatedEntry = subrowsToAdd;
+    console.log(updatedEntry);
+    let newSid = `DSST${newSidNumber}`;
     const newContact = new spa({  fname,
       lname,
       dob,
@@ -508,6 +544,7 @@ let newSid = `DSST${newSidNumber}`;
       start,
       end,
       status,
+      subrows:updatedEntry,
       sid:newSid
      });
     await newContact.save();

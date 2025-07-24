@@ -2,7 +2,7 @@
 import React from "react";
 
 export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const pagesPerGroup = 8; 
+  const pagesPerGroup = 30; 
   const currentGroup = Math.ceil(currentPage / pagesPerGroup); 
   const startPage = (currentGroup - 1) * pagesPerGroup + 1;
   const endPage = Math.min(startPage + pagesPerGroup - 1, totalPages);

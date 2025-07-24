@@ -53,7 +53,7 @@ exports.LoginUser = CatchAsyncError(async (req, res, next) => {
 
   exports.RegisterUserLD = CatchAsyncError(async(req,res,next)=>{
 
-    const {userName,userEmail,password,userType} = req.body;
+    const {userName,userEmail,password} = req.body;
     console.log(req.body);
 
     const hPassword = await bcrypt.hash(password,10)
