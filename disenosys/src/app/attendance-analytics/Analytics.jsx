@@ -169,7 +169,7 @@ const handleDownload = () => {
                         {batch.date}
                       </td> */}
                         {std?.status?.map((s) => (
-                          <td className="text-center">
+                          <td key={s} className="text-center">
                             {s === true ? (
                               <span className="bg-green-500 rounded-md px-2 py-0.5 text-white shadow-inner">
                                 present
