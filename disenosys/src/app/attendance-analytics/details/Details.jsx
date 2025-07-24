@@ -128,7 +128,7 @@ const Details = () => {
                         {batch.batch.toUpperCase()}
                       </h1>
                       {std?.topic?.map((items) => (
-                        <p className="font-medium text-sm bg-blue-100 rounded-lg shadow-inner px-4 py-1 mb-2 flex items-center gap-2">
+                        <p key={items} className="font-medium text-sm bg-blue-100 rounded-lg shadow-inner px-4 py-1 mb-2 flex items-center gap-2">
                           {items} <IoCheckmarkDoneCircle  size={25} className="text-green-400"/>
                         </p>
                       ))}

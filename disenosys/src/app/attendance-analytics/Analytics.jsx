@@ -141,7 +141,7 @@ const handleDownload = () => {
                   </th> */}
                     {getDate?.map((i) =>
                       i[0].map((i) => (
-                        <th className="py-2 px-2 text-center border-r border-gray-300">
+                        <th key={i} className="py-2 px-2 text-center border-r border-gray-300">
                           {new Date(i).getDate()}-{new Date(i).getMonth() + 1}-
                           {new Date(i).getFullYear()}
                         </th>
