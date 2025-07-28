@@ -104,6 +104,7 @@ const enroll = require("./routes/enroll.js");
 const FindJob = require("./routes/findJob.js");
 const batch = require("./routes/batch.js");
 const attendance = require("./routes/attendance.js");
+const leads = require("./routes/leads.js");
 
 app.use("/api/v1", UserRoute);
 app.use("/api/v1", CourseRoute);
@@ -129,6 +130,7 @@ app.use("/enroll",enroll)
 app.use("/Jobs",FindJob)
 app.use("/",batch)
 app.use("/",attendance)
+app.use("/",leads)
 
 app.get("/",(req,res) => {
  res.send("hi")

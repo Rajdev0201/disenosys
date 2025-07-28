@@ -18,10 +18,10 @@ export const getBatch = (batch) => async (dispatch) => {
   }
 
 
-  export const getBatchName = () => async (dispatch) => {
+  export const getBatchName = (course) => async (dispatch) => {
     try {
         dispatch(setBatchName({data:[],loading:true}))
-        const res = await axios.get(`https://disenosys-dkhj.onrender.com/get-batchName`);
+        const res = await axios.get(`http://localhost:8000/get-batchName?course=${course}`);
         const getData = res.data;
         dispatch(setBatchName({data:getData,loading:false}));
     } catch (error) {

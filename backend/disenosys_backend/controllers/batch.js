@@ -45,7 +45,7 @@ exports.createBatch = async (req, res) => {
       //     await student.save();
       //   }
       // }
-      
+
       return res.status(201).json({ message: "Create a new batch", data });
     } else {
       existing?.students?.push(...students);
@@ -60,9 +60,7 @@ exports.createBatch = async (req, res) => {
 };
 
 exports.getBatch = async (req, res) => {
-  console.log(req.query);
   const { batch } = req.query;
-  console.log(batch);
   try {
     const data = await Batch.find({ batch: batch });
     console.log(data);
@@ -76,8 +74,9 @@ exports.getBatch = async (req, res) => {
 };
 
 exports.getBatchName = async (req, res) => {
+    const {course} = req.query;
   try {
-    const data = await Batch.find({}, "batch");
+    const data = await Batch.find({topic:course}, "batch");
     if (!data) {
       return res.status(404).json({ message: "not fetch the batch" });
     }

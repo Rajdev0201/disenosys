@@ -29,6 +29,7 @@ import exam from "./features/examCertificateSlice.js";
 import jobs from "./features/cretaeJobSlice.js";
 import batch from "./features/batchSlice.js";
 import attendance from "./features/attendanceSlice.js";
+import leads from "./features/leadsSlice.js";
 
 export default configureStore({
   reducer: {
@@ -61,5 +62,6 @@ export default configureStore({
     jobs:jobs,
     batch:batch,
     attendance:attendance,
+    leads:leads,
   },
 });

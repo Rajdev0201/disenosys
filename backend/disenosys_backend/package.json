@@ -24,6 +24,7 @@
     "express": "^4.19.2",
     "express-fileupload": "^1.5.1",
     "express-session": "^1.18.0",
+    "gupshup-whatsapp-api": "^1.0.2",
     "jsonwebtoken": "^9.0.2",
     "mammoth": "^1.8.0",
     "moment-timezone": "^0.5.46",

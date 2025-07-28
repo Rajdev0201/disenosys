@@ -1,0 +1,83 @@
+const mongoose = require("mongoose")
+
+const leadsSchema = new mongoose.Schema({
+  fullName:{
+    type:String,
+    required:true
+  },
+  phone:{
+    type:String,
+    required:true
+  },
+  email:{
+    type:String,
+    required:true
+  },
+  linkedin:{
+    type:String,
+    required:true
+  },
+  currentCompany:{
+    type:String,
+    required:true
+  },
+  currentDesignation:{
+    type:String,
+    required:true
+  },
+  currentCTC:{
+    type:String,
+    required:true
+  },
+  expectedCTC:{
+    type:String,
+    required:true
+  },
+  noticePeriod:{
+    type:String,
+    required:true
+  },
+  noticeNegotiable:{
+    type:String,
+    required:true
+  },
+  currentLocation:{
+    type:String,
+    required:true
+  },
+  willingToRelocate:{
+    type:String,
+    required:true
+  },
+  preferredLocation:{
+    type:String,
+    required:true
+  },
+  experience:{
+    type:String,
+    required:true
+  },
+  engagementType:{
+    type:String,
+    required:true
+  },
+  urgency:{
+    type:String,
+    required:true
+  },
+  message:{
+    type:String,
+    required:true
+  },
+  resume:{
+    type:String,
+    required:true
+  },
+  status: 
+  { type: String, default: "Pending" },
+  updatedStatus:{
+    type:String,
+  }
+},{timestamps:true});
+
+module.exports = mongoose.model("Leads", leadsSchema);
