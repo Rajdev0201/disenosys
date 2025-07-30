@@ -1,7 +1,7 @@
 //import Chips from "./Chips";
 //import Flitercard from "./Filtercard";
 
-import DynamicGreetings from "./DynamicGreetings";
+import Form from "./DynamicGreetings";
 
 // import Age from "./Age";
 // import Theme from "./MainTheme";
@@ -12,6 +12,6 @@ export default function Demo () {
    // <Flitercard />
    // <Age/>
    // <Theme/>
-   <DynamicGreetings/>
+   <Form/>
    )
 }

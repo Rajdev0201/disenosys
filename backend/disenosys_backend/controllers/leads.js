@@ -3,7 +3,6 @@ const sendLeadToWhatsapp = require("../utils/WhatsappApi.js");
 
 
 exports.handleLeadSubmission = async (req, res) => {
-    console.log(req.body)
   try {
     const {
       fullName,
@@ -16,14 +15,17 @@ exports.handleLeadSubmission = async (req, res) => {
       expectedCTC,
       noticePeriod,
       noticeNegotiable,
-      currentLocation,
-      willingToRelocate,
-      preferredLocation,
       experience,
+      relevant,
       engagementType,
       urgency,
       message,
     } = req.body;
+
+const currentCountry = JSON.parse(req.body.currentCountry);
+const currentState = JSON.parse(req.body.currentState);
+const currentCity = JSON.parse(req.body.currentCity);
+
 
     const resume = req.file?.filename;
     
@@ -38,16 +40,16 @@ exports.handleLeadSubmission = async (req, res) => {
       expectedCTC,
       noticePeriod,
       noticeNegotiable,
-      currentLocation,
-      willingToRelocate,
-      preferredLocation,
+      currentCountry,
+      currentState,
+      currentCity,
       experience,
+      relevant,
       engagementType,
       urgency,
       message,
       resume:resume
     })
-    console.log(data)
     await data.save();
     await sendLeadToWhatsapp(data);
 
@@ -64,8 +66,9 @@ exports.handleLeadSubmission = async (req, res) => {
 exports.postHook = async (req, res) => {
   try {
     const payload = req.body;
+    console.log(payload)
     const replyId = payload?.payload?.reply?.id;
-
+    console.log(replyId)
     if (!replyId) return res.sendStatus(200);
 
     const [responseType, leadId] = replyId.split("_");

@@ -41,19 +41,23 @@ const leadsSchema = new mongoose.Schema({
     type:String,
     required:true
   },
-  currentLocation:{
-    type:String,
+  currentCountry:{
+    type:Object,
     required:true
   },
-  willingToRelocate:{
-    type:String,
+    currentState: {
+    type:Object,
     required:true
-  },
-  preferredLocation:{
-    type:String,
+    },
+    currentCity: {
+    type:Object,
     required:true
-  },
+    },
   experience:{
+    type:String,
+    required:true
+  },
+  relevant:{
     type:String,
     required:true
   },
@@ -67,7 +71,6 @@ const leadsSchema = new mongoose.Schema({
   },
   message:{
     type:String,
-    required:true
   },
   resume:{
     type:String,

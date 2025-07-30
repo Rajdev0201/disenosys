@@ -1,38 +1,46 @@
 "use client"
-import React, { useEffect, useState } from 'react'
 
+import React, { useState } from "react";
+import { CountrySelect, StateSelect, CitySelect } from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
 
-const getgreeting = (time) => {
-    if(time >= 5 && time < 12){
-     return "Good morning bro"
-    }else if(time >= 12 && time < 15){
-        return "Good aftn bro"
-    }else if(time >=15 && time < 20){
-          return "Good evng bro"
-    }else{
-        return "Good night bro"
-    }
-}
+export default function App() {
+  const [country, setCountry] = useState(null);
+  const [currentState, setCurrentState] = useState(null);
+   const [currentCity, setCurrentCity] = useState(null);
 
-const DynamicGreetings = () => {
-   const [time,setTime] = useState(new Date());
-
-   useEffect(() => {
-     const timer = setInterval(() => {
-        setTime(new Date());
-     },1000)
-     console.log("times")
-     return () => clearInterval(timer)
-   },[])
-   
-
-   const getsH = getgreeting(time.getHours())
-  //  const formatedTimes = time.toLocaleTimeString()
   return (
+    <>
     <div>
-       {formatedTimes} grettings- {getsH}
-    </div>
-  )
-}
+      <h6>Country</h6>
+      <CountrySelect
+        containerClassName="form-group"
+        inputClassName=""
+        onChange={(_country) => setCountry(_country)}
+        onTextChange={(_txt) => console.log(_txt)}
+        placeHolder="Select Country"
+      />
+ 
+      <h6>State</h6>
+      <StateSelect
+        countryid={country?.id}
+        containerClassName="form-group"
+        inputClassName=""
+        onChange={(_state) => setCurrentState(_state)}
+        onTextChange={(_txt) => console.log(_txt)}
+        defaultValue={currentState}
+        placeHolder="Select State"
+      />
 
-export default DynamicGreetings
+       <h6>City</h6>
+      <CitySelect
+        countryid={country?.id}
+        stateid={currentState?.id}
+        onChange={(_city) => setCurrentCity(_city)}
+        defaultValue={currentCity}
+        placeHolder="Select City"
+      />
+    </div>
+ </>
+  );
+}

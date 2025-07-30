@@ -1,34 +1,46 @@
 // components/LeadCaptureForm.jsx
 "use client";
 import axios from "axios";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import {
+  CountrySelect,
+  StateSelect,
+  CitySelect,
+} from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
 
 const LeadCaptureForm = () => {
-const initialFormData = {
-  fullName: "",
-  phone: "",
-  email: "",
-  linkedin: "",
-  resume: null, // file input
-  currentCompany: "",
-  currentDesignation: "",
-  currentCTC: "",
-  expectedCTC: "",
-  noticePeriod: "",
-  noticeNegotiable: "No",
-  currentLocation: "",
-  willingToRelocate: "No",
-  preferredLocation: "",
-  experience: "",
-  engagementType: "",
-  urgency: "",
-  message: "",
-};
+  const initialFormData = {
+    fullName: "",
+    phone: "",
+    wp: "",
+    email: "",
+    linkedin: "",
+    resume: null,
+    currentCompany: "",
+    currentDesignation: "",
+    currentCTC: "",
+    expectedCTC: "",
+    noticePeriod: "",
+    noticeNegotiable: "",
+    currentCountry: null,
+    currentState: null,
+    currentCity: null,
+    experience: "",
+    relevant: "",
+    engagementType: "",
+    urgency: "",
+    message: "",
+  };
 
   const [formData, setFormData] = useState(initialFormData);
-
+  const [load,setLoad] = useState(false)
+  const router = useRouter();
   const handleChange = (e) => {
     const { name, value, files, type } = e.target;
     if (type === "file") {
@@ -37,79 +49,99 @@ const initialFormData = {
       setFormData({ ...formData, [name]: value });
     }
   };
+  const [sameAsPhone, setSameAsPhone] = useState(false);
 
+  const handlePhoneChange = (value) => {
+    setFormData((prev) => ({
+      ...prev,
+      phone: value,
+      wp: sameAsPhone ? value : prev.wp, // update wp if checkbox is checked
+    }));
+  };
 
+  const handleWpChange = (value) => {
+    if (!sameAsPhone) {
+      setFormData((prev) => ({ ...prev, wp: value }));
+    }
+  };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleCheckboxChange = (e) => {
+    const checked = e.target.checked;
+    setSameAsPhone(checked);
+    if (checked) {
+      setFormData((prev) => ({ ...prev, wp: prev.phone }));
+    } else {
+      setFormData((prev) => ({ ...prev, wp: "" }));
+    }
+  };
 
-  const {
-    fullName,
-    phone,
-    email,
-    resume,
-    engagementType,
-    urgency,
-  } = formData;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoad(true)
+    const { fullName, phone, email, resume, engagementType, urgency } =
+      formData;
 
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phoneRegex = /^[6-9]\d{9}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^(?:\+91|91)?[6-9]\d{9}$/;
+    // Basic validation
+    if (!fullName.trim()) {
+      return toast.error("Please enter your full name");
+    }
 
-  // Basic validation
-  if (!fullName.trim()) {
-    return toast.error("Please enter your full name");
-  }
+    if (!phone.trim() || !phoneRegex.test(phone)) {
+      return toast.error("Please enter a valid 10-digit phone number");
+    }
 
-  if (!phone.trim() || !phoneRegex.test(phone)) {
-    return toast.error("Please enter a valid 10-digit phone number");
-  }
+    if (!email.trim() || !emailRegex.test(email)) {
+      return toast.error("Please enter a valid email address");
+    }
 
-  if (!email.trim() || !emailRegex.test(email)) {
-    return toast.error("Please enter a valid email address");
-  }
+    if (!resume) {
+      return toast.error("Please upload your resume (PDF or DOCX)");
+    }
 
-  if (!resume) {
-    return toast.error("Please upload your resume (PDF or DOCX)");
-  }
+    if (!engagementType) {
+      return toast.error("Please select an Engagement Type");
+    }
 
-  if (!engagementType) {
-    return toast.error("Please select an Engagement Type");
-  }
+    if (!urgency) {
+      return toast.error("Please select your urgency to join/switch");
+    }
 
-  if (!urgency) {
-    return toast.error("Please select your urgency to join/switch");
-  }
+    // Prepare FormData for API (especially for file upload)
+    const data = new FormData();
+    for (const key in formData) {
+      const value = formData[key];
+      // If the value is an object and not a file, stringify it
+      if (value && typeof value === "object" && !(value instanceof File)) {
+        data.append(key, JSON.stringify(value));
+      } else {
+        data.append(key, value);
+      }
+    }
 
-  // Prepare FormData for API (especially for file upload)
-  const data = new FormData();
-  for (const key in formData) {
-    data.append(key, formData[key]);
-  }
-
-
-  // Call your API here
-  await axios.post("http://localhost:8000/leads-post",data,{
-     headers: {
+    // Call your API here
+    await axios
+      .post("https://disenosys-dkhj.onrender.com/leads-post", data, {
+        headers: {
           "Content-Type": "multipart/form-data",
         },
-  })
-    .then((res) => {
-      if (res.ok) {
-        toast.success("Form submitted successfully!");
-        setFormData(initialFormData);
-      } else {
-        toast.error("Submission failed. Try again.");
-      }
-    })
-    .catch((err) => {
-      console.error(err);
-      toast.error("Something went wrong");
-    });
-};
-
+      })
+      .then((res) => {
+        if (res) {
+          setLoad(false)
+          toast.success("Form submitted successfully!");
+          setFormData(initialFormData);
+          router.push("/applied");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("Something went wrong");
+      });
+  };
 
   return (
-
     <form
       onSubmit={handleSubmit}
       className="max-w-5xl mx-auto p-6 rounded-xl shadow-inner font-poppins border mt-2 border-blue-100"
@@ -123,124 +155,289 @@ const handleSubmit = async (e) => {
         Personal Information
       </h3>
       <div className="grid md:grid-cols-2 gap-4">
+        <div className="">
+          <label className="text-gray-500">
+            Full Name <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="fullName"
+            // placeholder="Full Name"
+            onChange={handleChange}
+            className="input-style"
+          />
+        </div>
 
-        <input
-          type="text"
-          name="fullName"
-          placeholder="Full Name"
-          onChange={handleChange}
-          className="input-style"
-        />
-        <input
-          type="text"
-          name="phone"
-          placeholder="Phone Number"
-          onChange={handleChange}
-          className="input-style"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          onChange={handleChange}
-          className="input-style"
-        />
-        <input
-          type="text"
-          name="linkedin"
-          placeholder="LinkedIn Profile URL"
-          onChange={handleChange}
-          className="input-style"
-        />
+        <div>
+          <label className="text-gray-500">
+            Email Address <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            name="email"
+            // placeholder="Email Address"
+            onChange={handleChange}
+            className="input-style"
+          />
+        </div>
+
+        <div>
+          <label className="text-gray-500">
+            Phone Number <span className="text-red-500">*</span>
+          </label>
+          <PhoneInput
+            country={"in"}
+            value={formData.phone}
+            onChange={handlePhoneChange}
+            placeholder="Enter your number"
+            inputProps={{
+              name: "phone",
+              required: true,
+              autoFocus: true,
+              className:
+                "w-full border border-gray-300 rounded px-12 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500",
+            }}
+          />
+        </div>
+        <div>
+          <div className="md:flex justify-between">
+            <label className="text-gray-500">
+              Whatsapp Number <span className="text-red-500">*</span>
+            </label>
+            <div className="">
+              <label className="inline-flex items-center">
+                <input
+                  type="checkbox"
+                  checked={sameAsPhone}
+                  onChange={handleCheckboxChange}
+                  className="form-checkbox w-4 h-4 text-blue-600"
+                />
+                <span className="ml-2 text-gray-600">Same as Phone Number</span>
+              </label>
+            </div>
+          </div>
+          <PhoneInput
+            country={"in"}
+            value={formData.wp}
+            onChange={handleWpChange}
+            disabled={sameAsPhone}
+            inputProps={{
+              name: "phone",
+              required: true,
+              autoFocus: true,
+              className:
+                "w-full border border-gray-300 rounded px-12 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500",
+            }}
+          />
+        </div>
+
+        <div>
+          <label className="text-gray-500">
+            LinkedIn Profile URL <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="linkedin"
+            // placeholder="LinkedIn Profile URL"
+            onChange={handleChange}
+            className="input-style"
+          />
+        </div>
         <div className="flex flex-col">
-        <span className="text-sm text-gray-500">Upload resume</span>
-        <input
-          type="file"
-          name="resume"
-          accept=".pdf,.doc,.docx"
-          onChange={handleChange}
-          className="file-input w-full"
-        />
+          <label className="text-gray-500">
+            Upload Resume <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="file"
+            name="resume"
+            accept=".pdf,.doc,.docx"
+            onChange={handleChange}
+            className="file-input w-full input-style"
+          />
         </div>
       </div>
 
       {/* Job Details */}
-      <h3 className="text-lg font-semibold mt-8 mb-4 text-gray-700">Job Details</h3>
+      <h3 className="text-lg font-semibold mt-8 mb-4 text-gray-700">
+        Job Details
+      </h3>
       <div className="grid md:grid-cols-2 gap-4">
-        <input
-          type="text"
-          name="currentCompany"
-          placeholder="Current Company"
-          onChange={handleChange}
-          className="input-style"
-        />
-        <input
-          type="text"
-          name="currentDesignation"
-          placeholder="Current Designation"
-          onChange={handleChange}
-          className="input-style"
-        />
-        <input
-          type="number"
-          name="currentCTC"
-          placeholder="Current CTC (LPA)"
-          onChange={handleChange}
-          className="input-style"
-        />
-        <input
-          type="number"
-          name="expectedCTC"
-          placeholder="Expected CTC (LPA)"
-          onChange={handleChange}
-          className="input-style"
-        />
-        <input
-          type="number"
-          name="noticePeriod"
-          placeholder="Notice Period (in days)"
-          onChange={handleChange}
-          className="input-style"
-        />
-        <select
-          name="noticeNegotiable"
-          onChange={handleChange}
-          className="input-style"
-        >
-          <option value="" className="input-style" disabled>Notice Period Negotiable?</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-        <input
+        <div>
+          <label className="text-gray-500">
+            Total Experience (in Years, Eg.:4.5){" "}
+            <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="experience"
+            // placeholder="Years of Experience"
+            onChange={handleChange}
+            className="input-style"
+            required
+          />
+        </div>
+        <div>
+          <label className="text-gray-500">
+            Relevant Experience design (in Years, Eg.:4.5)
+            <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="relevant"
+            // placeholder="Years of Experience"
+            onChange={handleChange}
+            className="input-style"
+            required
+          />
+        </div>
+        <div>
+          <label className="text-gray-500">
+            Current Company<span className="text-red-500">*</span>
+          </label>
+
+          <input
+            type="text"
+            name="currentCompany"
+            // placeholder="Current Company"
+            onChange={handleChange}
+            className="input-style"
+            required
+          />
+        </div>
+        <div>
+          <label className="text-gray-500">
+            Current Designation <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="currentDesignation"
+            // placeholder="Current Designation"
+            onChange={handleChange}
+            className="input-style"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="text-gray-500">
+            Current CTC (Lakh Per Annum) <span className="text-red-500">*</span>
+          </label>
+
+          <input
+            type="text"
+            name="currentCTC"
+            placeholder="Ex:3LPA or 5LPA"
+            onChange={handleChange}
+            className="input-style"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="text-gray-500">
+            Expected CTC (Lakh Per Annum){" "}
+            <span className="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            name="expectedCTC"
+            placeholder="Ex:3LPA or 5LPA"
+            onChange={handleChange}
+            className="input-style"
+            required
+          />
+        </div>
+
+        <div>
+          <label className="text-gray-500">
+            Notice Period (in days) <span className="text-red-500">*</span>
+          </label>
+          <select
+            name="noticePeriod"
+            value={formData.noticePeriod} // assuming you're using state
+            onChange={handleChange}
+            className="input-style outline-none"
+            required
+          >
+            <option value="" disabled>
+              Select Notice Period
+            </option>
+            <option value="Immediate">Immediate</option>
+            <option value="7">7 Days</option>
+            <option value="15">15 Days</option>
+            <option value="30">30 Days</option>
+            <option value="45">45 Days</option>
+            <option value="60">60 Days</option>
+            <option value="90">90 Days</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-gray-500">
+            Notice Negotiable <span className="text-red-500">*</span>
+          </label>
+          <select
+            name="noticeNegotiable"
+            value={formData.noticeNegotiable}
+            onChange={handleChange}
+            className="input-style "
+            required
+          >
+            <option value="" className="input-style" disabled>
+              Select option
+            </option>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+        </div>
+
+        <div>
+          <label className="text-gray-500">
+            Current Country <span className="text-red-500">*</span>
+          </label>
+          {/* <input
           type="text"
           name="currentLocation"
-          placeholder="Current Location"
+          // placeholder="Current Location"
           onChange={handleChange}
           className="input-style"
-        />
-        <select
-          name="willingToRelocate"
-          onChange={handleChange}
-          className="input-style"
-        >
-          <option value="" disabled>Willing to Relocate?</option>
-          <option value="Yes">Yes</option>
-          <option value="No">No</option>
-        </select>
-        <input
-          type="text"
-          name="preferredLocation"
-          placeholder="Preferred Location (Optional)"
-          onChange={handleChange}
-          className="input-style"
-        />
-        <input
-          type="number"
-          name="experience"
-          placeholder="Years of Experience"
-          onChange={handleChange}
-          className="input-style"
-        />
+            required
+        /> */}
+          <CountrySelect
+            containerClassName="form-group"
+            name="currentCountry"
+            onChange={(value) =>
+              handleChange({ target: { name: "currentCountry", value } })
+            }
+            placeHolder="Select Country"
+          />
+        </div>
+        <div>
+          <label className="text-gray-500">
+            Current State <span className="text-red-500">*</span>
+          </label>
+          <StateSelect
+            countryid={formData.currentCountry?.id}
+            name="currentState"
+            onChange={(value) =>
+              handleChange({ target: { name: "currentState", value } })
+            }
+            placeHolder="Select State"
+          />
+        </div>
+        <div>
+          <label className="text-gray-500">
+            Current City <span className="text-red-500">*</span>
+          </label>
+          <CitySelect
+            countryid={formData.currentCountry?.id}
+            stateid={formData.currentState?.id}
+            name="currentCity"
+            onChange={(value) =>
+              handleChange({ target: { name: "currentCity", value } })
+            }
+            placeHolder="Select City"
+          />
+        </div>
       </div>
 
       {/* Engagement Type */}
@@ -248,17 +445,20 @@ const handleSubmit = async (e) => {
         Engagement Type
       </h3>
       <div className="flex flex-wrap gap-4">
-        {["Job Referral Only", "Training + Job", "Guidance/Call"].map((type) => (
-          <label key={type} className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="engagementType"
-              value={type}
-              onChange={handleChange}
-            />
-            {type}
-          </label>
-        ))}
+        {["Job Referral Only", "Training + Job", "Guidance/Call"].map(
+          (type) => (
+            <label key={type} className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="engagementType"
+                value={type}
+                onChange={handleChange}
+                required
+              />
+              {type}
+            </label>
+          )
+        )}
       </div>
 
       {/* Additional Info */}
@@ -266,33 +466,45 @@ const handleSubmit = async (e) => {
         Additional Info
       </h3>
       <div className="grid md:grid-cols-2 gap-4">
-        <select
-          name="urgency"
-          onChange={handleChange}
-          className="outline-none input-style"
-        >
-          <option value="" disabled>Urgency to Join/Switch</option>
-          <option value="Immediate">Immediate</option>
-          <option value="Within 30 Days">Within 30 Days</option>
-          <option value="Just Exploring">Just Exploring</option>
-        </select>
-        <textarea
-          name="message"
-          placeholder="Any Message (Optional)"
-          rows={3}
-          onChange={handleChange}
-          className="input-style"
-        />
+        <div>
+          <label className="text-gray-500">
+            Urgency to Join/Switch <span className="text-red-500">*</span>
+          </label>
+
+          <select
+            name="urgency"
+            value={formData.urgency}
+            onChange={handleChange}
+            className="outline-none input-style"
+            required
+          >
+            <option value="" disabled>
+              Select option
+            </option>
+            <option value="Immediate">Immediate</option>
+            <option value="Within 30 Days">Within 30 Days</option>
+            <option value="Just Exploring">Just Exploring</option>
+          </select>
+        </div>
+        <div>
+          <label className="text-gray-500">Any Message (Optional)</label>
+          <textarea
+            name="message"
+            // placeholder="Any Message (Optional)"
+            rows={3}
+            onChange={handleChange}
+            className="input-style"
+          />
+        </div>
       </div>
 
       <button
         type="submit"
         className="mt-6 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
       >
-        Submit
+       {load ? "Loading ..." : " Submit "}
       </button>
     </form>
-
   );
 };
 

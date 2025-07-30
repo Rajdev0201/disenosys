@@ -82,7 +82,6 @@ const handleExisting = ( ) => {
         const courseMatch = sub.cname
           ?.toLowerCase()
           .includes(course?.toLowerCase());
-        console.log("course match", courseMatch);
         const isYetToStart = !sub.start && !sub.end;
         const isInProgress = sub.start && !sub.end;
         const isCompleted = sub.start && sub.end;

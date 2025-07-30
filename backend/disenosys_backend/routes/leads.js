@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const { handleLeadSubmission, getLeads, updateStaus } = require("../controllers/leads");
+const { handleLeadSubmission, getLeads, updateStaus, postHook } = require("../controllers/leads");
 
 cloudinary.config({
     cloud_name: 'dapilmiei',
@@ -25,5 +25,6 @@ const upload = multer({ storage: storageP });
 router.post("/leads-post",upload.single('resume'),handleLeadSubmission);
 router.get("/get-leads",getLeads);
 router.put("/updated-status/:id",updateStaus)
+router.post("/webhook/lead-webhook",postHook)
 
 module.exports = router;

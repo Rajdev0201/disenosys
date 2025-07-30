@@ -12,7 +12,7 @@ const MyCourse = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filteredData, setFilteredData] = useState([]);
   const itemsPerPage = 20;
-  console.log(course);
+
 
   useEffect(() => {
     dispatch(CourseList());
