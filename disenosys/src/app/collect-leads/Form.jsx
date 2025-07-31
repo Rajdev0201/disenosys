@@ -138,6 +138,7 @@ const LeadCaptureForm = () => {
         }
       })
       .catch((err) => {
+        setLoad(false)
         console.error(err);
         toast.error("Something went wrong");
       });
