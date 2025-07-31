@@ -77,7 +77,7 @@ const LeadCaptureForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { fullName, phone, email, resume, engagementType, urgency } =
+    const { fullName, phone, email, resume, engagementType, urgency,currentCity,currentCountry,currentState } =
       formData;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -102,7 +102,10 @@ const LeadCaptureForm = () => {
     if (!engagementType) {
       return toast.error("Please select an Engagement Type");
     }
-
+      
+    if (!currentCity || !currentState || !currentCountry) {
+      return toast.error("Please select city and state,country");
+    }
     if (!urgency) {
       return toast.error("Please select your urgency to join/switch");
     }
