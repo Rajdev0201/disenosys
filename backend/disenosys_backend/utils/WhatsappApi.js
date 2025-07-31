@@ -2,47 +2,63 @@ const axios = require("axios");
 const qs = require("qs");
 
 const sendLeadToWhatsapp = async (leadData) => {
-  const { fullName, phone, _id } = leadData;
+  const {
+    fullName,
+    currentLocation,
+    email,
+    phone,
+    whatsapp,
+    currentSalary,
+    _id
+  } = leadData;
 
-  const params = {
-    channel: "whatsapp",
-    source: "919940037999",
-    destination: "6382209795" , // or use static "6382209795"
-    template: "leads_edutech", // make sure this matches your approved template
-    "template.params": JSON.stringify([fullName, phone]),
-    message: JSON.stringify({
-      type: "quick_reply",
-      msg: "Please respond below.",
-      options: [
+  const payload = {
+    source: "919940037999", // Your Gupshup sender number
+    destination: "916382209795", // ✅ Send to this specific number with country code
+    template: JSON.stringify({
+      id: "d4525a9a-52fe-4861-b317-1ca6d7c79a08",
+      params: [
+        fullName || "No Name",
+        currentLocation || "No Location",
+        email || "No Email",
+        phone || "No Phone",
+        whatsapp || "No WhatsApp",
+        currentSalary || "0",
+      ],
+      // ✅ Add Quick Reply buttons
+      buttons: [
         {
-          type: "text",
+          type: "quick_reply",
           title: "Interested",
-          postbackText: `interested_${_id}`,
+          id: _id,
         },
         {
-          type: "text",
+          type: "quick_reply",
           title: "Not Interested",
-          postbackText: `notinterested_${_id}`,
+          id: _id,
         },
       ],
     }),
   };
 
-  const data = qs.stringify(params);
+  const data = qs.stringify(payload);
 
   try {
-    const res = await axios.post("https://api.gupshup.io/sm/api/v1/msg", data, {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        apikey: "5vsaj1b2msdqaj4ff0irvfuh0lynihry", // replace with your actual key
-      },
-    });
+    const res = await axios.post(
+      "https://api.gupshup.io/wa/api/v1/template/msg",
+      data,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          apikey: "sk_26bb150fd3bb4a1a86019e1a044fbbaf", // Your API key
+        },
+      }
+    );
 
-    console.log("Message sent:", res.data);
+    console.log("✅ Message sent successfully:", res.data);
   } catch (err) {
-    console.error("Failed to send message:", err.response?.data || err.message);
+    console.error("❌ Error sending WhatsApp message:", err.response?.data || err.message);
   }
 };
-
 
 module.exports = sendLeadToWhatsapp;

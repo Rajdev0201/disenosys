@@ -1,6 +1,11 @@
 const Leads = require("../models/leads.js");
 const sendLeadToWhatsapp = require("../utils/WhatsappApi.js");
+const Gupshup = require('gupshup-whatsapp-api')
+  const axios = require("axios");
 
+let client = new Gupshup({
+	apiKey: '5vsaj1b2msdqaj4ff0irvfuh0lynihry'
+});
 
 exports.handleLeadSubmission = async (req, res) => {
   try {
@@ -61,8 +66,6 @@ const currentCity = JSON.parse(req.body.currentCity);
 };
 
 
-
-
 exports.postHook = async (req, res) => {
   try {
     const payload = req.body;
@@ -117,3 +120,39 @@ exports.updateStaus = async (req,res) => {
   }
 }
 
+exports.test = () => {
+client.message.send({
+	channel : "whatsapp",
+	source : "+919940037999",
+	destination : "+916382209795",
+	'src.name': "disenosys",
+	message : {
+		isHSM: "true",
+		type: "text",
+		text: "hi there"
+	}
+}).then((response) => {
+	console.log("Text message sent", response)
+}).catch(err => {
+	console.log("Text message err:", err)
+})
+}
+
+exports.test2 = () => {
+
+const data = {
+  phone: "6382209795",
+  optinType: "USER_OPTIN",
+  app: "disenosys" // Replace with your Gupshup App name
+};
+
+axios.post("https://api.gupshup.io/sm/api/v1/user/opt/in/whatsapp", data, {
+  headers: {
+    "Content-Type": "application/json",
+    "apikey": "sk_26bb150fd3bb4a1a86019e1a044fbbaf" // Use your correct API key
+  }
+})
+.then(res => console.log("✅ Opt-in success:", res.data))
+.catch(err => console.error("❌ Opt-in error:", err.response?.data || err.message));
+
+}

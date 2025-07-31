@@ -77,7 +77,6 @@ const LeadCaptureForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoad(true)
     const { fullName, phone, email, resume, engagementType, urgency } =
       formData;
 
@@ -107,7 +106,7 @@ const LeadCaptureForm = () => {
     if (!urgency) {
       return toast.error("Please select your urgency to join/switch");
     }
-
+    setLoad(true)
     // Prepare FormData for API (especially for file upload)
     const data = new FormData();
     for (const key in formData) {
@@ -122,7 +121,7 @@ const LeadCaptureForm = () => {
 
     // Call your API here
     await axios
-      .post("https://disenosys-dkhj.onrender.com/leads-post", data, {
+      .post("http://localhost:8000/leads-post", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
