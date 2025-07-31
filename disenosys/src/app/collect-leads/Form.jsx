@@ -325,7 +325,7 @@ const LeadCaptureForm = () => {
           <input
             type="text"
             name="currentCTC"
-            placeholder="Ex:3LPA or 5LPA"
+            placeholder="Ex:3.5 or 5"
             onChange={handleChange}
             className="input-style"
             required
@@ -340,7 +340,7 @@ const LeadCaptureForm = () => {
           <input
             type="text"
             name="expectedCTC"
-            placeholder="Ex:3LPA or 5LPA"
+            placeholder="Ex:4.6 or 8"
             onChange={handleChange}
             className="input-style"
             required
