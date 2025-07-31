@@ -87,7 +87,8 @@ const handleDownload = () => {
           Email:std.email,
           CurrentLocation:std.CurrentLocation,
           Phone:std.phone,
-          Whatsapp:std.wp
+          Whatsapp:std?.wp,
+          CurrentCtc:std?.currentCTC
         };
         excelData.push(row);
     });
@@ -95,7 +96,7 @@ const handleDownload = () => {
     const worksheet = XLSX.utils.json_to_sheet(excelData);
 
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Attendance Report");
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Sales_Report");
 
     const excelBuffer = XLSX.write(workbook, {
       bookType: "xlsx",
@@ -119,11 +120,12 @@ const handleDownload = () => {
       .toString()
       .padStart(2, "0")}${currentDate.getFullYear()}`;
 
-    link.setAttribute("download", `Attendance_Report_${formattedDate}.xlsx`);
+    link.setAttribute("download", `Sales_Report_${formattedDate}.xlsx`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
     window.URL.revokeObjectURL(url);
+   alert("xl sheet downloaded!!")
   } catch (error) {
     console.error("Error exporting data:", error);
     alert("Failed to export data. Please try again.");
@@ -167,7 +169,7 @@ const handleDownload = () => {
               type="text"
             />
           </div>
-          <button className="bg-green-400 px-2 py-1 rounded-md shadow-inner text-sm text-white mb-2">Download Report</button>
+          <button className="bg-green-400 px-2 py-1 rounded-md shadow-inner text-sm text-white mb-2" onClick={handleDownload}>Download Report</button>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full border text-left text-sm">
