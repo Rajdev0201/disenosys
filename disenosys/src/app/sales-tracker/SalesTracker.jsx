@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLeads, updateLead } from "../Redux/action/leads";
+import * as XLSX from "xlsx";
 const statusOptions = ["Pending", "Spoke", "Enrolled"];
 
 const SalesTracking = () => {
@@ -74,6 +75,60 @@ const SalesTracking = () => {
   })
   setFilterData(filter)
   },[leads,search])
+
+  
+const handleDownload = () => {
+  try {
+
+    const excelData = [];
+    leads?.data?.map((std) => {
+        const row = {
+          Name: std.fullName,
+          Email:std.email,
+          CurrentLocation:std.CurrentLocation,
+          Phone:std.phone,
+          Whatsapp:std.wp
+        };
+        excelData.push(row);
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(excelData);
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Attendance Report");
+
+    const excelBuffer = XLSX.write(workbook, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    // Create Blob and trigger download
+    const blob = new Blob([excelBuffer], {
+      type: "application/octet-stream",
+    });
+
+    const link = document.createElement("a");
+    const url = window.URL.createObjectURL(blob);
+    link.href = url;
+
+    const currentDate = new Date();
+    const formattedDate = `${currentDate
+      .getDate()
+      .toString()
+      .padStart(2, "0")}${(currentDate.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}${currentDate.getFullYear()}`;
+
+    link.setAttribute("download", `Attendance_Report_${formattedDate}.xlsx`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error("Error exporting data:", error);
+    alert("Failed to export data. Please try again.");
+  }
+};
   
   return (
     <div className="p-6 bg-gray-100 min-h-screen font-garet">
@@ -82,7 +137,7 @@ const SalesTracking = () => {
           <h1 className="text-3xl font-bold mb-6 text-gray-500 text-center">
             Sales Tracking Dashboard
           </h1>
-
+          <div className="flex justify-between">
           <div class="form relative mb-2">
             <button class="absolute left-2 -translate-y-1/2 top-1/2 p-1">
               <svg
@@ -112,7 +167,8 @@ const SalesTracking = () => {
               type="text"
             />
           </div>
-
+          <button className="bg-green-400 px-2 py-1 rounded-md shadow-inner text-sm text-white mb-2">Download Report</button>
+          </div>
           <div className="overflow-x-auto">
             <table className="w-full border text-left text-sm">
               <thead className="bg-gray-200 text-gray-600 uppercase">

@@ -9,6 +9,9 @@ const leadsSchema = new mongoose.Schema({
     type:String,
     required:true
   },
+   wp:{
+    type:String,
+   },
   email:{
     type:String,
     required:true

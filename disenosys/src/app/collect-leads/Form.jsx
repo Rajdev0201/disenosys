@@ -225,7 +225,7 @@ const LeadCaptureForm = () => {
             onChange={handleWpChange}
             disabled={sameAsPhone}
             inputProps={{
-              name: "phone",
+              name: "wp",
               required: true,
               autoFocus: true,
               className:
