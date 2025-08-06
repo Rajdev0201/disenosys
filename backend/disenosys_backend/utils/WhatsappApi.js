@@ -1,63 +1,39 @@
-const axios = require("axios");
-const qs = require("qs");
+
+const twilio = require('twilio');
+const accountSid = process.env.TWILIO_SID;
+const authToken = process.env.TWILIO_AUTH;
+const client = new twilio(accountSid, authToken);
 
 const sendLeadToWhatsapp = async (leadData) => {
   const {
     fullName,
-    currentLocation,
-    email,
     phone,
-    whatsapp,
+    currentLocation,
     currentSalary,
     _id
   } = leadData;
 
-  const payload = {
-    source: "919940037999", // Your Gupshup sender number
-    destination: "916382209795", // ✅ Send to this specific number with country code
-    template: JSON.stringify({
-      id: "d4525a9a-52fe-4861-b317-1ca6d7c79a08",
-      params: [
-        fullName || "No Name",
-        currentLocation || "No Location",
-        email || "No Email",
-        phone || "No Phone",
-        whatsapp || "No WhatsApp",
-        currentSalary || "0",
-      ],
-      // ✅ Add Quick Reply buttons
-      buttons: [
-        {
-          type: "quick_reply",
-          title: "Interested",
-          id: _id,
-        },
-        {
-          type: "quick_reply",
-          title: "Not Interested",
-          id: _id,
-        },
-      ],
-    }),
-  };
-
-  const data = qs.stringify(payload);
-
   try {
-    const res = await axios.post(
-      "https://api.gupshup.io/wa/api/v1/template/msg",
-      data,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-          apikey: "sk_26bb150fd3bb4a1a86019e1a044fbbaf", // Your API key
-        },
-      }
-    );
+    const response = await client.messages.create({
+      from: process.env.TWILIO_TO, // Your approved WhatsApp number
+      to: process.env.TWILIO_FROM,    // Sales team number
+      contentSid:process.env.TWILIO_TEMPLATE, // Template SID from Twilio
+      contentVariables: JSON.stringify({
+        "1": fullName || "No Name",
+        "2": phone || "No Phone",
+        "3": currentLocation || "No Location",
+        "4": currentSalary || "0",
+        "5": _id // for reply tracking
+      }),
+      persistentAction: [
+        `reply?payload=interested_${_id}`,
+        `reply?payload=not_interested_${_id}`
+      ]
+    });
 
-    console.log("✅ Message sent successfully:", res.data);
-  } catch (err) {
-    console.error("❌ Error sending WhatsApp message:", err.response?.data || err.message);
+    console.log("✅ Message sent successfully:", response.sid);
+  } catch (error) {
+    console.error("❌ Failed to send message:", error.message);
   }
 };
 

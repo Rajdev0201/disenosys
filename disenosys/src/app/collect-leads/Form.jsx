@@ -39,16 +39,34 @@ const LeadCaptureForm = () => {
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [load,setLoad] = useState(false)
+  const [load,setLoad] = useState(false);
   const router = useRouter();
+  const[confirm,setConfirm] = useState(false);
+
+
   const handleChange = (e) => {
-    const { name, value, files, type } = e.target;
-    if (type === "file") {
-      setFormData({ ...formData, [name]: files[0] });
+  const { name, value, files, type } = e.target;
+
+  if (type === "file") {
+    const allowedTypes = [
+      "application/pdf", // .pdf
+      // "application/msword", // .doc
+      // "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+    ];
+
+    const file = files[0];
+
+    if (file && allowedTypes.includes(file.type)) {
+      setFormData({ ...formData, [name]: file });
     } else {
-      setFormData({ ...formData, [name]: value });
+      alert("Only PDF files are allowed.");
+      setFormData({ ...formData, [name]: null }); // Optional: clear previous invalid file
     }
-  };
+  } else {
+    setFormData({ ...formData, [name]: value });
+  }
+};
+
   const [sameAsPhone, setSameAsPhone] = useState(false);
 
   const handlePhoneChange = (value) => {
@@ -102,6 +120,13 @@ const LeadCaptureForm = () => {
     if (!engagementType) {
       return toast.error("Please select an Engagement Type");
     }
+
+     if (
+      formData.engagementType === "Job Referral Only" &&
+      !confirm
+    ) {
+      return toast.error("You must confirm eligibility checkbox before submitting.");
+    }
       
     if (!currentCity || !currentState || !currentCountry) {
       return toast.error("Please select city and state,country");
@@ -124,7 +149,7 @@ const LeadCaptureForm = () => {
 
     // Call your API here
     await axios
-      .post("http://localhost:8000/leads-post", data, {
+      .post("https://disenosys-dkhj.onrender.com/leads-post", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -253,7 +278,7 @@ const LeadCaptureForm = () => {
           <input
             type="file"
             name="resume"
-            accept=".pdf,.doc,.docx"
+            accept=".pdf"
             onChange={handleChange}
             className="file-input w-full input-style"
           />
@@ -281,7 +306,7 @@ const LeadCaptureForm = () => {
         </div>
         <div>
           <label className="text-gray-500">
-            Relevant Experience design (in Years, Eg.:4.5)
+             Relevant Experience in Automotive Design (in Years,Eg.:4.5)
             <span className="text-red-500">*</span>
           </label>
           <input
@@ -463,7 +488,29 @@ const LeadCaptureForm = () => {
           )
         )}
       </div>
+           {formData.engagementType === "Job Referral Only" && (
+        <div className="border p-4 rounded-md bg-gray-50 space-y-4">
+          <div className="text-gray-700">
+            <p className="font-semibold text-md">To be eligible for direct job referrals, you must meet the following criteria:</p>
+            <ul className="list-disc pl-5 mt-2 space-y-1 text-sm">
+              <li>Minimum 5 years of experience in Automotive OEM or Tier 1 Supplier</li>
+              <li>Relevant domain experience in handling the complete product development lifecycle (from RFQ to SOP)</li>
+              <li>Must be able to provide valid proof of employment and project involvement</li>
+            </ul>
+          </div>
 
+          <label className="flex items-start gap-2 text-sm text-gray-600">
+            <input
+              type="checkbox"
+              name="confirm"
+              checked={confirm}
+              onChange={(e) => setConfirm(e.target.checked)}
+              className="mt-1"
+            />
+            I confirm that I meet the above criteria and can provide valid documentation if required.
+          </label>
+           </div>
+      )}
       {/* Additional Info */}
       <h3 className="text-lg font-semibold mt-8 mb-4 text-gray-700">
         Additional Info

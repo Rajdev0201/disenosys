@@ -58,7 +58,7 @@ const currentCity = JSON.parse(req.body.currentCity);
       resume:resume
     })
     await data.save();
-    await sendLeadToWhatsapp(data);
+    // await sendLeadToWhatsapp(data);
 
     return res.status(200).json({ message: "Data captured successfully!",data });
   } catch (error) {
@@ -68,16 +68,36 @@ const currentCity = JSON.parse(req.body.currentCity);
 };
 
 
+// exports.postHook = async (req, res) => {
+//   try {
+//     const payload = req.body;
+//     console.log(payload)
+//     const replyId = payload?.payload?.reply?.id;
+//     console.log(replyId)
+//     if (!replyId) return res.sendStatus(200);
+
+//     const [responseType, leadId] = replyId.split("_");
+
+//     const lead = await Leads.findById(leadId);
+//     if (!lead) return res.status(404).json({ error: "Lead not found" });
+
+//     lead.status = responseType === "interested" ? "Interested" : "Not Interested";
+//     await lead.save();
+
+//     console.log(`Lead ${leadId} marked as ${lead.status}`);
+//     return res.sendStatus(200);
+//   } catch (error) {
+//     console.error("Webhook error:", error);
+//     return res.sendStatus(500);
+//   }
+// };
+
 exports.postHook = async (req, res) => {
   try {
     const payload = req.body;
-    console.log(payload)
-    const replyId = payload?.payload?.reply?.id;
-    console.log(replyId)
-    if (!replyId) return res.sendStatus(200);
+    const replyId = payload?.Body || ""; // Twilio webhook sends reply text/payload
 
     const [responseType, leadId] = replyId.split("_");
-
     const lead = await Leads.findById(leadId);
     if (!lead) return res.status(404).json({ error: "Lead not found" });
 
@@ -91,7 +111,6 @@ exports.postHook = async (req, res) => {
     return res.sendStatus(500);
   }
 };
-
 
 exports.getLeads = async (req,res) => {
   try{
@@ -122,39 +141,44 @@ exports.updateStaus = async (req,res) => {
   }
 }
 
-exports.test = () => {
-client.message.send({
-	channel : "whatsapp",
-	source : "+919940037999",
-	destination : "+916382209795",
-	'src.name': "disenosys",
-	message : {
-		isHSM: "true",
-		type: "text",
-		text: "hi there"
-	}
-}).then((response) => {
-	console.log("Text message sent", response)
-}).catch(err => {
-	console.log("Text message err:", err)
-})
-}
 
-exports.test2 = () => {
 
-const data = {
-  phone: "6382209795",
-  optinType: "USER_OPTIN",
-  app: "disenosys" // Replace with your Gupshup App name
+
+
+
+//test 
+
+exports.test =  async (req, res) => {
+  const { to } = req.body;
+
+  const headers = {
+    'Cache-Control': 'no-cache',
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'apikey': '5vsaj1b2msdqaj4ff0irvfuh0lynihry',
+  };
+
+  const data = new URLSearchParams({
+    channel: 'whatsapp',
+    source: '919940037999', // Your approved sender number
+    destination: to, // Ex: '919xxxxxxxxx'
+    'src.name': 'disenosys',
+    template: JSON.stringify({
+      id: '8e6841ee-b835-4cc7-9d03-1c75fc368c5e',
+      params: ['John,', 'Jan'], // Dynamic values
+    }),
+  });
+
+  try {
+    const response = await axios.post(
+      'https://api.gupshup.io/wa/api/v1/template/msg',
+      data,
+      { headers }
+    );
+
+    res.status(200).json({ success: true, data: response.data });
+  } catch (error) {
+    console.error('Error sending message:', error?.response?.data || error.message);
+    res.status(500).json({ success: false, error: error?.response?.data || error.message });
+  }
 };
 
-axios.post("https://api.gupshup.io/sm/api/v1/user/opt/in/whatsapp", data, {
-  headers: {
-    "Content-Type": "application/json",
-    "apikey": "sk_26bb150fd3bb4a1a86019e1a044fbbaf" // Use your correct API key
-  }
-})
-.then(res => console.log("✅ Opt-in success:", res.data))
-.catch(err => console.error("❌ Opt-in error:", err.response?.data || err.message));
-
-}
