@@ -84,13 +84,29 @@ const handleDownload = () => {
     leads?.data?.map((std) => {
         const row = {
           Name: std.fullName,
-          Email:std.email,
-          CurrentLocation:std.CurrentLocation,
+          Email:std.email,    
           Phone:std.phone,
           Whatsapp:std?.wp,
-          CurrentCtc:std?.currentCTC
+          Linkedin:std.linkedin,
+          Resume:std.resume,
+          TotalExperience:std.experience,
+          relevantExperience:std.relevant,
+          CurrentCompany:std.currentCompany,
+          CurrentDesignation:std.currentDesignation,
+          currentCtc:std?.currentCTC,
+          expectedCtc:std?.expectedCTC, 
+          noticePeriod:std?.noticePeriod,
+          noticeNegotiable:std?.noticeNegotiable,
+          CurrentCountry:std.currentCountry.name,
+          CurrentState:std.currentState.name,
+          CurrentCity:std.currentCity.name,
+          EngagementType:std.engagementType,
+          Urgency:std.urgency,
+          Message:std.message,
+          Status:std.status,
+          UpdatedStatus:std.updatedStatus,
         };
-        excelData.push(row);
+          excelData.push(row);
     });
 
     const worksheet = XLSX.utils.json_to_sheet(excelData);

@@ -1,11 +1,7 @@
 const Leads = require("../models/leads.js");
-const sendLeadToWhatsapp = require("../utils/WhatsappApi.js");
-const Gupshup = require('gupshup-whatsapp-api')
-  const axios = require("axios");
+// const sendLeadToWhatsapp = require("../utils/WhatsappApi.js");
+const axios = require("axios");
 
-let client = new Gupshup({
-	apiKey: '5vsaj1b2msdqaj4ff0irvfuh0lynihry'
-});
 
 exports.handleLeadSubmission = async (req, res) => {
   try {
@@ -68,49 +64,36 @@ const currentCity = JSON.parse(req.body.currentCity);
 };
 
 
-// exports.postHook = async (req, res) => {
-//   try {
-//     const payload = req.body;
-//     console.log(payload)
-//     const replyId = payload?.payload?.reply?.id;
-//     console.log(replyId)
-//     if (!replyId) return res.sendStatus(200);
 
-//     const [responseType, leadId] = replyId.split("_");
 
-//     const lead = await Leads.findById(leadId);
-//     if (!lead) return res.status(404).json({ error: "Lead not found" });
-
-//     lead.status = responseType === "interested" ? "Interested" : "Not Interested";
-//     await lead.save();
-
-//     console.log(`Lead ${leadId} marked as ${lead.status}`);
-//     return res.sendStatus(200);
-//   } catch (error) {
-//     console.error("Webhook error:", error);
-//     return res.sendStatus(500);
-//   }
-// };
 
 exports.postHook = async (req, res) => {
   try {
-    const payload = req.body;
-    const replyId = payload?.Body || ""; // Twilio webhook sends reply text/payload
+    const message = req.body;
+    const payload = message?.Payload || message?.payload;
 
-    const [responseType, leadId] = replyId.split("_");
+    if (payload && typeof payload === 'string') {
+      const [status, leadId] = payload.split('_');  // e.g., "interested_64ec54..."
+
+      console.log('Lead Response:', { status, leadId });
     const lead = await Leads.findById(leadId);
     if (!lead) return res.status(404).json({ error: "Lead not found" });
 
-    lead.status = responseType === "interested" ? "Interested" : "Not Interested";
+    lead.status = status === "interested" ? "Interested" : "Not Interested";
     await lead.save();
 
-    console.log(`Lead ${leadId} marked as ${lead.status}`);
-    return res.sendStatus(200);
+    console.log(`✅ Lead ${leadId} updated to: ${lead.status}`);
+      return res.status(200).json({ message: 'Received response', status, leadId });
+    }
+
+    res.status(200).json({ message: 'No valid payload found.' });
   } catch (error) {
-    console.error("Webhook error:", error);
-    return res.sendStatus(500);
+    console.error('Webhook error:', error);
+    res.status(500).json({ message: 'Server error' });
   }
+
 };
+
 
 exports.getLeads = async (req,res) => {
   try{

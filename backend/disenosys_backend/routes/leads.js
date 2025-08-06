@@ -4,7 +4,7 @@ const multer = require('multer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const { handleLeadSubmission, getLeads, updateStaus, postHook, test } = require("../controllers/leads");
-const sendLeadToWhatsapp = require("../utils/WhatsappApi");
+
 
 cloudinary.config({
     cloud_name: 'dapilmiei',
@@ -27,7 +27,6 @@ router.post("/leads-post",upload.single('resume'),handleLeadSubmission);
 router.get("/get-leads",getLeads);
 router.put("/updated-status/:id",updateStaus)
 router.post("/webhook/lead-webhook",postHook)
-router.get("/test",sendLeadToWhatsapp)
 router.post("/test",test)
 
 module.exports = router;

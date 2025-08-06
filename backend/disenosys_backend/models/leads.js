@@ -83,6 +83,7 @@ const leadsSchema = new mongoose.Schema({
   { type: String, default: "Pending" },
   updatedStatus:{
     type:String,
+    default:"NA"
   }
 },{timestamps:true});
 
