@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   default:"Disenosys",
   template:"%s | Disenosys"
   },
-  description:"We provide various Post Graduate courses on Automotive Body Design in a range of domains such as BIW, Plastic Trims, Seating and many more.",
+ description:"",
 };
 
 export default function RootLayout({
