@@ -256,7 +256,7 @@ const CertificateSingle = () => {
             </p>
             <p
               className={`text-[#cc1919] font-medium font-sans ml-52 w-[480px] font-brush cname mb-6 ${
-                singleStudent.name.length > 10 ? "text-3xl" : "text-5xl"
+                singleStudent?.name?.length > 10 ? "text-3xl" : "text-5xl"
               }`}
             >
               {singleStudent.name}
