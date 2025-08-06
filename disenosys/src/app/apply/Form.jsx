@@ -174,8 +174,8 @@ const LeadCaptureForm = () => {
       onSubmit={handleSubmit}
       className="max-w-5xl mx-auto p-6 rounded-xl shadow-inner font-poppins border mt-2 border-blue-100"
     >
-      <h2 className="text-2xl font-bold mb-6 text-center text-blue-500">
-        Job Seeker / Student <span className="">Form</span>
+      <h2 className="text-lg lg:text-3xl font-bold mb-6 text-center text-blue-500">
+        Application <span className="">Form</span>
       </h2>
 
       {/* Personal Information */}
