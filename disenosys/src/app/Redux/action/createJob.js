@@ -36,7 +36,7 @@ export const createJob = (data) => async (dispatch) => {
   };
 
 
-export const getJob = (page=1) => async (dispatch) => {
+export const getJob = (page) => async (dispatch) => {
     try{
        dispatch(setJob({jobs:[],loading:true,error:false}))
        const res = await axios.get(`https://disenosys-dkhj.onrender.com/Jobs/getjob?page=${page}&limit=9`);

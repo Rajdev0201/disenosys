@@ -58,25 +58,60 @@ const SalesTracking = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [filterData,setFilterData] = useState([]);
+  const [page, setPage] = useState(1);
+  const totalPages = leads?.pages;
+  const [startDate, setStartDate] = useState(""); 
+  const [endDate, setEndDate] = useState("");    
+  const limit = 15;
 
   const handleStatusChange = (id, newStatus) => {
     dispatch(updateLead(id, newStatus));
   };
 
-  useEffect(() => {
-    dispatch(getLeads());
-  }, [dispatch]);
+ useEffect(() => {
+  const delayDebounce = setTimeout(() => {
+  dispatch(getLeads(page, limit, search, startDate, endDate));
+      }, 800); // debounce search
 
-  useEffect(() => {
-  const filter = leads?.data?.filter((std) => {
-    const name = std?.fullName?.toUpperCase().includes(search.toLowerCase());
-    const email = std.email?.toLowerCase().includes(search.toLowerCase());
-    return name || email
-  })
-  setFilterData(filter)
-  },[leads,search])
+    return () => clearTimeout(delayDebounce);
+}, [page, limit, search, startDate, endDate]);
 
   
+  const handlePageClick = (newPage) => {
+    if (newPage > 0 && newPage <= totalPages) {
+      setPage(newPage);
+    }
+  };
+
+//   useEffect(() => {
+//    const filter = leads?.data?.filter((std) => {
+//   const nameMatch = std?.fullName?.toLowerCase().includes(search.toLowerCase());
+//   const emailMatch = std.email?.toLowerCase().includes(search.toLowerCase());
+
+//   const formatDateOnly = (dateStr) => new Date(dateStr).toISOString().split('T')[0];
+//   const created = formatDateOnly(std.createdAt);
+
+//   const start = startDate ? formatDateOnly(startDate) : null;
+//   const end = endDate ? formatDateOnly(endDate) : null;
+
+//   const isWithinDateRange =
+//     (!start || created >= start) &&
+//     (!end || created <= end);
+
+//   // Apply both search and date filters
+//   const searchMatch = search ? (nameMatch || emailMatch) : true;
+
+//   return searchMatch && isWithinDateRange;
+// });
+
+//   setFilterData(filter)
+//   setPage(1);
+//   },[leads,search,startDate,endDate])
+
+  useEffect(() => {
+  setPage(1); // Reset to page 1 when filters/search changes
+}, [search, startDate, endDate]);
+
 const handleDownload = () => {
   try {
 
@@ -147,6 +182,13 @@ const handleDownload = () => {
     alert("Failed to export data. Please try again.");
   }
 };
+
+const handleReset = () => {
+   setSearch("");
+   setStartDate("");
+   setEndDate("");
+   setFilterData(leads?.data || []);
+}
   
   return (
     <div className="p-6 bg-gray-100 min-h-screen font-garet">
@@ -155,7 +197,12 @@ const handleDownload = () => {
           <h1 className="text-3xl font-bold mb-6 text-gray-500 text-center">
             Sales Tracking Dashboard
           </h1>
+          <div className="flex justify-end items-center gap-2 mb-2">
+          <p className="text-sm">Total Data : <span className="text-red-500 font-bold">{leads?.data?.length}</span> </p>
+          <p className="text-sm">Current Page : <span className="text-red-500 font-bold">{leads?.page}</span></p>
+          </div>
           <div className="flex justify-between">
+          <div className="flex items-center gap-4 mb-0">
           <div class="form relative mb-2">
             <button class="absolute left-2 -translate-y-1/2 top-1/2 p-1">
               <svg
@@ -185,6 +232,25 @@ const handleDownload = () => {
               type="text"
             />
           </div>
+          <div className="relative group">
+           <input type="date" value={startDate} className= "input rounded-full px-8 py-2 border-2 bg-gray-200 border-transparent focus:outline-none focus:border-blue-500 placeholder-gray-400 transition-all duration-300 shadow-md mb-2" onChange={(e) => setStartDate(e.target.value)} />
+                  <div className="absolute bottom-full mb-1 left-0 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    Start Date
+                   </div>
+           </div>
+           <div className="relative group">
+           <input type="date" value={endDate} className = "input rounded-full px-8 py-2 border-2 bg-gray-200 border-transparent focus:outline-none focus:border-blue-500 placeholder-gray-400 transition-all duration-300 shadow-md mb-2 " onChange={(e) => setEndDate(e.target.value)} />
+            <div className="absolute bottom-full mb-1 left-0 bg-gray-800 text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                    End Date
+             </div>
+          </div>
+          <>
+            <button className="bg-blue-500 px-4 py-2 rounded-md text-white shadow-md hover:bg-blue-600 transition-colors" onClick={handleReset}>
+            Reset
+          </button>
+          </>
+           </div>
+           
           <button className="bg-green-400 px-2 py-1 rounded-md shadow-inner text-sm text-white mb-2" onClick={handleDownload}>Download Report</button>
           </div>
           <div className="overflow-x-auto">
@@ -202,12 +268,12 @@ const handleDownload = () => {
                 </tr>
               </thead>
               <tbody>
-                {filterData?.map((student, index) => (
+                {leads?.data?.map((student, index) => (
                   <tr
                     key={student._id}
                     className="border-b hover:bg-gray-50 transition"
                   >
-                    <td className="px-4 py-2">{index + 1}</td>
+                    <td className="px-4 py-2">{(page - 1) * limit + index + 1}</td>
                     <td className="px-4 py-2">{student.fullName}</td>
                     <td className="px-4 py-2">{student.email}</td>
                     <td className="px-4 py-2">{student.phone}</td>
@@ -260,7 +326,7 @@ const handleDownload = () => {
 
                 {leads?.data?.length === 0 && (
                   <tr>
-                    <td colSpan="7" className="text-center py-6 text-gray-500">
+                    <td colSpan="7" className="text-center py-6 text-red-500">
                       No student enquiries found.
                     </td>
                   </tr>
@@ -268,6 +334,40 @@ const handleDownload = () => {
               </tbody>
             </table>
           </div>
+                <div className="flex justify-center mt-8 mb-4">
+        {leads?.data?.length &&(
+        <ul className="flex items-center gap-2 text-sm">
+          <li
+            onClick={() => handlePageClick(page - 1)}
+            className="cursor-pointer text-gray-400 hover:text-black"
+          >
+            &lt;
+          </li>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => ( 
+            //Create one object: { length: 3 } 
+            //That tells JavaScript: “Make an array with 3 empty slots.”
+            //{ length: totalPages } → creates an empty array of that size
+            //(_, i) => i + 1 → fills it with numbers starting from 1
+            //The map function iterates over the array and returns a new array with the page numbers.
+            <li
+              key={num}
+              onClick={() => handlePageClick(num)}
+              className={`px-3 py-1 rounded-full cursor-pointer ${ 
+                num === page ? "bg-blue-600 text-white" : "text-gray-700 hover:bg-gray-200"
+              }`}
+            >
+              {num < 10 ? `0${num}` : num} 
+            </li>
+          ))}
+          <li
+            onClick={() => handlePageClick(page + 1)}
+            className="cursor-pointer text-gray-400 hover:text-black"
+          >
+            &gt;
+          </li>
+        </ul>
+        )}
+      </div>
         </div>
       ) : (
         <span className="text-center text-green-500">Loading.....</span>

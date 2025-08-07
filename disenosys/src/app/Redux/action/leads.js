@@ -4,10 +4,10 @@ import { setLeads, updateLeads } from "../features/leadsSlice";
 
 
 //https://disenosys-dkhj.onrender.com
-export const getLeads = () => async (dispatch) => {
+export const getLeads = (page, limit, search = '', startDate = '', endDate = '') => async (dispatch) => {
     try {
         dispatch(setLeads({data:[],loading:true}))
-        const res = await axios.get(`https://disenosys-dkhj.onrender.com/get-leads`);
+        const res = await axios.get(`https://disenosys-dkhj.onrender.com/get-leads?page=${page}&limit=${limit}&search=${search}&startDate=${startDate}&endDate=${endDate}`);
         const getData = res.data;
         console.log(getData)
         dispatch(setLeads({data:getData,loading:false}));

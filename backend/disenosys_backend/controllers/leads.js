@@ -94,15 +94,65 @@ exports.postHook = async (req, res) => {
 
 };
 
+exports.getLeads = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const skip = (page - 1) * limit;
 
-exports.getLeads = async (req,res) => {
-  try{
-    const data = await Leads.find();
-    return res.status(200).json({message:"get the data",data})
-  }catch(err){
-    
+    const search = req.query.search || "";
+    const startDate = req.query.startDate;
+    const endDate = req.query.endDate;
+
+
+    const query = {};
+
+    // 🔍 Search condition
+    if (search) {
+      query.$or = [
+        { fullName: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    // 📅 Date range filter (corrected)
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      end.setHours(23, 59, 59, 999); // Make sure to include full end date
+
+      query.createdAt = {
+        $gte: start,
+        $lte: end,
+      };
+    }
+
+    console.log("Query:", query);
+
+    // 🔄 Fetch filtered and paginated data
+    const data = await Leads.find(query)
+      .skip(skip)
+      .limit(limit)
+      .sort({ createdAt: -1 });
+
+
+    // 📊 Count total records
+    const total = await Leads.countDocuments(query);
+
+    // ✅ Response
+    return res.status(200).json({
+      message: "Leads fetched successfully",
+      data,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+    });
+  } catch (err) {
+    return res.status(500).json({ message: "Something went wrong", err });
   }
-}
+};
+
+
 
 exports.updateStaus = async (req,res) => {
   const {id} = req.params;
