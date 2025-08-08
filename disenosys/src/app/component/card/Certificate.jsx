@@ -277,7 +277,7 @@ const CertificateComponent = () => {
           key={index} id={`certificate-${index}`} 
             className={`flex justify-center items-center min-h-screen ${showCertificate ? "" : "hidden"}`}
           >
-            <div className="flex flex-col w-[1000px] rounded relative overflow-hidden h-[1123px] bg-center hover:cursor-pointer c">
+            <div className="w-[1000px] rounded relative overflow-hidden h-[1123px] bg-center hover:cursor-pointer c">
               <div className="ml-8 text-center flex flex-col items-center">
                 <div className="w-64 h-24 mr-12 mb-8">
                   <Image src={logo} alt="logo" className="text-blue-600" />
@@ -303,8 +303,8 @@ const CertificateComponent = () => {
               <p className="text-3xl mt-8  font-berlin font-light text-gray-800 ml-52 w-[480px]">
                   This certifies that
                 </p>
-                <p className={`text-[#cc1919] font-medium font-sans ml-52 w-[480px] font-brush cname mb-6 ${
-                student?.name?.length > 10 ? "text-3xl" : "text-5xl"
+                <p className={`text-[#cc1919] font-medium ml-52 w-[480px] font-brush cname mb-6 ${
+                student?.name?.length > 15 ? "text-4xl" : "text-5xl"
               }`}>
                   {student.name}
                 </p>
@@ -325,14 +325,14 @@ const CertificateComponent = () => {
                   <span className="font-semibold">{student.awardedDate}</span>
                 </p>
               </div>
-              <div className="flex flex-col justify-end items-end mt-3 mr-16">
+              <div className="absolute bottom-[264px] right-16 flex flex-col items-end">
                 {/* <Image
                   src={s}
                   alt="signature"
                   className="text-blue-600 w-40 h-20"
                 /> */}
                 {/* <div className="border border-b-2 border-gray-900 w-40"></div> */}
-                <p className="text-lg font-bold text-blue-900 mt-24">
+                <p className="text-lg font-bold text-blue-900">
                   PRAVEEN KUMAR S
                 </p>
                 <p className="text-gray-700 text-center mr-5">CEO, Disenosys</p>
