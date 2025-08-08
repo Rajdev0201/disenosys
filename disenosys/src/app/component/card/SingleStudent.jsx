@@ -233,10 +233,10 @@ const CertificateSingle = () => {
             <div className="w-64 h-24 mr-12 mb-8">
               <Image src={logo} alt="logo" className="text-blue-600" />
             </div>
-            <h2 className="text-[#cc1919] font-medium text-8xl font-berlin ml-36">
+            <h2 className="text-[#cc1919] font-medium text-7xl font-vanquish  ml-20">
               Certificate
             </h2>
-            <p className="text-6xl font-medium font-berlin text-gray-700 mr-2 ml-16">
+            <p className="text-5xl font-medium font-today-sans-serif text-gray-700 mr-2 ml-4">
               of Internship
             </p>
           </div>
@@ -255,9 +255,7 @@ const CertificateSingle = () => {
               This certifies that
             </p>
             <p
-              className={`text-[#cc1919] font-medium ml-52 w-[480px] font-brush cname mb-6 ${
-                singleStudent?.name?.length > 15 ? "text-4xl" : "text-5xl"
-              }`}
+              className='text-[#cc1919] font-medium ml-52 w-[480px] font-brush cname mb-6 text-6xl'
             >
               {singleStudent.name}
             </p>

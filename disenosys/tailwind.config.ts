@@ -20,7 +20,8 @@ const config: Config = {
         montheavy: ['"Montheavy"', 'sans-serif'],
         lexend:['Lexend','sans-serif'],
         nunito: ["Nunito Sans", 'sans-serif'],
-
+        vanquish: ["Vanquish W00 Bold", 'sans-serif'],
+        'today-sans-serif': ["Today Sans Serif Bold", 'sans-serif'],
         josefin: ["Josefin Sans", 'sans-serif'],
       },
       animation: {
