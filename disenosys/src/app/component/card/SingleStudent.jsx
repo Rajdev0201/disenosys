@@ -17,7 +17,7 @@ const CertificateSingle = () => {
     email: "",
     award: "",
   });
-  console.log(singleStudent.name.length);
+
   //   const [isSending, setIsSending] = useState(false);
   //   const [showCertificate, setShowCertificate] = useState(false);
   //   const [showSendCertificateButton, setShowSendCertificateButton] = useState(false);

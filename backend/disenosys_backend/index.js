@@ -37,15 +37,17 @@ mongoose.connect(process.env.MONGO_URI,{
         console.error("MongoDB connection error:", err);
     });
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }));
-
 app.use(cors())
 app.use(
   cors({
     origin: "*",
   })
 );
+app.use(express.json({ limit: "200mb" })); // raise limit
+app.use(express.urlencoded({ limit: "200mb", extended: true }));
+
+// app.use(express.json())
+// app.use(express.urlencoded({ extended: true }));
 
 app.use((_req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -1491,36 +1493,151 @@ app.post("/send-single-gpdx", uploadsingleGpdx.none(),async (req, res) => {
 const uploadcertificate = multer({ dest: 'uploadcertificate/' });
 
 
-app.post("/send-certificate", uploadcertificate.none(), async(req, res) => {
-  const { email, pdfDataUrl,name,course } = req.body;
-  console.log(email)
-  if (!email || !pdfDataUrl) {
-    return res.status(400).send("Missing email or PDF data");
-  }
+// app.post("/send-certificate", uploadcertificate.none(), async(req, res) => {
+//   const { email, pdfDataUrl,name,course } = req.body;
+//   console.log(email)
+//   if (!email || !pdfDataUrl) {
+//     return res.status(400).send("Missing email or PDF data");
+//   }
 
 
-  const base64Data = pdfDataUrl.split(";base64,").pop();
-  const pdfBuffer = Buffer.from(base64Data, "base64");
+//   const base64Data = pdfDataUrl.split(";base64,").pop();
+//   const pdfBuffer = Buffer.from(base64Data, "base64");
 
-  const transporter = nodemailer.createTransport({
+//   const transporter = nodemailer.createTransport({
 
- host: 'smtp.office365.com', 
-port: 587,                 
-secure: false,   
-auth: {
-  user: 'classes@disenosys.com',
-  pass: 'xnccsypkfhfpymwg',
-}
-});
+//   host: 'smtp.office365.com', 
+//   port: 587,                 
+//   secure: false,   
+//   auth: {
+//   user: 'classes@disenosys.com',
+//   pass: 'xnccsypkfhfpymwg',
+//  }
+// });
 
 
-  const mailOptions = {
-    from: "classes@disenosys.com",
-    to: email,
-    subject: `Certificate for ${course}`,
-     html: `
-        <html>
-          <head>
+//   const mailOptions = {
+//     from: "classes@disenosys.com",
+//     to: email,
+//     subject: `Certificate for ${course}`,
+//      html: `
+//         <html>
+//           <head>
+//             <style>
+//               body {
+//                 font-family: Arial, sans-serif;
+//                 color: #333333;
+//                 background-color: #f4f4f9;
+//                 margin: 0;
+//                 padding: 0;
+//               }
+//               .email-container {
+//                 background-color: #ffffff;
+//                 border-radius: 8px;
+//                 padding: 20px;
+//                 margin: 20px;
+//                 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+//               }
+//               h1 {
+//                 color: #004aad;
+//                 font-size: 24px;
+//                 margin-bottom: 10px;
+//               }
+//               p {
+//                 font-size: 16px;
+//                 line-height: 1.6;
+//                 color: #555555;
+//               }
+//               .footer {
+//                 margin-top: 20px;
+//                 font-size: 14px;
+//                 text-align: start;
+//                 color: #888888;
+//               }
+//               .highlight {
+//                 color: #004aad;
+//                 font-weight: bold;
+//               }
+//               .cta {
+//                 color: #ffffff;
+//                 background-color: #004aad;
+//                 padding: 10px 15px;
+//                 text-decoration: none;
+//                 border-radius: 5px;
+//               }
+//             </style>
+//           </head>
+//           <body>
+//             <div class="email-container">
+//               <h1>Certificate of Completion</h1>
+//               <p>Dear <span class="highlight">${name}</span>,</p>
+//               <p>We are pleased to inform you that you have successfully completed the <span class="highlight">${course}</span>. Please find attached your Certificate of Completion for the Internship.</p>
+//               <p>We congratulate you on your achievement and wish you continued success in your future endeavors.</p>
+//               <p>If you have any questions or need further assistance, feel free to reach out to us.</p>
+              
+//               <p class="footer">Best regards, <br />The Disenosys Team</p>
+//             </div>
+//           </body>
+//         </html>
+//       `,
+//     attachments: [
+//       {
+//         filename:`${name}_certificate.pdf`,
+//         content: pdfBuffer,
+//       },
+//     ],
+//   };
+
+
+//   transporter.sendMail(mailOptions, (error, info) => {
+//     if (error) {
+//       console.error("Error sending email:", error);
+//       return res.status(500).send("Error sending email");
+//     }
+//   });
+
+//   const newIntern = new InternC({
+//     name:name,
+//     course:course,
+//     email:email,
+//   });
+
+//   await newIntern.save();
+//   res.status(200).send({ success: true, message: "Certificate sent successfully",data:newIntern}) 
+// });
+
+app.post("/send-certificate", async (req, res) => {
+  try {
+    const { students } = req.body;
+
+    if (!Array.isArray(students) || students.length === 0) {
+      return res.status(400).send("No students provided");
+    }
+
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.office365.com',
+      port: 587,
+      secure: false,
+      auth: {
+        user: 'classes@disenosys.com',
+        pass: 'xnccsypkfhfpymwg',
+      }
+    });
+
+    const results = [];
+
+    for (const student of students) {
+      try {
+        const base64Data = student.pdfDataUrl.split(";base64,").pop();
+        const pdfBuffer = Buffer.from(base64Data, "base64");
+
+        await transporter.sendMail({
+          from: "classes@disenosys.com",
+          to: student.email,
+          subject: `Certificate for ${student.course}`,
+          html: `
+             <html>
+            <head>
             <style>
               body {
                 font-family: Arial, sans-serif;
@@ -1568,8 +1685,8 @@ auth: {
           <body>
             <div class="email-container">
               <h1>Certificate of Completion</h1>
-              <p>Dear <span class="highlight">${name}</span>,</p>
-              <p>We are pleased to inform you that you have successfully completed the <span class="highlight">${course}</span>. Please find attached your Certificate of Completion for the Internship.</p>
+              <p>Dear <span class="highlight">${student.name}</span>,</p>
+              <p>We are pleased to inform you that you have successfully completed the <span class="highlight">${student.course}</span>. Please find attached your Certificate of Completion for the Internship.</p>
               <p>We congratulate you on your achievement and wish you continued success in your future endeavors.</p>
               <p>If you have any questions or need further assistance, feel free to reach out to us.</p>
               
@@ -1577,33 +1694,38 @@ auth: {
             </div>
           </body>
         </html>
-      `,
-    attachments: [
-      {
-        filename:`${name}_certificate.pdf`,
-        content: pdfBuffer,
-      },
-    ],
-  };
+          `,
+          attachments: [
+            {
+              filename: `${student.name}_certificate.pdf`,
+              content: pdfBuffer,
+            },
+          ],
+        });
 
+        await InternC.create({
+          name: student.name,
+          course: student.course,
+          email: student.email
+        });
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error("Error sending email:", error);
-      return res.status(500).send("Error sending email");
+        results.push({ email: student.email, status: "sent" });
+
+        // Delay to avoid throttling
+        await new Promise(r => setTimeout(r, 2000));
+
+      } catch (err) {
+        console.error(`Failed for ${student.email}:`, err.message);
+        results.push({ email: student.email, status: "failed", error: err.message });
+      }
     }
-  });
 
-  const newIntern = new InternC({
-    name:name,
-    course:course,
-    email:email,
-  });
-
-  await newIntern.save();
-  res.status(200).send({ success: true, message: "Certificate sent successfully",data:newIntern}) 
+    res.json({ success: true, results });
+  } catch (error) {
+    console.error("Bulk send error:", error);
+    res.status(500).send("Server error while sending certificates");
+  }
 });
-
 
 
 const uploadsingle = multer({ dest: 'uploadcertificatesingle/' });

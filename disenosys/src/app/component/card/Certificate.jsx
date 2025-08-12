@@ -42,8 +42,6 @@ const CertificateComponent = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
   
-      console.log("Backend response:", response);
-  
       if (response && response.data) {
         const updatedData = response.data.map((student) => {
           
@@ -104,77 +102,143 @@ const CertificateComponent = () => {
   };
   
   
-  const generatePDF = async (id, name, course, from, to,awardedDate, email) => {
-    setShowCertificate(true)
-    try {
-      const element = document.getElementById(id);
+  // const generatePDF = async (id, name, course, from, to,awardedDate, email) => {
+  //   setShowCertificate(true)
+  //   try {
+  //     const element = document.getElementById(id);
   
+  //     const options = {
+  //       margin: 0,
+  //       filename: `${name}_certificate.pdf`,
+  //       image: { type: "jpeg", quality: 0.98 },
+  //       html2canvas: { scale: 2.5 },
+  //       jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+  //     };
+  
+  //     const pdfDataUrl = await html2pdf()
+  //       .from(element)
+  //       .set(options)
+  //       .outputPdf("datauristring");
+  
+  //     const formData = new FormData();
+  //     formData.append("pdfDataUrl", pdfDataUrl);
+  //     formData.append("email", email);
+  //     formData.append("name", name);
+  //     formData.append("course", course);
+  //    //https://disenosys-dkhj.onrender.com
+     
+  //     await axios.post("https://disenosys-dkhj.onrender.com/send-certificate", formData, {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //     });
+  
+  //     console.log(`Certificate sent to ${email}`);
+  //   } catch (error) {
+  //     alert("Error generating or sending certificate", error)
+  //     console.error("Error generating or sending certificate:", error);
+  //   }
+  //   setShowCertificate(false)
+  // };
+
+
+  // const sendCertificates = async () => {
+  //   setIsSending(true);
+  
+  //   const emailPromises = studentsData.map(async (student, index) => {
+  //     const uniqueId = `certificate-${index}`; 
+  
+  //     console.log("Sending certificate for:", student.name, "Course:", student.course, "Email:", student.email);
+  
+  //     if (!student.email) {
+  //       console.error("No email found for student:", student);
+  //       return;
+  //     }
+  
+  //     await generatePDF(uniqueId, student.name, student.course, student.from, student.to, student.awardedDate, student.email);
+  //   });
+  
+  //   await Promise.all(emailPromises);
+  
+  //   setTimeout(() => {
+  //     setIsSending(false);
+  //     setIsSent(true);
+  //     if(setIsSent){
+  //       alert("Certificates have been successfully sent!");
+  //     }else{
+  //       alert("certificate have not been sent!");
+  //     }
+     
+  //   }, 2000);
+ 
+  // };
+  
+
+  
+  function chunkArray(array, size) {
+  const chunks = [];
+  for (let i = 0; i < array.length; i += size) {
+    chunks.push(array.slice(i, i + size));
+  }
+  return chunks;
+}
+
+const sendCertificates = async () => {
+  setIsSending(true);
+
+  try {
+    const studentsArray = [];
+
+    for (let index = 0; index < studentsData.length; index++) {
+      const student = studentsData[index];
+      const uniqueId = `certificate-${index}`;
+
+      // Render certificate for capture
+      setShowCertificate(true);
+
+      const element = document.getElementById(uniqueId);
       const options = {
         margin: 0,
-        filename: `${name}_certificate.pdf`,
+        filename: `${student.name}_certificate.pdf`,
         image: { type: "jpeg", quality: 0.98 },
         html2canvas: { scale: 2.5 },
         jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
       };
-  
+
       const pdfDataUrl = await html2pdf()
         .from(element)
         .set(options)
         .outputPdf("datauristring");
-  
-      const formData = new FormData();
-      formData.append("pdfDataUrl", pdfDataUrl);
-      formData.append("email", email);
-      formData.append("name", name);
-      formData.append("course", course);
-     //https://disenosys-dkhj.onrender.com
-     
-      await axios.post("https://disenosys-dkhj.onrender.com/send-certificate", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+
+      studentsArray.push({
+        email: student.email,
+        name: student.name,
+        course: student.course,
+        pdfDataUrl,
       });
-  
-      console.log(`Certificate sent to ${email}`);
-    } catch (error) {
-      alert("Error generating or sending certificate", error)
-      console.error("Error generating or sending certificate:", error);
     }
-    setShowCertificate(false)
-  };
+
+    setShowCertificate(false);
+
+    // Send in batches of 5 to avoid Payload Too Large
+    const batches = chunkArray(studentsArray, 5);
+
+    for (const batch of batches) {
+      await axios.post("https://disenosys-dkhj.onrender.com/send-certificate", { students: batch }, {
+        headers: { "Content-Type": "application/json" },
+        maxBodyLength: Infinity,
+      });
+    }
+    
+    alert("Certificates have been successfully sent!");
+  } catch (error) {
+    console.error("Error sending certificates:", error);
+    alert(`Error: ${error.response?.data?.message || error.message}`);
+  }
+
+  setIsSending(false);
+  setIsSent(true);
+};
 
 
-  
-
-  const sendCertificates = async () => {
-    setIsSending(true);
-  
-    const emailPromises = studentsData.map(async (student, index) => {
-      const uniqueId = `certificate-${index}`; 
-  
-      console.log("Sending certificate for:", student.name, "Course:", student.course, "Email:", student.email);
-  
-      if (!student.email) {
-        console.error("No email found for student:", student);
-        return;
-      }
-  
-      await generatePDF(uniqueId, student.name, student.course, student.from, student.to, student.awardedDate, student.email);
-    });
-  
-    await Promise.all(emailPromises);
-  
-    setTimeout(() => {
-      setIsSending(false);
-      setIsSent(true);
-      if(setIsSent){
-        alert("Certificates have been successfully sent!");
-      }else{
-        alert("certificate have not been sent!");
-      }
-     
-    }, 2000);
- 
-  };
-  
   const handleDownload = async () => {
     try {
 
