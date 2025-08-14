@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getLeads, getLeadSDownload, updateLead } from "../Redux/action/leads";
 import * as XLSX from "xlsx";
-const statusOptions = ["Pending","Follow-up","Enrolled","Not Interested"];
+const statusOptions = ["Pending","Follow-up","Enrolled","Not Interested","Disconnected"];
 
 const SalesTracking = () => {
   //   const [students, setStudents] = useState([

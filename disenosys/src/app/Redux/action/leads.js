@@ -31,7 +31,7 @@ export const updateLead = (Id, updatedData) => async (dispatch) => {
   try {
       const response = await axios.put(`https://disenosys-dkhj.onrender.com/updated-status/${Id}`, {status:updatedData});
       dispatch(updateLeads(response.data)); 
-      dispatch(getLeads());
+      dispatch(getLeads(1,15,"","",""));
   } catch (error) {
       console.error('Error:', error);
   }
