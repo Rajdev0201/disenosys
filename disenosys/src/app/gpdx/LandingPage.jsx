@@ -9,6 +9,16 @@ import gpdx from "../assests/gpdx2.png"
 import Image from "next/image";
 
 const GPDXLandingPage = () => {
+    
+  const sendWhatsAppMessage = () => {
+    if (typeof window !== 'undefined') {
+      const phoneNumber = '9150023820';
+      const message = 'I want to get gpdx syllabus. Could you please share Syllabus? Thanks!';
+      const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+  };
+
   return (
     <div className="font-sans mt-16 lg:mt-24">
       {/* Top Section */}
@@ -18,7 +28,7 @@ const GPDXLandingPage = () => {
             <h2 className="text-xl lg:text-3xl font-bold mb-6 text-gray-800">
               GPDX – Global Product Design Excellence Exam.
             </h2>
-            <p className="max-w-2xl text-gray-700 mb-2 text-sm lg:text-xl">
+            <p className="max-w-2xl text-gray-700 mb-2 text-sm  font-bold lg:text-xl">
               Prove Your Skills. Get Hired.
             </p>
             <p className="max-w-2xl text-gray-700 mb-6 text-sm lg:text-xl">
@@ -27,10 +37,13 @@ const GPDXLandingPage = () => {
               NX and get direct referrals to top automotive companies.
             </p>
             <div className="flex flex-col lg:flex-row gap-4">
-          <button className="bg-white text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition duration-300">
-           <a href="https://rzp.io/rzp/RW7h49BN">Register Now</a>
+          <button className="bg-white text-blue-900 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition duration-300">
+           <a href="https://rzp.io/rzp/RW7h49BN"
+               target="_blank" 
+                rel="noopener noreferrer"  
+           >Register Now</a>
       </button>
-              <button className="bg-[#0d1039] text-white  px-6 py-2 rounded-md hover:bg-gray-500">
+              <button className="bg-[#0d1039] text-white  px-6 py-2 rounded-md hover:bg-gray-500" onClick={sendWhatsAppMessage}>
                 View Syllabus
               </button>
             </div>
@@ -131,7 +144,7 @@ const GPDXLandingPage = () => {
       {/* Syllabus */}
       <section className="py-2 lg:py-10 bg-white font-garet">
         <div className="container mx-auto px-4">
-          <h3 className="text-2xl md:text-4xl lg:text-5xl font-medium px-4 md:px-12 font-garet lg:px-3 text-[#0d1039] mb-4 lg:mb-8  text-center">
+          <h3 className="text-2xl md:text-4xl lg:text-5xl font-medium px-4 md:px-12 font-garet lg:px-3 text-[#0d1039] mb-4 lg:mb-8 text-center">
             Syllabus
           </h3>
 
@@ -151,7 +164,7 @@ const GPDXLandingPage = () => {
                 className="bg-white border  border-gray-200 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 flex  justify-center items-center p-5 mt-2"
               >
                 {/* Title */}
-                <h4 className="text-sm lg:text-md font-medium lg:font-bold text-gray-800">{item}</h4>
+                <h4 className="text-sm lg:text-md font-medium text-center text-gray-800">{item}</h4>
               </div>
             ))}
           </div>
@@ -226,12 +239,15 @@ const GPDXLandingPage = () => {
 
     {/* Final Call to Action */}
     <div className="bg-blue-900 text-white rounded-xl shadow-lg p-10 text-center">
-      <h3 className="text-2xl font-bold mb-4">Ready to Prove Your Automotive Design Skills?</h3>
-      <p className="mb-6 text-blue-100">
+      <h3 className="text-2xl lg:text-3xl font-medium mb-4">Ready to Prove Your Automotive Design Skills?</h3>
+      <p className="mb-6 text-sm text-blue-100">
         Register for the GPDX Exam today and fast-track your career in the automotive industry.
       </p>
-      <button className="bg-white text-blue-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-200 transition duration-300">
-        <a href="https://rzp.io/rzp/RW7h49BN">Register Now</a>
+      <button className="bg-white text-blue-900 px-6 py-3 rounded-lg font-medium hover:bg-gray-200 transition duration-300">
+        <a href="https://rzp.io/rzp/RW7h49BN"
+         target="_blank" 
+         rel="noopener noreferrer"     
+        >Register Now</a>
       </button>
     </div>
 
