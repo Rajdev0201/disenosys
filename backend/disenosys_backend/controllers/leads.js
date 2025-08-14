@@ -152,6 +152,17 @@ exports.getLeads = async (req, res) => {
   }
 };
 
+exports.getLeadsDownload = async(req,res) => {
+  try{
+     const data = await Leads.find();
+     if(!data){
+      return res.status(400).json({message:"not found the data"})
+     }
+     return res.status(200).json({message:"data received for download xl sheet",data})
+  }catch(err){
+      console.log(err)
+  }
+}
 
 
 exports.updateStaus = async (req,res) => {

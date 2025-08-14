@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getLeads, updateLead } from "../Redux/action/leads";
+import { getLeads, getLeadSDownload, updateLead } from "../Redux/action/leads";
 import * as XLSX from "xlsx";
 const statusOptions = ["Pending","Follow-up","Enrolled","Not Interested"];
 
@@ -54,7 +54,7 @@ const SalesTracking = () => {
   //     },
   //   ]);
 
-  const { leads, loading } = useSelector((state) => state.leads);
+  const { leads, loading,leadXl } = useSelector((state) => state.leads);
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [filterData,setFilterData] = useState([]);
@@ -71,6 +71,7 @@ const SalesTracking = () => {
  useEffect(() => {
   const delayDebounce = setTimeout(() => {
   dispatch(getLeads(page, limit, search, startDate, endDate));
+  dispatch(getLeadSDownload());
       }, 800); // debounce search
 
     return () => clearTimeout(delayDebounce);
@@ -116,7 +117,7 @@ const handleDownload = () => {
   try {
 
     const excelData = [];
-    leads?.data?.map((std) => {
+    leadXl?.data?.map((std) => {
         const row = {
           Name: std.fullName,
           Email:std.email,    

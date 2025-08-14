@@ -1,6 +1,6 @@
 "use client"
 import axios from "axios";
-import { setLeads, updateLeads } from "../features/leadsSlice";
+import { setLeads, setLeadsXl, updateLeads } from "../features/leadsSlice";
 
 
 //https://disenosys-dkhj.onrender.com
@@ -9,7 +9,6 @@ export const getLeads = (page, limit, search = '', startDate = '', endDate = '')
         dispatch(setLeads({data:[],loading:true}))
         const res = await axios.get(`https://disenosys-dkhj.onrender.com/get-leads?page=${page}&limit=${limit}&search=${search}&startDate=${startDate}&endDate=${endDate}`);
         const getData = res.data;
-        console.log(getData)
         dispatch(setLeads({data:getData,loading:false}));
     } catch (error) {
         dispatch(setLeads({data:[],loading:false,error:error}));
@@ -17,6 +16,16 @@ export const getLeads = (page, limit, search = '', startDate = '', endDate = '')
   }
 
 
+export const getLeadSDownload = () => async (dispatch) => {
+    try {
+        dispatch(setLeadsXl({data:[],loading:true}))
+        const res = await axios.get('https://disenosys-dkhj.onrender.com/leads-xl');
+        const getData = res.data;
+        dispatch(setLeadsXl({data:getData,loading:false}));
+    } catch (error) {
+        dispatch(setLeadsXl({data:[],loading:false,error:error}));
+    }
+  }
  
 export const updateLead = (Id, updatedData) => async (dispatch) => {
   try {

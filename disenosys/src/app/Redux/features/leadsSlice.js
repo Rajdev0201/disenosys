@@ -2,6 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     leads:[],
+    leadXl:[],
+    loading:false,
+    error:null,
 }
 
 const leadsSlice = createSlice({
@@ -11,7 +14,12 @@ const leadsSlice = createSlice({
     setLeads:(state,action) => {
      state.loading = action.payload.loading;
      state.leads = action.payload.data;
-     state.errors = action.payload.errors;
+     state.error = action.payload.errors;
+    },
+     setLeadsXl:(state,action) => {
+     state.loading = action.payload.loading;
+     state.leadXl = action.payload.data;
+     state.error = action.payload.errors;
     },
     updateLeads: (state, action) => {
   const updated = action.payload; // updated lead object
@@ -29,5 +37,5 @@ const leadsSlice = createSlice({
   }
 })
 
-export const {setLeads,updateLeads} = leadsSlice.actions;
+export const {setLeads,updateLeads,setLeadsXl} = leadsSlice.actions;
 export default leadsSlice.reducer;
