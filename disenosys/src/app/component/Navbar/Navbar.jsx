@@ -91,7 +91,7 @@ const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
   return (
-    <nav className="shadow-lg bg-[#0d1039] z-20 mt-2 lg:mt-16 fixed top-0 right-0 left-0">
+    <nav className="shadow-lg bg-[#0d1039] z-20 mt-0 lg:mt-16 fixed top-0 right-0 left-0">
       <div className=" shadow-lg bg-[#0d1039]  flex flex-col md:flex-row items-center justify-center px-4 lg:px-32 py-3">
         <div className="flex lg:hidden items-center w-full md:w-auto justify-between md:justify-start">
           <Link href="/">
@@ -224,7 +224,7 @@ const Navbar = () => {
          </div> */}
 
         {mobileMenuOpen && (
-          <div className="absolute top-16 left-0 w-full bg-violet-800 shadow-lg z-50 xl:hidden">
+          <div className="absolute top-16 left-0 w-full bg-gray-800 shadow-lg z-50 xl:hidden">
             <div className="flex flex-col items-center py-1 space-y-2">
               <Link
                 href="/"

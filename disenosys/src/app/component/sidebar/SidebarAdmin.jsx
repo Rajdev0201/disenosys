@@ -26,7 +26,7 @@ const Sidebar = () => {
 
   const links = [
     // { href: '/certificate', label: 'Post certificate', icon: <PiCertificateBold /> },
-    { href: '/gpdx', label: 'DEMO', icon: <TfiWrite />    },
+    { href: '/gpdx1', label: 'DEMO', icon: <TfiWrite />    },
     { href: '/applicants', label: 'Applicants', icon: <GrScorecard />},
     { href: '/mentors', label: 'Mentors-Profile', icon: <GrScorecard />},
     { href: '/studentsapplied', label: 'Hyper-Drive', icon: <GrScorecard />},
