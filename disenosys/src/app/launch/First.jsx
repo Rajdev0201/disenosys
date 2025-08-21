@@ -60,7 +60,7 @@ const First = () => {
         <h4 className="text-lg text-gray-600  text-center px-6 mb-4">
           You are about to start the <b>CATIA V5</b> section
         </h4>
-        <div className="bg-[#E7E8F1] flex flex-col w-full text-center p-6 space-y-2 flex justify-center items-center">
+        <div className="bg-[#E7E8F1] flex-col w-full text-center p-6 space-y-2 flex justify-center items-center">
             <Image src={das} className="w-64 h-16 "/>
             <h5 className="text-lg font-poppins">CATIA V5</h5>
             <h5 className="font-bold text-lg font-poppins">7.5 mins</h5>

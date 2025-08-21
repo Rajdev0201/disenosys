@@ -12,6 +12,8 @@ const studentSchema = new mongoose.Schema({
   percentage: { type: Number },
   quizFinishTime: { type: Date },
   courseName:{type:String},
+  status:{type:String},
+  reason:{type:String},
 }, { timestamps: true }); 
 const Student = mongoose.model("Student", studentSchema);
 module.exports = Student;

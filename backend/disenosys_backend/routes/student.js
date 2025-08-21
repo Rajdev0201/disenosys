@@ -199,7 +199,7 @@ const sendResultEmail = async (studentEmail, studentName, totalScore, percentage
 
   
 router.post('/updateStudentQuiz', async (req, res) => {
-    const { studentId, totalScore, percentage } = req.body;
+    const { studentId, totalScore, percentage,reason,status } = req.body;
   
     try {
       const student = await Student.findById(studentId);
@@ -212,11 +212,38 @@ router.post('/updateStudentQuiz', async (req, res) => {
       student.totalScore = totalScore;
       student.percentage = percentage;
       student.attendedQuiz = true;
+      student.reason = reason;
+      student.status = status;
       student. quizFinishTime = Date.now();
   
       await student.save();
       await sendResultEmail(student.email, student.name, totalScore, percentage);
   
+      res.status(200).json({ message: "Quiz results updated successfully" });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Server error" });
+    }
+});
+  
+router.post('/terminate', async (req, res) => {
+    const { _id,reason,status } = req.body;
+    try {
+      const student = await Student.findById(_id);
+  
+      if (!student) {
+        return res.status(404).json({ message: "Student not found" });
+      }
+  
+    // student.quizResults = quizResults;
+    //  student.totalScore = totalScore;
+    //   student.percentage = percentage;
+       student.reason = reason;
+       student.status = status;
+       student.attendedQuiz = true;
+  
+      await student.save();
+ 
       res.status(200).json({ message: "Quiz results updated successfully" });
     } catch (error) {
       console.error(error);

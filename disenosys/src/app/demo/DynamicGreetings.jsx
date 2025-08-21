@@ -9,10 +9,12 @@ export default function App() {
   const [currentState, setCurrentState] = useState(null);
    const [currentCity, setCurrentCity] = useState(null);
 
+   
+
   return (
     <>
     <div>
-      <h6>Country</h6>
+      <h6>Country -</h6>
       <CountrySelect
         containerClassName="form-group"
         inputClassName=""
@@ -40,6 +42,11 @@ export default function App() {
         defaultValue={currentCity}
         placeHolder="Select City"
       />
+    </div>
+
+
+    <div>
+      <h1>country{country}</h1>
     </div>
  </>
   );

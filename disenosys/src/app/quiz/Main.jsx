@@ -26,7 +26,13 @@ const Main = () => {
 
   useEffect(() => {
     axios.get('https://disenosys-dkhj.onrender.com/api/questions')
-      .then(response => setQuestions(response.data))
+         .then(response => {
+        const totalQuestions = response.data;
+        const shuffledQuestions = totalQuestions.sort(() => Math.random() - 0.5); 
+        const randomTenQuestions = shuffledQuestions.slice(0, 50); 
+        setQuestions(randomTenQuestions);
+        // setIsLoading(false);
+      })
       .catch(error => console.error('Error fetching questions:', error));
   }, []);
 

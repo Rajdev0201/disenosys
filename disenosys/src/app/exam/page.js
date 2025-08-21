@@ -55,7 +55,7 @@ export default function AdminPage() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-gray-800 to-gray-900">
+    <div className="">
       {/* {isExamOpen ? ( */}
         <Auth />
       {/* ) : isBeforeExam ? (

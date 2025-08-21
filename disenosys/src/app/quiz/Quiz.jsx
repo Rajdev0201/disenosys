@@ -1,9 +1,12 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOut, setStudent } from "../Redux/features/studentSlice";
 import axios from "axios";
+import * as faceapi from "face-api.js";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Quiz = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(
@@ -33,6 +36,63 @@ const Quiz = ({ questions }) => {
   const dispatch = useDispatch();
   const router = useRouter();
   const student = useSelector((state) => state?.student?.student?.user);
+    const videoRef = useRef(null);
+  const [stream, setStream] = useState(null);
+
+ const lastWarnRef = useRef("");
+  const terminatedRef = useRef(false);
+const lastSeenRef = useRef(Date.now());
+const missCountRef = useRef(0);
+const downStreakRef = useRef(0);
+const awayStreakRef = useRef(0);
+const [reason,setReason] = useState("successfully completed");
+const [status,setStaus] = useState("Completed");
+const [debug, setDebug] = useState({
+  camera: "off",
+  faces: 0,
+  gaze: "-",
+  absentSec: 0,
+  lastSeenSec: 0,
+});
+ 
+useEffect(() => {
+  const loadModels = async () => {
+    await faceapi.nets.tinyFaceDetector.loadFromUri("/models");
+    await faceapi.nets.faceLandmark68Net.loadFromUri("/models");
+
+    try {
+      // Check permission state before requesting
+      if (navigator.permissions) {
+        const result = await navigator.permissions.query({ name: "camera" });
+        
+        if (result.state === "denied") {
+          toast.warn("Please allow camera access to continue the exam.");
+          router.push("/exam")
+          return; // stop further execution
+        }
+      }
+
+      // Request access
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      setStream(stream);
+
+      if (videoRef.current) {
+        videoRef.current.srcObject = stream;
+        videoRef.current.onloadedmetadata = () => {
+          setDebug((d) => ({ ...d, camera: "on" }));
+          videoRef.current.play();
+        };
+      }
+    } catch (e) {
+      toast.warn("Please allow camera access to continue the exam.");
+         router.push("/exam")
+    }
+  };
+
+  loadModels();
+}, []);
+
+
 
   useEffect(() => {
     const storedUser = localStorage.getItem("student");
@@ -54,33 +114,35 @@ const Quiz = ({ questions }) => {
     }
   }, [dispatch, router]);
   
+  const alertShown = useRef(false);
+
   useEffect(() => {
-    const startTime = new Date(localStorage.getItem("startTime"));
-    const examDuration = 30 * 60 * 1000; // 30 minutes in milliseconds
-    let alertShown = false;
-  
-    const timer = setInterval(() => {
-      const now = new Date();
-      const timeElapsed = now - startTime;
-      const timeRemaining = Math.max((examDuration - timeElapsed) / 1000, 0); // Convert to seconds
-  
-      if (timeRemaining <= 0) {
-        clearInterval(timer);
-        handleFinish();
-      } else {
-        setGlobalTimeRemaining(timeRemaining);
-        localStorage.setItem("globalTimeRemaining", timeRemaining);
-  
-        if (timeRemaining <= 300 && !alertShown) {
-          alert("You have only 5 minutes left!");
-          alertShown = true;
-        }
+  const savedStartTime = Number(localStorage.getItem("startTime"));
+  const startTime = savedStartTime ? savedStartTime : Date.now();
+  const examDuration = 30 * 60 * 1000; // 30 minutes
+
+  const timer = setInterval(() => {
+    const now = Date.now();
+    const timeElapsed = now - startTime;
+    const timeRemaining = Math.max((examDuration - timeElapsed) / 1000, 0);
+
+    if (timeRemaining <= 0) {
+      clearInterval(timer);
+      handleFinish();
+    } else {
+      setGlobalTimeRemaining(timeRemaining);
+      localStorage.setItem("globalTimeRemaining", timeRemaining);
+
+      if (timeRemaining <= 300 && !alertShown.current) {
+        alert("You have only 5 minutes left!");
+        alertShown.current = true;
       }
-    }, 1000);
-  
-    return () => clearInterval(timer);
-  }, [quizFinished]);
-  
+    }
+  }, 1000);
+
+  return () => clearInterval(timer);
+}, []);
+
 
   const formatTime = (timeInSeconds) => {
     const totalSeconds = Math.floor(timeInSeconds); 
@@ -209,6 +271,185 @@ const Quiz = ({ questions }) => {
     };
   };
 
+  const addWarning = (msg) => {
+
+  // if (force) {
+  //   toast.warn(`⚠️ ${msg}`, {
+  //     position: "top-center",
+  //     autoClose: 4000,
+  //   });
+  //   return;
+  // }
+
+   if (lastWarnRef.current !== msg) {
+    lastWarnRef.current = msg;
+    toast.warn(`⚠️ ${msg}`, {
+      position: "top-center",
+      autoClose: 4000,
+    });
+  }
+};
+
+
+
+  //   const addViolation = () => {
+  //  if (terminatedRef.current) return; // prevent multiple alerts
+  // terminatedRef.current = true; // lock termination
+  //  const result = calculateResult();
+  //  console.log(result)
+  // fetch("http://localhost:8000/api/student/terminate", {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({
+  //     _id: student._id,
+  //     // totalScore: result.totalScore,
+  //     // percentage: result.percentage,
+  //     reason:"Suspicious activity",
+  //     status: "Terminated",
+  //   }),
+  // });
+
+  // // toast.warning(`Exam terminated: ${reason}`);
+  // // window.location.href = "/exam-terminated"; // force exit page
+  //   };
+
+   useEffect(() => {
+  const TICK_MS = 2000;           // check every 2s
+  const ABSENT_LIMIT_S = 60;      // 1 minute
+  const DOWN_NEED_STREAK = 5;     // must be detected 3 ticks in a row (~6s)
+  const AWAY_NEED_STREAK = 3;     // same
+  // const H_LEFT = 0.45;    // left threshold
+  // const H_RIGHT = 0.55;   // right threshold  
+ const H_LEFT = 0.45;    // left threshold
+ const H_RIGHT = 0.55;  //right
+
+  const tick = async () => {
+    if (!videoRef.current) return;
+
+    const opts = new faceapi.TinyFaceDetectorOptions({
+      inputSize: 160,
+      scoreThreshold: 0.5,
+    });
+
+    const dets = await faceapi
+      .detectAllFaces(videoRef.current, opts)
+      .withFaceLandmarks();
+
+    
+    // defaults for panel
+    let gaze = "-";
+    let faces = dets.length;
+     // face not seen 
+    if (faces === 0) {
+     addWarning("Face not detected! Please sit in a well-lit area.");
+     setReason("Face not detected! Please sit in a well-lit area.");
+     setStaus("Suspicious activity");
+     missCountRef.current += 1;
+     const absentSec = missCountRef.current * (TICK_MS / 1000);
+  if (absentSec >= ABSENT_LIMIT_S) {
+    setReason("Face not detected! Please sit in a well-lit area.");
+  }
+  return;
+}
+
+    // face seen -> reset absence
+    missCountRef.current = 0;
+    lastSeenRef.current = Date.now();
+
+    if (faces > 1) {
+      setDebug({
+        camera: "on",
+        faces,
+        gaze: "multiple",
+        absentSec: 0,
+        lastSeenSec: 0,
+      });
+      addWarning("Multiple faces detected!");
+      setReason("Multiple faces detected!");
+      setStaus("Suspicious activity");
+      return;
+    }
+
+    // exactly one face -> landmarks based checks
+    const landmarks = dets[0].landmarks;
+
+    // --- looking down (very simple heuristic) ---
+    const leftEye = landmarks.getLeftEye();
+    const rightEye = landmarks.getRightEye();
+    const avgY = (leftEye[0].y + rightEye[0].y) / 2;
+
+    const vh = videoRef.current.videoHeight || 360; // guard if not ready
+    const down = avgY > vh * 0.55; // tweak 0.55–0.60 as needed
+    if (down) {
+      downStreakRef.current += 1;
+    } else {
+      downStreakRef.current = 0;
+    }
+    if (downStreakRef.current >= DOWN_NEED_STREAK) {
+      gaze = "down";
+      setDebug({
+        camera: "on",
+        faces,
+        gaze,
+        absentSec: 0,
+        lastSeenSec: 0,
+      });
+      addWarning("Looking down (possible phone use)");
+     setReason("Looking down (possible phone use)");
+     setStaus("Suspicious activity");
+      return;
+    }
+
+    // --- looking left/right (nose average X across landmarks) ---
+    const nose = landmarks.getNose();
+    const avgX =
+      nose.reduce((s, p) => s + p.x, 0) / (nose.length || 1);
+    const vw = videoRef.current.videoWidth || 480;
+
+    let away = false;
+    if (avgX < vw * H_LEFT) {
+      gaze = "left";
+      away = true;
+    } else if (avgX > vw * H_RIGHT) {
+      gaze = "right";
+      away = true;
+    } else {
+      away = false;
+    }
+
+    if (away) {
+      awayStreakRef.current += 1;
+    } else {
+      awayStreakRef.current = 0;
+    }
+
+    if (awayStreakRef.current >= AWAY_NEED_STREAK) {
+      setDebug({
+        camera: "on",
+        faces,
+        gaze,
+        absentSec: 0,
+        lastSeenSec: 0,
+      });
+      addWarning(`You're moving too far (${gaze}). Please stay centered`);
+      // addViolation();
+      return;
+    }
+
+    // update panel when normal
+    setDebug({
+      camera: "on",
+      faces,
+      gaze: gaze === "-" ? "forward" : gaze,
+      absentSec: 0,
+      lastSeenSec: 0,
+    });
+  };
+
+  const id = setInterval(tick, TICK_MS);
+  return () => clearInterval(id);
+   }, []);
+
   const handleFinish = async () => {
     const confirmSubmit = window.confirm("Do you want to submit the exam?");
     if (confirmSubmit) {
@@ -218,16 +459,18 @@ const Quiz = ({ questions }) => {
       const result = calculateResult();
 
       try {
-        const response = await axios.post(
+       await axios.post(
           "https://disenosys-dkhj.onrender.com/api/student/updateStudentQuiz",
           {
             studentId: student._id,
             // quizResults: answers,
             totalScore: result.totalScore,
             percentage: result.percentage,
+            reason:reason,
+            status:status,
           }
         );
-        console.log(response);
+      
         localStorage.removeItem("startTime");
         localStorage.removeItem("globalTimeRemaining");
         localStorage.removeItem("currentQuestionIndex");
@@ -236,6 +479,11 @@ const Quiz = ({ questions }) => {
         // if (response.status === 200) {
         //   alert("Quiz submitted successfully!");
         // }
+      if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+      videoRef.current.srcObject = null;
+    }
       } catch (error) {
         console.error("Error submitting quiz results", error);
       }
@@ -267,6 +515,18 @@ const Quiz = ({ questions }) => {
   };
 
   return (
+    <>
+    <div className="fixed top-2 left-4 font-garet">
+    <video ref={videoRef} autoPlay playsInline width="200" height="200" />
+    </div>
+      <div className="flex flex-col justify-end fixed top-2 font-garet right-4 border bg-red-400 text-white p-2 rounded-md shadow-md">
+    <div className="font-semibold mb-1 text-center">Proctor Status</div>
+    <div className="text-sm">Camera: <b>{debug.camera}</b></div>
+    <div className="text-sm">Faces: <b>{debug.faces}</b></div>
+    <div className="text-sm">Gaze: <b>{debug.gaze}</b></div>
+    {/* <div>Absent (sec): <b>{debug.absentSec}</b></div>
+    <div>Last seen (sec): <b>{debug.lastSeenSec}</b></div> */}
+  </div>
     <div className="flex flex-wrap mt-8">
       {quizFinished ? (
         // Show only the result popup if quiz is finished
@@ -463,6 +723,7 @@ const Quiz = ({ questions }) => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
