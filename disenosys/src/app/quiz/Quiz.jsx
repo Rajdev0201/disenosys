@@ -460,7 +460,7 @@ useEffect(() => {
 
       try {
        await axios.post(
-          "http://localhost:8000/api/student/updateStudentQuiz",
+          "https://disenosys-dkhj.onrender.com/api/student/updateStudentQuiz",
           {
             studentId: student._id,
             // quizResults: answers,
