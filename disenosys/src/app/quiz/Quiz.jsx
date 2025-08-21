@@ -119,7 +119,7 @@ useEffect(() => {
   useEffect(() => {
   const savedStartTime = Number(localStorage.getItem("startTime"));
   const startTime = savedStartTime ? savedStartTime : Date.now();
-  const examDuration = 30 * 60 * 1000; // 30 minutes
+  const examDuration = 1 * 60 * 1000; // 30 minutes
 
   const timer = setInterval(() => {
     const now = Date.now();
@@ -460,7 +460,7 @@ useEffect(() => {
 
       try {
        await axios.post(
-          "https://disenosys-dkhj.onrender.com/api/student/updateStudentQuiz",
+          "http://localhost:8000/api/student/updateStudentQuiz",
           {
             studentId: student._id,
             // quizResults: answers,
@@ -470,6 +470,11 @@ useEffect(() => {
             status:status,
           }
         );
+       if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+      videoRef.current.srcObject = null;
+    }
       
         localStorage.removeItem("startTime");
         localStorage.removeItem("globalTimeRemaining");
@@ -479,11 +484,6 @@ useEffect(() => {
         // if (response.status === 200) {
         //   alert("Quiz submitted successfully!");
         // }
-      if (stream) {
-      stream.getTracks().forEach(track => track.stop());
-      setStream(null);
-      videoRef.current.srcObject = null;
-    }
       } catch (error) {
         console.error("Error submitting quiz results", error);
       }
