@@ -47,6 +47,23 @@ const downStreakRef = useRef(0);
 const awayStreakRef = useRef(0);
 const [reason,setReason] = useState("successfully completed");
 const [status,setStaus] = useState("Completed");
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem("examData"));
+    if (storedData) {
+      setReason(storedData.reason);
+      setStaus(storedData.status);
+    }
+  }, []);
+
+
+  useEffect(() => {
+    localStorage.setItem(
+      "examData",
+      JSON.stringify({ reason, status })
+    );
+  }, [reason, status]);
+
 const [debug, setDebug] = useState({
   camera: "off",
   faces: 0,
@@ -119,7 +136,7 @@ useEffect(() => {
   useEffect(() => {
   const savedStartTime = Number(localStorage.getItem("startTime"));
   const startTime = savedStartTime ? savedStartTime : Date.now();
-  const examDuration = 1 * 60 * 1000; // 30 minutes
+  const examDuration = 30 * 60 * 1000; // 30 minutes
 
   const timer = setInterval(() => {
     const now = Date.now();
@@ -470,17 +487,21 @@ useEffect(() => {
             status:status,
           }
         );
-       if (stream) {
-      stream.getTracks().forEach(track => track.stop());
-      setStream(null);
-      videoRef.current.srcObject = null;
-    }
+       
+         if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+        setStream(null);
+        if (videoRef.current) {
+          videoRef.current.srcObject = null;
+        }
+      }
       
         localStorage.removeItem("startTime");
         localStorage.removeItem("globalTimeRemaining");
         localStorage.removeItem("currentQuestionIndex");
         localStorage.removeItem("answers");
-        localStorage.removeItem("quizFinished")
+        localStorage.removeItem("quizFinished");
+        localStorage.removeItem("examData");
         // if (response.status === 200) {
         //   alert("Quiz submitted successfully!");
         // }
@@ -510,6 +531,7 @@ useEffect(() => {
     localStorage.removeItem("answers");
     localStorage.removeItem("quizFinished");
     localStorage.removeItem("startTime");
+    localStorage.removeItem("examData");
     dispatch(LogOut());
     router.push("/");
   };
