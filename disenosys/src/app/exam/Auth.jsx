@@ -116,7 +116,7 @@ const Auth = () => {
   </li>
 
   <li><b>Completion:</b> Once you have answered all questions, click the 
-    <span className="text-blue-500 font-bold"> "Finish"</span> button to review your results. 
+    <span className="text-blue-500 font-bold">&quot;Finish&quot;</span> button to review your results. 
     A pop-up will display your performance, and an email with your results will also be sent to you.
   </li>
 
