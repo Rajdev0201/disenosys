@@ -194,7 +194,7 @@ export const SignupData = (userData) => async (dispatch) => {
       dispatch(setStudent(data));
       toast.dark('Login successful!', {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
