@@ -152,7 +152,6 @@ export const SignupData = (userData) => async (dispatch) => {
 
   // Action creator for Facebook login success
   export const handleLogin = (response) => async (dispatch) => {
-    console.log("Facebook Login Success:", response);
   
     const { first_name, last_name, userID } = response.data;
     const userName = `${first_name} ${last_name}`;
@@ -163,7 +162,6 @@ export const SignupData = (userData) => async (dispatch) => {
         userName,
       });
   
-      console.log("User data saved:", result.data);
   
       // Dispatch to Redux store
       dispatch(FacebookLog(result.data));
@@ -190,7 +188,6 @@ export const SignupData = (userData) => async (dispatch) => {
         "https://disenosys-dkhj.onrender.com/api/student/login",
         userData
       );
-      console.log(data); 
       dispatch(setStudent(data));
       toast.dark('Login successful!', {
         position: "top-center",

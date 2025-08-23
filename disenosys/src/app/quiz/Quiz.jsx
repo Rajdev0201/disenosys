@@ -50,12 +50,13 @@ const Quiz = ({ questions }) => {
   const [status, setStaus] = useState("successfully completed");
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("examData")) || [];
-    if (stored) {
-    setReason(stored.reason); 
-    setStaus(stored.status);
-    }
-  }, []);
+  const stored = JSON.parse(localStorage.getItem("examData"));
+  if (stored) {
+    setReason(stored.reason || []);
+    setStaus(stored.status || "successfully completed");
+  }
+}, []);
+
 
   useEffect(() => {
     localStorage.setItem("examData", JSON.stringify({ reason, status }));
