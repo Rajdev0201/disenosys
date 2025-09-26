@@ -11,18 +11,11 @@ const Login = () => {
     const nav = useRouter();
     const handleLoginSuccess = async (credentialResponse) => {
         const decoded = jwtDecode(credentialResponse?.credential);
-        console.log("Login Success:", decoded);
-    
         try {
             const response = await axios.post('https://disenosys-dkhj.onrender.com/api/v1/user/google', {
                 userEmail: decoded.email,
                 userName: decoded.name, 
             });
-    
-            console.log('User data saved:', response.data);
-            
-           
-         
     
             const { _id, userName, userEmail } = response.data.user; 
             
