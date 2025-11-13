@@ -59,7 +59,6 @@ const length = courses.length
     })
 })
 
-
 exports.Reviews = CatchAsyncError(async (req, res) => {
     const { courseId, name, rating, message,like } = req.body;
     console.log(req.body)
@@ -82,4 +81,4 @@ exports.Reviews = CatchAsyncError(async (req, res) => {
     await course.save(); 
   
     res.status(200).json({ success: true, message: "Review added successfully", reviews: course.reviews });
-  });
+});

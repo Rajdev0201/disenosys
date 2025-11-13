@@ -234,7 +234,7 @@ const [showCertificate, setShowCertificate] = useState(false);
 
 
     <div className="flex flex-col justify-end mt-12 mr-16">
-      <div className="border border-b-2 border-gray-900 w-40"></div>
+
       <p className="text-xl font-bold text-blue-900 mt-12">
         PRAVEEN KUMAR S
       </p>

@@ -8,4 +8,6 @@ router.get("/getCart", getCart);
 router.put("/cart/:id/increament", increament);
 router.put("/cart/:id/decreament", decreament);
 router.delete("/cart/:id", removeCart);
+
+
 module.exports = router;
