@@ -1901,13 +1901,13 @@ app.post('/quiz', upload.none(), async (req, res) => {
   }
 });
 
-app.post('/biw', upload.none(), async (req, res) => {
+app.post('/biw', upload.single("file"), async (req, res) => {
   try {
     const { examname, createdBy } = req.body;
-
     if (!req.file || !examname || !createdBy) {
       return res.status(400).json({ error: 'Missing required fields or file' });
     }
+  
 
     // Read Excel File
     const workbook = XLSX.readFile(req.file.path);
@@ -1915,7 +1915,7 @@ app.post('/biw', upload.none(), async (req, res) => {
     const sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
     for (const row of sheetData) {
-      console.log("Processing row:", row);
+    
 
       // Normalize row keys and values
       const normalizedRow = Object.fromEntries(
@@ -1958,7 +1958,6 @@ app.post('/biw', upload.none(), async (req, res) => {
 
         try {
           const savedQuestion = await question.save();
-          console.log(`Saved question: ${savedQuestion.question}`);
         } catch (saveError) {
           console.error(`Error saving question: ${saveError.message}`, saveError);
         }
@@ -1971,6 +1970,25 @@ app.post('/biw', upload.none(), async (req, res) => {
   } catch (err) {
     console.error('Error details:', err);
     res.status(500).json({ error: 'Failed to upload questions', details: err });
+  }
+});
+
+app.delete("/biw/delete", async (req, res) => {
+  try {
+    const { examname } = req.body;
+
+    if (!examname) {
+      return res.status(400).json({ error: "examname is required" });
+    }
+
+    const result = await BIW.deleteMany({ examname });
+
+    return res.status(200).json({
+      message: `${result.deletedCount} questions deleted for exam: ${examname}`
+    });
+  } catch (err) {
+    console.error("Delete Error:", err);
+    return res.status(500).json({ error: "Internal server error" });
   }
 });
 
