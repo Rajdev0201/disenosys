@@ -244,9 +244,9 @@ const Navbar = () => {
                 "Course",
                 "Portfolio",
                 "Gallery",
-                "Admissions",
+                "Admission",
                 "Blog",
-                "Contact Us",
+                "Contact",
               ].map((item) => (
                 <Link
                   key={item}
