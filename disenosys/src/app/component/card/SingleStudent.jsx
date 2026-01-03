@@ -74,7 +74,7 @@ const CertificateSingle = () => {
       formData.append("course", course);
 
       await axios.post(
-        "https://disenosys-dkhj.onrender.com/send-single-certificate",
+        "https://disenosys-7dm5.onrender.com/send-single-certificate",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

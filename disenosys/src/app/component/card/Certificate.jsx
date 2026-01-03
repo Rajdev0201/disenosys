@@ -38,7 +38,7 @@ const CertificateComponent = () => {
     formData.append("file", file);
   
     try {
-      const response = await axios.post("https://disenosys-dkhj.onrender.com/upload-xl", formData, {
+      const response = await axios.post("https://disenosys-7dm5.onrender.com/upload-xl", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
   
@@ -222,7 +222,7 @@ const sendCertificates = async () => {
     const batches = chunkArray(studentsArray, 5);
 
     for (const batch of batches) {
-      await axios.post("https://disenosys-dkhj.onrender.com/send-certificate", { students: batch }, {
+      await axios.post("https://disenosys-7dm5.onrender.com/send-certificate", { students: batch }, {
         headers: { "Content-Type": "application/json" },
         maxBodyLength: Infinity,
       });
@@ -242,7 +242,7 @@ const sendCertificates = async () => {
   const handleDownload = async () => {
     try {
 
-      const response = await axios.get('https://disenosys-dkhj.onrender.com/api/student/demo-intern', {
+      const response = await axios.get('https://disenosys-7dm5.onrender.com/api/student/demo-intern', {
         responseType: 'blob', // Important to set the response type to blob
       });
 
