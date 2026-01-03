@@ -64,7 +64,7 @@ const [showCertificate, setShowCertificate] = useState(false);
       formData.append("date", date);
  
     
-      await axios.post("https://disenosys-dkhj.onrender.com/send-single-gpdx", formData, {
+      await axios.post("https://disenosys-7dm5.onrender.com/send-single-gpdx", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert(`Certificate sent to ${email}`);

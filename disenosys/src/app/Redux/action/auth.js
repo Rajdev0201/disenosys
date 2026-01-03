@@ -85,7 +85,7 @@ export const SignupData = (userData) => async (dispatch) => {
   export const admin = (userData,router) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://disenosys-dkhj.onrender.com/admin/login",
+        "https://disenosys-7dm5.onrender.com/admin/login",
         userData
       );
       dispatch(Admin(data));

@@ -32,7 +32,7 @@ const CertificateComponent = () => {
 
     try {
       const response = await axios.post(
-        "https://disenosys-dkhj.onrender.com/upload-xl-exam",
+        "https://disenosys-7dm5.onrender.com/upload-xl-exam",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -89,7 +89,7 @@ const CertificateComponent = () => {
       formData.append("course", course);
       formData.append("score", score);
       await axios.post(
-        "https://disenosys-dkhj.onrender.com/send-certificate-exam",
+        "https://disenosys-7dm5.onrender.com/send-certificate-exam",
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -150,7 +150,7 @@ const CertificateComponent = () => {
   const handleDownload = async () => {
     try {
 
-      const response = await axios.get('https://disenosys-dkhj.onrender.com/api/student/demo-exam-c', {
+      const response = await axios.get('https://disenosys-7dm5.onrender.com/api/student/demo-exam-c', {
         responseType: 'blob', // Important to set the response type to blob
       });
 

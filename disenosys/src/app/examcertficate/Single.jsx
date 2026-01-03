@@ -58,7 +58,7 @@ const [showCertificate, setShowCertificate] = useState(false);
     
 
      //https://disenosys-dkhj.onrender.com
-      await axios.post("https://disenosys-dkhj.onrender.com/send-single-certificate-exam", formData, {
+      await axios.post("https://disenosys-7dm5.onrender.com/send-single-certificate-exam", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert(`Certificate sent to ${email}`);

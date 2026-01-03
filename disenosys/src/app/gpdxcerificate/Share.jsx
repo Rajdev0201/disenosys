@@ -31,7 +31,7 @@ const Share = () => {
       formData.append("file", file);
     
       try {
-        const response = await axios.post("https://disenosys-dkhj.onrender.com/upload-xl-gpdx", formData, {
+        const response = await axios.post("https://disenosys-7dm5.onrender.com/upload-xl-gpdx", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
     
@@ -95,7 +95,7 @@ const Share = () => {
         formData.append("score", score);
         formData.append("awardedDate", awardedDate);
     
-        await axios.post("https://disenosys-dkhj.onrender.com/send-gpdxcourse", formData, {
+        await axios.post("https://disenosys-7dm5.onrender.com/send-gpdxcourse", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
     
@@ -143,7 +143,7 @@ const Share = () => {
     const handleDownload = async () => {
       try {
   
-        const response = await axios.get('https://disenosys-dkhj.onrender.com/api/student/demo-gpdx', {
+        const response = await axios.get('https://disenosys-7dm5.onrender.com/api/student/demo-gpdx', {
           responseType: 'blob', // Important to set the response type to blob
         });
   
