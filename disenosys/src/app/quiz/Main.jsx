@@ -25,7 +25,7 @@ const Main = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    axios.get('https://disenosys-dkhj.onrender.com/api/questions')
+    axios.get('https://disenosys-7dm5.onrender.com/api/questions')
          .then(response => {
         const totalQuestions = response.data;
         const shuffledQuestions = totalQuestions.sort(() => Math.random() - 0.5); 

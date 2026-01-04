@@ -219,7 +219,7 @@ const Quiz = ({ questions }) => {
 
       try {
         const response = await axios.post(
-          "https://disenosys-dkhj.onrender.com/api/student/updateStudentQuiz",
+          "https://disenosys-7dm5.onrender.com/api/student/updateStudentQuiz",
           {
             studentId: student._id,
             // quizResults: answers,

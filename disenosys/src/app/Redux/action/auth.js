@@ -185,7 +185,7 @@ export const SignupData = (userData) => async (dispatch) => {
   export const studentLogin = (userData, router) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://disenosys-dkhj.onrender.com/api/student/login",
+        "https://disenosys-7dm5.onrender.com/api/student/login",
         userData
       );
       dispatch(setStudent(data));
