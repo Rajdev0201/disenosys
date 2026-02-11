@@ -6,7 +6,7 @@ import axios from 'axios'
 
 export const fetchCourse = () => async (dispatch) => {
     try {
-      const response = await axios.get('https://disenosys-dkhj.onrender.com/api/v1/getAllCourses');
+      const response = await axios.get('https://disenosys-7dm5.onrender.com/api/v1/getAllCourses');
       const productsJson = response.data;
       dispatch(setProducts(productsJson));
     } catch (error) {
@@ -17,7 +17,7 @@ export const fetchCourse = () => async (dispatch) => {
   export const courseld = () => async (dispatch) => {
     try {
         dispatch(setCourse({data:[],loading:true}));
-        const res = await axios.get("https://disenosys-dkhj.onrender.com/ld/courseget");
+        const res = await axios.get("https://disenosys-7dm5.onrender.com/ld/courseget");
         const getData = res.data;
         dispatch(setCourse({data:getData,loading:false}));
     } catch (error) {
@@ -27,7 +27,7 @@ export const fetchCourse = () => async (dispatch) => {
 
   export const removeCourse = (Id) => async (dispatch) => {
     try {
-        await axios.delete(`https://disenosys-dkhj.onrender.com/ld/coursedelete/${Id}`);
+        await axios.delete(`https://disenosys-7dm5.onrender.com/ld/coursedelete/${Id}`);
         dispatch(remove(Id));
         dispatch(courseld())
     } catch (error) {
@@ -37,7 +37,7 @@ export const fetchCourse = () => async (dispatch) => {
 
 export const editCourse = (Id, updatedCourseData) => async (dispatch) => {
   try {
-      const response = await axios.put(`https://disenosys-dkhj.onrender.com/ld/courseedit/${Id}`, updatedCourseData);
+      const response = await axios.put(`https://disenosys-7dm5.onrender.com/ld/courseedit/${Id}`, updatedCourseData);
       dispatch(updateCourse(response.data)); 
   } catch (error) {
       console.error('Error updating course:', error);

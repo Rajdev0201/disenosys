@@ -7,7 +7,7 @@ import { postJob, postPayment, postPremiumUsers, removeJob, setJob, setPayment, 
 
 
 export const createJob = (data) => async (dispatch) => {
-    const createJobPromise = axios.post("https://disenosys-dkhj.onrender.com/Jobs/postjob", data, {
+    const createJobPromise = axios.post("https://disenosys-7dm5.onrender.com/Jobs/postjob", data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

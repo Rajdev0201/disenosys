@@ -13,7 +13,7 @@ import {setExternal,removeCode} from "../features/externalSlice.js";
 export const SignupData = (userData) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://disenosys-dkhj.onrender.com/api/v1/user/register",
+        "https://disenosys-7dm5.onrender.com/api/v1/user/register",
         userData
       );
       dispatch(Signup(data));
@@ -51,7 +51,7 @@ export const SignupData = (userData) => async (dispatch) => {
     console.log(userData);
     try {
       const { data } = await axios.post(
-        "https://disenosys-dkhj.onrender.com/api/v1/user/login",
+        "https://disenosys-7dm5.onrender.com/api/v1/user/login",
         userData // This is now JSON, not FormData
       );
       dispatch(Login(data));
@@ -118,7 +118,7 @@ export const SignupData = (userData) => async (dispatch) => {
   export const adminLD = (userData,router) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://disenosys-dkhj.onrender.com/admin/loginld",
+        "https://disenosys-7dm5.onrender.com/admin/loginld",
         userData
       );
       dispatch(AdminLD(data));
@@ -148,7 +148,7 @@ export const SignupData = (userData) => async (dispatch) => {
       }
   };
 
-  const API_URL = "https://disenosys-dkhj.onrender.com/api/v1/user";
+  const API_URL = "https://disenosys-7dm5.onrender.com/api/v1/user";
 
   // Action creator for Facebook login success
   export const handleLogin = (response) => async (dispatch) => {
@@ -220,7 +220,7 @@ export const SignupData = (userData) => async (dispatch) => {
   export const studentLogin1 = (userData, router) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://disenosys-dkhj.onrender.com/api/student/login",
+        "https://disenosys-7dm5.onrender.com/api/student/login",
         userData
       );
       console.log(data); 
@@ -255,7 +255,7 @@ export const SignupData = (userData) => async (dispatch) => {
   export const studentLoginBIW = (userData, router) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-        "https://disenosys-dkhj.onrender.com/api/student/examAll-login",
+        "https://disenosys-7dm5.onrender.com/api/student/examAll-login",
         userData
       );
       console.log(data); 
@@ -292,7 +292,7 @@ export const SignupData = (userData) => async (dispatch) => {
   //student code 
   export const studentCode = () => async (dispatch) => {
     try {
-        const res = await axios.get("https://disenosys-dkhj.onrender.com/api/admin/studentCode");
+        const res = await axios.get("https://disenosys-7dm5.onrender.com/api/admin/studentCode");
         const getData = res.data;
         dispatch(setCode(getData));
     } catch (error) {
@@ -304,7 +304,7 @@ export const SignupData = (userData) => async (dispatch) => {
 
 export const companyCode = () => async (dispatch) => {
   try {
-      const res = await axios.get("https://disenosys-dkhj.onrender.com/api/admin/companycode");
+      const res = await axios.get("https://disenosys-7dm5.onrender.com/api/admin/companycode");
       const getData = res.data;
       dispatch(setCompanyCode(getData));
   } catch (error) {
@@ -315,7 +315,7 @@ export const companyCode = () => async (dispatch) => {
 //external code 
 export const externalCode = () => async (dispatch) => {
   try {
-      const res = await axios.get("https://disenosys-dkhj.onrender.com/api/admin/externalCode");
+      const res = await axios.get("https://disenosys-7dm5.onrender.com/api/admin/externalCode");
       const getData = res.data;
       dispatch(setExternal(getData));
   } catch (error) {
@@ -328,7 +328,7 @@ export const externalCode = () => async (dispatch) => {
 
 export const deleteStudentCode = (id) => async (dispatch) => {
   try {
-      await axios.delete(`https://disenosys-dkhj.onrender.com/api/admin/studentCode/${id}`);
+      await axios.delete(`https://disenosys-7dm5.onrender.com/api/admin/studentCode/${id}`);
       dispatch(remove(id));
       dispatch(studentCode());
       toast.dark('The code has Deleted!', {
@@ -351,7 +351,7 @@ export const deleteStudentCode = (id) => async (dispatch) => {
 
 export const deleteExternalCode = (id) => async (dispatch) => {
   try {
-    await axios.delete(`https://disenosys-dkhj.onrender.com/api/admin/externalCode/${id}`); //https://disenosys-dkhj.onrender.com
+    await axios.delete(`https://disenosys-7dm5.onrender.com/api/admin/externalCode/${id}`); //https://disenosys-7dm5.onrender.com
     dispatch(removeCode(id));
     dispatch(externalCode());
     toast.dark('The code has Deleted!', {
@@ -373,7 +373,7 @@ export const deleteExternalCode = (id) => async (dispatch) => {
 
 export const deleteCompanyCode = (id) => async (dispatch) => {
   try {
-    await axios.delete(`https://disenosys-dkhj.onrender.com/api/admin/compnyCode/${id}`); //https://disenosys-dkhj.onrender.com
+    await axios.delete(`https://disenosys-7dm5.onrender.com/api/admin/compnyCode/${id}`); //https://disenosys-7dm5.onrender.com
     dispatch(removeCodeC(id));
     dispatch(companyCode());
     toast.dark('The code has Deleted!', {

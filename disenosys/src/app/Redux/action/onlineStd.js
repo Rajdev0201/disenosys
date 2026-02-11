@@ -7,7 +7,7 @@ import {remove, setOnline, updateOnline} from "../features/onlineStdSlice.js"
 export const Online = (page,search = "") => async (dispatch) => {
     try {
         dispatch(setOnline({data:[],loading:true}))
-        const res = await axios.get(`https://disenosys-dkhj.onrender.com/ld/studentget?page=${page}&limit=30&search=${encodeURIComponent(search)}`);
+        const res = await axios.get(`https://disenosys-7dm5.onrender.com/ld/studentget?page=${page}&limit=30&search=${encodeURIComponent(search)}`);
         const getData = res.data;
         dispatch(setOnline({data:getData,loading:false}));
     } catch (error) {
@@ -17,7 +17,7 @@ export const Online = (page,search = "") => async (dispatch) => {
 
   export const removeOnline = (Id) => async (dispatch) => {
     try {
-        await axios.delete(`https://disenosys-dkhj.onrender.com/ld/studentdelete/${Id}`);
+        await axios.delete(`https://disenosys-7dm5.onrender.com/ld/studentdelete/${Id}`);
         dispatch(remove(Id));
         dispatch(Online())
     } catch (error) {
@@ -27,7 +27,7 @@ export const Online = (page,search = "") => async (dispatch) => {
 
 export const editOnline = (Id, updatedData) => async (dispatch) => {
   try {
-      const response = await axios.put(`https://disenosys-dkhj.onrender.com/ld/studentedit/${Id}`, updatedData);
+      const response = await axios.put(`https://disenosys-7dm5.onrender.com/ld/studentedit/${Id}`, updatedData);
       dispatch(updateOnline(response.data)); 
   } catch (error) {
       console.error('Error updating course:', error);

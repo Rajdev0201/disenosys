@@ -12,7 +12,7 @@ import { setUpdate } from '../features/currentProfile.js';
 export const editProfile = (Data) => async (dispatch) => {
     try {
       const { data } = await axios.post(
-         "https://disenosys-dkhj.onrender.com/upload-profile",        
+         "https://disenosys-7dm5.onrender.com/upload-profile",        
           Data
       );
       dispatch(setprofile(data));

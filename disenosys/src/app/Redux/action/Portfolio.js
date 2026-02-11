@@ -10,7 +10,7 @@ import {getmentorData} from "../features/mentorSlice.js";
 
 export const getPortfolioOne = () => async (dispatch) => {
     try {
-      const res = await axios.get(`https://disenosys-dkhj.onrender.com/update/portfolio/single`);
+      const res = await axios.get(`https://disenosys-7dm5.onrender.com/update/portfolio/single`);
       console.log(res)
       const portfolio = res.data;
       dispatch(setUpdate(portfolio));
@@ -22,7 +22,7 @@ export const getPortfolioOne = () => async (dispatch) => {
 
   export const getPortfolioAll = () => async (dispatch) => {
     try {
-      const res = await axios.get(`https://disenosys-dkhj.onrender.com/update/portfolio`);
+      const res = await axios.get(`https://disenosys-7dm5.onrender.com/update/portfolio`);
       const portfolioAll = res.data;
       dispatch(setUpdateAll(portfolioAll));
     } catch (error) {
@@ -33,7 +33,7 @@ export const getPortfolioOne = () => async (dispatch) => {
 //resume
   export const getResume = () => async (dispatch) => {
     try {
-      const res = await axios.get(`https://disenosys-dkhj.onrender.com/resume/profile`);
+      const res = await axios.get(`https://disenosys-7dm5.onrender.com/resume/profile`);
       const portfolioAll = res.data;
       dispatch(setUpdateResume(portfolioAll));
     } catch (error) {
@@ -48,7 +48,7 @@ export const getPortfolioOne = () => async (dispatch) => {
 
   export const getBlog = () => async (dispatch) => {
     try {
-        const res = await axios.get("https://disenosys-dkhj.onrender.com/api/blog/data");
+        const res = await axios.get("https://disenosys-7dm5.onrender.com/api/blog/data");
         const getData = res.data;
         dispatch(getBlogData(getData));
     } catch (error) {
@@ -58,7 +58,7 @@ export const getPortfolioOne = () => async (dispatch) => {
 
   export const getCareer = () => async (dispatch) => {
     try{
-      const res = await axios.get("https://disenosys-dkhj.onrender.com/careerdata");
+      const res = await axios.get("https://disenosys-7dm5.onrender.com/careerdata");
       const getData = res.data;
       dispatch(getCareerData(getData));
     }catch(error){
@@ -70,9 +70,9 @@ export const getPortfolioOne = () => async (dispatch) => {
   try {
     const { exp, automotive } = filters;
     console.log(filters)
-   //https://disenosys-dkhj.onrender.com
+   //https://disenosys-7dm5.onrender.com
     const res = await axios.get(
-      `https://disenosys-dkhj.onrender.com/mentordata?page=${page}&exp=${exp}&automotive=${automotive}`
+      `https://disenosys-7dm5.onrender.com/mentordata?page=${page}&exp=${exp}&automotive=${automotive}`
     );
 
     dispatch(getmentorData(res.data));
