@@ -126,8 +126,6 @@ router.post('/examAll-login', async (req, res) => {
 });
 
 
-
-
 const sendResultEmail = async (studentEmail, studentName, totalScore, percentage) => {
   const transporter = nodemailer.createTransport({
 

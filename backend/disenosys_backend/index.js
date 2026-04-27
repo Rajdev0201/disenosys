@@ -54,7 +54,7 @@ app.use((_req, res, next) => {
   res.header('Access-Control-Allow-Headers', '*');
   next();
 });
-const orgins = ["https://disenosys.onrender.com","http://localhost:3000","https://disenosys-eight.vercel.app"]
+const orgins = ["https://disenosys.onrender.com","http://localhost:3000","https://disenosys-eight.vercel.app","https://disenosys-7dm5.onrender.com"]
 app.use(cors({
   origin: orgins,
   methods: ['GET', 'POST', 'PUT', 'DELETE'],

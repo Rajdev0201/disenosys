@@ -212,14 +212,6 @@ const [showCertificate, setShowCertificate] = useState(false);
 
   
   <div className="flex justify-between mt-16">
-      
-      {/* <div className="mt-4">
-        <p className="text-sm font-light font-sans text-center text-gray-800 bg-red-100">
-          Accredited by
-        </p>
-        <div className="flex justify-center items-center w-24 h-24 overflow-hidden bg-red-100">
-<Image src={Nsdca} alt="Accreditation Logo" className="w-full h-full object-contain" />
-</div> */}
 
       <div className="mt-20 mx-64">
         <p className="text-sm font-light font-sans">
@@ -242,8 +234,6 @@ const [showCertificate, setShowCertificate] = useState(false);
     </div>
   </div>
 </div>
-
-    
     </>
   );
 };
