@@ -1,149 +1,37 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import "./Online.css";
-import form from "../assests/profile/onlineform.jpg";
-import Image from "next/image";
-import { useSearchParams } from "next/navigation";
-import online from "../assests/profile/online.jpg";
+
 const Online = () => {
-   
-    const [result, setResult] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    setLoading(true);
-    const formData = new FormData(event.target);
-
-    const name = formData.get("name");
-    const email = formData.get("email");
-    const mobile = formData.get("mobile");
-    const cname = formData.get("cname");
-    if (!name || !email || !mobile || !cname) {
-      setResult("Please fill out all fields.");
-      setLoading(false);
-      return;
-    }
-
-    formData.append("access_key", "6c016ccc-be7f-4c75-be4c-56e74e4671fa");
-
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setResult("Form Submitted Successfully");
-        event.target.reset();
-        setTimeout(() => {
-          setResult("");
-        }, 2000);
-      } else {
-        setResult(data.message);
-      }
-    } catch (error) {
-      console.error("Error submitting the form", error);
-      setResult("An error occurred. Please try again.");
-    }
-    setLoading(false);
-  };
-  
-
-    const search = useSearchParams();
-    const courseName = search.get("courseName");
   return (
-    <div className="flex justify-center items-center py-40 bg-gray-50">
-      <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-        
-        {/* Form Section */}
-        <div className="flex flex-col justify-center">
-          <h2 className="text-3xl font-bold text-[#182073] mb-6 text-center md:text-left">
-            Course Enrollment
-          </h2>
-          <form className="text-[#182073]" onSubmit={onSubmit}>
-            {/* Name Input */}
-            <label className="text-sm font-semibold block mb-2 after:content-['*'] after:ml-0.5 after:text-red-500">
-              Name
-            </label>
-            <input
-              className="w-full p-3 mb-4 rounded-md bg-gray-100 text-black outline-none ring-none focus:ring-2 focus:ring-sky-500"
-              type="text"
-              name="name"
-              placeholder="Enter your Name"
-              id="name"
-              required
-            />
-
-            {/* Email Input */}
-            <label className="text-sm font-semibold block mb-2 after:content-['*'] after:ml-0.5 after:text-red-500">
-              Email
-            </label>
-            <input
-              className="w-full p-3 mb-4 rounded-md bg-gray-100 text-black outline-none ring-none focus:ring-2 focus:ring-sky-500"
-              type="email"
-              name="email"
-              placeholder="Enter your Email"
-              id="email"
-              required
-            />
-
-            {/* Phone Input */}
-            <label className="text-sm font-semibold block mb-2 after:content-['*'] after:ml-0.5 after:text-red-500">
-              Phone
-            </label>
-            <input
-              className="w-full p-3 mb-4 rounded-md bg-gray-100 text-black outline-none ring-none focus:ring-2 focus:ring-sky-500"
-              type="text"
-              name="mobile"
-              placeholder="Enter your Phone Number"
-              id="mobile"
-              required
-            />
-
-            {/* Course Input */}
-            <label className="text-sm font-semibold block mb-2 after:content-['*'] after:ml-0.5 after:text-red-500">
-              Your Course
-            </label>
-            <input
-              className="w-full p-3 mb-4 rounded-md bg-gray-100 text-black outline-none ring-none focus:ring-2 focus:ring-sky-500"
-              type="text"
-                name="cname"
-              placeholder="Enter the Course Name"
-              defaultValue={courseName}
-               id="cname"
-              required
-            />
-
-            {/* Submit Button */}
-            <div className="flex justify-center md:justify-start mt-6">
-              <button
-                className="w-full md:w-auto bg-[#182073] text-white font-bold py-3 px-6 rounded-sm hover:bg-sky-400 transition-colors"
-                type="submit"
-                disabled={loading}
-              >
-                {loading ? "Sending..." : "Submit"}
-              </button>
+    <section className="py-16 bg-slate-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl bg-white shadow-xl p-8 md:p-12">
+          <h1 className="text-4xl sm:text-5xl font-bold text-slate-900 mb-6">
+            Online Courses at Disenosys
+          </h1>
+          <p className="text-lg text-slate-600 mb-6 leading-8">
+            Experience flexible, instructor-led training tailored for working professionals and students. Our online curriculum lets you learn automotive design with live sessions, real project practice, and placement guidance.
+          </p>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="rounded-2xl bg-[#0d1039] p-6 text-white">
+              <h2 className="text-2xl font-semibold mb-3">What you get</h2>
+              <ul className="space-y-2 text-slate-200">
+                <li>Live interactive sessions</li>
+                <li>Assignments & project reviews</li>
+                <li>Placement assistance</li>
+                <li>Lifetime access to recordings</li>
+              </ul>
             </div>
-            {result && <p className={`mt-4 ${result.includes("error") ? "text-red-500" : "text-green-500"}`}>{result}</p>}
-          </form>
-        </div>
-          
-
-        {/* Image Section */}
-        <div className="flex justify-center items-center">
-          <Image
-            src={online}
-            alt="Enrollment Image"
-            className="rounded-lg object-cover shadow-sm rounded-sm"
-            width={400}
-            height={400}
-          />
+            <div className="rounded-2xl bg-slate-100 p-6">
+              <h2 className="text-2xl font-semibold mb-3 text-slate-900">Ready to enroll?</h2>
+              <p className="text-slate-600 leading-7">
+                Fill out the online course form and our admissions team will contact you with the next steps.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

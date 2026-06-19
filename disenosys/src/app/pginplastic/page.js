@@ -4,7 +4,7 @@ import Footer from "../component/Navbar/Footer"
 import Navbar from "../component/Navbar/Navbar"
 import MarqueeView from "../home/Marquee"
 import Partner from "../home/Partner"
-import Plastic from "./Plastic"
+// import Plastic from "./Plastic"
 
 
 
@@ -13,7 +13,7 @@ export default function CartPage() {
     <div>
         <BlinkingAlert/>
         <Navbar/>
-        <Plastic/>
+        {/* <Plastic/> */}
         <MarqueeView/>
         <Partner/>
         <Footer/>
