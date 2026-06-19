@@ -79,7 +79,7 @@ const [showCertificate, setShowCertificate] = useState(false);
       });
       alert(`Certificate sent to ${email}`);
     } catch (error) {
-      alert("Error generating or sending certificate")
+      //alert("Error generating or sending certificate")
       console.error("Error generating or sending certificate:", error);
     }
     setShowCertificate(false);
