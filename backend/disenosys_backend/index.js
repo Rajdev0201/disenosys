@@ -14,6 +14,8 @@ const nodemailer = require('nodemailer');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary')
 
+const dns = require('dns');
+ dns.setServers(['8.8.8.8','1.1.1.1'])
 
 const CLIENT_ID = "86xiq0kdd6l43i";
 const CLIENT_SECRET = "WPL_AP1.ojibLusdShatmsUq.07+vuQ==";
@@ -25,17 +27,42 @@ dotenv.config({ path: path.join(__dirname, "./.env") })
 
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI,{
-  useNewUrlParser: true,       
-  useUnifiedTopology: true,    
-  serverSelectionTimeoutMS: 30000,
-})
+const connectMongoDb = ()  => {
+
+    const mongoUrl ="mongodb+srv://rajkumarprjpm:Admin123@cluster0.gvopb3q.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    mongoose.connect(mongoUrl, {
+      serverSelectionTimeoutMS: 30000,
+    })
     .then(() => {
         console.log("MongoDB Connected");
     })
     .catch(err => {
         console.error("MongoDB connection error:", err);
+        if (String(mongoUrl || "").startsWith("mongodb+srv://")) {
+          console.error("SRV DNS lookup failed. Set MONGO_URI_DIRECT in .env with a non-SRV MongoDB URI as a fallback.");
+        }
     });
+
+}
+connectMongoDb();
+
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || "").trim());
+}
+
+async function ensureMongoConnection() {
+  if (mongoose.connection.readyState === 1) {
+    return;
+  }
+
+  if (mongoose.connection.readyState === 2) {
+    await mongoose.connection.asPromise();
+    return;
+  }
+
+  throw new Error("MongoDB is not connected");
+}
+ 
 
 app.use(cors())
 app.use(
@@ -922,6 +949,10 @@ app.post("/send-certificate-exam", uploadcertificateExam.none(), async(req, res)
     return res.status(400).send("Missing email or PDF data");
   }
 
+  if (!isValidEmail(email)) {
+    return res.status(400).send("Invalid email address");
+  }
+
 
   const base64Data = pdfDataUrl.split(";base64,").pop();
   const pdfBuffer = Buffer.from(base64Data, "base64");
@@ -951,12 +982,7 @@ app.post("/send-certificate-exam", uploadcertificateExam.none(), async(req, res)
   };
 
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error("Error sending email:", error);
-      return res.status(500).send("Error sending email");
-    }
-  });
+  await transporter.sendMail(mailOptions);
   const newExam = new ExamC({
     name:name,
     course:course,
@@ -964,6 +990,7 @@ app.post("/send-certificate-exam", uploadcertificateExam.none(), async(req, res)
     score:score,
   });
 
+  await ensureMongoConnection();
   await newExam.save();
   res.status(200).send({ success: true, message: "Certificate sent successfully",data:newExam });
 });
@@ -976,6 +1003,10 @@ app.post("/send-gpdxcourse", uploadgpdxCourse.none(), async(req, res) => {
   console.log(awardedDate)
   if (!email || !pdfDataUrl) {
     return res.status(400).send("Missing email or PDF data");
+  }
+
+  if (!isValidEmail(email)) {
+    return res.status(400).send("Invalid email address");
   }
 
 
@@ -1008,13 +1039,7 @@ auth: {
   };
 
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error("Error sending email:", error);
-      return res.status(500).send("Error sending email");
-    }
-    res.status(200).send("Certificate sent successfully");
-  });
+  await transporter.sendMail(mailOptions);
   const newExam = new gpdxC({
     name:name,
     email:email,
@@ -1022,6 +1047,7 @@ auth: {
     Completion:awardedDate,
   });
 
+  await ensureMongoConnection();
   await newExam.save();
   res.status(200).send({ success: true, message: "Certificate sent successfully",data:newExam });
 });
@@ -1032,6 +1058,10 @@ app.post("/send-certificate-course", uploadCourse.none(), async(req, res) => {
   console.log(udin)
   if (!email || !pdfDataUrl) {
     return res.status(400).send("Missing email or PDF data");
+  }
+
+  if (!isValidEmail(email)) {
+    return res.status(400).send("Invalid email address");
   }
 
 
@@ -1064,13 +1094,7 @@ auth: {
   };
 
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      console.error("Error sending email:", error);
-      return res.status(500).send("Error sending email");
-    }
-    res.status(200).send("Certificate sent successfully");
-  });
+  await transporter.sendMail(mailOptions);
 
   
   const newCourse = new CourseC({
@@ -1081,8 +1105,10 @@ auth: {
     Udin:udin,
     url:pdfDataUrl
   });
-
+  
+  await ensureMongoConnection();
   await newCourse.save();
+  
   res.status(200).send({ success: true, message: "Certificate sent successfully",data:newCourse });
 });
 
@@ -1194,6 +1220,10 @@ app.post("/send-single-certificate-exam", uploadsingleExam.none(),async (req, re
     if (!email || !pdfDataUrl) {
       return res.status(400).send("Missing email or PDF data");
     }
+
+    if (!isValidEmail(email)) {
+      return res.status(400).send("Invalid email address");
+    }
   
     const base64Data = pdfDataUrl.split(";base64,").pop();
     const pdfBuffer = Buffer.from(base64Data, "base64");
@@ -1224,14 +1254,8 @@ app.post("/send-single-certificate-exam", uploadsingleExam.none(),async (req, re
       ],
     };
 
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.error("Error sending email:", err);
-        return res.status(500).send("Error sending email");
-      }
-      console.log("Email sent: " + info.response);
-      res.send("Certificate sent successfully");
-    });
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent: " + info.response);
 
     const newExam = new ExamC({
       name:name,
@@ -1240,6 +1264,7 @@ app.post("/send-single-certificate-exam", uploadsingleExam.none(),async (req, re
       score:score,
     });
   
+    await ensureMongoConnection();
     await newExam.save();
     res.status(200).send({ success: true, message: "Certificate sent successfully",data:newExam });
   } catch (error) {
@@ -1254,10 +1279,14 @@ const uploadsingleCourse= multer({ storage: multer.memoryStorage() });
 app.post("/send-single-certificate-course", uploadsingleCourse.none(),async (req, res) => {
   try {
     const { email, pdfDataUrl,name,course,date,udin} = req.body;
-    console.log(udin)
+    console.log(req.body)
     if (!email || !pdfDataUrl) {
       return res.status(400).send("Missing email or PDF data");
     }
+
+    // if (!isValidEmail(email)) {
+    //   return res.status(400).send("Invalid email address");
+    // }
   
     const base64Data = pdfDataUrl.split(";base64,").pop();
     const pdfBuffer = Buffer.from(base64Data, "base64");
@@ -1346,14 +1375,8 @@ app.post("/send-single-certificate-course", uploadsingleCourse.none(),async (req
     };
     
 
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.error("Error sending email:", err);
-        return res.status(500).send("Error sending email");
-      }
-      console.log("Email sent: " + info.response);
-      res.send("Certificate sent successfully");
-    });
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent: " + info.response);
     const newCourse = new CourseC({
       name:name,
       course:course,
@@ -1363,6 +1386,7 @@ app.post("/send-single-certificate-course", uploadsingleCourse.none(),async (req
       url:pdfDataUrl
     });
   
+    await ensureMongoConnection();
     await newCourse.save();
     res.status(200).send({ success: true, message: "Certificate sent successfully",data:newCourse });
   } catch (error) {
@@ -1379,6 +1403,10 @@ app.post("/send-single-gpdx", uploadsingleGpdx.none(),async (req, res) => {
     console.log(email)
     if (!email || !pdfDataUrl) {
       return res.status(400).send("Missing email or PDF data");
+    }
+
+    if (!isValidEmail(email)) {
+      return res.status(400).send("Invalid email address");
     }
   
     const base64Data = pdfDataUrl.split(";base64,").pop();
@@ -1468,14 +1496,8 @@ app.post("/send-single-gpdx", uploadsingleGpdx.none(),async (req, res) => {
     };
     
 
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.error("Error sending email:", err);
-        return res.status(500).send("Error sending email");
-      }
-      console.log("Email sent: " + info.response);
-      res.send("Certificate sent successfully");
-    });
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent: " + info.response);
     const newExam = new gpdxC({
       name:name,
       email:email,
@@ -1483,6 +1505,7 @@ app.post("/send-single-gpdx", uploadsingleGpdx.none(),async (req, res) => {
       Completion:date,
     });
   
+    await ensureMongoConnection();
     await newExam.save();
     res.status(200).send({ success: true, message: "Certificate sent successfully",data:newExam });
   } catch (error) {
@@ -1492,119 +1515,6 @@ app.post("/send-single-gpdx", uploadsingleGpdx.none(),async (req, res) => {
 });
 const uploadcertificate = multer({ dest: 'uploadcertificate/' });
 
-
-// app.post("/send-certificate", uploadcertificate.none(), async(req, res) => {
-//   const { email, pdfDataUrl,name,course } = req.body;
-//   console.log(email)
-//   if (!email || !pdfDataUrl) {
-//     return res.status(400).send("Missing email or PDF data");
-//   }
-
-
-//   const base64Data = pdfDataUrl.split(";base64,").pop();
-//   const pdfBuffer = Buffer.from(base64Data, "base64");
-
-//   const transporter = nodemailer.createTransport({
-
-//   host: 'smtp.office365.com', 
-//   port: 587,                 
-//   secure: false,   
-//   auth: {
-//   user: 'classes@disenosys.com',
-//   pass: 'xnccsypkfhfpymwg',
-//  }
-// });
-
-
-//   const mailOptions = {
-//     from: "classes@disenosys.com",
-//     to: email,
-//     subject: `Certificate for ${course}`,
-//      html: `
-//         <html>
-//           <head>
-//             <style>
-//               body {
-//                 font-family: Arial, sans-serif;
-//                 color: #333333;
-//                 background-color: #f4f4f9;
-//                 margin: 0;
-//                 padding: 0;
-//               }
-//               .email-container {
-//                 background-color: #ffffff;
-//                 border-radius: 8px;
-//                 padding: 20px;
-//                 margin: 20px;
-//                 box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-//               }
-//               h1 {
-//                 color: #004aad;
-//                 font-size: 24px;
-//                 margin-bottom: 10px;
-//               }
-//               p {
-//                 font-size: 16px;
-//                 line-height: 1.6;
-//                 color: #555555;
-//               }
-//               .footer {
-//                 margin-top: 20px;
-//                 font-size: 14px;
-//                 text-align: start;
-//                 color: #888888;
-//               }
-//               .highlight {
-//                 color: #004aad;
-//                 font-weight: bold;
-//               }
-//               .cta {
-//                 color: #ffffff;
-//                 background-color: #004aad;
-//                 padding: 10px 15px;
-//                 text-decoration: none;
-//                 border-radius: 5px;
-//               }
-//             </style>
-//           </head>
-//           <body>
-//             <div class="email-container">
-//               <h1>Certificate of Completion</h1>
-//               <p>Dear <span class="highlight">${name}</span>,</p>
-//               <p>We are pleased to inform you that you have successfully completed the <span class="highlight">${course}</span>. Please find attached your Certificate of Completion for the Internship.</p>
-//               <p>We congratulate you on your achievement and wish you continued success in your future endeavors.</p>
-//               <p>If you have any questions or need further assistance, feel free to reach out to us.</p>
-              
-//               <p class="footer">Best regards, <br />The Disenosys Team</p>
-//             </div>
-//           </body>
-//         </html>
-//       `,
-//     attachments: [
-//       {
-//         filename:`${name}_certificate.pdf`,
-//         content: pdfBuffer,
-//       },
-//     ],
-//   };
-
-
-//   transporter.sendMail(mailOptions, (error, info) => {
-//     if (error) {
-//       console.error("Error sending email:", error);
-//       return res.status(500).send("Error sending email");
-//     }
-//   });
-
-//   const newIntern = new InternC({
-//     name:name,
-//     course:course,
-//     email:email,
-//   });
-
-//   await newIntern.save();
-//   res.status(200).send({ success: true, message: "Certificate sent successfully",data:newIntern}) 
-// });
 
 app.post("/send-certificate", async (req, res) => {
   try {
@@ -1628,6 +1538,11 @@ app.post("/send-certificate", async (req, res) => {
 
     for (const student of students) {
       try {
+        if (!isValidEmail(student.email)) {
+          results.push({ email: student.email, status: "failed", error: "Invalid email address" });
+          continue;
+        }
+
         const base64Data = student.pdfDataUrl.split(";base64,").pop();
         const pdfBuffer = Buffer.from(base64Data, "base64");
 
@@ -1703,6 +1618,7 @@ app.post("/send-certificate", async (req, res) => {
           ],
         });
 
+        await ensureMongoConnection();
         await InternC.create({
           name: student.name,
           course: student.course,
@@ -1736,6 +1652,10 @@ app.post("/send-single-certificate", uploadsingle.none(),async (req, res) => {
     console.log(email)
     if (!email || !pdfDataUrl) {
       return res.status(400).send("Missing email or PDF data");
+    }
+
+    if (!isValidEmail(email)) {
+      return res.status(400).send("Invalid email address");
     }
   
     const base64Data = pdfDataUrl.split(";base64,").pop();
@@ -1826,19 +1746,15 @@ app.post("/send-single-certificate", uploadsingle.none(),async (req, res) => {
       ],
     };
 
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.error("Error sending email:", err);
-        return res.status(500).send("Error sending email");
-      }
-      console.log("Email sent: " + info.response);
-    });
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent: " + info.response);
     const newIntern = new InternC({
       name:name,
       course:course,
       email:email,
     });
   
+    await ensureMongoConnection();
     await newIntern.save();
     res.status(200).send({ success: true, message: "Certificate sent successfully",data:newIntern}) 
   } catch (error) {
